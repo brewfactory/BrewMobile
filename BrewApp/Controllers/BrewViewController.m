@@ -39,52 +39,45 @@
          self.socket = socket;
          __weak typeof(self) weakSelf = self;
          
-         //Connection status callbacks
-         self.socket.onConnect = ^()
-         {
+         //Connection status
+         self.socket.onConnect = ^() {
              weakSelf.socketIsConnected = YES;
              NSLog(@"Connected to host %@", weakSelf.host);
          };
          
-         self.socket.onDisconnect = ^()
-         {
+         self.socket.onDisconnect = ^() {
              NSLog(@"Disconnected from host %@", weakSelf.host);
          };
          
-         //Custom event callbacks
-         [self.socket on:EVENT_BREW do:^(id data)
-         {
-             NSDictionary *brewInfo = data;
+         //Custom events
+         
+         //Brew status changed
+         [self.socket on:EVENT_BREW do:^(id brewData) {
+             NSDictionary *brewInfo = brewData;
              NSNumber *inProgress = brewInfo[@"inProgress"];
              
              if (brewInfo && inProgress.intValue == 1) {
                  NSArray *phases = brewInfo[@"phases"];
-                 NSString *name = brewInfo[@"name"];
                 
                  if(phases.count > 0) {
                      NSDictionary *currentPhase = phases[0];
-                     NSNumber *temp = currentPhase[@"temp"];
-                     NSNumber *tempReached = currentPhase[@"tempReached"];
-                     
-                     NSLog(@"%@", data);
-                     NSLog(@"Brew phase %@ updated with temp %.2f ˚C, temp reached: %d", name, temp.floatValue, tempReached.intValue);
-                     [weakSelf performSelectorOnMainThread:@selector(updatePhaseLabel:) withObject:currentPhase waitUntilDone:NO];
+                    [weakSelf performSelectorOnMainThread:@selector(updatePhaseLabel:) withObject:currentPhase waitUntilDone:NO];
                  }
              }
          }];
          
-         [self.socket on:EVENT_TEMPERATURE do:^(NSNumber *data)
-         {
-             if (data) {
-                 NSLog(@"Temperature update: %.2f ˚C", data.floatValue);
-                 [weakSelf performSelectorOnMainThread:@selector(updateTempLabel:) withObject:data waitUntilDone:NO];
+         //Temperature changed
+         [self.socket on:EVENT_TEMPERATURE do:^(NSNumber *newTemp) {
+             if (newTemp) {
+                 NSLog(@"Temperature update: %.2f ˚C", newTemp.floatValue);
+                 [weakSelf performSelectorOnMainThread:@selector(updateTempLabel:) withObject:newTemp waitUntilDone:NO];
              } else {
                  NSLog(@"No data available for temperature.");
              }
          }];
        
-         /*[self.socket on:EVENT_PWM do:^(id data)
-          {
+         //PWM changed
+         /*[self.socket on:EVENT_PWM do:^(id data) {
               NSLog(@"PWM update: %@", data);
           }];*/
      }];
@@ -100,9 +93,9 @@
     phaseLabel.text = [NSString stringWithFormat:@"Temp: %.2f ˚C,\n temp reached: %@", temp.floatValue, tempReached.intValue == 1 ? @"yes" : @"no"];
 }
 
-- (void)updateTempLabel:(NSNumber *)temp
+- (void)updateTempLabel:(NSNumber *)newTemp
 {
-    tempLabel.text = [NSString stringWithFormat:@"%.2f ˚C", temp.floatValue];
+    tempLabel.text = [NSString stringWithFormat:@"%.2f ˚C", newTemp.floatValue];
 }
 
 #pragma mark - Memory management
