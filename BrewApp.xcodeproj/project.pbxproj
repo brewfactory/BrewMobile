@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5E7EEF7D5E3B49EF9766FBAC /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6A5644DD31EE42708B45078B /* libPods.a */; };
 		69FA08A5198BB01B009CD802 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 69FA08A4198BB01B009CD802 /* Foundation.framework */; };
 		69FA08A7198BB01B009CD802 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 69FA08A6198BB01B009CD802 /* CoreGraphics.framework */; };
 		69FA08A9198BB01B009CD802 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 69FA08A8198BB01B009CD802 /* UIKit.framework */; };
@@ -14,7 +15,6 @@
 		69FA08B1198BB01B009CD802 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 69FA08B0198BB01B009CD802 /* main.m */; };
 		69FA08B5198BB01B009CD802 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 69FA08B4198BB01B009CD802 /* AppDelegate.m */; };
 		69FA08B8198BB01B009CD802 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 69FA08B6198BB01B009CD802 /* Main.storyboard */; };
-		69FA08BB198BB01B009CD802 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 69FA08BA198BB01B009CD802 /* ViewController.m */; };
 		69FA08BD198BB01B009CD802 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 69FA08BC198BB01B009CD802 /* Images.xcassets */; };
 		69FA08C4198BB01B009CD802 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 69FA08C3198BB01B009CD802 /* XCTest.framework */; };
 		69FA08C5198BB01B009CD802 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 69FA08A4198BB01B009CD802 /* Foundation.framework */; };
@@ -34,6 +34,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		2BC82EC0B23747D0B82AF874 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
 		69FA08A1198BB01B009CD802 /* BrewApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BrewApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		69FA08A4198BB01B009CD802 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		69FA08A6198BB01B009CD802 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -45,14 +46,13 @@
 		69FA08B3198BB01B009CD802 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		69FA08B4198BB01B009CD802 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		69FA08B7198BB01B009CD802 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		69FA08B9198BB01B009CD802 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		69FA08BA198BB01B009CD802 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		69FA08BC198BB01B009CD802 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		69FA08C2198BB01B009CD802 /* BrewAppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BrewAppTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		69FA08C3198BB01B009CD802 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		69FA08CB198BB01B009CD802 /* BrewAppTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "BrewAppTests-Info.plist"; sourceTree = "<group>"; };
 		69FA08CD198BB01B009CD802 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		69FA08CF198BB01B009CD802 /* BrewAppTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BrewAppTests.m; sourceTree = "<group>"; };
+		6A5644DD31EE42708B45078B /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -63,6 +63,7 @@
 				69FA08A7198BB01B009CD802 /* CoreGraphics.framework in Frameworks */,
 				69FA08A9198BB01B009CD802 /* UIKit.framework in Frameworks */,
 				69FA08A5198BB01B009CD802 /* Foundation.framework in Frameworks */,
+				5E7EEF7D5E3B49EF9766FBAC /* libPods.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -86,6 +87,7 @@
 				69FA08C9198BB01B009CD802 /* BrewAppTests */,
 				69FA08A3198BB01B009CD802 /* Frameworks */,
 				69FA08A2198BB01B009CD802 /* Products */,
+				2BC82EC0B23747D0B82AF874 /* Pods.xcconfig */,
 			);
 			sourceTree = "<group>";
 		};
@@ -105,6 +107,7 @@
 				69FA08A6198BB01B009CD802 /* CoreGraphics.framework */,
 				69FA08A8198BB01B009CD802 /* UIKit.framework */,
 				69FA08C3198BB01B009CD802 /* XCTest.framework */,
+				6A5644DD31EE42708B45078B /* libPods.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -115,8 +118,6 @@
 				69FA08B3198BB01B009CD802 /* AppDelegate.h */,
 				69FA08B4198BB01B009CD802 /* AppDelegate.m */,
 				69FA08B6198BB01B009CD802 /* Main.storyboard */,
-				69FA08B9198BB01B009CD802 /* ViewController.h */,
-				69FA08BA198BB01B009CD802 /* ViewController.m */,
 				69FA08BC198BB01B009CD802 /* Images.xcassets */,
 				69FA08AB198BB01B009CD802 /* Supporting Files */,
 			);
@@ -159,9 +160,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 69FA08D3198BB01B009CD802 /* Build configuration list for PBXNativeTarget "BrewApp" */;
 			buildPhases = (
+				704FD312CD804B51BA02D54F /* Check Pods Manifest.lock */,
 				69FA089D198BB01B009CD802 /* Sources */,
 				69FA089E198BB01B009CD802 /* Frameworks */,
 				69FA089F198BB01B009CD802 /* Resources */,
+				D61E3A70902C4B318DCD385C /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -243,12 +246,44 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		704FD312CD804B51BA02D54F /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		D61E3A70902C4B318DCD385C /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Pods-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		69FA089D198BB01B009CD802 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				69FA08BB198BB01B009CD802 /* ViewController.m in Sources */,
 				69FA08B5198BB01B009CD802 /* AppDelegate.m in Sources */,
 				69FA08B1198BB01B009CD802 /* main.m in Sources */,
 			);
@@ -372,6 +407,7 @@
 		};
 		69FA08D4198BB01B009CD802 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 2BC82EC0B23747D0B82AF874 /* Pods.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
@@ -385,6 +421,7 @@
 		};
 		69FA08D5198BB01B009CD802 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 2BC82EC0B23747D0B82AF874 /* Pods.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
@@ -455,6 +492,7 @@
 				69FA08D5198BB01B009CD802 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		69FA08D6198BB01B009CD802 /* Build configuration list for PBXNativeTarget "BrewAppTests" */ = {
 			isa = XCConfigurationList;
@@ -463,6 +501,7 @@
 				69FA08D8198BB01B009CD802 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
