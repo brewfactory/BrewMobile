@@ -21,6 +21,7 @@
 		69FA08C6198BB01B009CD802 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 69FA08A8198BB01B009CD802 /* UIKit.framework */; };
 		69FA08CE198BB01B009CD802 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 69FA08CC198BB01B009CD802 /* InfoPlist.strings */; };
 		69FA08D0198BB01B009CD802 /* BrewAppTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 69FA08CF198BB01B009CD802 /* BrewAppTests.m */; };
+		69FA08DC198BC9CB009CD802 /* BrewViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 69FA08DB198BC9CB009CD802 /* BrewViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -52,6 +53,8 @@
 		69FA08CB198BB01B009CD802 /* BrewAppTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "BrewAppTests-Info.plist"; sourceTree = "<group>"; };
 		69FA08CD198BB01B009CD802 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		69FA08CF198BB01B009CD802 /* BrewAppTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BrewAppTests.m; sourceTree = "<group>"; };
+		69FA08DA198BC9CB009CD802 /* BrewViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BrewViewController.h; sourceTree = "<group>"; };
+		69FA08DB198BC9CB009CD802 /* BrewViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BrewViewController.m; sourceTree = "<group>"; };
 		6A5644DD31EE42708B45078B /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -117,6 +120,7 @@
 			children = (
 				69FA08B3198BB01B009CD802 /* AppDelegate.h */,
 				69FA08B4198BB01B009CD802 /* AppDelegate.m */,
+				69FA08D9198BC9CB009CD802 /* Controllers */,
 				69FA08B6198BB01B009CD802 /* Main.storyboard */,
 				69FA08BC198BB01B009CD802 /* Images.xcassets */,
 				69FA08AB198BB01B009CD802 /* Supporting Files */,
@@ -151,6 +155,15 @@
 				69FA08CC198BB01B009CD802 /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		69FA08D9198BC9CB009CD802 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				69FA08DA198BC9CB009CD802 /* BrewViewController.h */,
+				69FA08DB198BC9CB009CD802 /* BrewViewController.m */,
+			);
+			path = Controllers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -284,6 +297,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				69FA08DC198BC9CB009CD802 /* BrewViewController.m in Sources */,
 				69FA08B5198BB01B009CD802 /* AppDelegate.m in Sources */,
 				69FA08B1198BB01B009CD802 /* main.m in Sources */,
 			);
