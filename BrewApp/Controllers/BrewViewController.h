@@ -9,14 +9,13 @@
 #import <UIKit/UIKit.h>
 #import <SIOSocket/SIOSocket.h>
 #import "PhaseCell.h"
+#import "ContentParser.h"
 
 @interface BrewViewController : UIViewController<UITableViewDataSource, UITableViewDelegate> {
     IBOutlet UILabel *tempLabel;
     IBOutlet UILabel *phaseLabel;
     IBOutlet UILabel *nameLabel;
     IBOutlet UITableView *phasesTableView;
-    
-    NSArray *brewPhases;
 }
 
 @end

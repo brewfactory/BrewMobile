@@ -10,6 +10,9 @@
 		5E7EEF7D5E3B49EF9766FBAC /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6A5644DD31EE42708B45078B /* libPods.a */; };
 		69DB31F7198CF76A004AD0CB /* PhaseCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 69DB31F5198CF76A004AD0CB /* PhaseCell.m */; };
 		69DB31F8198CF76A004AD0CB /* PhaseCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 69DB31F6198CF76A004AD0CB /* PhaseCell.xib */; };
+		69DB31FF198CFB3C004AD0CB /* BrewPhase.m in Sources */ = {isa = PBXBuildFile; fileRef = 69DB31FE198CFB3C004AD0CB /* BrewPhase.m */; };
+		69DB3202198CFD05004AD0CB /* BrewState.m in Sources */ = {isa = PBXBuildFile; fileRef = 69DB3201198CFD05004AD0CB /* BrewState.m */; };
+		69DB3209198D021B004AD0CB /* ContentParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 69DB3208198D021B004AD0CB /* ContentParser.m */; };
 		69FA08A5198BB01B009CD802 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 69FA08A4198BB01B009CD802 /* Foundation.framework */; };
 		69FA08A7198BB01B009CD802 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 69FA08A6198BB01B009CD802 /* CoreGraphics.framework */; };
 		69FA08A9198BB01B009CD802 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 69FA08A8198BB01B009CD802 /* UIKit.framework */; };
@@ -41,6 +44,12 @@
 		69DB31F4198CF76A004AD0CB /* PhaseCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhaseCell.h; sourceTree = "<group>"; };
 		69DB31F5198CF76A004AD0CB /* PhaseCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhaseCell.m; sourceTree = "<group>"; };
 		69DB31F6198CF76A004AD0CB /* PhaseCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PhaseCell.xib; sourceTree = "<group>"; };
+		69DB31FD198CFB3C004AD0CB /* BrewPhase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BrewPhase.h; sourceTree = "<group>"; };
+		69DB31FE198CFB3C004AD0CB /* BrewPhase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BrewPhase.m; sourceTree = "<group>"; };
+		69DB3200198CFD05004AD0CB /* BrewState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BrewState.h; sourceTree = "<group>"; };
+		69DB3201198CFD05004AD0CB /* BrewState.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BrewState.m; sourceTree = "<group>"; };
+		69DB3207198D021B004AD0CB /* ContentParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContentParser.h; sourceTree = "<group>"; };
+		69DB3208198D021B004AD0CB /* ContentParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContentParser.m; sourceTree = "<group>"; };
 		69FA08A1198BB01B009CD802 /* BrewApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BrewApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		69FA08A4198BB01B009CD802 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		69FA08A6198BB01B009CD802 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -98,6 +107,26 @@
 			path = CustomViews;
 			sourceTree = "<group>";
 		};
+		69DB31FC198CFB3C004AD0CB /* Entities */ = {
+			isa = PBXGroup;
+			children = (
+				69DB31FD198CFB3C004AD0CB /* BrewPhase.h */,
+				69DB31FE198CFB3C004AD0CB /* BrewPhase.m */,
+				69DB3200198CFD05004AD0CB /* BrewState.h */,
+				69DB3201198CFD05004AD0CB /* BrewState.m */,
+			);
+			path = Entities;
+			sourceTree = "<group>";
+		};
+		69DB3206198D021B004AD0CB /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				69DB3207198D021B004AD0CB /* ContentParser.h */,
+				69DB3208198D021B004AD0CB /* ContentParser.m */,
+			);
+			path = Utils;
+			sourceTree = "<group>";
+		};
 		69FA0898198BB01B009CD802 = {
 			isa = PBXGroup;
 			children = (
@@ -135,9 +164,11 @@
 			children = (
 				69FA08B3198BB01B009CD802 /* AppDelegate.h */,
 				69FA08B4198BB01B009CD802 /* AppDelegate.m */,
+				69DB3206198D021B004AD0CB /* Utils */,
 				69FA08D9198BC9CB009CD802 /* Controllers */,
 				69FA08B6198BB01B009CD802 /* Main.storyboard */,
 				69DB31F3198CF76A004AD0CB /* CustomViews */,
+				69DB31FC198CFB3C004AD0CB /* Entities */,
 				69FA08BC198BB01B009CD802 /* Images.xcassets */,
 				69FA08AB198BB01B009CD802 /* Supporting Files */,
 			);
@@ -315,9 +346,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				69FA08DC198BC9CB009CD802 /* BrewViewController.m in Sources */,
+				69DB31FF198CFB3C004AD0CB /* BrewPhase.m in Sources */,
 				69FA08B5198BB01B009CD802 /* AppDelegate.m in Sources */,
 				69FA08B1198BB01B009CD802 /* main.m in Sources */,
+				69DB3209198D021B004AD0CB /* ContentParser.m in Sources */,
 				69DB31F7198CF76A004AD0CB /* PhaseCell.m in Sources */,
+				69DB3202198CFD05004AD0CB /* BrewState.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

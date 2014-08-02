@@ -1,13 +1,13 @@
 //
-//  PhaseCell.m
+//  BrewState.m
 //  BrewApp
 //
 //  Created by Ágnes Vásárhelyi on 02/08/14.
 //
 //
 
-#import "PhaseCell.h"
+#import "BrewState.h"
 
-@implementation PhaseCell
+@implementation BrewState
 
 @end

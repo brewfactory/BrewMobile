@@ -12,10 +12,13 @@
 #define EVENT_TEMPERATURE @"temperature_changed"
 #define EVENT_PWM @"pwm_changed"
 
-@interface BrewViewController ()
+@interface BrewViewController () {
+    BrewState *actBrewState;
+}
 @property (nonatomic, strong) SIOSocket *socket;
 @property (nonatomic, strong) NSString *host;
 @property (nonatomic) BOOL socketIsConnected;
+
 @end
 
 @implementation BrewViewController
@@ -53,23 +56,17 @@
          
          //Brew status changed
          [self.socket on:EVENT_BREW do:^(id brewData) {
-             NSDictionary *brewInfo = brewData;
-             NSNumber *inProgress = brewInfo[@"inProgress"];
-             
-             if (brewInfo && inProgress.intValue == 1) {
-                 NSArray *phases = brewInfo[@"phases"];
-                
-                 if(phases.count > 0) {
-                     NSDictionary *currentPhase = phases[0];
-                    [weakSelf performSelectorOnMainThread:@selector(updatePhaseLabel:) withObject:currentPhase waitUntilDone:NO];
-                 }
+             actBrewState = [[ContentParser sharedInstance] parseBrewStateFromRawData:brewData];
+             [phasesTableView performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:NO];
+
+             if (actBrewState.inProgress) {
+                 [self performSelectorOnMainThread:@selector(updateNameLabel) withObject:nil waitUntilDone:NO];
              }
          }];
          
          //Temperature changed
          [self.socket on:EVENT_TEMPERATURE do:^(NSNumber *newTemp) {
              if (newTemp) {
-                 NSLog(@"Temperature update: %.2f ˚C", newTemp.floatValue);
                  [weakSelf performSelectorOnMainThread:@selector(updateTempLabel:) withObject:newTemp waitUntilDone:NO];
              } else {
                  NSLog(@"No data available for temperature.");
@@ -85,17 +82,14 @@
 
 #pragma mark - Refreshing UI
 
-- (void)updatePhaseLabel:(NSDictionary *)currentPhase
-{
-    NSNumber *temp = currentPhase[@"temp"];
-    NSNumber *tempReached = currentPhase[@"tempReached"];
-    
-    phaseLabel.text = [NSString stringWithFormat:@"Temp: %.2f ˚C,\n temp reached: %@", temp.floatValue, tempReached.intValue == 1 ? @"yes" : @"no"];
-}
-
 - (void)updateTempLabel:(NSNumber *)newTemp
 {
     tempLabel.text = [NSString stringWithFormat:@"%.2f ˚C", newTemp.floatValue];
+}
+
+- (void)updateNameLabel
+{
+    nameLabel.text = [NSString stringWithFormat:@"Brewing %@ at", actBrewState.name];
 }
 
 #pragma mark - UITableViewDataSource
@@ -107,7 +101,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return brewPhases.count;
+    return actBrewState.phases.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -118,11 +112,26 @@
         NSArray *nib = [[NSBundle mainBundle] loadNibNamed:CellIdentifier owner:self options:nil];
         cell = (PhaseCell *)[nib objectAtIndex:0];
     }
-
+    
+    if (actBrewState.phases.count > indexPath.row) {
+        BrewPhase *phase = actBrewState.phases[indexPath.row];
+        
+        cell.minLabel.text = [NSString stringWithFormat:@"%@", phase.min];
+        cell.tempLabel.text = [NSString stringWithFormat:@"%@", phase.temp];
+       
+        [UIView animateWithDuration:0.3f animations:^{
+            cell.backgroundColor = phase.tempReached ? [UIColor orangeColor] : [UIColor lightGrayColor];
+        }];
+    }
     return cell;
 }
 
 #pragma mark - UITableViewDelegate
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return 78.0f;
+}
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
