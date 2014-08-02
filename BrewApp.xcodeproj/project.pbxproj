@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		5E7EEF7D5E3B49EF9766FBAC /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6A5644DD31EE42708B45078B /* libPods.a */; };
+		69DB31F7198CF76A004AD0CB /* PhaseCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 69DB31F5198CF76A004AD0CB /* PhaseCell.m */; };
+		69DB31F8198CF76A004AD0CB /* PhaseCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 69DB31F6198CF76A004AD0CB /* PhaseCell.xib */; };
 		69FA08A5198BB01B009CD802 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 69FA08A4198BB01B009CD802 /* Foundation.framework */; };
 		69FA08A7198BB01B009CD802 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 69FA08A6198BB01B009CD802 /* CoreGraphics.framework */; };
 		69FA08A9198BB01B009CD802 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 69FA08A8198BB01B009CD802 /* UIKit.framework */; };
@@ -36,6 +38,9 @@
 
 /* Begin PBXFileReference section */
 		2BC82EC0B23747D0B82AF874 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
+		69DB31F4198CF76A004AD0CB /* PhaseCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhaseCell.h; sourceTree = "<group>"; };
+		69DB31F5198CF76A004AD0CB /* PhaseCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhaseCell.m; sourceTree = "<group>"; };
+		69DB31F6198CF76A004AD0CB /* PhaseCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PhaseCell.xib; sourceTree = "<group>"; };
 		69FA08A1198BB01B009CD802 /* BrewApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BrewApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		69FA08A4198BB01B009CD802 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		69FA08A6198BB01B009CD802 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -83,6 +88,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		69DB31F3198CF76A004AD0CB /* CustomViews */ = {
+			isa = PBXGroup;
+			children = (
+				69DB31F4198CF76A004AD0CB /* PhaseCell.h */,
+				69DB31F5198CF76A004AD0CB /* PhaseCell.m */,
+				69DB31F6198CF76A004AD0CB /* PhaseCell.xib */,
+			);
+			path = CustomViews;
+			sourceTree = "<group>";
+		};
 		69FA0898198BB01B009CD802 = {
 			isa = PBXGroup;
 			children = (
@@ -122,6 +137,7 @@
 				69FA08B4198BB01B009CD802 /* AppDelegate.m */,
 				69FA08D9198BC9CB009CD802 /* Controllers */,
 				69FA08B6198BB01B009CD802 /* Main.storyboard */,
+				69DB31F3198CF76A004AD0CB /* CustomViews */,
 				69FA08BC198BB01B009CD802 /* Images.xcassets */,
 				69FA08AB198BB01B009CD802 /* Supporting Files */,
 			);
@@ -246,6 +262,7 @@
 				69FA08BD198BB01B009CD802 /* Images.xcassets in Resources */,
 				69FA08AF198BB01B009CD802 /* InfoPlist.strings in Resources */,
 				69FA08B8198BB01B009CD802 /* Main.storyboard in Resources */,
+				69DB31F8198CF76A004AD0CB /* PhaseCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -300,6 +317,7 @@
 				69FA08DC198BC9CB009CD802 /* BrewViewController.m in Sources */,
 				69FA08B5198BB01B009CD802 /* AppDelegate.m in Sources */,
 				69FA08B1198BB01B009CD802 /* main.m in Sources */,
+				69DB31F7198CF76A004AD0CB /* PhaseCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
