@@ -10,4 +10,9 @@
 
 @implementation PhaseCell
 
+- (void)setTextColorForAllLabels:(UIColor *)color
+{
+    _minLabel.textColor = _minTextLabel.textColor = _tempLabel.textColor = _tempTextLabel.textColor = color;
+}
+
 @end

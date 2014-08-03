@@ -15,4 +15,6 @@
 @property (nonatomic, weak) IBOutlet UILabel *tempLabel;
 @property (nonatomic, weak) IBOutlet UILabel *tempTextLabel;
 
+- (void)setTextColorForAllLabels:(UIColor *)color;
+
 @end

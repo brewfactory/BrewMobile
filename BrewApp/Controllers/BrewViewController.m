@@ -58,7 +58,7 @@
          [self.socket on:EVENT_BREW do:^(id brewData) {
              actBrewState = [[ContentParser sharedInstance] parseBrewStateFromRawData:brewData];
              [phasesTableView performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:NO];
-
+             NSLog(@"%@", brewData);
              if (actBrewState.inProgress) {
                  [self performSelectorOnMainThread:@selector(updateNameLabel) withObject:nil waitUntilDone:NO];
              }
@@ -92,6 +92,25 @@
     nameLabel.text = [NSString stringWithFormat:@"Brewing %@ at", actBrewState.name];
 }
 
+- (UIColor *)colorForPhase:(BrewPhase *)phase
+{
+    UIColor *bgColor = [UIColor whiteColor];
+    if (phase.inProgress && !phase.tempReached) {
+        //Heating in progress
+        bgColor = [UIColor colorWithRed:240.0 / 255.0 green:173.0 / 255.0 blue:78.0 / 255.0 alpha:1.0];
+    } else if(phase.inProgress && phase.tempReached) {
+        //Still in progress
+        bgColor = [UIColor colorWithRed:66.0 / 255.0 green:139.0 / 255.0 blue:202.0 / 255.0 alpha:1.0];
+    } else if(!phase.inProgress && phase.tempReached) {
+        //Brew ended
+        bgColor = [UIColor colorWithRed:92.0 / 255.0 green:184.0 / 255.0 blue:92.0 / 255.0 alpha:1.0];
+    } else if(!phase.inProgress && !phase.tempReached) {
+        //Brew inactive
+        bgColor = [UIColor colorWithRed:245.0 / 255.0 green:245.0 / 255.0 blue:245.0 / 255.0 alpha:1.0];
+    }
+    return bgColor;
+}
+
 #pragma mark - UITableViewDataSource
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -118,9 +137,12 @@
         
         cell.minLabel.text = [NSString stringWithFormat:@"%@", phase.min];
         cell.tempLabel.text = [NSString stringWithFormat:@"%@", phase.temp];
-       
+        
         [UIView animateWithDuration:0.3f animations:^{
-            cell.backgroundColor = phase.tempReached ? [UIColor orangeColor] : [UIColor lightGrayColor];
+            cell.backgroundColor = [self colorForPhase:phase];
+            if (!phase.inProgress && !phase.tempReached) {
+                [cell setTextColorForAllLabels:[UIColor blackColor]];
+            }
         }];
     }
     return cell;
