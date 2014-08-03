@@ -2,7 +2,6 @@ language: objective-c
 
 before_install:
     - gem install cocoapods --no-rdoc --no-ri --no-document --quiet
-    - cd BrewApp
 
 # Path to the Xcode workspace.
 #If you're using a project, use xcode_project: ...
