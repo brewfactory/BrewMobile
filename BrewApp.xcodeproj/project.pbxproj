@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		5E7EEF7D5E3B49EF9766FBAC /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6A5644DD31EE42708B45078B /* libPods.a */; };
+		6965BD65198E89B20036DDB1 /* ISO8601DateFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = 6965BD64198E89B20036DDB1 /* ISO8601DateFormatter.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		69DB31F7198CF76A004AD0CB /* PhaseCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 69DB31F5198CF76A004AD0CB /* PhaseCell.m */; };
 		69DB31F8198CF76A004AD0CB /* PhaseCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 69DB31F6198CF76A004AD0CB /* PhaseCell.xib */; };
 		69DB31FF198CFB3C004AD0CB /* BrewPhase.m in Sources */ = {isa = PBXBuildFile; fileRef = 69DB31FE198CFB3C004AD0CB /* BrewPhase.m */; };
@@ -41,6 +42,8 @@
 
 /* Begin PBXFileReference section */
 		2BC82EC0B23747D0B82AF874 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
+		6965BD63198E89B20036DDB1 /* ISO8601DateFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ISO8601DateFormatter.h; sourceTree = "<group>"; };
+		6965BD64198E89B20036DDB1 /* ISO8601DateFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ISO8601DateFormatter.m; sourceTree = "<group>"; };
 		69DB31F4198CF76A004AD0CB /* PhaseCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhaseCell.h; sourceTree = "<group>"; };
 		69DB31F5198CF76A004AD0CB /* PhaseCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhaseCell.m; sourceTree = "<group>"; };
 		69DB31F6198CF76A004AD0CB /* PhaseCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PhaseCell.xib; sourceTree = "<group>"; };
@@ -123,6 +126,8 @@
 			children = (
 				69DB3207198D021B004AD0CB /* ContentParser.h */,
 				69DB3208198D021B004AD0CB /* ContentParser.m */,
+				6965BD63198E89B20036DDB1 /* ISO8601DateFormatter.h */,
+				6965BD64198E89B20036DDB1 /* ISO8601DateFormatter.m */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -350,6 +355,7 @@
 				69FA08B5198BB01B009CD802 /* AppDelegate.m in Sources */,
 				69FA08B1198BB01B009CD802 /* main.m in Sources */,
 				69DB3209198D021B004AD0CB /* ContentParser.m in Sources */,
+				6965BD65198E89B20036DDB1 /* ISO8601DateFormatter.m in Sources */,
 				69DB31F7198CF76A004AD0CB /* PhaseCell.m in Sources */,
 				69DB3202198CFD05004AD0CB /* BrewState.m in Sources */,
 			);
