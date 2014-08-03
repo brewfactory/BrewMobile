@@ -1,6 +1,8 @@
 BrewMobile
 ==========
 
+[![Build Status](https://travis-ci.org/vasarhelyia/BrewMobile.svg?branch=master)](https://travis-ci.org/vasarhelyia/BrewMobile)
+
 iOS client for the [Brewfactory][1] project
 
 What is this?
