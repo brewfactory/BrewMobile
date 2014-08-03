@@ -128,13 +128,13 @@
         cell.minLabel.text = [NSString stringWithFormat:@"%@", phase.min];
         cell.tempLabel.text = [NSString stringWithFormat:@"%@", phase.temp];
         if (phase.state == FINISHED) {
-           cell.statusLabel.text = [NSString stringWithFormat:@"• finished at %@ •", phase.jobEnd];
+           cell.statusLabel.text = [NSString stringWithFormat:@"finished at %@", phase.jobEnd];
         } else if (phase.state == HEATING) {
             if(actTemp) {
-                cell.statusLabel.text = [NSString stringWithFormat:@"• %@ •", phase.temp.floatValue > actTemp.floatValue ? @"heating" : @"cooling"];
+                cell.statusLabel.text = [NSString stringWithFormat:@"%@", phase.temp.floatValue > actTemp.floatValue ? @"heating" : @"cooling"];
             }
         } else if (phase.state == ACTIVE) {
-            cell.statusLabel.text = @"• active •";
+            cell.statusLabel.text = @"active";
         }
         
         [UIView animateWithDuration:0.3f animations:^{

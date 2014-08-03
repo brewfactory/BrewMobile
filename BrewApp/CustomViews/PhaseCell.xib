@@ -51,7 +51,7 @@
                     <nil key="highlightedColor"/>
                 </label>
                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZEg-9h-ubB" userLabel="statusLabel">
-                    <rect key="frame" x="138" y="29" width="0.0" height="21"/>
+                    <rect key="frame" x="338" y="29" width="0.0" height="21"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <constraints>
                         <constraint firstAttribute="width" relation="lessThanOrEqual" constant="150" id="lVt-tq-vYy"/>
@@ -69,13 +69,13 @@
                 <constraint firstItem="HYJ-TY-DDm" firstAttribute="baseline" secondItem="JX4-HG-D3q" secondAttribute="baseline" id="IRV-tf-BNo"/>
                 <constraint firstItem="JX4-HG-D3q" firstAttribute="baseline" secondItem="6Ep-VC-XI3" secondAttribute="baseline" id="Op6-Xj-4yA"/>
                 <constraint firstItem="ZEg-9h-ubB" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="29" id="P0X-du-3Pj"/>
-                <constraint firstItem="ZEg-9h-ubB" firstAttribute="leading" secondItem="eVn-8m-YfD" secondAttribute="trailing" constant="15" id="Rpr-K5-EN4"/>
                 <constraint firstItem="6Ep-VC-XI3" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="28" id="VGW-FE-BPf"/>
                 <constraint firstItem="eVn-8m-YfD" firstAttribute="baseline" secondItem="HYJ-TY-DDm" secondAttribute="baseline" id="fGz-tv-Fxf"/>
                 <constraint firstItem="eVn-8m-YfD" firstAttribute="leading" secondItem="HYJ-TY-DDm" secondAttribute="trailing" constant="4" id="mwH-Lp-3dD"/>
                 <constraint firstItem="eVn-8m-YfD" firstAttribute="top" secondItem="HYJ-TY-DDm" secondAttribute="top" id="pW7-fj-aub"/>
                 <constraint firstItem="ZEg-9h-ubB" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="ta4-kd-Tnv"/>
                 <constraint firstItem="6Ep-VC-XI3" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="16" id="tfE-kY-2mo"/>
+                <constraint firstAttribute="trailing" secondItem="ZEg-9h-ubB" secondAttribute="trailing" constant="16" id="xkx-nd-8pK"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <connections>
