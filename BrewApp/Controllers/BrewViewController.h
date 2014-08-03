@@ -13,8 +13,8 @@
 
 @interface BrewViewController : UIViewController<UITableViewDataSource, UITableViewDelegate> {
     IBOutlet UILabel *tempLabel;
-    IBOutlet UILabel *phaseLabel;
     IBOutlet UILabel *nameLabel;
+    IBOutlet UILabel *startTimeLabel;
     IBOutlet UITableView *phasesTableView;
 }
 

@@ -58,9 +58,10 @@
          [self.socket on:EVENT_BREW do:^(id brewData) {
              actBrewState = [[ContentParser sharedInstance] parseBrewStateFromRawData:brewData];
              [phasesTableView performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:NO];
-             NSLog(@"%@", brewData);
+
              if (actBrewState.inProgress) {
                  [self performSelectorOnMainThread:@selector(updateNameLabel) withObject:nil waitUntilDone:NO];
+                 [self performSelectorOnMainThread:@selector(updateStartTimeLabel) withObject:nil waitUntilDone:NO];
              }
          }];
          
@@ -84,12 +85,17 @@
 
 - (void)updateTempLabel:(NSNumber *)newTemp
 {
-    tempLabel.text = [NSString stringWithFormat:@"%.2f ˚C", newTemp.floatValue];
+    tempLabel.text = [NSString stringWithFormat:@"at %.2f ˚C, ", newTemp.floatValue];
 }
 
 - (void)updateNameLabel
 {
-    nameLabel.text = [NSString stringWithFormat:@"Brewing %@ at", actBrewState.name];
+    nameLabel.text = [NSString stringWithFormat:@"Brewing %@", actBrewState.name];
+}
+
+- (void)updateStartTimeLabel
+{
+    startTimeLabel.text = [NSString stringWithFormat:@"started %@", actBrewState.startTime];
 }
 
 - (UIColor *)colorForPhase:(BrewPhase *)phase
@@ -99,7 +105,7 @@
         //Heating in progress
         bgColor = [UIColor colorWithRed:240.0 / 255.0 green:173.0 / 255.0 blue:78.0 / 255.0 alpha:1.0];
     } else if(phase.inProgress && phase.tempReached) {
-        //Still in progress
+        //Brewing still in progress
         bgColor = [UIColor colorWithRed:66.0 / 255.0 green:139.0 / 255.0 blue:202.0 / 255.0 alpha:1.0];
     } else if(!phase.inProgress && phase.tempReached) {
         //Brew ended
@@ -120,7 +126,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return actBrewState.phases.count;
+    return actBrewState && actBrewState.phases ? actBrewState.phases.count : 0;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -132,11 +138,12 @@
         cell = (PhaseCell *)[nib objectAtIndex:0];
     }
     
-    if (actBrewState.phases.count > indexPath.row) {
+    if (actBrewState && actBrewState.phases && actBrewState.phases.count > indexPath.row) {
         BrewPhase *phase = actBrewState.phases[indexPath.row];
         
         cell.minLabel.text = [NSString stringWithFormat:@"%@", phase.min];
         cell.tempLabel.text = [NSString stringWithFormat:@"%@", phase.temp];
+        cell.statusLabel.text = !phase.inProgress && phase.tempReached ? [NSString stringWithFormat:@"finished at %@", phase.jobEnd] : @"";
         
         [UIView animateWithDuration:0.3f animations:^{
             cell.backgroundColor = [self colorForPhase:phase];
@@ -145,6 +152,7 @@
             }
         }];
     }
+    
     return cell;
 }
 
@@ -157,7 +165,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    //not sure if we want to have selection
+    //Not sure if we want to have selection
 }
 
 #pragma mark - Memory management

@@ -12,7 +12,7 @@
 
 - (void)setTextColorForAllLabels:(UIColor *)color
 {
-    _minLabel.textColor = _minTextLabel.textColor = _tempLabel.textColor = _tempTextLabel.textColor = color;
+    _minLabel.textColor = _minTextLabel.textColor = _tempLabel.textColor = _tempTextLabel.textColor = _statusLabel.textColor = color;
 }
 
 @end

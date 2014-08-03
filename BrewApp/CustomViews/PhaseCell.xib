@@ -11,44 +11,51 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6Ep-VC-XI3" userLabel="minLabel">
-                    <rect key="frame" x="6" y="28" width="41" height="21"/>
+                    <rect key="frame" x="16" y="28" width="0.0" height="21"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <constraints>
-                        <constraint firstAttribute="width" constant="41" id="JIY-PI-FsY"/>
                         <constraint firstAttribute="width" relation="lessThanOrEqual" constant="60" id="wlh-ac-woo"/>
                     </constraints>
                     <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="17"/>
                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="minutes" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JX4-HG-D3q" userLabel="minTextLabel">
-                    <rect key="frame" x="55" y="28" width="63" height="21"/>
+                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="minutes at" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JX4-HG-D3q" userLabel="minTextLabel">
+                    <rect key="frame" x="20" y="28" width="77" height="21"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <constraints>
-                        <constraint firstAttribute="width" constant="63" id="KOg-6r-l7f"/>
-                        <constraint firstAttribute="width" relation="lessThanOrEqual" constant="63" id="zPi-lH-I4h"/>
+                        <constraint firstAttribute="width" relation="lessThanOrEqual" constant="80" id="zPi-lH-I4h"/>
                     </constraints>
                     <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="17"/>
                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HYJ-TY-DDm" userLabel="tempLabel">
-                    <rect key="frame" x="126" y="28" width="41" height="21"/>
+                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HYJ-TY-DDm" userLabel="tempLabel">
+                    <rect key="frame" x="103" y="28" width="0.0" height="21"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <constraints>
                         <constraint firstAttribute="width" relation="lessThanOrEqual" constant="60" id="QAQ-Di-iDA"/>
-                        <constraint firstAttribute="width" constant="41" id="bEE-3e-57x"/>
                     </constraints>
                     <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="17"/>
                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="˚C" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eVn-8m-YfD" userLabel="tempTextLabel">
-                    <rect key="frame" x="175" y="28" width="22" height="21"/>
+                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="˚C" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eVn-8m-YfD" userLabel="tempTextLabel">
+                    <rect key="frame" x="107" y="28" width="16" height="21"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <constraints>
                         <constraint firstAttribute="width" relation="lessThanOrEqual" constant="30" id="axl-r3-eip"/>
-                        <constraint firstAttribute="width" constant="22" id="lXM-68-vaZ"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="17"/>
+                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZEg-9h-ubB" userLabel="statusLabel">
+                    <rect key="frame" x="138" y="29" width="176" height="21"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <constraints>
+                        <constraint firstAttribute="width" relation="lessThanOrEqual" constant="176" id="lVt-tq-vYy"/>
+                        <constraint firstAttribute="width" constant="176" id="vbu-mw-IkD"/>
                     </constraints>
                     <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="17"/>
                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -57,23 +64,27 @@
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
-                <constraint firstItem="JX4-HG-D3q" firstAttribute="leading" secondItem="6Ep-VC-XI3" secondAttribute="trailing" constant="1" id="1yn-ar-M9N"/>
-                <constraint firstItem="HYJ-TY-DDm" firstAttribute="leading" secondItem="JX4-HG-D3q" secondAttribute="trailing" constant="1" id="5O1-6L-sg1"/>
+                <constraint firstItem="JX4-HG-D3q" firstAttribute="leading" secondItem="6Ep-VC-XI3" secondAttribute="trailing" constant="4" id="1yn-ar-M9N"/>
+                <constraint firstItem="HYJ-TY-DDm" firstAttribute="leading" secondItem="JX4-HG-D3q" secondAttribute="trailing" constant="6" id="5O1-6L-sg1"/>
                 <constraint firstItem="6Ep-VC-XI3" firstAttribute="top" secondItem="JX4-HG-D3q" secondAttribute="top" id="7NL-ea-gZu"/>
                 <constraint firstItem="HYJ-TY-DDm" firstAttribute="baseline" secondItem="JX4-HG-D3q" secondAttribute="baseline" id="IRV-tf-BNo"/>
                 <constraint firstItem="JX4-HG-D3q" firstAttribute="baseline" secondItem="6Ep-VC-XI3" secondAttribute="baseline" id="Op6-Xj-4yA"/>
+                <constraint firstItem="ZEg-9h-ubB" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="29" id="P0X-du-3Pj"/>
+                <constraint firstItem="ZEg-9h-ubB" firstAttribute="leading" secondItem="eVn-8m-YfD" secondAttribute="trailing" constant="15" id="Rpr-K5-EN4"/>
                 <constraint firstItem="6Ep-VC-XI3" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="28" id="VGW-FE-BPf"/>
                 <constraint firstItem="eVn-8m-YfD" firstAttribute="baseline" secondItem="HYJ-TY-DDm" secondAttribute="baseline" id="fGz-tv-Fxf"/>
-                <constraint firstItem="eVn-8m-YfD" firstAttribute="leading" secondItem="HYJ-TY-DDm" secondAttribute="trailing" constant="1" id="mwH-Lp-3dD"/>
+                <constraint firstItem="eVn-8m-YfD" firstAttribute="leading" secondItem="HYJ-TY-DDm" secondAttribute="trailing" constant="4" id="mwH-Lp-3dD"/>
                 <constraint firstItem="eVn-8m-YfD" firstAttribute="top" secondItem="HYJ-TY-DDm" secondAttribute="top" id="pW7-fj-aub"/>
-                <constraint firstItem="6Ep-VC-XI3" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="6" id="tfE-kY-2mo"/>
+                <constraint firstItem="ZEg-9h-ubB" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="ta4-kd-Tnv"/>
+                <constraint firstItem="6Ep-VC-XI3" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="16" id="tfE-kY-2mo"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <connections>
                 <outlet property="minLabel" destination="6Ep-VC-XI3" id="1Jc-LC-imM"/>
-                <outlet property="minTextLabel" destination="JX4-HG-D3q" id="2zf-CS-vAq"/>
+                <outlet property="minTextLabel" destination="JX4-HG-D3q" id="2wC-FW-jw7"/>
+                <outlet property="statusLabel" destination="ZEg-9h-ubB" id="r1Z-HJ-Bjp"/>
                 <outlet property="tempLabel" destination="HYJ-TY-DDm" id="fvh-wp-IMD"/>
-                <outlet property="tempTextLabel" destination="eVn-8m-YfD" id="65N-9E-ggo"/>
+                <outlet property="tempTextLabel" destination="eVn-8m-YfD" id="h8H-sB-jSV"/>
             </connections>
         </view>
     </objects>
