@@ -33,13 +33,14 @@ static ContentParser *SharedInstance;
     //Needed for casting to primitive types
     NSNumber *inProgress = rawBrewState[@"inProgress"];
     NSNumber *paused = rawBrewState[@"paused"];
+    NSString *startTimeString = rawBrewState[@"startTime"];
+    NSString *name = rawBrewState[@"name"];
 
     brewState.inProgress = inProgress.boolValue;
-    brewState.name = rawBrewState[@"name"];
+    brewState.name = ![name isKindOfClass:[NSNull class]] ? name : nil;
     brewState.paused = paused.boolValue;
     
-    NSString *startTimeString = rawBrewState[@"startTime"];
-    brewState.startTime = ![startTimeString isKindOfClass:[NSNull class]] ? [self reformatDateString:startTimeString] : @"";
+    brewState.startTime = ![startTimeString isKindOfClass:[NSNull class]] ? [self reformatDateString:startTimeString] : nil;
 
     [self parseBrewPhasesOfState:brewState fromRawData:rawBrewState[@"phases"]];
     
@@ -63,7 +64,7 @@ static ContentParser *SharedInstance;
         brewPhase.temp = rawPhase[@"temp"];
         
         NSString *endTimeString = rawPhase[@"jobEnd"];
-        brewPhase.jobEnd =  ![endTimeString isKindOfClass:[NSNull class]] ? [self reformatDateString:endTimeString] : @"";
+        brewPhase.jobEnd =  ![endTimeString isKindOfClass:[NSNull class]] ? [self reformatDateString:endTimeString] : nil;
         
         [phasesArray addObject:brewPhase];
     }
