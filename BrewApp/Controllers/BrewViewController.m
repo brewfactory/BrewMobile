@@ -14,6 +14,7 @@
 
 @interface BrewViewController () {
     BrewState *actBrewState;
+    NSNumber *actTemp;
 }
 @property (nonatomic, strong) SIOSocket *socket;
 @property (nonatomic, strong) NSString *host;
@@ -66,8 +67,10 @@
          //Temperature changed
          [self.socket on:EVENT_TEMPERATURE do:^(NSNumber *newTemp) {
              if (![newTemp isKindOfClass:[NSNull class]]) {
-                 [weakSelf performSelectorOnMainThread:@selector(updateTempLabel:) withObject:newTemp waitUntilDone:NO];
+                 actTemp = newTemp;
+                 [weakSelf performSelectorOnMainThread:@selector(updateTempLabel) withObject:nil waitUntilDone:NO];
              } else {
+                 actTemp = nil;
                  NSLog(@"No data available for temperature.");
              }
          }];
@@ -86,33 +89,16 @@
     nameLabel.text = actBrewState.name ? [NSString stringWithFormat:@"Brewing %@ at", actBrewState.name] : @"";
 }
 
-- (void)updateTempLabel:(NSNumber *)newTemp
+- (void)updateTempLabel
 {
-    tempLabel.text = newTemp ? [NSString stringWithFormat:@"%.2f ˚C", newTemp.floatValue] : @"";
+    if(actTemp) {
+        tempLabel.text = actTemp ? [NSString stringWithFormat:@"%.2f ˚C", actTemp.floatValue] : @"";
+    }
 }
 
 - (void)updateStartTimeLabel
 {
     startTimeLabel.text = actBrewState.startTime ? [NSString stringWithFormat:@"started %@", actBrewState.startTime] : @"";
-}
-
-- (UIColor *)colorForPhase:(BrewPhase *)phase
-{
-    UIColor *bgColor = [UIColor whiteColor];
-    if (phase.inProgress && !phase.tempReached) {
-        //Heating in progress
-        bgColor = [UIColor colorWithRed:240.0 / 255.0 green:173.0 / 255.0 blue:78.0 / 255.0 alpha:1.0];
-    } else if(phase.inProgress && phase.tempReached) {
-        //Brewing still in progress
-        bgColor = [UIColor colorWithRed:66.0 / 255.0 green:139.0 / 255.0 blue:202.0 / 255.0 alpha:1.0];
-    } else if(!phase.inProgress && phase.tempReached) {
-        //Brew ended
-        bgColor = [UIColor colorWithRed:92.0 / 255.0 green:184.0 / 255.0 blue:92.0 / 255.0 alpha:1.0];
-    } else if(!phase.inProgress && !phase.tempReached) {
-        //Brew inactive
-        bgColor = [UIColor colorWithRed:245.0 / 255.0 green:245.0 / 255.0 blue:245.0 / 255.0 alpha:1.0];
-    }
-    return bgColor;
 }
 
 #pragma mark - UITableViewDataSource
@@ -141,11 +127,19 @@
         
         cell.minLabel.text = [NSString stringWithFormat:@"%@", phase.min];
         cell.tempLabel.text = [NSString stringWithFormat:@"%@", phase.temp];
-        cell.statusLabel.text = !phase.inProgress && phase.tempReached ? [NSString stringWithFormat:@"finished at %@", phase.jobEnd] : @"";
+        if (phase.state == FINISHED) {
+           cell.statusLabel.text = [NSString stringWithFormat:@"• finished at %@ •", phase.jobEnd];
+        } else if (phase.state == HEATING) {
+            if(actTemp) {
+                cell.statusLabel.text = [NSString stringWithFormat:@"• %@ •", phase.temp.floatValue > actTemp.floatValue ? @"heating" : @"cooling"];
+            }
+        } else if (phase.state == ACTIVE) {
+            cell.statusLabel.text = @"• active •";
+        }
         
         [UIView animateWithDuration:0.3f animations:^{
-            cell.backgroundColor = [self colorForPhase:phase];
-            if (!phase.inProgress && !phase.tempReached) {
+            cell.backgroundColor = [phase colorForCurrentState];
+            if (phase.state == INACTIVE) {
                 [cell setTextColorForAllLabels:[UIColor blackColor]];
             }
         }];
