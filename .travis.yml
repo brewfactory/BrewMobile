@@ -1,0 +1,16 @@
+language: objective-c
+
+before_install:
+    - gem install cocoapods --no-rdoc --no-ri --no-document --quiet
+    - cd BrewApp
+
+# Path to the Xcode workspace.
+#If you're using a project, use xcode_project: ...
+xcode_workspace: BrewApp.xcworkspace
+
+# Define the Xcode scheme to use. Make sure the scheme is
+ # "Shared" (in Xcode, menu Product > Scheme > Manage Schemes).
+xcode_scheme: BrewApp
+
+# Instruct Travis to run tests in the simulator instead of a real device
+xcode_sdk: iphonesimulator
