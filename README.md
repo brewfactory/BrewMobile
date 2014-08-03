@@ -14,7 +14,6 @@ App for supervising the brewing process from your iPhone.
 **The UI**
 
 ![brew_demo_1][2]
-![brew_demo_2][3]
  
 Used technologies
 -----------------
@@ -31,11 +30,9 @@ $ open BrewApp.xcworkspace/
 // TODO
 -------
 
- - cover with tests
  - support push notifications (for phase changes)
- - iOS 8 support (Swift)
+ - iOS 8 support (Swift project)
 
   [1]: https://github.com/brewfactory/BrewCore
   [2]: http://vasarhelyia.github.io/BrewMobile/img/1.png
-  [3]: http://vasarhelyia.github.io/BrewMobile/img/2.png
 
