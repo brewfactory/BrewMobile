@@ -8,7 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		5E7EEF7D5E3B49EF9766FBAC /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6A5644DD31EE42708B45078B /* libPods.a */; };
+		691A6879198EC61A00F5282A /* BrewPhaseTestCase.m in Sources */ = {isa = PBXBuildFile; fileRef = 691A6878198EC61A00F5282A /* BrewPhaseTestCase.m */; };
 		6965BD65198E89B20036DDB1 /* ISO8601DateFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = 6965BD64198E89B20036DDB1 /* ISO8601DateFormatter.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		69CF5596198ED0B8008834CA /* BrewStateTestCase.m in Sources */ = {isa = PBXBuildFile; fileRef = 69CF5595198ED0B8008834CA /* BrewStateTestCase.m */; };
+		69CF5598198ED2AA008834CA /* ContentParserTestCase.m in Sources */ = {isa = PBXBuildFile; fileRef = 69CF5597198ED2AA008834CA /* ContentParserTestCase.m */; };
 		69DB31F7198CF76A004AD0CB /* PhaseCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 69DB31F5198CF76A004AD0CB /* PhaseCell.m */; };
 		69DB31F8198CF76A004AD0CB /* PhaseCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 69DB31F6198CF76A004AD0CB /* PhaseCell.xib */; };
 		69DB31FF198CFB3C004AD0CB /* BrewPhase.m in Sources */ = {isa = PBXBuildFile; fileRef = 69DB31FE198CFB3C004AD0CB /* BrewPhase.m */; };
@@ -26,8 +29,8 @@
 		69FA08C5198BB01B009CD802 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 69FA08A4198BB01B009CD802 /* Foundation.framework */; };
 		69FA08C6198BB01B009CD802 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 69FA08A8198BB01B009CD802 /* UIKit.framework */; };
 		69FA08CE198BB01B009CD802 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 69FA08CC198BB01B009CD802 /* InfoPlist.strings */; };
-		69FA08D0198BB01B009CD802 /* BrewAppTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 69FA08CF198BB01B009CD802 /* BrewAppTests.m */; };
 		69FA08DC198BC9CB009CD802 /* BrewViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 69FA08DB198BC9CB009CD802 /* BrewViewController.m */; };
+		7240F5E9AA614572ABCB92E1 /* libPods-BrewAppTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CA8C6DF317BA4D8CB22EB10B /* libPods-BrewAppTests.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -42,8 +45,11 @@
 
 /* Begin PBXFileReference section */
 		2BC82EC0B23747D0B82AF874 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
+		691A6878198EC61A00F5282A /* BrewPhaseTestCase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BrewPhaseTestCase.m; sourceTree = "<group>"; };
 		6965BD63198E89B20036DDB1 /* ISO8601DateFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ISO8601DateFormatter.h; sourceTree = "<group>"; };
 		6965BD64198E89B20036DDB1 /* ISO8601DateFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ISO8601DateFormatter.m; sourceTree = "<group>"; };
+		69CF5595198ED0B8008834CA /* BrewStateTestCase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BrewStateTestCase.m; sourceTree = "<group>"; };
+		69CF5597198ED2AA008834CA /* ContentParserTestCase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContentParserTestCase.m; sourceTree = "<group>"; };
 		69DB31F4198CF76A004AD0CB /* PhaseCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhaseCell.h; sourceTree = "<group>"; };
 		69DB31F5198CF76A004AD0CB /* PhaseCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhaseCell.m; sourceTree = "<group>"; };
 		69DB31F6198CF76A004AD0CB /* PhaseCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PhaseCell.xib; sourceTree = "<group>"; };
@@ -69,10 +75,11 @@
 		69FA08C3198BB01B009CD802 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		69FA08CB198BB01B009CD802 /* BrewAppTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "BrewAppTests-Info.plist"; sourceTree = "<group>"; };
 		69FA08CD198BB01B009CD802 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		69FA08CF198BB01B009CD802 /* BrewAppTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BrewAppTests.m; sourceTree = "<group>"; };
 		69FA08DA198BC9CB009CD802 /* BrewViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BrewViewController.h; sourceTree = "<group>"; };
 		69FA08DB198BC9CB009CD802 /* BrewViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BrewViewController.m; sourceTree = "<group>"; };
 		6A5644DD31EE42708B45078B /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		C7413F332CB54C189F7B9703 /* Pods-BrewAppTests.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BrewAppTests.xcconfig"; path = "Pods/Pods-BrewAppTests.xcconfig"; sourceTree = "<group>"; };
+		CA8C6DF317BA4D8CB22EB10B /* libPods-BrewAppTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-BrewAppTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -94,6 +101,7 @@
 				69FA08C4198BB01B009CD802 /* XCTest.framework in Frameworks */,
 				69FA08C6198BB01B009CD802 /* UIKit.framework in Frameworks */,
 				69FA08C5198BB01B009CD802 /* Foundation.framework in Frameworks */,
+				7240F5E9AA614572ABCB92E1 /* libPods-BrewAppTests.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -113,10 +121,10 @@
 		69DB31FC198CFB3C004AD0CB /* Entities */ = {
 			isa = PBXGroup;
 			children = (
-				69DB31FD198CFB3C004AD0CB /* BrewPhase.h */,
-				69DB31FE198CFB3C004AD0CB /* BrewPhase.m */,
 				69DB3200198CFD05004AD0CB /* BrewState.h */,
 				69DB3201198CFD05004AD0CB /* BrewState.m */,
+				69DB31FD198CFB3C004AD0CB /* BrewPhase.h */,
+				69DB31FE198CFB3C004AD0CB /* BrewPhase.m */,
 			);
 			path = Entities;
 			sourceTree = "<group>";
@@ -140,6 +148,7 @@
 				69FA08A3198BB01B009CD802 /* Frameworks */,
 				69FA08A2198BB01B009CD802 /* Products */,
 				2BC82EC0B23747D0B82AF874 /* Pods.xcconfig */,
+				C7413F332CB54C189F7B9703 /* Pods-BrewAppTests.xcconfig */,
 			);
 			sourceTree = "<group>";
 		};
@@ -160,6 +169,7 @@
 				69FA08A8198BB01B009CD802 /* UIKit.framework */,
 				69FA08C3198BB01B009CD802 /* XCTest.framework */,
 				6A5644DD31EE42708B45078B /* libPods.a */,
+				CA8C6DF317BA4D8CB22EB10B /* libPods-BrewAppTests.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -194,8 +204,10 @@
 		69FA08C9198BB01B009CD802 /* BrewAppTests */ = {
 			isa = PBXGroup;
 			children = (
-				69FA08CF198BB01B009CD802 /* BrewAppTests.m */,
 				69FA08CA198BB01B009CD802 /* Supporting Files */,
+				691A6878198EC61A00F5282A /* BrewPhaseTestCase.m */,
+				69CF5595198ED0B8008834CA /* BrewStateTestCase.m */,
+				69CF5597198ED2AA008834CA /* ContentParserTestCase.m */,
 			);
 			path = BrewAppTests;
 			sourceTree = "<group>";
@@ -244,9 +256,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 69FA08D6198BB01B009CD802 /* Build configuration list for PBXNativeTarget "BrewAppTests" */;
 			buildPhases = (
+				E6DB8DB8765249439B23025F /* Check Pods Manifest.lock */,
 				69FA08BE198BB01B009CD802 /* Sources */,
 				69FA08BF198BB01B009CD802 /* Frameworks */,
 				69FA08C0198BB01B009CD802 /* Resources */,
+				019900F3A2C1418FAD11B46C /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -313,6 +327,21 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		019900F3A2C1418FAD11B46C /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Pods-BrewAppTests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		704FD312CD804B51BA02D54F /* Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -343,6 +372,21 @@
 			shellScript = "\"${SRCROOT}/Pods/Pods-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
+		E6DB8DB8765249439B23025F /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -365,7 +409,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				69FA08D0198BB01B009CD802 /* BrewAppTests.m in Sources */,
+				69CF5598198ED2AA008834CA /* ContentParserTestCase.m in Sources */,
+				691A6879198EC61A00F5282A /* BrewPhaseTestCase.m in Sources */,
+				69CF5596198ED0B8008834CA /* BrewStateTestCase.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -507,6 +553,7 @@
 		};
 		69FA08D7198BB01B009CD802 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = C7413F332CB54C189F7B9703 /* Pods-BrewAppTests.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/BrewApp.app/BrewApp";
 				FRAMEWORK_SEARCH_PATHS = (
@@ -529,6 +576,7 @@
 		};
 		69FA08D8198BB01B009CD802 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = C7413F332CB54C189F7B9703 /* Pods-BrewAppTests.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/BrewApp.app/BrewApp";
 				FRAMEWORK_SEARCH_PATHS = (
