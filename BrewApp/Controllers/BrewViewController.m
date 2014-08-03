@@ -56,18 +56,16 @@
          
          //Brew status changed
          [self.socket on:EVENT_BREW do:^(id brewData) {
-             actBrewState = [[ContentParser sharedInstance] parseBrewStateFromRawData:brewData];
-             [phasesTableView performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:NO];
+            actBrewState = [[ContentParser sharedInstance] parseBrewStateFromRawData:brewData];
+            [phasesTableView performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:NO];
 
-             if (actBrewState.inProgress) {
-                 [self performSelectorOnMainThread:@selector(updateNameLabel) withObject:nil waitUntilDone:NO];
-                 [self performSelectorOnMainThread:@selector(updateStartTimeLabel) withObject:nil waitUntilDone:NO];
-             }
+            [self performSelectorOnMainThread:@selector(updateNameLabel) withObject:nil waitUntilDone:NO];
+            [self performSelectorOnMainThread:@selector(updateStartTimeLabel) withObject:nil waitUntilDone:NO];
          }];
          
          //Temperature changed
          [self.socket on:EVENT_TEMPERATURE do:^(NSNumber *newTemp) {
-             if (newTemp) {
+             if (![newTemp isKindOfClass:[NSNull class]]) {
                  [weakSelf performSelectorOnMainThread:@selector(updateTempLabel:) withObject:newTemp waitUntilDone:NO];
              } else {
                  NSLog(@"No data available for temperature.");
@@ -85,17 +83,17 @@
 
 - (void)updateNameLabel
 {
-    nameLabel.text = [NSString stringWithFormat:@"Brewing %@ at", actBrewState.name];
+    nameLabel.text = actBrewState.name ? [NSString stringWithFormat:@"Brewing %@ at", actBrewState.name] : @"";
 }
 
 - (void)updateTempLabel:(NSNumber *)newTemp
 {
-    tempLabel.text = [NSString stringWithFormat:@"%.2f ˚C", newTemp.floatValue];
+    tempLabel.text = newTemp ? [NSString stringWithFormat:@"%.2f ˚C", newTemp.floatValue] : @"";
 }
 
 - (void)updateStartTimeLabel
 {
-    startTimeLabel.text = [NSString stringWithFormat:@"started %@", actBrewState.startTime];
+    startTimeLabel.text = actBrewState.startTime ? [NSString stringWithFormat:@"started %@", actBrewState.startTime] : @"";
 }
 
 - (UIColor *)colorForPhase:(BrewPhase *)phase
