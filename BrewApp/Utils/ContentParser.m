@@ -74,10 +74,9 @@ static ContentParser *SharedInstance;
 - (NSString *)reformatDateString:(NSString *)rawDateString
 {
     NSString *timeString;
+    ISO8601DateFormatter *isoDateFormatter = [[ISO8601DateFormatter alloc] init];
+    NSDate *formattedDate = [isoDateFormatter dateFromString:rawDateString];
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-    [dateFormatter setDateFormat:@"yyyy'-'MM'-'dd'T'HH':'mm':'ss.SSS'Z'"];
-    [dateFormatter setLocale:[NSLocale systemLocale]];
-    NSDate *formattedDate = [dateFormatter dateFromString:rawDateString];
     [dateFormatter setDateFormat:@"HH':'mm"];
     timeString = [dateFormatter stringFromDate:formattedDate];
     

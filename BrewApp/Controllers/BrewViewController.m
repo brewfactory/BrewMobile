@@ -83,14 +83,14 @@
 
 #pragma mark - Refreshing UI
 
-- (void)updateTempLabel:(NSNumber *)newTemp
-{
-    tempLabel.text = [NSString stringWithFormat:@"at %.2f ˚C, ", newTemp.floatValue];
-}
-
 - (void)updateNameLabel
 {
-    nameLabel.text = [NSString stringWithFormat:@"Brewing %@", actBrewState.name];
+    nameLabel.text = [NSString stringWithFormat:@"Brewing %@ at", actBrewState.name];
+}
+
+- (void)updateTempLabel:(NSNumber *)newTemp
+{
+    tempLabel.text = [NSString stringWithFormat:@"%.2f ˚C", newTemp.floatValue];
 }
 
 - (void)updateStartTimeLabel
