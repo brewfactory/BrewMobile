@@ -1,5 +1,5 @@
 BrewMobile
-========
+==========
 
 iOS client for the [Brewfactory][1] project
 
@@ -23,11 +23,11 @@ Used technologies
  - Socket.IO for WebSocket
 
 ### Setting up the project ###
-
+```
 $ pod install
 
 $ open BrewApp.xcworkspace/
-
+```
 // TODO
 -------
 
