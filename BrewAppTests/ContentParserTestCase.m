@@ -24,6 +24,10 @@ SpecBegin(ContentParser)
 describe(@"ContentParser", ^{
     __block ContentParser *contentParser;
     
+    beforeAll(^{
+        [NSTimeZone setDefaultTimeZone:[NSTimeZone timeZoneForSecondsFromGMT:+0]];
+    });
+    
     beforeEach(^{
         contentParser = [[ContentParser alloc] init];
     });
@@ -36,11 +40,15 @@ describe(@"ContentParser", ^{
         NSString *originalDateString = @"2014-08-03T09:55:00.000Z";
         NSString *formattedDateString = [contentParser reformatDateString:originalDateString];
         
-        expect(formattedDateString).to.equal(@"11:55");
+        expect(formattedDateString).to.equal(@"09:55");
     });
     
     afterEach(^{
         contentParser = nil;
+    });
+    
+    afterAll(^{
+        [NSTimeZone setDefaultTimeZone:[NSTimeZone defaultTimeZone]];
     });
 });
 
