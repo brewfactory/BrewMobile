@@ -37,8 +37,10 @@ static ContentParser *SharedInstance;
     brewState.inProgress = inProgress.boolValue;
     brewState.name = rawBrewState[@"name"];
     brewState.paused = paused.boolValue;
-    brewState.startTime = rawBrewState[@"startTime"];
     
+    NSString *startTimeString = rawBrewState[@"startTime"];
+    brewState.startTime = ![startTimeString isKindOfClass:[NSNull class]] ? [self reformatDateString:startTimeString] : @"";
+
     [self parseBrewPhasesOfState:brewState fromRawData:rawBrewState[@"phases"]];
     
     return brewState;
@@ -59,12 +61,27 @@ static ContentParser *SharedInstance;
         brewPhase.tempReached = tempReached.boolValue;
         brewPhase.min = rawPhase[@"min"];
         brewPhase.temp = rawPhase[@"temp"];
-        brewPhase.jobEnd = rawPhase[@"jobEnd"];
+        
+        NSString *endTimeString = rawPhase[@"jobEnd"];
+        brewPhase.jobEnd =  ![endTimeString isKindOfClass:[NSNull class]] ? [self reformatDateString:endTimeString] : @"";
         
         [phasesArray addObject:brewPhase];
     }
     
     state.phases = phasesArray;
+}
+
+- (NSString *)reformatDateString:(NSString *)rawDateString
+{
+    NSString *timeString;
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:@"yyyy'-'MM'-'dd'T'HH':'mm':'ss.SSS'Z'"];
+    [dateFormatter setLocale:[NSLocale systemLocale]];
+    NSDate *formattedDate = [dateFormatter dateFromString:rawDateString];
+    [dateFormatter setDateFormat:@"HH':'mm"];
+    timeString = [dateFormatter stringFromDate:formattedDate];
+    
+    return timeString;
 }
 
 @end
