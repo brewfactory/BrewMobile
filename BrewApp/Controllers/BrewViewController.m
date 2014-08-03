@@ -30,7 +30,7 @@
 {
     [super viewDidLoad];
 
-    self.host = @"http://localhost:3000";
+    self.host = @"http://brewcore-demo.herokuapp.com";
     [self openConnection];
 }
 
