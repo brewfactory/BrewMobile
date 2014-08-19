@@ -1,0 +1,1 @@
+pod 'SIOSocket', :git => 'https://github.com/vasarhelyia/SIOSocket.git', :commit => '9f53ec4f4684bc3d4ed67276e31e99728d500e48'
