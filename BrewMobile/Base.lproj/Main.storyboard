@@ -1,24 +1,82 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6185.11" systemVersion="13E28" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="vXZ-lx-hvc">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6185.11" systemVersion="13E28" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="VzK-S1-lFf">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6190.4"/>
     </dependencies>
     <scenes>
         <!--Brew View Controller-->
-        <scene sceneID="ufC-wZ-h7g">
+        <scene sceneID="wm4-iC-e4a">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
-                <viewController id="vXZ-lx-hvc" customClass="BrewViewController" customModule="BrewMobile" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="VzK-S1-lFf" customClass="BrewViewController" customModule="BrewMobile" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="jyV-Pf-zRb"/>
-                        <viewControllerLayoutGuide type="bottom" id="2fi-mo-0CV"/>
+                        <viewControllerLayoutGuide type="top" id="tWJ-EQ-qQb"/>
+                        <viewControllerLayoutGuide type="bottom" id="hAR-Mr-wUD"/>
                     </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="kh9-bI-dsS">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                    <view key="view" contentMode="scaleToFill" id="tNK-FN-4xJ">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" allowsSelection="NO" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="3Qa-Rc-J9s" userLabel="phasesTableView">
+                                <rect key="frame" x="0.0" y="199" width="320" height="369"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <connections>
+                                    <outlet property="dataSource" destination="VzK-S1-lFf" id="5Jj-8p-oYv"/>
+                                    <outlet property="delegate" destination="VzK-S1-lFf" id="pEG-BD-g8K"/>
+                                </connections>
+                            </tableView>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gyd-PU-lhQ" userLabel="nameLabel">
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="45" id="hBj-S4-4hc"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="20"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8uo-fb-fIr" userLabel="tempLabel">
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="45" id="9xV-OW-7EN"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="25"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vrD-eZ-Qlc" userLabel="startTimeLabel">
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="45" id="Lvn-wC-3dL"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="20"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="3Qa-Rc-J9s" firstAttribute="top" secondItem="tWJ-EQ-qQb" secondAttribute="bottom" constant="179" id="6tU-dk-plS"/>
+                            <constraint firstItem="3Qa-Rc-J9s" firstAttribute="centerX" secondItem="8uo-fb-fIr" secondAttribute="centerX" id="71v-CG-e0K"/>
+                            <constraint firstItem="3Qa-Rc-J9s" firstAttribute="leading" secondItem="tNK-FN-4xJ" secondAttribute="leading" id="Gbb-9P-hlq"/>
+                            <constraint firstItem="vrD-eZ-Qlc" firstAttribute="centerX" secondItem="3Qa-Rc-J9s" secondAttribute="centerX" constant="1" id="Q0G-wi-fZw"/>
+                            <constraint firstItem="gyd-PU-lhQ" firstAttribute="top" secondItem="tWJ-EQ-qQb" secondAttribute="bottom" constant="20" id="U4O-J9-kcT"/>
+                            <constraint firstItem="8uo-fb-fIr" firstAttribute="leading" secondItem="gyd-PU-lhQ" secondAttribute="leading" id="a3x-lP-Ffv"/>
+                            <constraint firstAttribute="bottom" secondItem="3Qa-Rc-J9s" secondAttribute="bottom" id="e4F-wI-vi6"/>
+                            <constraint firstItem="8uo-fb-fIr" firstAttribute="top" secondItem="gyd-PU-lhQ" secondAttribute="bottom" constant="3" id="fRQ-IB-Rgg"/>
+                            <constraint firstItem="3Qa-Rc-J9s" firstAttribute="centerX" secondItem="gyd-PU-lhQ" secondAttribute="centerX" id="l17-TU-zPk"/>
+                            <constraint firstItem="8uo-fb-fIr" firstAttribute="centerX" secondItem="tNK-FN-4xJ" secondAttribute="centerX" id="oDm-BG-7pW"/>
+                            <constraint firstItem="vrD-eZ-Qlc" firstAttribute="top" secondItem="8uo-fb-fIr" secondAttribute="bottom" constant="3" id="yOw-P6-Kz8"/>
+                        </constraints>
                     </view>
+                    <simulatedOrientationMetrics key="simulatedOrientationMetrics"/>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4">
+                        <size key="portraitSize" width="320" height="568"/>
+                        <size key="landscapeSize" width="568" height="320"/>
+                    </simulatedScreenMetrics>
+                    <connections>
+                        <outlet property="nameLabel" destination="gyd-PU-lhQ" id="Gbw-YL-nYf"/>
+                        <outlet property="phasesTableView" destination="3Qa-Rc-J9s" id="xUS-Bx-59v"/>
+                        <outlet property="startTimeLabel" destination="vrD-eZ-Qlc" id="un0-zu-tj1"/>
+                        <outlet property="tempLabel" destination="8uo-fb-fIr" id="C1z-8K-2nd"/>
+                    </connections>
                 </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="rTm-iG-WeD" sceneMemberID="firstResponder"/>
             </objects>
         </scene>
     </scenes>
