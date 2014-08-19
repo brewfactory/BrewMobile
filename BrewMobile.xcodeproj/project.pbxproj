@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		6809CF595ECA4D168275077A /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D4B8B3F1DCDC4AF2ADEC4500 /* libPods.a */; };
 		692AAA8919A34C8C00224C4D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 692AAA8819A34C8C00224C4D /* AppDelegate.swift */; };
-		692AAA8B19A34C8C00224C4D /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 692AAA8A19A34C8C00224C4D /* ViewController.swift */; };
+		692AAA8B19A34C8C00224C4D /* BrewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 692AAA8A19A34C8C00224C4D /* BrewViewController.swift */; };
 		692AAA8E19A34C8C00224C4D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 692AAA8C19A34C8C00224C4D /* Main.storyboard */; };
 		692AAA9019A34C8C00224C4D /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 692AAA8F19A34C8C00224C4D /* Images.xcassets */; };
 		692AAA9C19A34C8C00224C4D /* BrewMobileTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 692AAA9B19A34C8C00224C4D /* BrewMobileTests.swift */; };
@@ -30,13 +30,14 @@
 		692AAA8319A34C8C00224C4D /* BrewMobile.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BrewMobile.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		692AAA8719A34C8C00224C4D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		692AAA8819A34C8C00224C4D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		692AAA8A19A34C8C00224C4D /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		692AAA8A19A34C8C00224C4D /* BrewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrewViewController.swift; sourceTree = "<group>"; };
 		692AAA8D19A34C8C00224C4D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		692AAA8F19A34C8C00224C4D /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		692AAA9519A34C8C00224C4D /* BrewMobileTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BrewMobileTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		692AAA9A19A34C8C00224C4D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		692AAA9B19A34C8C00224C4D /* BrewMobileTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrewMobileTests.swift; sourceTree = "<group>"; };
 		692AAAA519A3550A00224C4D /* Brew.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Brew.swift; sourceTree = "<group>"; };
+		692AAAA819A3738A00224C4D /* BrewMobile-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "BrewMobile-Bridging-Header.h"; sourceTree = "<group>"; };
 		7B8B932D111948C1AA5441F4 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
 		D4B8B3F1DCDC4AF2ADEC4500 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -84,7 +85,7 @@
 			isa = PBXGroup;
 			children = (
 				692AAA8819A34C8C00224C4D /* AppDelegate.swift */,
-				692AAA8A19A34C8C00224C4D /* ViewController.swift */,
+				692AAA8A19A34C8C00224C4D /* BrewViewController.swift */,
 				692AAA8C19A34C8C00224C4D /* Main.storyboard */,
 				692AAA8F19A34C8C00224C4D /* Images.xcassets */,
 				692AAA8619A34C8C00224C4D /* Supporting Files */,
@@ -96,6 +97,7 @@
 		692AAA8619A34C8C00224C4D /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				692AAAA819A3738A00224C4D /* BrewMobile-Bridging-Header.h */,
 				692AAA8719A34C8C00224C4D /* Info.plist */,
 			);
 			name = "Supporting Files";
@@ -260,7 +262,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				692AAA8B19A34C8C00224C4D /* ViewController.swift in Sources */,
+				692AAA8B19A34C8C00224C4D /* BrewViewController.swift in Sources */,
 				692AAA8919A34C8C00224C4D /* AppDelegate.swift in Sources */,
 				692AAAA619A3550A00224C4D /* Brew.swift in Sources */,
 			);
@@ -382,6 +384,7 @@
 				INFOPLIST_FILE = BrewMobile/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "BrewMobile/BrewMobile-Bridging-Header.h";
 			};
 			name = Debug;
 		};
@@ -394,6 +397,7 @@
 				INFOPLIST_FILE = BrewMobile/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "BrewMobile/BrewMobile-Bridging-Header.h";
 			};
 			name = Release;
 		};
