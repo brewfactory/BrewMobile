@@ -23,6 +23,8 @@ Used technologies
  - iOS >= 7.0
  - Socket.IO for WebSocket
 
+### iOS 8 compatible [swift branch][3] ###
+
 ### Setting up the project ###
 ```
 $ pod install
@@ -33,8 +35,7 @@ $ open BrewApp.xcworkspace/
 -------
 
  - support push notifications (for phase changes)
- - iOS 8 support (Swift project)
 
   [1]: https://github.com/brewfactory/BrewCore
   [2]: http://vasarhelyia.github.io/BrewMobile/img/1.png
-
+  [3]: https://github.com/vasarhelyia/BrewMobile/tree/swift
