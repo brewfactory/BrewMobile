@@ -49,15 +49,16 @@ class BrewViewController: UIViewController, UITableViewDelegate, UITableViewData
                 self.actState = parseBrewState(data)!
                
                 dispatch_async(dispatch_get_main_queue(), {
+                    self.phasesTableView.reloadData()
                     self.updateNameLabel();
                     self.updateStartTimeLabel()
-                    })
                 })
             })
+        })
     }
     
     func updateNameLabel() {
-        self.nameLabel.text = "Brewing \(self.actState.name) at"
+        self.nameLabel.text = self.actState.inProgress ? "Brewing \(self.actState.name) at" : ""
     }
     
     func updateTempLabel(temperature: Int) {
@@ -65,17 +66,20 @@ class BrewViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
     
     func updateStartTimeLabel() {
-        self.startTimeLabel.text = "started \(self.actState.startTime)"
+        self.startTimeLabel.text = self.actState.inProgress ? "started \(self.actState.startTime)" : ""
     }
     
     func tableView(tableView: UITableView!, numberOfRowsInSection section: Int) -> Int {
-        return 1
+        return self.actState.phases.count
     }
     
     func tableView(tableView: UITableView!, cellForRowAtIndexPath indexPath: NSIndexPath!) -> UITableViewCell! {
-        let cell: UITableViewCell = UITableViewCell(style: UITableViewCellStyle.Default, reuseIdentifier: "MyTestCell")
-        
-        //cell.textLabel.text = "\(indexPath.row)"
+        let cell: UITableViewCell = UITableViewCell(style: UITableViewCellStyle.Default, reuseIdentifier: "BrewCell")
+        cell.textLabel.font = UIFont(name: "HelveticaNeue-Light", size: 18)
+        if self.actState.phases.count > indexPath.row  {
+            let brewPhase = self.actState.phases[indexPath.row]
+            cell.textLabel.text = "\(brewPhase.min) minutes at \(brewPhase.temp) ˚C"
+        }
         
         return cell
     }
