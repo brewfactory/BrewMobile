@@ -72,12 +72,14 @@ class BrewPhase: Brew {
     var min: Int
     var temp: Int
     var tempReached: Bool
+    var state: State
     
     override init() {
         jobEnd = ""
         min = 0
         temp = 0
         tempReached = false
+        state = State.INACTIVE
         super.init()
     }
     
@@ -86,6 +88,22 @@ class BrewPhase: Brew {
         self.min = min
         self.temp = temp
         self.tempReached = tempReached
+       
+        self.state = { () -> State in
+            switch (inProgress, tempReached)  {
+            case (true, false):
+                return State.HEATING
+            case (true, true):
+                return State.ACTIVE
+            case (false, true):
+                return State.FINISHED
+            case (false, false):
+                fallthrough
+            default:
+                return State.INACTIVE
+            }
+        } ()
+        
         super.init(inProgress: inProgress)
     }
 }

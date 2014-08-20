@@ -8,10 +8,14 @@
 
 import UIKit
 
+let tempChangedEvent = "temperature_changed"
+let brewChangedEvent = "brew_changed"
+let host = "http://brewcore-demo.herokuapp.com/"
+
 class BrewViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
-    let host = "http://brewcore-demo.herokuapp.com/"
-    var actState :BrewState
+    var actState: BrewState
+    var actTemp: Float
     
     @IBOutlet weak var tempLabel: UILabel!
     @IBOutlet weak var nameLabel: UILabel!
@@ -20,31 +24,32 @@ class BrewViewController: UIViewController, UITableViewDelegate, UITableViewData
 
     required init(coder aDecoder: NSCoder) {
         actState = BrewState()
+        actTemp = 0;
         super.init(coder: aDecoder)
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        SIOSocket.socketWithHost(self.host, response: {socket in
+        SIOSocket.socketWithHost(host, response: {socket in
             socket.onConnect = {
-                println("connected to \(self.host)")
+                println("Connected to \(host)")
             }
             
             socket.onDisconnect = {
-                println("disconnected from \(self.host)")
+                println("Disconnected from \(host)")
             }
             
-            socket.on("temperature_changed", callback: {(AnyObject data) -> Void in
-                let temp = data as Int
+            socket.on(tempChangedEvent, callback: {(AnyObject data) -> Void in
+                self.actTemp = data as Float
                 
                 dispatch_async(dispatch_get_main_queue(), {
-                    self.updateTempLabel(temp);
+                    self.updateTempLabel(self.actTemp);
                     })
                 })
             
-            socket.on("brew_changed", callback: {(AnyObject data) -> Void in
-                println("brew data: \(data)")
+            socket.on(brewChangedEvent, callback: {(AnyObject data) -> Void in
+                println("Brew data: \(data)")
                 
                 self.actState = parseBrewState(data)!
                
@@ -61,12 +66,12 @@ class BrewViewController: UIViewController, UITableViewDelegate, UITableViewData
         self.nameLabel.text = self.actState.inProgress ? "Brewing \(self.actState.name) at" : ""
     }
     
-    func updateTempLabel(temperature: Int) {
-        self.tempLabel.text = "\(temperature) ˚C"
+    func updateTempLabel(temperature: Float) {
+        self.tempLabel.text = NSString(format:"%.2f ˚C", temperature)
     }
     
     func updateStartTimeLabel() {
-        self.startTimeLabel.text = self.actState.inProgress ? "started \(self.actState.startTime)" : ""
+        self.startTimeLabel.text = self.actState.inProgress ? "started at \(self.actState.startTime)" : ""
     }
     
     func tableView(tableView: UITableView!, numberOfRowsInSection section: Int) -> Int {
@@ -76,9 +81,12 @@ class BrewViewController: UIViewController, UITableViewDelegate, UITableViewData
     func tableView(tableView: UITableView!, cellForRowAtIndexPath indexPath: NSIndexPath!) -> UITableViewCell! {
         let cell: UITableViewCell = UITableViewCell(style: UITableViewCellStyle.Default, reuseIdentifier: "BrewCell")
         cell.textLabel.font = UIFont(name: "HelveticaNeue-Light", size: 18)
+        
         if self.actState.phases.count > indexPath.row  {
             let brewPhase = self.actState.phases[indexPath.row]
-            cell.textLabel.text = "\(brewPhase.min) minutes at \(brewPhase.temp) ˚C"
+            let stateText = {() -> String in if (brewPhase.state == State.HEATING) && (Int(self.actTemp) > brewPhase.temp) { return "cooling" } else { return brewPhase.state.stateDescription() }}()
+           
+            cell.textLabel.text = "\(brewPhase.min) minutes at \(brewPhase.temp) ˚C \t \(stateText)"
         }
         
         return cell
