@@ -8,6 +8,8 @@
 
 import Foundation
 
+typealias PhaseArray = Array<BrewPhase>
+
 enum State: Int {
     case INACTIVE = 0
     case HEATING
@@ -30,34 +32,40 @@ enum State: Int {
     }
 }
 
-class BrewPhase {
-    var jobEnd: String!
-    var min: Int!
-    var temp: Int!
-    var tempReached: Bool!
-    var inProgress: Bool!
+class Brew {
+    var inProgress: Bool
     
-    init() {
-        jobEnd = ""
-        min = 0
-        temp = 0
-        tempReached = false
-        inProgress = false
+    init(inProgress: Bool) {
+        self.inProgress = inProgress
     }
 }
 
-class BrewState {
-    var name: String!
-    var startTime: String!
-    var phases: Array<BrewPhase>!
-    var paused: Bool!
-    var inProgress: Bool!
+class BrewState: Brew {
+    var name: String
+    var startTime: String
+    var phases: PhaseArray
+    var paused: Bool
     
-    init() {
-        name = ""
-        startTime = ""
-        phases = []
-        paused = false
-        inProgress = false
+    init(name: String, startTime: String, phases: PhaseArray, paused: Bool, inProgress: Bool) {
+        self.name = name
+        self.startTime = startTime
+        self.phases = phases
+        self.paused = paused
+        super.init(inProgress: inProgress)
+    }
+}
+
+class BrewPhase: Brew {
+    var jobEnd: String
+    var min: Int
+    var temp: Int
+    var tempReached: Bool
+    
+    init(jobEnd: String, min: Int, temp: Int, tempReached: Bool, inProgress: Bool) {
+        self.jobEnd = jobEnd
+        self.min = min
+        self.temp = temp
+        self.tempReached = tempReached
+        super.init(inProgress: inProgress)
     }
 }

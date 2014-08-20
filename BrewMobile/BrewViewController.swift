@@ -9,13 +9,19 @@
 import UIKit
 
 class BrewViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+    
     let host = "http://brewcore-demo.herokuapp.com/"
-    var actState = BrewState()
+    var actState :BrewState
     
     @IBOutlet weak var tempLabel: UILabel!
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var startTimeLabel: UILabel!
     @IBOutlet weak var phasesTableView: UITableView!
+
+    required init(coder aDecoder: NSCoder) {
+        actState = BrewState(name: "", startTime: "", phases: Array<BrewPhase>(), paused: false, inProgress: false)
+        super.init(coder: aDecoder)
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -40,6 +46,8 @@ class BrewViewController: UIViewController, UITableViewDelegate, UITableViewData
             socket.on("brew_changed", callback: {(AnyObject data) -> Void in
                 println("brew data: \(data)")
                 
+                self.actState = parseBrewState(data)!
+               
                 dispatch_async(dispatch_get_main_queue(), {
                     self.updateNameLabel();
                     self.updateStartTimeLabel()
@@ -67,7 +75,7 @@ class BrewViewController: UIViewController, UITableViewDelegate, UITableViewData
     func tableView(tableView: UITableView!, cellForRowAtIndexPath indexPath: NSIndexPath!) -> UITableViewCell! {
         let cell: UITableViewCell = UITableViewCell(style: UITableViewCellStyle.Default, reuseIdentifier: "MyTestCell")
         
-        cell.textLabel.text = "\(indexPath.row)"
+        //cell.textLabel.text = "\(indexPath.row)"
         
         return cell
     }
