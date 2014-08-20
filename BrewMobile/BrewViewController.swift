@@ -19,7 +19,7 @@ class BrewViewController: UIViewController, UITableViewDelegate, UITableViewData
     @IBOutlet weak var phasesTableView: UITableView!
 
     required init(coder aDecoder: NSCoder) {
-        actState = BrewState(name: "", startTime: "", phases: Array<BrewPhase>(), paused: false, inProgress: false)
+        actState = BrewState()
         super.init(coder: aDecoder)
     }
     

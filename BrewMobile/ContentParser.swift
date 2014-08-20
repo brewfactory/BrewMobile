@@ -37,7 +37,7 @@ func parseBrewState(brew: AnyObject) -> BrewState? {
             }
         }
     }
-    return nil
+    return BrewState()
 }
 
 func parseBrewPhase(brew: AnyObject) -> BrewPhase? {
@@ -57,7 +57,7 @@ func parseBrewPhase(brew: AnyObject) -> BrewPhase? {
                 }
             }
     }
-    return nil
+    return BrewPhase()
 }
  
 func formatDate(startTimeString: String) -> String {

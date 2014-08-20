@@ -35,6 +35,10 @@ enum State: Int {
 class Brew {
     var inProgress: Bool
     
+    init () {
+        inProgress = false
+    }
+    
     init(inProgress: Bool) {
         self.inProgress = inProgress
     }
@@ -45,6 +49,14 @@ class BrewState: Brew {
     var startTime: String
     var phases: PhaseArray
     var paused: Bool
+    
+    override init() {
+        name = ""
+        startTime = ""
+        phases = PhaseArray()
+        paused = false
+        super.init()
+    }
     
     init(name: String, startTime: String, phases: PhaseArray, paused: Bool, inProgress: Bool) {
         self.name = name
@@ -60,6 +72,14 @@ class BrewPhase: Brew {
     var min: Int
     var temp: Int
     var tempReached: Bool
+    
+    override init() {
+        jobEnd = ""
+        min = 0
+        temp = 0
+        tempReached = false
+        super.init()
+    }
     
     init(jobEnd: String, min: Int, temp: Int, tempReached: Bool, inProgress: Bool) {
         self.jobEnd = jobEnd
