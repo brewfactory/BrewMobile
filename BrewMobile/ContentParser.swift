@@ -61,12 +61,11 @@ func parseBrewPhase(brew: AnyObject) -> BrewPhase? {
 }
  
 func formatDate(startTimeString: String) -> String {
+    let isoDateFormatter = ISO8601DateFormatter()
+    let formattedDate = isoDateFormatter.dateFromString(startTimeString)
     let dateStringFormatter = NSDateFormatter()
-    dateStringFormatter.dateFormat = "yyyy'-'MM'-'dd'T'HH':'mm':'ss.SSS'Z'"
-    dateStringFormatter.locale = NSLocale.currentLocale()
-    let date = dateStringFormatter.dateFromString(startTimeString)
     dateStringFormatter.dateFormat = "HH:mm"
-    let dateString = dateStringFormatter.stringFromDate(date!)
+    let dateString = dateStringFormatter.stringFromDate(formattedDate!)
             
     return dateString
 }
