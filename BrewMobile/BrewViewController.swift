@@ -10,7 +10,17 @@ import UIKit
 
 let tempChangedEvent = "temperature_changed"
 let brewChangedEvent = "brew_changed"
-let host = "http://brewcore-demo.herokuapp.com/"
+let host = "http://localhost:3000"//"http://brewcore-demo.herokuapp.com/"
+
+class BrewCell: UITableViewCell {
+    @IBOutlet weak var minLabel: UILabel!
+    @IBOutlet weak var statusLabel: UILabel!
+    
+    func setTextColorForAllLabels(color: UIColor) {
+        minLabel.textColor = color;
+        statusLabel.textColor = color;
+    }
+}
 
 class BrewViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
@@ -21,7 +31,7 @@ class BrewViewController: UIViewController, UITableViewDelegate, UITableViewData
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var startTimeLabel: UILabel!
     @IBOutlet weak var phasesTableView: UITableView!
-
+    
     required init(coder aDecoder: NSCoder) {
         actState = BrewState()
         actTemp = 0;
@@ -75,14 +85,14 @@ class BrewViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
     
     func stateText(brewPhase: BrewPhase) -> String {
-        if(self.actState.paused) {
+        if self.actState.paused {
             return "paused"
         }
         switch brewPhase.state  {
         case State.FINISHED:
             return "\(brewPhase.state.stateDescription()) at \(brewPhase.jobEnd)"
         case State.HEATING:
-            if (self.actTemp > brewPhase.temp) { return "cooling" }
+            if self.actTemp > brewPhase.temp { return "cooling" }
             fallthrough
         default:
             return brewPhase.state.stateDescription()
@@ -94,23 +104,20 @@ class BrewViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
     
     func tableView(tableView: UITableView!, cellForRowAtIndexPath indexPath: NSIndexPath!) -> UITableViewCell! {
-        let cell: UITableViewCell = UITableViewCell(style: UITableViewCellStyle.Default, reuseIdentifier: "BrewCell")
-        cell.textLabel.font = UIFont(name: "HelveticaNeue-Light", size: 18)
-        
+        let cell = tableView.dequeueReusableCellWithIdentifier("BrewCell", forIndexPath: indexPath) as BrewCell
         if self.actState.phases.count > indexPath.row  {
             let brewPhase = self.actState.phases[indexPath.row]
         
-            cell.textLabel.text = "\(brewPhase.min) minutes at \(Int(brewPhase.temp)) ˚C \t \(stateText(brewPhase))"
+            println(cell)
+            cell.minLabel.text = "\(brewPhase.min) minutes at \(Int(brewPhase.temp)) ˚C"
+            cell.statusLabel.text = "\(stateText(brewPhase))"
             UIView.animateWithDuration(0.3, animations: { () -> Void in
                 cell.backgroundColor = brewPhase.state.bgColor()
+                cell.setTextColorForAllLabels(brewPhase.state == State.INACTIVE ? UIColor.blackColor() : UIColor.whiteColor())
             })
         }
         
         return cell
-    }
-    
-    func tableView(tableView: UITableView!, heightForRowAtIndexPath indexPath: NSIndexPath!) -> CGFloat {
-        return 78.0
     }
     
     override func didReceiveMemoryWarning() {
