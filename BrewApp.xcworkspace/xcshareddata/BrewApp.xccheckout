@@ -5,34 +5,34 @@
 	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
 	<false/>
 	<key>IDESourceControlProjectIdentifier</key>
-	<string>476334AB-5CAF-4D2B-A107-BE22438D5D8D</string>
+	<string>0A148070-2200-49EA-9502-D59000BBE252</string>
 	<key>IDESourceControlProjectName</key>
 	<string>BrewApp</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
-		<key>8855C7CA-A8C0-4C2E-94EB-A9B3E217FF14</key>
+		<key>E6759926BE76333EA66F84A911604FCFC7C9CD0C</key>
 		<string>ssh://github.com/vasarhelyia/BrewMobile.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
 	<string>BrewApp.xcworkspace</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
-		<key>8855C7CA-A8C0-4C2E-94EB-A9B3E217FF14</key>
+		<key>E6759926BE76333EA66F84A911604FCFC7C9CD0C</key>
 		<string>..</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
 	<string>ssh://github.com/vasarhelyia/BrewMobile.git</string>
 	<key>IDESourceControlProjectVersion</key>
-	<integer>110</integer>
+	<integer>111</integer>
 	<key>IDESourceControlProjectWCCIdentifier</key>
-	<string>8855C7CA-A8C0-4C2E-94EB-A9B3E217FF14</string>
+	<string>E6759926BE76333EA66F84A911604FCFC7C9CD0C</string>
 	<key>IDESourceControlProjectWCConfigurations</key>
 	<array>
 		<dict>
 			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
 			<string>public.vcs.git</string>
 			<key>IDESourceControlWCCIdentifierKey</key>
-			<string>8855C7CA-A8C0-4C2E-94EB-A9B3E217FF14</string>
+			<string>E6759926BE76333EA66F84A911604FCFC7C9CD0C</string>
 			<key>IDESourceControlWCCName</key>
 			<string>BrewApp</string>
 		</dict>
