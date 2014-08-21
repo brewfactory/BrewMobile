@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 
 typealias PhaseArray = Array<BrewPhase>
 
@@ -28,6 +29,21 @@ enum State: Int {
             return "finished"
         default:
             return String(self.toRaw())
+        }
+    }
+    
+    func bgColor() -> UIColor {
+        switch self {
+        case .INACTIVE:
+            return UIColor(red: 245.0 / 255.0, green:245.0 / 255.0, blue:245.0 / 255.0, alpha: 1.0)
+        case .HEATING:
+            return UIColor(red: 240.0 / 255.0,  green:173.0 / 255.0, blue:78.0 / 255.0, alpha: 1.0)
+        case .ACTIVE:
+            return UIColor(red: 66.0 / 255.0, green:139.0 / 255.0, blue:202.0 / 255.0, alpha: 1.0)
+        case .FINISHED:
+            return UIColor(red: 92.0 / 255.0, green:184.0 / 255.0, blue:92.0 / 255.0, alpha: 1.0)
+        default:
+            return UIColor.whiteColor()
         }
     }
 }
@@ -70,7 +86,7 @@ class BrewState: Brew {
 class BrewPhase: Brew {
     var jobEnd: String
     var min: Int
-    var temp: Int
+    var temp: Float
     var tempReached: Bool
     var state: State
     
@@ -83,7 +99,7 @@ class BrewPhase: Brew {
         super.init()
     }
     
-    init(jobEnd: String, min: Int, temp: Int, tempReached: Bool, inProgress: Bool) {
+    init(jobEnd: String, min: Int, temp: Float, tempReached: Bool, inProgress: Bool) {
         self.jobEnd = jobEnd
         self.min = min
         self.temp = temp
