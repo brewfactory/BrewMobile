@@ -20,7 +20,7 @@ enum State: Int {
     func stateDescription() -> String {
         switch self {
         case .INACTIVE:
-            return "inactive"
+            return ""
         case .HEATING:
             return "heating"
         case .ACTIVE:
