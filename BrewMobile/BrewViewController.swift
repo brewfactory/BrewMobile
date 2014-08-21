@@ -49,7 +49,7 @@ class BrewViewController: UIViewController, UITableViewDelegate, UITableViewData
                 })
             
             socket.on(brewChangedEvent, callback: {(AnyObject data) -> Void in
-                println("Brew data: \(data)")
+                //println("Brew data: \(data)")
                 
                 self.actState = parseBrewState(data)!
                
@@ -74,6 +74,21 @@ class BrewViewController: UIViewController, UITableViewDelegate, UITableViewData
         self.startTimeLabel.text = self.actState.inProgress ? "started at \(self.actState.startTime)" : ""
     }
     
+    func stateText(brewPhase: BrewPhase) -> String {
+        if(self.actState.paused) {
+            return "paused"
+        }
+        switch brewPhase.state  {
+        case State.FINISHED:
+            return "\(brewPhase.state.stateDescription()) at \(brewPhase.jobEnd)"
+        case State.HEATING:
+            if (self.actTemp > brewPhase.temp) { return "cooling" }
+            fallthrough
+        default:
+            return brewPhase.state.stateDescription()
+        }
+    }
+    
     func tableView(tableView: UITableView!, numberOfRowsInSection section: Int) -> Int {
         return self.actState.phases.count
     }
@@ -84,12 +99,18 @@ class BrewViewController: UIViewController, UITableViewDelegate, UITableViewData
         
         if self.actState.phases.count > indexPath.row  {
             let brewPhase = self.actState.phases[indexPath.row]
-            let stateText = {() -> String in if (brewPhase.state == State.HEATING) && (Int(self.actTemp) > brewPhase.temp) { return "cooling" } else { return brewPhase.state.stateDescription() }}()
-           
-            cell.textLabel.text = "\(brewPhase.min) minutes at \(brewPhase.temp) ˚C \t \(stateText)"
+        
+            cell.textLabel.text = "\(brewPhase.min) minutes at \(Int(brewPhase.temp)) ˚C \t \(stateText(brewPhase))"
+            UIView.animateWithDuration(0.3, animations: { () -> Void in
+                cell.backgroundColor = brewPhase.state.bgColor()
+            })
         }
         
         return cell
+    }
+    
+    func tableView(tableView: UITableView!, heightForRowAtIndexPath indexPath: NSIndexPath!) -> CGFloat {
+        return 78.0
     }
     
     override func didReceiveMemoryWarning() {
