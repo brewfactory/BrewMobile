@@ -59,7 +59,7 @@ class BrewViewController: UIViewController, UITableViewDelegate, UITableViewData
                 })
             
             socket.on(brewChangedEvent, callback: {(AnyObject data) -> Void in
-                //println("Brew data: \(data)")
+                println("Brew data: \(data)")
                 
                 self.actState = parseBrewState(data)!
                
@@ -73,7 +73,11 @@ class BrewViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
     
     func updateNameLabel() {
-        self.nameLabel.text = self.actState.inProgress ? "Brewing \(self.actState.name) at" : ""
+        if self.actState.phases.count > 0 {
+            self.nameLabel.text = self.actState.inProgress ? "Brewing \(self.actState.name) at" : ""
+        } else {
+            self.nameLabel.text = "We are not brewing :(\nHow is it possible?"
+        }
     }
     
     func updateTempLabel(temperature: Float) {
