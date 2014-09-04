@@ -1,1 +1,1 @@
-pod 'SIOSocket', :git => 'https://github.com/vasarhelyia/SIOSocket.git', :tag => 'v0.0.3'
+pod 'SIOSocket', :git => 'https://github.com/MegaBits/SIOSocket.git'
