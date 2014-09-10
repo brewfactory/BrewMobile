@@ -1,7 +1,7 @@
 workspace 'BrewApp'
 xcodeproj 'BrewApp'
 
-pod 'SIOSocket', :podspec => 'https://raw.githubusercontent.com/MegaBits/SIOSocket/master/SIOSocket.podspec'
+pod 'SIOSocket', :git => 'https://github.com/MegaBits/SIOSocket.git'
 
 target :BrewAppTests do
   	pod 'Specta',      '~> 0.2.1'
