@@ -56,7 +56,7 @@
          //Custom events
          
          //Brew status changed
-         [self.socket on:EVENT_BREW do:^(id brewData) {
+         [self.socket on:EVENT_BREW callback:^(id brewData) {
             actBrewState = [[ContentParser sharedInstance] parseBrewStateFromRawData:brewData];
             [phasesTableView performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:NO];
 
@@ -65,7 +65,7 @@
          }];
          
          //Temperature changed
-         [self.socket on:EVENT_TEMPERATURE do:^(NSNumber *newTemp) {
+         [self.socket on:EVENT_TEMPERATURE callback:^(NSNumber *newTemp) {
              if (![newTemp isKindOfClass:[NSNull class]]) {
                  actTemp = newTemp;
                  [weakSelf performSelectorOnMainThread:@selector(updateTempLabel) withObject:nil waitUntilDone:NO];
@@ -76,7 +76,7 @@
          }];
        
          //PWM changed
-         /*[self.socket on:EVENT_PWM do:^(id data) {
+         /*[self.socket on:EVENT_PWM callback:^(id data) {
               NSLog(@"PWM update: %@", data);
           }];*/
      }];
