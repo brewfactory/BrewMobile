@@ -59,7 +59,7 @@ class BrewViewController: UIViewController, UITableViewDelegate, UITableViewData
                 })
             
             socket.on(brewChangedEvent, callback: {(AnyObject data) -> Void in
-                println("Brew data: \(data)")
+                //println("Brew data: \(data)")
                 
                 self.actState = parseBrewState(data)!
                
@@ -112,7 +112,6 @@ class BrewViewController: UIViewController, UITableViewDelegate, UITableViewData
         if self.actState.phases.count > indexPath.row  {
             let brewPhase = self.actState.phases[indexPath.row]
         
-            println(cell)
             cell.minLabel.text = "\(brewPhase.min) minutes at \(Int(brewPhase.temp)) ˚C"
             cell.statusLabel.text = "\(stateText(brewPhase))"
             UIView.animateWithDuration(0.3, animations: { () -> Void in
