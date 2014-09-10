@@ -1,7 +1,7 @@
 BrewMobile
 ==========
 
-[![Build Status](https://travis-ci.org/vasarhelyia/BrewMobile.svg?branch=master)](https://travis-ci.org/vasarhelyia/BrewMobile)
+[![Build Status](https://travis-ci.org/vasarhelyia/BrewMobile.svg?branch=objC)](https://travis-ci.org/vasarhelyia/BrewMobile)
 
 iOS client for the [Brewfactory][1] project
 
@@ -23,7 +23,7 @@ Used technologies
  - iOS >= 7.0
  - Socket.IO for WebSocket
 
-### iOS 8 compatible [swift branch][3] ###
+### iOS 8 compatible [swift project at master][3] ###
 
 ### Setting up the project ###
 ```
@@ -38,4 +38,4 @@ $ open BrewApp.xcworkspace/
 
   [1]: https://github.com/brewfactory/BrewCore
   [2]: http://vasarhelyia.github.io/BrewMobile/img/1.png
-  [3]: https://github.com/vasarhelyia/BrewMobile/tree/swift
+  [3]: https://github.com/vasarhelyia/BrewMobile/
