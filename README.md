@@ -1,7 +1,7 @@
 BrewMobile
 ==========
 
-[![Build Status](https://travis-ci.org/vasarhelyia/BrewMobile.svg?branch=objC)](https://travis-ci.org/vasarhelyia/BrewMobile)
+[![Build Status](https://travis-ci.org/brewfactory/BrewMobile.svg?branch=objC)](https://travis-ci.org/brewfactory/BrewMobile)
 
 iOS client for the [Brewfactory][1] project
 
