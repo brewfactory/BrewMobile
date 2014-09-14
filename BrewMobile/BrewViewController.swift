@@ -17,8 +17,8 @@ class BrewCell: UITableViewCell {
     @IBOutlet weak var statusLabel: UILabel!
     
     func setTextColorForAllLabels(color: UIColor) {
-        minLabel.textColor = color;
-        statusLabel.textColor = color;
+        minLabel.textColor = color
+        statusLabel.textColor = color
     }
 }
 
@@ -34,13 +34,22 @@ class BrewViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     required init(coder aDecoder: NSCoder) {
         actState = BrewState()
-        actTemp = 0;
+        actTemp = 0
         super.init(coder: aDecoder)
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        self.connectToHost()
+    }
+    
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+    }
+    
+    // MARK: SIOSocket
+    
+    private func connectToHost() {
         SIOSocket.socketWithHost(host, response: {socket in
             socket.onConnect = {
                 println("Connected to \(host)")
@@ -54,23 +63,23 @@ class BrewViewController: UIViewController, UITableViewDelegate, UITableViewData
                 self.actTemp = data as Float
                 
                 dispatch_async(dispatch_get_main_queue(), {
-                    self.updateTempLabel(self.actTemp);
-                    })
+                    self.updateTempLabel(self.actTemp)
                 })
+            })
             
             socket.on(brewChangedEvent, callback: {(AnyObject data) -> Void in
-                //println("Brew data: \(data)")
+                self.actState = parseBrewState(data) ?? BrewState()
                 
-                self.actState = parseBrewState(data)!
-               
                 dispatch_async(dispatch_get_main_queue(), {
                     self.phasesTableView.reloadData()
-                    self.updateNameLabel();
+                    self.updateNameLabel()
                     self.updateStartTimeLabel()
                 })
             })
         })
     }
+    
+    // MARK: UI refreshment
     
     func updateNameLabel() {
         if self.actState.phases.count > 0 {
@@ -103,6 +112,8 @@ class BrewViewController: UIViewController, UITableViewDelegate, UITableViewData
         }
     }
     
+    // MARK: UITableViewDataSource
+    
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self.actState.phases.count
     }
@@ -113,7 +124,8 @@ class BrewViewController: UIViewController, UITableViewDelegate, UITableViewData
             let brewPhase = self.actState.phases[indexPath.row]
         
             cell.minLabel.text = "\(brewPhase.min) minutes at \(Int(brewPhase.temp)) ˚C"
-            cell.statusLabel.text = "\(stateText(brewPhase))"
+            cell.statusLabel.text = "\(self.stateText(brewPhase))"
+           
             UIView.animateWithDuration(0.3, animations: { () -> Void in
                 cell.backgroundColor = brewPhase.state.bgColor()
                 cell.setTextColorForAllLabels(brewPhase.state == State.INACTIVE ? UIColor.blackColor() : UIColor.whiteColor())
@@ -121,11 +133,6 @@ class BrewViewController: UIViewController, UITableViewDelegate, UITableViewData
         }
         
         return cell
-    }
-    
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
     
 }

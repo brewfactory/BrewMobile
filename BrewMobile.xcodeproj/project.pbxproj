@@ -16,6 +16,9 @@
 		692AAA9C19A34C8C00224C4D /* BrewMobileTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 692AAA9B19A34C8C00224C4D /* BrewMobileTests.swift */; };
 		692AAAA619A3550A00224C4D /* Brew.swift in Sources */ = {isa = PBXBuildFile; fileRef = 692AAAA519A3550A00224C4D /* Brew.swift */; };
 		69832CDF19A4CE1F00F414C4 /* ISO8601DateFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = 69832CDE19A4CE1F00F414C4 /* ISO8601DateFormatter.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		69DAECB819C5A83500933A62 /* BrewState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69DAECB719C5A83500933A62 /* BrewState.swift */; };
+		69DAECBA19C5A84400933A62 /* BrewPhase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69DAECB919C5A84400933A62 /* BrewPhase.swift */; };
+		69DAECBC19C5AACF00933A62 /* JSONHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69DAECBB19C5AACF00933A62 /* JSONHelper.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -43,6 +46,9 @@
 		692AAAA819A3738A00224C4D /* BrewMobile-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "BrewMobile-Bridging-Header.h"; sourceTree = "<group>"; };
 		69832CDD19A4CE1F00F414C4 /* ISO8601DateFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ISO8601DateFormatter.h; sourceTree = "<group>"; };
 		69832CDE19A4CE1F00F414C4 /* ISO8601DateFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ISO8601DateFormatter.m; sourceTree = "<group>"; };
+		69DAECB719C5A83500933A62 /* BrewState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BrewState.swift; sourceTree = "<group>"; };
+		69DAECB919C5A84400933A62 /* BrewPhase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BrewPhase.swift; sourceTree = "<group>"; };
+		69DAECBB19C5AACF00933A62 /* JSONHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = JSONHelper.swift; path = ../JSONHelper.swift; sourceTree = "<group>"; };
 		7B8B932D111948C1AA5441F4 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
 		D4B8B3F1DCDC4AF2ADEC4500 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -92,6 +98,8 @@
 				692AAA8819A34C8C00224C4D /* AppDelegate.swift */,
 				692AAA8A19A34C8C00224C4D /* BrewViewController.swift */,
 				692AAAA519A3550A00224C4D /* Brew.swift */,
+				69DAECB719C5A83500933A62 /* BrewState.swift */,
+				69DAECB919C5A84400933A62 /* BrewPhase.swift */,
 				6928C98B19A3A49E00B2494E /* ContentParser.swift */,
 				692AAA8C19A34C8C00224C4D /* Main.storyboard */,
 				692AAA8F19A34C8C00224C4D /* Images.xcassets */,
@@ -130,6 +138,7 @@
 		69832CDC19A4CE1F00F414C4 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
+				69DAECBB19C5AACF00933A62 /* JSONHelper.swift */,
 				69832CDD19A4CE1F00F414C4 /* ISO8601DateFormatter.h */,
 				69832CDE19A4CE1F00F414C4 /* ISO8601DateFormatter.m */,
 			);
@@ -280,9 +289,12 @@
 			files = (
 				692AAA8B19A34C8C00224C4D /* BrewViewController.swift in Sources */,
 				692AAA8919A34C8C00224C4D /* AppDelegate.swift in Sources */,
+				69DAECB819C5A83500933A62 /* BrewState.swift in Sources */,
+				69DAECBA19C5A84400933A62 /* BrewPhase.swift in Sources */,
 				6928C98C19A3A49E00B2494E /* ContentParser.swift in Sources */,
 				692AAAA619A3550A00224C4D /* Brew.swift in Sources */,
 				69832CDF19A4CE1F00F414C4 /* ISO8601DateFormatter.m in Sources */,
+				69DAECBC19C5AACF00933A62 /* JSONHelper.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
