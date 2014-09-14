@@ -37,5 +37,5 @@ $ open BrewApp.xcworkspace/
  - support push notifications (for phase changes)
 
   [1]: https://github.com/brewfactory/BrewCore
-  [2]: http://vasarhelyia.github.io/BrewMobile/img/1.png
-  [3]: https://github.com/vasarhelyia/BrewMobile/
+  [2]: http://brewfactory.org/BrewMobile/img/2.png
+  [3]: https://github.com/brewfactory/BrewMobile/
