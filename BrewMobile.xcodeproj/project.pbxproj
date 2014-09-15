@@ -15,7 +15,6 @@
 		692AAA9019A34C8C00224C4D /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 692AAA8F19A34C8C00224C4D /* Images.xcassets */; };
 		692AAA9C19A34C8C00224C4D /* BrewMobileTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 692AAA9B19A34C8C00224C4D /* BrewMobileTests.swift */; };
 		692AAAA619A3550A00224C4D /* Brew.swift in Sources */ = {isa = PBXBuildFile; fileRef = 692AAAA519A3550A00224C4D /* Brew.swift */; };
-		69832CDF19A4CE1F00F414C4 /* ISO8601DateFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = 69832CDE19A4CE1F00F414C4 /* ISO8601DateFormatter.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		69BF5BB919C5DEEF00F878EF /* JSONHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69BF5BB819C5DEEF00F878EF /* JSONHelper.swift */; };
 		69DAECB819C5A83500933A62 /* BrewState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69DAECB719C5A83500933A62 /* BrewState.swift */; };
 		69DAECBA19C5A84400933A62 /* BrewPhase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69DAECB919C5A84400933A62 /* BrewPhase.swift */; };
@@ -44,8 +43,6 @@
 		692AAA9B19A34C8C00224C4D /* BrewMobileTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrewMobileTests.swift; sourceTree = "<group>"; };
 		692AAAA519A3550A00224C4D /* Brew.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Brew.swift; sourceTree = "<group>"; };
 		692AAAA819A3738A00224C4D /* BrewMobile-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "BrewMobile-Bridging-Header.h"; sourceTree = "<group>"; };
-		69832CDD19A4CE1F00F414C4 /* ISO8601DateFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ISO8601DateFormatter.h; sourceTree = "<group>"; };
-		69832CDE19A4CE1F00F414C4 /* ISO8601DateFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ISO8601DateFormatter.m; sourceTree = "<group>"; };
 		69BF5BB819C5DEEF00F878EF /* JSONHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSONHelper.swift; sourceTree = "<group>"; };
 		69DAECB719C5A83500933A62 /* BrewState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BrewState.swift; sourceTree = "<group>"; };
 		69DAECB919C5A84400933A62 /* BrewPhase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BrewPhase.swift; sourceTree = "<group>"; };
@@ -139,8 +136,6 @@
 			isa = PBXGroup;
 			children = (
 				69BF5BB819C5DEEF00F878EF /* JSONHelper.swift */,
-				69832CDD19A4CE1F00F414C4 /* ISO8601DateFormatter.h */,
-				69832CDE19A4CE1F00F414C4 /* ISO8601DateFormatter.m */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -294,7 +289,6 @@
 				6928C98C19A3A49E00B2494E /* ContentParser.swift in Sources */,
 				69BF5BB919C5DEEF00F878EF /* JSONHelper.swift in Sources */,
 				692AAAA619A3550A00224C4D /* Brew.swift in Sources */,
-				69832CDF19A4CE1F00F414C4 /* ISO8601DateFormatter.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
