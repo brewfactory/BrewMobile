@@ -1,2 +1,2 @@
 pod 'SIOSocket', :git => 'https://github.com/MegaBits/SIOSocket.git'
-pod 'ISO8601DateFormatterValueTransformer', '~> 0.7'
+pod 'ISO8601DateFormatter', '~> 0.7'
