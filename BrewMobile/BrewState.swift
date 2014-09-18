@@ -50,11 +50,11 @@ class BrewState: Brew  {
     override class func decode(json: JSON) -> BrewState? {
         return JSONDictObject(json) >>> { brew in
             BrewState.create <^>
-                brew["name"]       >>> JSONString      <*>
-                ((brew["startTime"] >>> JSONString) ?? "") <*>
-                brew["phases"]     >>> JSONArrayObject <*>
-                brew["paused"]     >>> JSONBool        <*>
-                brew["inProgress"] >>> JSONBool
+                brew["name"]        >>> JSONString          <*>
+                ((brew["startTime"] >>> JSONString) ?? "")  <*>
+                brew["phases"]      >>> JSONArrayObject     <*>
+                brew["paused"]      >>> JSONBool            <*>
+                brew["inProgress"]  >>> JSONBool
         }
     }
 }
