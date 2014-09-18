@@ -50,7 +50,7 @@ class BrewViewController: UIViewController, UITableViewDelegate, UITableViewData
     // MARK: SIOSocket
     
     private func connectToHost() {
-        SIOSocket.socketWithHost(host, response: {socket in
+        SIOSocket.socketWithHost(host, reconnectAutomatically: true, attemptLimit: 0, withDelay: 1, maximumDelay: 5, timeout: 20, response: {socket in
             socket.onConnect = {
                 println("Connected to \(host)")
             }
