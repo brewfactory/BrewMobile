@@ -95,7 +95,7 @@ class BrewPhase: Brew {
     override class func decode(json: JSON) -> BrewPhase? {
         return JSONDictObject(json) >>> { brew in
             BrewPhase.create <^>
-               (brew["jobEnd"] ?? "")   >>> JSONString  <*>
+                ((brew["jobEnd"] >>> JSONString) ?? "") <*>
                 brew["min"]             >>> JSONInt     <*>
                 brew["temp"]            >>> JSONFloat   <*>
                 brew["tempReached"]     >>> JSONBool    <*>
