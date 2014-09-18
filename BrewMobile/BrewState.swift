@@ -35,13 +35,15 @@ class BrewState: Brew  {
             var newPhases: PhaseArray = []
             
             for rawPhase: JSON in phases {
-                let brewPhase = parseBrewPhase(rawPhase) ?? BrewPhase()
-                newPhases.append(brewPhase)
+                if let brewPhase = parseBrewPhase(rawPhase) {
+                    newPhases.append(brewPhase)
+                }
             }
             return newPhases
             }(phases)
         return BrewState(name: name, startTime: formatDate(startTime), phases: parsedPhases, paused: paused, inProgress: inProgress)
     }
+
 
     // MARK: JSONDecodable
 
@@ -49,7 +51,7 @@ class BrewState: Brew  {
         return JSONDictObject(json) >>> { brew in
             BrewState.create <^>
                 brew["name"]       >>> JSONString      <*>
-                brew["startTime"]  >>> JSONString      <*>
+                ((brew["startTime"] >>> JSONString) ?? "") <*>
                 brew["phases"]     >>> JSONArrayObject <*>
                 brew["paused"]     >>> JSONBool        <*>
                 brew["inProgress"] >>> JSONBool
