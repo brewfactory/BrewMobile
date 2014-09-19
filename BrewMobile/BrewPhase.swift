@@ -47,7 +47,13 @@ enum State: Int {
     
 }
 
-class BrewPhase: Brew {
+// MARK: Equatable
+
+func == (left: BrewPhase, right: BrewPhase) -> Bool {
+    return (left.jobEnd == right.jobEnd) && (left.min == right.min) && (left.temp == right.temp) && (left.tempReached == right.tempReached) && (left.inProgress == right.inProgress)
+}
+
+class BrewPhase: Brew, Equatable {
     var jobEnd: String
     var min: Int
     var temp: Float

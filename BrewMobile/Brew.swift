@@ -24,4 +24,5 @@ class Brew : JSONDecodable {
     class func decode(json: JSON) -> Self? {
         return nil
     }
+
 }
