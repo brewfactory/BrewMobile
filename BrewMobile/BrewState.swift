@@ -8,7 +8,13 @@
 
 import Foundation
 
-class BrewState: Brew  {
+// MARK: Equatable
+
+func == (left: BrewState, right: BrewState) -> Bool {
+    return (left.name == right.name) && (left.startTime == right.startTime) && (left.phases as AnyObject === right.phases as AnyObject) && (left.paused == right.paused) && (left.inProgress == right.inProgress)
+}
+
+class BrewState: Brew, Equatable  {
     var name: String
     var startTime: String
     var phases: PhaseArray
@@ -57,4 +63,5 @@ class BrewState: Brew  {
                 brew["inProgress"]  >>> JSONBool
         }
     }
+
 }
