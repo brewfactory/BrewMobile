@@ -30,7 +30,7 @@ $ open BrewApp.xcworkspace/
 // TODO
 -------
 
- - cover with tests
+ - improve test coverage
  - support push notifications (for phase changes)
 
   [1]: https://github.com/brewfactory/BrewCore
