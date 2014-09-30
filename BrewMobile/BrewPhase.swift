@@ -99,13 +99,17 @@ class BrewPhase: Brew, Equatable {
     // MARK: JSONDecodable
     
     override class func decode(json: JSON) -> BrewPhase? {
-        return JSONDictObject(json) >>> { brew in
+        if let decodedBrewPhaseObject = (JSONDictObject(json) >>> { brew in
             BrewPhase.create <^>
                (brew["jobEnd"] ?? "")   >>> JSONString  <*>
                 brew["min"]             >>> JSONInt     <*>
                 brew["temp"]            >>> JSONFloat   <*>
                 brew["tempReached"]     >>> JSONBool    <*>
                 brew["inProgress"]      >>> JSONBool
+            }) {
+            return decodedBrewPhaseObject
+        } else {
+            return BrewPhase()
         }
     }
     

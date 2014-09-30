@@ -11,7 +11,16 @@ import Foundation
 // MARK: Equatable
 
 func == (left: BrewState, right: BrewState) -> Bool {
-    return (left.name == right.name) && (left.startTime == right.startTime) && (left.phases as AnyObject === right.phases as AnyObject) && (left.paused == right.paused) && (left.inProgress == right.inProgress)
+    let phasesAreIdentical = { () -> Bool in
+        for i in 0...left.phases.count - 1 {
+            if left.phases[i] != right.phases[i] {
+                return false
+            }
+        }
+        return true
+    }()
+    
+    return (left.name == right.name) && (left.startTime == right.startTime) && phasesAreIdentical && (left.paused == right.paused) && (left.inProgress == right.inProgress)
 }
 
 class BrewState: Brew, Equatable  {
@@ -52,13 +61,17 @@ class BrewState: Brew, Equatable  {
     // MARK: JSONDecodable
 
     override class func decode(json: JSON) -> BrewState? {
-        return JSONDictObject(json) >>> { brew in
+        if let decodedBrewStateObject = (JSONDictObject(json) >>> { brew in
             BrewState.create <^>
                 brew["name"]       >>> JSONString      <*>
                 brew["startTime"]  >>> JSONString      <*>
                 brew["phases"]     >>> JSONArrayObject <*>
                 brew["paused"]     >>> JSONBool        <*>
                 brew["inProgress"] >>> JSONBool
+            }) {
+            return decodedBrewStateObject
+        } else {
+            return BrewState()
         }
     }
 
