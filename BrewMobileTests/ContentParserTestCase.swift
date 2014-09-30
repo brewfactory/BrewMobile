@@ -12,6 +12,7 @@ import XCTest
 class ContentParserTestCase: XCTestCase {
     var mockBrewState = BrewState()
     var mockBrewPhase = BrewPhase()
+    let currentZone = NSTimeZone.defaultTimeZone()
 
     override func setUp() {
         super.setUp()
@@ -23,7 +24,7 @@ class ContentParserTestCase: XCTestCase {
     }
     
     override func tearDown() {
-        NSTimeZone.setDefaultTimeZone(NSTimeZone(forSecondsFromGMT: +7200))
+        NSTimeZone.setDefaultTimeZone(currentZone)
 
         super.tearDown()
     }
@@ -63,8 +64,6 @@ class ContentParserTestCase: XCTestCase {
         } else {
             XCTFail("Object could not be parsed as a BrewPhase")
         }
-        
-        
     }
     
     func testParseBrewPhaseWithEmptyJSON() {

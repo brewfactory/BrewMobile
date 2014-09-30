@@ -39,7 +39,7 @@ class BrewPhaseTestCase: XCTestCase {
     
     func testTempReached() {
         XCTAssertNotNil(brewPhase.tempReached, "should have tempReached")
-        XCTAssertTrue(!brewPhase.tempReached, "expected to be false")
+        XCTAssertFalse(brewPhase.tempReached, "expected to be false")
     }
     
     func testInProgress() {

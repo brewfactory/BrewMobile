@@ -40,7 +40,7 @@ class BrewStateTestCase: XCTestCase {
     
     func testPaused() {
         XCTAssertNotNil(brewState.paused, "should have paused")
-        XCTAssertTrue(!brewState.paused, "expected to be false")
+        XCTAssertFalse(brewState.paused, "expected to be false")
     }
     
     func testInProgress() {
