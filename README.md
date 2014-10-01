@@ -30,7 +30,7 @@ $ open BrewApp.xcworkspace/
 // TODO
 -------
 
- - write tests (facing some diffculties in this subject with iOS 8 beta for now)
+ - improve test coverage
  - support push notifications (for phase changes)
 
   [1]: https://github.com/brewfactory/BrewCore
