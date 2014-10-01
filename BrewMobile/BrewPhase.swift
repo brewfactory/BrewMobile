@@ -47,7 +47,13 @@ enum State: Int {
     
 }
 
-class BrewPhase: Brew {
+// MARK: Equatable
+
+func == (left: BrewPhase, right: BrewPhase) -> Bool {
+    return (left.jobEnd == right.jobEnd) && (left.min == right.min) && (left.temp == right.temp) && (left.tempReached == right.tempReached) && (left.inProgress == right.inProgress)
+}
+
+class BrewPhase: Brew, Equatable {
     var jobEnd: String
     var min: Int
     var temp: Float
@@ -93,13 +99,17 @@ class BrewPhase: Brew {
     // MARK: JSONDecodable
     
     override class func decode(json: JSON) -> BrewPhase? {
-        return JSONDictObject(json) >>> { brew in
+        if let decodedBrewPhaseObject = (JSONDictObject(json) >>> { brew in
             BrewPhase.create <^>
                (brew["jobEnd"] ?? "")   >>> JSONString  <*>
                 brew["min"]             >>> JSONInt     <*>
                 brew["temp"]            >>> JSONFloat   <*>
                 brew["tempReached"]     >>> JSONBool    <*>
                 brew["inProgress"]      >>> JSONBool
+            }) {
+            return decodedBrewPhaseObject
+        } else {
+            return BrewPhase()
         }
     }
     

@@ -68,7 +68,7 @@ class BrewViewController: UIViewController, UITableViewDelegate, UITableViewData
             })
             
             socket.on(brewChangedEvent, callback: {(AnyObject data) -> Void in
-                self.actState = parseBrewState(data) ?? BrewState()
+                self.actState = parseBrewState(data)!
                 
                 dispatch_async(dispatch_get_main_queue(), {
                     self.phasesTableView.reloadData()
