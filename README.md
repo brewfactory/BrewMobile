@@ -32,6 +32,8 @@ $ open BrewApp.xcworkspace/
 
  - improve test coverage
  - support push notifications (for phase changes)
+ - designer
+ - logs
 
   [1]: https://github.com/brewfactory/BrewCore
   [2]: http://brewfactory.org/BrewMobile/img/2.png
