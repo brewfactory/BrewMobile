@@ -26,7 +26,7 @@ enum State: Int {
         case .FINISHED:
             return "finished"
         default:
-            return String(self.toRaw())
+            return String(self.rawValue)
         }
     }
     
