@@ -10,6 +10,7 @@
 		2AFE0C471EC84D3A99174670 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D4B8B3F1DCDC4AF2ADEC4500 /* libPods.a */; };
 		6809CF595ECA4D168275077A /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D4B8B3F1DCDC4AF2ADEC4500 /* libPods.a */; };
 		690197A71A0D4FA4003DB4B9 /* BrewDesignerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 690197A61A0D4FA4003DB4B9 /* BrewDesignerViewController.swift */; };
+		690197AB1A0E10F2003DB4B9 /* BrewNewPhaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 690197AA1A0E10F2003DB4B9 /* BrewNewPhaseViewController.swift */; };
 		6928C98C19A3A49E00B2494E /* ContentParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6928C98B19A3A49E00B2494E /* ContentParser.swift */; };
 		692AAA8919A34C8C00224C4D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 692AAA8819A34C8C00224C4D /* AppDelegate.swift */; };
 		692AAA8B19A34C8C00224C4D /* BrewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 692AAA8A19A34C8C00224C4D /* BrewViewController.swift */; };
@@ -43,7 +44,8 @@
 		0B8867EBE62D4D04A837E53D /* libPods-BrewMobileTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-BrewMobileTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4773AB27AD3F609E54511C2A /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		690197A61A0D4FA4003DB4B9 /* BrewDesignerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BrewDesignerViewController.swift; sourceTree = "<group>"; };
-		6928C98B19A3A49E00B2494E /* ContentParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentParser.swift; sourceTree = "<group>"; };
+		690197AA1A0E10F2003DB4B9 /* BrewNewPhaseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BrewNewPhaseViewController.swift; sourceTree = "<group>"; };
+		6928C98B19A3A49E00B2494E /* ContentParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ContentParser.swift; path = ../ContentParser.swift; sourceTree = "<group>"; };
 		692AAA8319A34C8C00224C4D /* BrewMobile.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BrewMobile.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		692AAA8719A34C8C00224C4D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		692AAA8819A34C8C00224C4D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -93,6 +95,25 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
+		690197AC1A0E10F9003DB4B9 /* Designer */ = {
+			isa = PBXGroup;
+			children = (
+				690197A61A0D4FA4003DB4B9 /* BrewDesignerViewController.swift */,
+				690197AA1A0E10F2003DB4B9 /* BrewNewPhaseViewController.swift */,
+			);
+			name = Designer;
+			sourceTree = "<group>";
+		};
+		690197AD1A0E1111003DB4B9 /* Brew entities */ = {
+			isa = PBXGroup;
+			children = (
+				692AAAA519A3550A00224C4D /* Brew.swift */,
+				69DAECB719C5A83500933A62 /* BrewState.swift */,
+				69DAECB919C5A84400933A62 /* BrewPhase.swift */,
+			);
+			name = "Brew entities";
+			sourceTree = "<group>";
+		};
 		692AAA7A19A34C8B00224C4D = {
 			isa = PBXGroup;
 			children = (
@@ -116,16 +137,13 @@
 		692AAA8519A34C8C00224C4D /* BrewMobile */ = {
 			isa = PBXGroup;
 			children = (
-				692AAA8819A34C8C00224C4D /* AppDelegate.swift */,
+				690197AD1A0E1111003DB4B9 /* Brew entities */,
 				692AAA8A19A34C8C00224C4D /* BrewViewController.swift */,
-				690197A61A0D4FA4003DB4B9 /* BrewDesignerViewController.swift */,
-				692AAAA519A3550A00224C4D /* Brew.swift */,
-				69DAECB719C5A83500933A62 /* BrewState.swift */,
-				69DAECB919C5A84400933A62 /* BrewPhase.swift */,
-				6928C98B19A3A49E00B2494E /* ContentParser.swift */,
-				692AAA8C19A34C8C00224C4D /* Main.storyboard */,
-				692AAA8F19A34C8C00224C4D /* Images.xcassets */,
+				690197AC1A0E10F9003DB4B9 /* Designer */,
 				69832CDC19A4CE1F00F414C4 /* Helpers */,
+				692AAA8C19A34C8C00224C4D /* Main.storyboard */,
+				692AAA8819A34C8C00224C4D /* AppDelegate.swift */,
+				692AAA8F19A34C8C00224C4D /* Images.xcassets */,
 				692AAA8619A34C8C00224C4D /* Supporting Files */,
 			);
 			path = BrewMobile;
@@ -163,6 +181,7 @@
 			isa = PBXGroup;
 			children = (
 				69BF5BB819C5DEEF00F878EF /* JSONHelper.swift */,
+				6928C98B19A3A49E00B2494E /* ContentParser.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -350,6 +369,7 @@
 				69BF5BB919C5DEEF00F878EF /* JSONHelper.swift in Sources */,
 				690197A71A0D4FA4003DB4B9 /* BrewDesignerViewController.swift in Sources */,
 				692AAAA619A3550A00224C4D /* Brew.swift in Sources */,
+				690197AB1A0E10F2003DB4B9 /* BrewNewPhaseViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

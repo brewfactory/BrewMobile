@@ -41,7 +41,7 @@ class BrewDesignerViewController : UIViewController, UITextFieldDelegate {
             let nowDate = NSDate()
             startTimePicker.minimumDate = nowDate
             startTimePicker.date = nowDate
-            self.view.addSubview(startTimePicker)
+            startTimePicker.hidden = false
         }
     }
     
