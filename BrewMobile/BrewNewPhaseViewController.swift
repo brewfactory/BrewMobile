@@ -17,10 +17,37 @@ class BrewNewPhaseViewController : UIViewController, UITextFieldDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        minStepper.value = Double(minTextField.text.toInt()!)
+        tempStepper.value = Double(tempTextField.text.toInt()!)
     }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
     
+    func setValueToStepper(value: Double, stepper: UIStepper) {
+        stepper.value = value
+    }
+    
+    func setValueToTextField(value: Int, textField: UITextField) {
+        textField.text = String(value)
+    }
+    
+    //MARK: UITextFieldDelegate
+    
+    func textFieldDidEndEditing(textField: UITextField) {
+        textField.resignFirstResponder()
+    }
+    
+    //MARK: IBAction methods
+    
+    @IBAction func stepperValueDidChange(stepper: UIStepper) {
+        setValueToTextField(Int(stepper.value), textField: stepper == minStepper ? minTextField : tempTextField)
+    }
+    
+    @IBAction func textFieldDidChange(textField: UITextField) {
+        setValueToStepper(Double(textField.text.toInt()!), stepper: textField == minTextField ? minStepper : tempStepper)
+    }
+
 }
