@@ -14,12 +14,17 @@ class BrewNewPhaseViewController : UIViewController, UITextFieldDelegate {
     @IBOutlet weak var tempTextField: UITextField!
     @IBOutlet weak var minStepper: UIStepper!
     @IBOutlet weak var tempStepper: UIStepper!
-    
+    @IBOutlet weak var doneButton: UIBarButtonItem!
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
         minStepper.value = Double(minTextField.text.toInt()!)
         tempStepper.value = Double(tempTextField.text.toInt()!)
+        
+        
+        doneButton.target = self
+        doneButton.action = "doneButtonPressed:"
     }
     
     override func didReceiveMemoryWarning() {
@@ -48,6 +53,10 @@ class BrewNewPhaseViewController : UIViewController, UITextFieldDelegate {
     
     @IBAction func textFieldDidChange(textField: UITextField) {
         setValueToStepper(Double(textField.text.toInt()!), stepper: textField == minTextField ? minStepper : tempStepper)
+    }
+    
+    @IBAction func doneButtonPressed(button: UIButton) {
+        self.dismissViewControllerAnimated(true, completion: nil)
     }
 
 }
