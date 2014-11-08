@@ -265,7 +265,7 @@
                     </view>
                     <toolbarItems/>
                     <navigationItem key="navigationItem" id="Zeq-Qr-9A6">
-                        <barButtonItem key="rightBarButtonItem" systemItem="done" id="Cph-Uy-POK"/>
+                        <barButtonItem key="rightBarButtonItem" title="Sync" id="Cph-Uy-POK"/>
                     </navigationItem>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
@@ -351,6 +351,7 @@
                     </navigationItem>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                     <connections>
+                        <outlet property="doneButton" destination="EJl-4l-0TN" id="l9g-3s-KZn"/>
                         <outlet property="minStepper" destination="fM5-3c-0aL" id="3B2-9a-KCg"/>
                         <outlet property="minTextField" destination="2EJ-ON-nEZ" id="kN7-go-2M6"/>
                         <outlet property="tempStepper" destination="KB8-Y1-Lym" id="aBc-TA-1fI"/>
