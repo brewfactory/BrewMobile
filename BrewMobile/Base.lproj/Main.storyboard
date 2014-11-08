@@ -312,6 +312,7 @@
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits" keyboardType="decimalPad"/>
                                         <connections>
+                                            <action selector="textFieldDidChange:" destination="TyE-Po-z3W" eventType="editingChanged" id="asL-Ax-vzs"/>
                                             <outlet property="delegate" destination="TyE-Po-z3W" id="PBc-5x-a2u"/>
                                         </connections>
                                     </textField>
@@ -320,16 +321,17 @@
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits" keyboardType="decimalPad"/>
                                         <connections>
+                                            <action selector="textFieldDidChange:" destination="TyE-Po-z3W" eventType="editingChanged" id="wi9-Ca-tPJ"/>
                                             <outlet property="delegate" destination="TyE-Po-z3W" id="NVz-7o-hWo"/>
                                         </connections>
                                     </textField>
-                                    <stepper opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" maximumValue="100" translatesAutoresizingMaskIntoConstraints="NO" id="fM5-3c-0aL">
+                                    <stepper opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" maximumValue="10000" translatesAutoresizingMaskIntoConstraints="NO" id="fM5-3c-0aL">
                                         <rect key="frame" x="34" y="103" width="94" height="29"/>
                                         <connections>
                                             <action selector="stepperValueDidChange:" destination="TyE-Po-z3W" eventType="valueChanged" id="sws-ef-Qgb"/>
                                         </connections>
                                     </stepper>
-                                    <stepper opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" maximumValue="100" translatesAutoresizingMaskIntoConstraints="NO" id="KB8-Y1-Lym">
+                                    <stepper opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" maximumValue="10000" translatesAutoresizingMaskIntoConstraints="NO" id="KB8-Y1-Lym">
                                         <rect key="frame" x="197" y="103" width="94" height="29"/>
                                         <connections>
                                             <action selector="stepperValueDidChange:" destination="TyE-Po-z3W" eventType="valueChanged" id="5bM-c8-keo"/>
