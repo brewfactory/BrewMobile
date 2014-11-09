@@ -172,6 +172,7 @@ class BrewDesignerViewController : UIViewController, UITextFieldDelegate, UITabl
         showFormattedTextDate(datePicker.date)
         //TODO: not formatting properly
         let isoDateFormatter = ISO8601DateFormatter()
+        isoDateFormatter.includeTime = true
         startTime = isoDateFormatter.stringFromDate(datePicker.date)
         enableSyncButton()
     }
