@@ -25,6 +25,7 @@ class BrewDesignerViewController : UIViewController, UITextFieldDelegate, UITabl
     var name: String
     var startTime: String
     var phases: Array<BrewPhase>
+    let nowDate = NSDate()
 
     required init(coder aDecoder: NSCoder) {
         name = ""
@@ -41,10 +42,18 @@ class BrewDesignerViewController : UIViewController, UITextFieldDelegate, UITabl
         
         syncButton.target = self
         syncButton.action = "syncButtonPressed:"
+        
+        showFormattedTextDate(nowDate)
     }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
+    }
+    
+    func showFormattedTextDate(date: NSDate) {
+        let dateFormatter = NSDateFormatter()
+        dateFormatter.dateFormat = "YYYY.MM.dd. HH:mm"
+        startTimeTextField.text = dateFormatter.stringFromDate(date)
     }
     
     //MARK: UITextFieldDelegate
@@ -54,7 +63,6 @@ class BrewDesignerViewController : UIViewController, UITextFieldDelegate, UITabl
             nameTextField.resignFirstResponder()
             textField.resignFirstResponder()
             
-            let nowDate = NSDate()
             startTimePicker.minimumDate = nowDate
             startTimePicker.date = nowDate
             pickerBgView.hidden = false
@@ -161,9 +169,7 @@ class BrewDesignerViewController : UIViewController, UITextFieldDelegate, UITabl
     //MARK: IBAction methods
 
     @IBAction func datePickerDateDidChange(datePicker: UIDatePicker) {
-        let dateFormatter = NSDateFormatter()
-        dateFormatter.dateFormat = "YYYY.MM.dd. HH:mm"
-        startTimeTextField.text = dateFormatter.stringFromDate(datePicker.date)
+        showFormattedTextDate(datePicker.date)
         //TODO: not formatting properly
         let isoDateFormatter = ISO8601DateFormatter()
         startTime = isoDateFormatter.stringFromDate(datePicker.date)
