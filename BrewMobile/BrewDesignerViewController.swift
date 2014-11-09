@@ -8,7 +8,7 @@
 
 import UIKit
 
-class BrewDesignerViewController : UIViewController, UITextFieldDelegate {
+class BrewDesignerViewController : UIViewController, UITextFieldDelegate, BrewPhaseDesignerDelegate {
 
     @IBOutlet weak var nameTextField: UITextField!
     @IBOutlet weak var startTimeTextField: UITextField!
@@ -37,12 +37,20 @@ class BrewDesignerViewController : UIViewController, UITextFieldDelegate {
     //MARK: UITextFieldDelegate
     
     func textFieldDidBeginEditing(textField: UITextField) {
-        if (textField == startTimeTextField) {
+        if textField == startTimeTextField {
+            textField.resignFirstResponder()
+            
             let nowDate = NSDate()
             startTimePicker.minimumDate = nowDate
             startTimePicker.date = nowDate
             startTimePicker.hidden = false
         }
+    }
+    
+    //MARK: BrewPhaseDesignerDelegate
+
+    func addNewPhase(phase: (min: Int, temp: Int)) {
+        println("phase: \(phase.min), \(phase.temp)")
     }
     
     //MARK: IBAction methods
@@ -53,6 +61,13 @@ class BrewDesignerViewController : UIViewController, UITextFieldDelegate {
         startTimeTextField.text = dateFormatter.stringFromDate(datePicker.date)
         let isoDateFormatter = ISO8601DateFormatter()
         startTime = isoDateFormatter.stringFromDate(datePicker.date)
+    }
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if segue.identifier == "addSegue" {
+            let brewNewPhaseViewController: BrewNewPhaseViewController = segue.destinationViewController as BrewNewPhaseViewController
+            brewNewPhaseViewController.delegate = self
+        }
     }
     
 }
