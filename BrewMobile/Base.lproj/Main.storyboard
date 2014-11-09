@@ -3,6 +3,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6244"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
         <!--Brew-->
@@ -192,37 +193,41 @@
                                                 <rect key="frame" x="35" y="91" width="250" height="1"/>
                                                 <color key="backgroundColor" red="0.75686274509999996" green="0.75686274509999996" blue="0.75686274509999996" alpha="0.20000000000000001" colorSpace="calibratedRGB"/>
                                             </view>
-                                            <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" scrollEnabled="NO" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="SZm-fm-dCl">
+                                            <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="default" allowsSelection="NO" rowHeight="60" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="SZm-fm-dCl" userLabel="phasesTableView">
                                                 <rect key="frame" x="0.0" y="129" width="320" height="280"/>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                <view key="tableFooterView" contentMode="scaleToFill" id="Lxb-Zs-zlG">
-                                                    <rect key="frame" x="0.0" y="110" width="320" height="40"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                                </view>
                                                 <prototypes>
-                                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" textLabel="sBd-BY-Evg" detailTextLabel="vC5-DW-J8l" style="IBUITableViewCellStyleValue1" id="Ph4-ju-dDZ">
+                                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="PhaseCell" id="Ph4-ju-dDZ" customClass="PhaseCell" customModule="BrewMobile" customModuleProvider="target">
                                                         <autoresizingMask key="autoresizingMask"/>
                                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Ph4-ju-dDZ" id="xbe-fc-w12">
                                                             <autoresizingMask key="autoresizingMask"/>
                                                             <subviews>
-                                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="sBd-BY-Evg">
-                                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                                                    <nil key="highlightedColor"/>
-                                                                </label>
-                                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="vC5-DW-J8l">
-                                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                                                    <color key="textColor" red="0.5568627451" green="0.5568627451" blue="0.57647058819999997" alpha="1" colorSpace="calibratedRGB"/>
+                                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="0.0" translatesAutoresizingMaskIntoConstraints="NO" id="bHL-ic-Tmf" userLabel="minLabel">
+                                                                    <rect key="frame" x="18" y="16" width="285" height="28"/>
+                                                                    <constraints>
+                                                                        <constraint firstAttribute="width" constant="285" id="fMO-xJ-C7z"/>
+                                                                    </constraints>
+                                                                    <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="17"/>
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
                                                             </subviews>
+                                                            <constraints>
+                                                                <constraint firstAttribute="bottomMargin" secondItem="bHL-ic-Tmf" secondAttribute="bottom" constant="7.5" id="OCZ-5K-VmN"/>
+                                                                <constraint firstItem="bHL-ic-Tmf" firstAttribute="leading" secondItem="xbe-fc-w12" secondAttribute="leadingMargin" constant="10" id="T8Y-kS-FrG"/>
+                                                                <constraint firstAttribute="centerY" secondItem="bHL-ic-Tmf" secondAttribute="centerY" constant="-0.25" id="g42-HJ-F23"/>
+                                                                <constraint firstItem="bHL-ic-Tmf" firstAttribute="top" secondItem="xbe-fc-w12" secondAttribute="topMargin" constant="8" id="iGG-dS-rVI"/>
+                                                            </constraints>
                                                         </tableViewCellContentView>
+                                                        <connections>
+                                                            <outlet property="phaseLabel" destination="bHL-ic-Tmf" id="ez7-L1-LgM"/>
+                                                        </connections>
                                                     </tableViewCell>
                                                 </prototypes>
                                                 <sections/>
+                                                <connections>
+                                                    <outlet property="dataSource" destination="A99-2W-2tT" id="kwP-ni-9iA"/>
+                                                    <outlet property="delegate" destination="A99-2W-2tT" id="dWZ-jA-AeP"/>
+                                                </connections>
                                             </tableView>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Phases:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kg8-Ux-2bA">
                                                 <rect key="frame" x="16" y="100" width="59" height="21"/>
@@ -235,18 +240,24 @@
                                     </view>
                                 </subviews>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="415" id="Bze-Bb-5hN"/>
+                                    <constraint firstAttribute="height" constant="409" id="Bze-Bb-5hN"/>
                                 </constraints>
                             </scrollView>
-                            <datePicker hidden="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="dateAndTime" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="021-Vb-cVT">
+                            <view hidden="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ggM-eD-ewr">
                                 <rect key="frame" x="0.0" y="314" width="320" height="162"/>
-                                <date key="date" timeIntervalSinceReferenceDate="437082403.12645298">
-                                    <!--2014-11-07 19:46:43 +0000-->
-                                </date>
-                                <connections>
-                                    <action selector="datePickerDateDidChange:" destination="A99-2W-2tT" eventType="valueChanged" id="CKf-By-zLZ"/>
-                                </connections>
-                            </datePicker>
+                                <subviews>
+                                    <datePicker contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="dateAndTime" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="021-Vb-cVT">
+                                        <rect key="frame" x="0.0" y="0.0" width="320" height="162"/>
+                                        <date key="date" timeIntervalSinceReferenceDate="437082403.12645298">
+                                            <!--2014-11-07 19:46:43 +0000-->
+                                        </date>
+                                        <connections>
+                                            <action selector="datePickerDateDidChange:" destination="A99-2W-2tT" eventType="valueChanged" id="CKf-By-zLZ"/>
+                                        </connections>
+                                    </datePicker>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -255,20 +266,22 @@
                     </view>
                     <toolbarItems/>
                     <navigationItem key="navigationItem" id="Zeq-Qr-9A6">
-                        <barButtonItem key="rightBarButtonItem" style="done" systemItem="done" id="Cph-Uy-POK"/>
+                        <barButtonItem key="leftBarButtonItem" title="Sync" id="Cph-Uy-POK"/>
+                        <barButtonItem key="rightBarButtonItem" systemItem="edit" id="ell-oz-yN3"/>
                     </navigationItem>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                     <connections>
                         <outlet property="nameTextField" destination="9cd-gS-0BW" id="GPa-nL-pel"/>
                         <outlet property="phasesTableView" destination="SZm-fm-dCl" id="TNL-Yz-v9e"/>
+                        <outlet property="pickerBgView" destination="ggM-eD-ewr" id="6oF-aa-9ua"/>
                         <outlet property="startTimePicker" destination="021-Vb-cVT" id="Y5e-sP-5bh"/>
                         <outlet property="startTimeTextField" destination="n47-T6-ejP" id="qMC-am-xKG"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="eML-1P-VrM" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="540" y="869"/>
+            <point key="canvasLocation" x="550" y="869"/>
         </scene>
         <!--Brew New Phase View Controller-->
         <scene sceneID="9HY-AP-STq">

@@ -80,7 +80,7 @@ class BrewViewController: UIViewController, UITableViewDelegate, UITableViewData
         })
     }
     
-    // MARK: UI refreshment
+    // MARK: refresh UI
     
     func updateNameLabel() {
         if self.actState.phases.count > 0 {
