@@ -8,6 +8,8 @@
 
 import UIKit
 
+typealias Phase = (min: Int, temp: Int)
+
 class PhaseCell: UITableViewCell {
     @IBOutlet weak var phaseLabel: UILabel!
 }
@@ -23,7 +25,7 @@ class BrewDesignerViewController : UIViewController, UITextFieldDelegate, UITabl
 
     var name: String
     var startTime: String
-    var phases: Array<(min: Int, temp: Int)>
+    var phases: Array<Phase>
 
     required init(coder aDecoder: NSCoder) {
         name = ""
@@ -56,18 +58,27 @@ class BrewDesignerViewController : UIViewController, UITextFieldDelegate, UITabl
         }
     }
     
+    func changeEditingModeOnTableView(editing: Bool) {
+        phasesTableView.editing = editing
+        editButton.title = editing ? "Done" : "Edit"
+    }
+    
     // MARK: UITableViewDataSource
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        let numberOfSections = phases.count
-        if numberOfSections == 0 {
-            tableView.editing = false
-        }
-        return numberOfSections
+        return 1
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1
+        let numberOfRows = phases.count
+        if numberOfRows == 0 {
+            changeEditingModeOnTableView(false)
+            editButton.enabled = false
+        } else {
+            editButton.enabled = true
+        }
+        
+        return numberOfRows
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
@@ -75,14 +86,10 @@ class BrewDesignerViewController : UIViewController, UITextFieldDelegate, UITabl
         if phases.count > indexPath.row  {
             let phase = phases[indexPath.row]
             
-            cell.phaseLabel.text = "\(phase.min) min \(phase.temp) ˚C"
+            cell.phaseLabel.text = "\(indexPath.row + 1). \(phase.min) min \(phase.temp) ˚C"
         }
         
         return cell
-    }
-    
-    func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return "\(section + 1)."
     }
     
     func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
@@ -95,21 +102,26 @@ class BrewDesignerViewController : UIViewController, UITextFieldDelegate, UITabl
     
     func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
         if editingStyle == UITableViewCellEditingStyle.Delete {
-            if phases.count > indexPath.section {
-                phases.removeAtIndex(indexPath.section)
-                tableView.deleteSections(NSIndexSet(index: indexPath.row), withRowAnimation: UITableViewRowAnimation.Automatic)
+            if phases.count > indexPath.row {
+                phases.removeAtIndex(indexPath.row)
+                tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Automatic)
                 tableView.reloadData()
             }
         }
     }
     
-    // MARK: UITableViewDelegate
-
-    
+    func tableView(tableView: UITableView, moveRowAtIndexPath sourceIndexPath: NSIndexPath, toIndexPath destinationIndexPath: NSIndexPath) {
+        let destinationPhase = phases[destinationIndexPath.row]
+        
+        phases[destinationIndexPath.row] =  phases[sourceIndexPath.row]
+        phases[sourceIndexPath.row] = destinationPhase
+        
+        tableView.reloadData()
+    }
     
     //MARK: BrewPhaseDesignerDelegate
     
-    func addNewPhase(phase: (min: Int, temp: Int)) {
+    func addNewPhase(phase: Phase) {
         phases.append(phase)
         phasesTableView.reloadData()
     }
@@ -125,7 +137,7 @@ class BrewDesignerViewController : UIViewController, UITextFieldDelegate, UITabl
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        phasesTableView.editing = false
+        changeEditingModeOnTableView(false)
         
         if segue.identifier == "addSegue" {
             let brewNewPhaseViewController: BrewNewPhaseViewController = segue.destinationViewController as BrewNewPhaseViewController
@@ -134,7 +146,7 @@ class BrewDesignerViewController : UIViewController, UITextFieldDelegate, UITabl
     }
     
     func editButtonPressed(editButton: UIBarButtonItem) {
-        phasesTableView.editing = !phasesTableView.editing
+        changeEditingModeOnTableView(!phasesTableView.editing)
     }
     
 }

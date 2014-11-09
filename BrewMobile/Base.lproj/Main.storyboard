@@ -226,7 +226,7 @@
                                                 <sections/>
                                                 <connections>
                                                     <outlet property="dataSource" destination="A99-2W-2tT" id="kwP-ni-9iA"/>
-                                                    <outlet property="delegate" destination="A99-2W-2tT" id="dWZ-jA-AeP"/>
+                                                    <outlet property="delegate" destination="A99-2W-2tT" id="Vl2-fW-rbw"/>
                                                 </connections>
                                             </tableView>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Phases:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kg8-Ux-2bA">
@@ -267,7 +267,7 @@
                     <toolbarItems/>
                     <navigationItem key="navigationItem" id="Zeq-Qr-9A6">
                         <barButtonItem key="leftBarButtonItem" title="Sync" id="Cph-Uy-POK"/>
-                        <barButtonItem key="rightBarButtonItem" systemItem="edit" id="ell-oz-yN3"/>
+                        <barButtonItem key="rightBarButtonItem" enabled="NO" title="Edit" id="ell-oz-yN3"/>
                     </navigationItem>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
