@@ -276,6 +276,7 @@
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                     <connections>
+                        <outlet property="cloneButton" destination="V5l-Nc-hnj" id="6pb-9c-GaX"/>
                         <outlet property="editButton" destination="ell-oz-yN3" id="kXy-RH-1Eg"/>
                         <outlet property="nameTextField" destination="9cd-gS-0BW" id="GPa-nL-pel"/>
                         <outlet property="phasesTableView" destination="SZm-fm-dCl" id="TNL-Yz-v9e"/>
@@ -283,6 +284,7 @@
                         <outlet property="startTimePicker" destination="021-Vb-cVT" id="Y5e-sP-5bh"/>
                         <outlet property="startTimeTextField" destination="n47-T6-ejP" id="qMC-am-xKG"/>
                         <outlet property="syncButton" destination="Cph-Uy-POK" id="sxO-p1-Wpu"/>
+                        <outlet property="trashButton" destination="6xc-HR-StU" id="WRS-bB-cBr"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="eML-1P-VrM" userLabel="First Responder" sceneMemberID="firstResponder"/>

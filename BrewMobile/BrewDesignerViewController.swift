@@ -21,11 +21,13 @@ class BrewDesignerViewController : UIViewController, UITextFieldDelegate, UITabl
     @IBOutlet weak var pickerBgView: UIView!
     @IBOutlet weak var editButton: UIBarButtonItem!
     @IBOutlet weak var syncButton: UIBarButtonItem!
+    @IBOutlet weak var cloneButton: UIBarButtonItem!
+    @IBOutlet weak var trashButton: UIBarButtonItem!
 
     var name: String
     var startTime: String
     var phases: Array<BrewPhase>
-    let nowDate = NSDate()
+    var nowDate = NSDate()
 
     required init(coder aDecoder: NSCoder) {
         name = ""
@@ -42,6 +44,12 @@ class BrewDesignerViewController : UIViewController, UITextFieldDelegate, UITabl
         
         syncButton.target = self
         syncButton.action = "syncButtonPressed:"
+        
+        cloneButton.target = self
+        cloneButton.action = "cloneButtonPressed:"
+        
+        trashButton.target = self
+        trashButton.action = "trashButtonPressed:"
         
         showFormattedTextDate(nowDate)
     }
@@ -198,8 +206,26 @@ class BrewDesignerViewController : UIViewController, UITextFieldDelegate, UITabl
         dismissInputViews()
     }
     
-    func syncButtonPressed(editButton: UIBarButtonItem) {
+    func syncButtonPressed(syncButton: UIBarButtonItem) {
         dismissInputViews()
+    }
+    
+    func cloneButtonPressed(cloneButton: UIBarButtonItem) {
+        dismissInputViews()
+
+    }
+    
+    func trashButtonPressed(trashButton: UIBarButtonItem) {
+        dismissInputViews()
+
+        phases.removeAll(keepCapacity: false)
+        name = ""
+        startTime = ""
+        nameTextField.text = ""
+        nowDate = NSDate()
+       
+        showFormattedTextDate(nowDate)
+        phasesTableView.reloadData()
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
