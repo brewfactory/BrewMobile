@@ -149,7 +149,7 @@
                                     <barButtonItem width="200" style="plain" systemItem="fixedSpace" id="W9w-pS-fGp"/>
                                     <barButtonItem systemItem="add" id="K6e-Af-eaO">
                                         <connections>
-                                            <segue destination="TyE-Po-z3W" kind="show" identifier="addSegue" id="aro-Me-3h5"/>
+                                            <segue destination="TyE-Po-z3W" kind="presentation" identifier="addSegue" id="aro-Me-3h5"/>
                                         </connections>
                                     </barButtonItem>
                                 </items>
@@ -330,19 +330,25 @@
                                     <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bcs-ap-Lhn">
                                         <color key="backgroundColor" red="0.85098039219999999" green="0.84705882349999995" blue="0.87450980389999999" alpha="1" colorSpace="calibratedRGB"/>
                                     </view>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CU7-z6-1Aw">
+                                        <rect key="frame" x="137" y="170" width="46" height="30"/>
+                                        <state key="normal" title="Add">
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="addButtonPressed:" destination="TyE-Po-z3W" eventType="touchUpInside" id="qGX-4x-SKO"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
-                    <navigationItem key="navigationItem" id="5Xa-JS-uAH">
-                        <barButtonItem key="rightBarButtonItem" systemItem="done" id="EJl-4l-0TN"/>
-                    </navigationItem>
+                    <navigationItem key="navigationItem" id="5Xa-JS-uAH"/>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                     <connections>
-                        <outlet property="doneButton" destination="EJl-4l-0TN" id="l9g-3s-KZn"/>
                         <outlet property="minStepper" destination="fM5-3c-0aL" id="3B2-9a-KCg"/>
                         <outlet property="minTextField" destination="2EJ-ON-nEZ" id="kN7-go-2M6"/>
                         <outlet property="tempStepper" destination="KB8-Y1-Lym" id="aBc-TA-1fI"/>
