@@ -9,7 +9,7 @@
 import UIKit
 
 protocol BrewPhaseDesignerDelegate {
-    func addNewPhase(phase: (min: Int, temp: Int))
+    func addNewPhase(phase: BrewPhase)
 }
 
 class BrewNewPhaseViewController : UIViewController, UITextFieldDelegate {
@@ -57,7 +57,8 @@ class BrewNewPhaseViewController : UIViewController, UITextFieldDelegate {
     }
     
     @IBAction func addButtonPressed(button: UIButton) {
-        delegate.addNewPhase((min: Int(minStepper.value), temp: Int(tempStepper.value)))
+        let newPhase = BrewPhase(jobEnd:"", min:Int(minStepper.value), temp:Float(tempStepper.value), tempReached:false, inProgress:false)
+        delegate.addNewPhase(newPhase)
         self.dismissViewControllerAnimated(true, completion: nil)
     }
     

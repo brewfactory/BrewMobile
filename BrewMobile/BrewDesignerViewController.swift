@@ -8,8 +8,6 @@
 
 import UIKit
 
-typealias Phase = (min: Int, temp: Int)
-
 class PhaseCell: UITableViewCell {
     @IBOutlet weak var phaseLabel: UILabel!
 }
@@ -26,7 +24,7 @@ class BrewDesignerViewController : UIViewController, UITextFieldDelegate, UITabl
 
     var name: String
     var startTime: String
-    var phases: Array<Phase>
+    var phases: Array<BrewPhase>
 
     required init(coder aDecoder: NSCoder) {
         name = ""
@@ -145,7 +143,7 @@ class BrewDesignerViewController : UIViewController, UITextFieldDelegate, UITabl
     
     //MARK: BrewPhaseDesignerDelegate
     
-    func addNewPhase(phase: Phase) {
+    func addNewPhase(phase: BrewPhase) {
         phases.append(phase)
         phasesTableView.reloadData()
         enableSyncButton()
