@@ -59,7 +59,11 @@ class BrewDesignerViewController : UIViewController, UITextFieldDelegate, UITabl
     // MARK: UITableViewDataSource
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return phases.count
+        let numberOfSections = phases.count
+        if numberOfSections == 0 {
+            tableView.editing = false
+        }
+        return numberOfSections
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -93,7 +97,8 @@ class BrewDesignerViewController : UIViewController, UITextFieldDelegate, UITabl
         if editingStyle == UITableViewCellEditingStyle.Delete {
             if phases.count > indexPath.section {
                 phases.removeAtIndex(indexPath.section)
-                tableView.deleteSections(NSIndexSet(index: indexPath.row), withRowAnimation: UITableViewRowAnimation.Fade)
+                tableView.deleteSections(NSIndexSet(index: indexPath.row), withRowAnimation: UITableViewRowAnimation.Automatic)
+                tableView.reloadData()
             }
         }
     }
@@ -120,6 +125,8 @@ class BrewDesignerViewController : UIViewController, UITextFieldDelegate, UITabl
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        phasesTableView.editing = false
+        
         if segue.identifier == "addSegue" {
             let brewNewPhaseViewController: BrewNewPhaseViewController = segue.destinationViewController as BrewNewPhaseViewController
             brewNewPhaseViewController.delegate = self
