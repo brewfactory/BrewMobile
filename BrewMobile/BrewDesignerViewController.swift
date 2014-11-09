@@ -50,11 +50,14 @@ class BrewDesignerViewController : UIViewController, UITextFieldDelegate, UITabl
     func textFieldDidBeginEditing(textField: UITextField) {
         if textField == startTimeTextField {
             textField.resignFirstResponder()
+            nameTextField.resignFirstResponder()
             
             let nowDate = NSDate()
             startTimePicker.minimumDate = nowDate
             startTimePicker.date = nowDate
             pickerBgView.hidden = false
+        } else {
+            pickerBgView.hidden = true
         }
     }
     
@@ -136,6 +139,16 @@ class BrewDesignerViewController : UIViewController, UITextFieldDelegate, UITabl
         startTime = isoDateFormatter.stringFromDate(datePicker.date)
     }
     
+    @IBAction func viewTapped() {
+        nameTextField.resignFirstResponder()
+        startTimeTextField.resignFirstResponder()
+        pickerBgView.hidden = true
+    }
+    
+    func editButtonPressed(editButton: UIBarButtonItem) {
+        changeEditingModeOnTableView(!phasesTableView.editing)
+    }
+    
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         changeEditingModeOnTableView(false)
         
@@ -143,10 +156,6 @@ class BrewDesignerViewController : UIViewController, UITextFieldDelegate, UITabl
             let brewNewPhaseViewController: BrewNewPhaseViewController = segue.destinationViewController as BrewNewPhaseViewController
             brewNewPhaseViewController.delegate = self
         }
-    }
-    
-    func editButtonPressed(editButton: UIBarButtonItem) {
-        changeEditingModeOnTableView(!phasesTableView.editing)
     }
     
 }
