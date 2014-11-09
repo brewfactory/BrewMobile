@@ -14,7 +14,7 @@ class PhaseCell: UITableViewCell {
     @IBOutlet weak var phaseLabel: UILabel!
 }
 
-class BrewDesignerViewController : UIViewController, UITextFieldDelegate, UITableViewDataSource, UITableViewDelegate, BrewPhaseDesignerDelegate {
+class BrewDesignerViewController : UIViewController, UITextFieldDelegate, UITableViewDataSource, UITableViewDelegate, BrewPhaseDesignerDelegate, UIGestureRecognizerDelegate {
 
     @IBOutlet weak var nameTextField: UITextField!
     @IBOutlet weak var startTimeTextField: UITextField!
@@ -22,6 +22,7 @@ class BrewDesignerViewController : UIViewController, UITextFieldDelegate, UITabl
     @IBOutlet weak var startTimePicker: UIDatePicker!
     @IBOutlet weak var pickerBgView: UIView!
     @IBOutlet weak var editButton: UIBarButtonItem!
+    @IBOutlet weak var syncButton: UIBarButtonItem!
 
     var name: String
     var startTime: String
@@ -39,6 +40,9 @@ class BrewDesignerViewController : UIViewController, UITextFieldDelegate, UITabl
         
         editButton.target = self
         editButton.action = "editButtonPressed:"
+        
+        syncButton.target = self
+        syncButton.action = "syncButtonPressed:"
     }
     
     override func didReceiveMemoryWarning() {
@@ -47,23 +51,39 @@ class BrewDesignerViewController : UIViewController, UITextFieldDelegate, UITabl
     
     //MARK: UITextFieldDelegate
     
-    func textFieldDidBeginEditing(textField: UITextField) {
+    func textFieldShouldBeginEditing(textField: UITextField) -> Bool {
         if textField == startTimeTextField {
-            textField.resignFirstResponder()
             nameTextField.resignFirstResponder()
+            textField.resignFirstResponder()
             
             let nowDate = NSDate()
             startTimePicker.minimumDate = nowDate
             startTimePicker.date = nowDate
             pickerBgView.hidden = false
+            
+            return false
         } else {
             pickerBgView.hidden = true
+            
+            return true
         }
+    }
+    
+    func textFieldDidEndEditing(textField: UITextField) {
+        syncButton.enabled = enableSyncButton()
     }
     
     func changeEditingModeOnTableView(editing: Bool) {
         phasesTableView.editing = editing
         editButton.title = editing ? "Done" : "Edit"
+        
+        let numberOfRows = phases.count
+        if numberOfRows == 0 {
+            editButton.enabled = false
+            syncButton.enabled = false
+        } else {
+            editButton.enabled = true
+        }
     }
     
     // MARK: UITableViewDataSource
@@ -77,6 +97,7 @@ class BrewDesignerViewController : UIViewController, UITextFieldDelegate, UITabl
         if numberOfRows == 0 {
             changeEditingModeOnTableView(false)
             editButton.enabled = false
+            syncButton.enabled = false
         } else {
             editButton.enabled = true
         }
@@ -127,6 +148,16 @@ class BrewDesignerViewController : UIViewController, UITextFieldDelegate, UITabl
     func addNewPhase(phase: Phase) {
         phases.append(phase)
         phasesTableView.reloadData()
+        enableSyncButton()
+    }
+    
+    //MARK: UIGestureRecognizerDelegate
+
+    func gestureRecognizer(gestureRecognizer: UIGestureRecognizer, shouldReceiveTouch touch: UITouch) -> Bool {
+        if touch.view.isDescendantOfView(phasesTableView) && phasesTableView.editing {
+            return false
+        }
+        return true
     }
     
     //MARK: IBAction methods
@@ -135,22 +166,40 @@ class BrewDesignerViewController : UIViewController, UITextFieldDelegate, UITabl
         let dateFormatter = NSDateFormatter()
         dateFormatter.dateFormat = "YYYY.MM.dd. HH:mm"
         startTimeTextField.text = dateFormatter.stringFromDate(datePicker.date)
+        //TODO: not formatting properly
         let isoDateFormatter = ISO8601DateFormatter()
         startTime = isoDateFormatter.stringFromDate(datePicker.date)
+        enableSyncButton()
     }
     
     @IBAction func viewTapped() {
+        dismissInputViews()
+    }
+    
+    func dismissInputViews() {
         nameTextField.resignFirstResponder()
         startTimeTextField.resignFirstResponder()
         pickerBgView.hidden = true
     }
     
+    func enableSyncButton() -> Bool {
+       return (phases.count > 0 && countElements(nameTextField.text) > 0 && countElements(startTimeTextField.text) > 0)
+    }
+    
+    //MARK: custom UIBarButtonItem actions
+    
     func editButtonPressed(editButton: UIBarButtonItem) {
         changeEditingModeOnTableView(!phasesTableView.editing)
+        dismissInputViews()
+    }
+    
+    func syncButtonPressed(editButton: UIBarButtonItem) {
+        dismissInputViews()
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         changeEditingModeOnTableView(false)
+        dismissInputViews()
         
         if segue.identifier == "addSegue" {
             let brewNewPhaseViewController: BrewNewPhaseViewController = segue.destinationViewController as BrewNewPhaseViewController

@@ -244,7 +244,7 @@
                                 </constraints>
                             </scrollView>
                             <view hidden="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ggM-eD-ewr">
-                                <rect key="frame" x="0.0" y="314" width="320" height="162"/>
+                                <rect key="frame" x="0.0" y="312" width="320" height="162"/>
                                 <subviews>
                                     <datePicker contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="dateAndTime" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="021-Vb-cVT">
                                         <rect key="frame" x="0.0" y="0.0" width="320" height="162"/>
@@ -270,7 +270,7 @@
                     </view>
                     <toolbarItems/>
                     <navigationItem key="navigationItem" id="Zeq-Qr-9A6">
-                        <barButtonItem key="leftBarButtonItem" title="Sync" id="Cph-Uy-POK"/>
+                        <barButtonItem key="leftBarButtonItem" enabled="NO" title="Sync" id="Cph-Uy-POK"/>
                         <barButtonItem key="rightBarButtonItem" enabled="NO" title="Edit" id="ell-oz-yN3"/>
                     </navigationItem>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
@@ -282,12 +282,14 @@
                         <outlet property="pickerBgView" destination="ggM-eD-ewr" id="6oF-aa-9ua"/>
                         <outlet property="startTimePicker" destination="021-Vb-cVT" id="Y5e-sP-5bh"/>
                         <outlet property="startTimeTextField" destination="n47-T6-ejP" id="qMC-am-xKG"/>
+                        <outlet property="syncButton" destination="Cph-Uy-POK" id="sxO-p1-Wpu"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="eML-1P-VrM" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <tapGestureRecognizer id="2Ar-Ur-SCt">
                     <connections>
                         <action selector="viewTapped" destination="A99-2W-2tT" id="aqv-Zh-QYL"/>
+                        <outlet property="delegate" destination="A99-2W-2tT" id="uud-38-CXa"/>
                     </connections>
                 </tapGestureRecognizer>
             </objects>
