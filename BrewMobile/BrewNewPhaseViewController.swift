@@ -60,5 +60,10 @@ class BrewNewPhaseViewController : UIViewController, UITextFieldDelegate {
         delegate.addNewPhase((min: Int(minStepper.value), temp: Int(tempStepper.value)))
         self.dismissViewControllerAnimated(true, completion: nil)
     }
+    
+    @IBAction func viewTapped() {
+        minTextField.resignFirstResponder()
+        tempTextField.resignFirstResponder()
+    }
 
 }

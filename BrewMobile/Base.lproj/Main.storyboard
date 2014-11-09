@@ -173,7 +173,7 @@
                                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="2014.11.10. 08:45" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="n47-T6-ejP" userLabel="startTime">
+                                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="n47-T6-ejP" userLabel="startTime">
                                                 <rect key="frame" x="81" y="46" width="231" height="30"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <textInputTraits key="textInputTraits"/>
@@ -260,9 +260,13 @@
                             </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <gestureRecognizers/>
                         <constraints>
                             <constraint firstItem="Cvx-Mj-E8g" firstAttribute="top" secondItem="g4j-fA-jrF" secondAttribute="bottom" id="ifW-Sr-LBv"/>
                         </constraints>
+                        <connections>
+                            <outletCollection property="gestureRecognizers" destination="2Ar-Ur-SCt" appends="YES" id="YXs-MP-8Jd"/>
+                        </connections>
                     </view>
                     <toolbarItems/>
                     <navigationItem key="navigationItem" id="Zeq-Qr-9A6">
@@ -281,6 +285,11 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="eML-1P-VrM" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="2Ar-Ur-SCt">
+                    <connections>
+                        <action selector="viewTapped" destination="A99-2W-2tT" id="aqv-Zh-QYL"/>
+                    </connections>
+                </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="550" y="869"/>
         </scene>
@@ -358,6 +367,10 @@
                             </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <gestureRecognizers/>
+                        <connections>
+                            <outletCollection property="gestureRecognizers" destination="ETa-89-aDt" appends="YES" id="iTO-FH-NpE"/>
+                        </connections>
                     </view>
                     <navigationItem key="navigationItem" id="5Xa-JS-uAH"/>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
@@ -370,6 +383,11 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Z2A-tG-Utg" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="ETa-89-aDt">
+                    <connections>
+                        <action selector="viewTapped" destination="TyE-Po-z3W" id="QUY-PN-yLn"/>
+                    </connections>
+                </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="935" y="869"/>
         </scene>
