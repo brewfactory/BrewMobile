@@ -17,7 +17,7 @@ class BrewDesignerViewController : UIViewController, UITextFieldDelegate, BrewPh
 
     var name: String
     var startTime: String
-    var phases: PhaseArray
+    var phases: Array<(min: Int, temp: Int)>
 
     required init(coder aDecoder: NSCoder) {
         name = ""
@@ -50,7 +50,7 @@ class BrewDesignerViewController : UIViewController, UITextFieldDelegate, BrewPh
     //MARK: BrewPhaseDesignerDelegate
 
     func addNewPhase(phase: (min: Int, temp: Int)) {
-        println("phase: \(phase.min), \(phase.temp)")
+        phases.append(phase)
     }
     
     //MARK: IBAction methods
