@@ -19,6 +19,7 @@ class BrewDesignerViewController : UIViewController, UITextFieldDelegate, UITabl
     @IBOutlet weak var phasesTableView: UITableView!
     @IBOutlet weak var startTimePicker: UIDatePicker!
     @IBOutlet weak var pickerBgView: UIView!
+    @IBOutlet weak var editButton: UIBarButtonItem!
 
     var name: String
     var startTime: String
@@ -33,6 +34,9 @@ class BrewDesignerViewController : UIViewController, UITextFieldDelegate, UITabl
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        editButton.target = self
+        editButton.action = "editButtonPressed:"
     }
     
     override func didReceiveMemoryWarning() {
@@ -74,8 +78,29 @@ class BrewDesignerViewController : UIViewController, UITextFieldDelegate, UITabl
     }
     
     func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return "\(section + 1)"
+        return "\(section + 1)."
     }
+    
+    func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
+        return true
+    }
+    
+    func tableView(tableView: UITableView, canMoveRowAtIndexPath indexPath: NSIndexPath) -> Bool {
+        return true
+    }
+    
+    func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
+        if editingStyle == UITableViewCellEditingStyle.Delete {
+            if phases.count > indexPath.section {
+                phases.removeAtIndex(indexPath.section)
+                tableView.deleteSections(NSIndexSet(index: indexPath.row), withRowAnimation: UITableViewRowAnimation.Fade)
+            }
+        }
+    }
+    
+    // MARK: UITableViewDelegate
+
+    
     
     //MARK: BrewPhaseDesignerDelegate
     
@@ -99,6 +124,10 @@ class BrewDesignerViewController : UIViewController, UITextFieldDelegate, UITabl
             let brewNewPhaseViewController: BrewNewPhaseViewController = segue.destinationViewController as BrewNewPhaseViewController
             brewNewPhaseViewController.delegate = self
         }
+    }
+    
+    func editButtonPressed(editButton: UIBarButtonItem) {
+        phasesTableView.editing = !phasesTableView.editing
     }
     
 }
