@@ -60,7 +60,9 @@ class BrewViewController: UIViewController, UITableViewDelegate, UITableViewData
             }
             
             socket.on(tempChangedEvent, callback: {(AnyObject data) -> Void in
-                self.actTemp = data as Float
+                if data.count > 0 {
+                    self.actTemp = data[0] as Float
+                }
                 
                 dispatch_async(dispatch_get_main_queue(), {
                     self.updateTempLabel(self.actTemp)
@@ -68,13 +70,15 @@ class BrewViewController: UIViewController, UITableViewDelegate, UITableViewData
             })
             
             socket.on(brewChangedEvent, callback: {(AnyObject data) -> Void in
-                self.actState = parseBrewState(data)!
-                
-                dispatch_async(dispatch_get_main_queue(), {
-                    self.phasesTableView.reloadData()
-                    self.updateNameLabel()
-                    self.updateStartTimeLabel()
-                })
+                if data.count > 0 {
+                    self.actState = parseBrewState(data[0])!
+                    
+                    dispatch_async(dispatch_get_main_queue(), {
+                        self.phasesTableView.reloadData()
+                        self.updateNameLabel()
+                        self.updateStartTimeLabel()
+                    })
+                }
             })
         })
     }
