@@ -118,8 +118,8 @@ class BrewPhase: Brew, Equatable {
     class func encode(object: BrewPhase) -> JSON? {
         var phase = Dictionary<String, AnyObject>()
         
-        phase["min"] = String(Int(object.min))
-        phase["temp"] = String(Int(object.temp))
+        phase["min"] = Int(object.min)
+        phase["temp"] = Float(object.temp)
         
         return phase
     }

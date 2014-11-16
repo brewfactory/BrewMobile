@@ -22,12 +22,13 @@ class APIManager {
             
             NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue(), completionHandler:{ (response:NSURLResponse!, data: NSData!, error: NSError!) -> Void in
                 
-                let jsonResult: AnyObject = NSJSONSerialization.JSONObjectWithData(data, options:NSJSONReadingOptions.MutableContainers, error: nil)!
+                if(data != nil) {
+                    let jsonResult: AnyObject = NSJSONSerialization.JSONObjectWithData(data, options:NSJSONReadingOptions.MutableContainers, error: nil)!
                 
-                println(jsonResult)
+                    println(jsonResult)
+                }
             })
         }
-        
     }
     
 }
