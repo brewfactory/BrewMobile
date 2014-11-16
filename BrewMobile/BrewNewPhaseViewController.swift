@@ -50,7 +50,7 @@ class BrewNewPhaseViewController : UIViewController, UITextFieldDelegate {
     }
     
     @IBAction func textFieldDidChange(textField: UITextField) {
-        setValueToStepper(Double(textField.text.toInt()!), stepper: textField == minTextField ? minStepper : tempStepper)
+        setValueToStepper(Double(countElements(textField.text) > 0 ? textField.text.toInt()! : 0), stepper: textField == minTextField ? minStepper : tempStepper)
     }
     
     @IBAction func addButtonPressed(button: UIButton) {
