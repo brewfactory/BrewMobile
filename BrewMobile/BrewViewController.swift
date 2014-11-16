@@ -48,11 +48,11 @@ class BrewViewController: UIViewController, UITableViewDelegate, UITableViewData
         stopButton.target = self
         stopButton.action = "stopButtonPressed:"
         
-        resumeButton.target = self
-        resumeButton.action = "resumeButtonPressed:"
+        //resumeButton.target = self
+        //resumeButton.action = "resumeButtonPressed:"
         
-        pauseButton.target = self
-        pauseButton.action = "pauseButtonPressed:"
+        //pauseButton.target = self
+        //pauseButton.action = "pauseButtonPressed:"
         
         self.connectToHost()
     }

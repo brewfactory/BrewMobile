@@ -95,10 +95,6 @@
                                 <items>
                                     <barButtonItem width="5" style="plain" systemItem="fixedSpace" id="orH-pS-zjp"/>
                                     <barButtonItem systemItem="stop" id="MEt-OV-Ecl"/>
-                                    <barButtonItem width="20" style="plain" systemItem="fixedSpace" id="dtK-kn-Qqd"/>
-                                    <barButtonItem systemItem="play" id="TaR-J2-dgp"/>
-                                    <barButtonItem width="20" style="plain" systemItem="fixedSpace" id="uvG-bR-yTD"/>
-                                    <barButtonItem systemItem="pause" id="o7k-MC-GdN"/>
                                 </items>
                             </toolbar>
                         </subviews>
@@ -121,9 +117,7 @@
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                     <connections>
                         <outlet property="nameLabel" destination="gyd-PU-lhQ" id="Gbw-YL-nYf"/>
-                        <outlet property="pauseButton" destination="o7k-MC-GdN" id="JX1-3z-Wgi"/>
                         <outlet property="phasesTableView" destination="3Qa-Rc-J9s" id="xUS-Bx-59v"/>
-                        <outlet property="resumeButton" destination="TaR-J2-dgp" id="IhB-Nn-Dso"/>
                         <outlet property="startTimeLabel" destination="vrD-eZ-Qlc" id="un0-zu-tj1"/>
                         <outlet property="stopButton" destination="MEt-OV-Ecl" id="Rxx-qI-XYq"/>
                         <outlet property="tempLabel" destination="8uo-fb-fIr" id="wQK-g0-ier"/>

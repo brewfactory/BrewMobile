@@ -9,31 +9,34 @@
 import Foundation
 
 class APIManager {
+    
+    //Mark: POST to /brew
+    
     class func createBrew(brew: BrewState) {
         if let brewJSON: JSON? = BrewState.encode(brew) {
-            postRequestWithBody(brewJSON!)
+            requestWithBody("api/brew", method: "POST", body: brewJSON!)
         }
     }
     
+    //Mark: PATCH to /brew/stop
+
     class func stopBrew() {
-        var request : NSMutableURLRequest = NSMutableURLRequest()
-        request.URL = NSURL(string: host + "api/brew/stop")
-        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-        request.HTTPMethod = "PATCH"
-        sendRequest(request)
+        requestWithBody("api/brew/stop", method: "PATCH", body: nil)
     }
     
-    class func postRequestWithBody(body: JSON) {
+    class func requestWithBody(path: String, method: String, body: JSON?) {
         var request : NSMutableURLRequest = NSMutableURLRequest()
         var serializationError: NSError?
 
-        request.URL = NSURL(string: host + "api/brew")
+        request.URL = NSURL(string: host + path)
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-        request.HTTPMethod = "POST"
-        request.HTTPBody = NSJSONSerialization.dataWithJSONObject(body, options: NSJSONWritingOptions.PrettyPrinted, error: &serializationError)
-
+        request.HTTPMethod = method
+        if body != nil {
+             request.HTTPBody = NSJSONSerialization.dataWithJSONObject(body!, options: NSJSONWritingOptions.PrettyPrinted, error: &serializationError)
+        }
+        
         if serializationError == nil {
-           sendRequest(request)
+            sendRequest(request)
         } else {
             println("Error serializing JSON from brew")
         }
