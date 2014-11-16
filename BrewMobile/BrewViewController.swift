@@ -32,7 +32,10 @@ class BrewViewController: UIViewController, UITableViewDelegate, UITableViewData
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var startTimeLabel: UILabel!
     @IBOutlet weak var phasesTableView: UITableView!
-    
+    @IBOutlet weak var stopButton: UIBarButtonItem!
+    @IBOutlet weak var resumeButton: UIBarButtonItem!
+    @IBOutlet weak var pauseButton: UIBarButtonItem!
+
     required init(coder aDecoder: NSCoder) {
         actState = BrewState()
         actTemp = 0
@@ -41,6 +44,16 @@ class BrewViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        stopButton.target = self
+        stopButton.action = "stopButtonPressed:"
+        
+        resumeButton.target = self
+        resumeButton.action = "resumeButtonPressed:"
+        
+        pauseButton.target = self
+        pauseButton.action = "pauseButtonPressed:"
+        
         self.connectToHost()
     }
     
@@ -138,6 +151,20 @@ class BrewViewController: UIViewController, UITableViewDelegate, UITableViewData
         }
         
         return cell
+    }
+    
+    //MARK: custom UIBarButtonItem actions
+    
+    func stopButtonPressed(stopButton: UIBarButtonItem) {
+
+    }
+    
+    func resumeButtonPressed(resumeButton: UIBarButtonItem) {
+
+    }
+    
+    func pauseButtonPressed(pauseButton: UIBarButtonItem) {
+        
     }
     
 }
