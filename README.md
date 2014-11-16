@@ -1,5 +1,4 @@
-BrewMobile
-==========
+# BrewMobile
 
 iOS client for the [Brewfactory](https://github.com/brewfactory/BrewCore) project
 
@@ -12,29 +11,28 @@ App for managing the brewing process from your iPhone.
  - gives visual feedback of the current state
  - brew designer - ability of composing new brew
  - stopping current process
-
-**The UI**
-
-![Brewing a beer](http://brewfactory.org/BrewMobile/img/4.png)  
-![Designing a brew](http://brewfactory.org/BrewMobile/img/5.png)
  
-Used technologies
------------------
+## Used technologies
+
  - Swift
  - iOS >= 7.0, iOS 8 compatible
  - Socket.IO for WebSocket
 
-### Setting up the project ###
+## Setting up the project
 ```
 $ pod install
 
 $ open BrewMobile.xcworkspace/
 ```
-// TODO
--------
+
+## // TODO
 
  - improve test coverage
  - support push notifications (for phase changes)
  - ability to edit host
  - pause/resume
  - logs
+
+## The UI
+
+![Brewing a beer](http://brewfactory.org/BrewMobile/img/4.png)![Designing a brew](http://brewfactory.org/BrewMobile/img/5.png)
