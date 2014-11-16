@@ -81,7 +81,11 @@ class BrewDesignerViewController : UIViewController, UITextFieldDelegate, UITabl
     }
     
     func textFieldDidEndEditing(textField: UITextField) {
-        syncButton.enabled = enableSyncButton()
+        enableSyncButton()
+    }
+    
+    func textFieldDidBeginEditing(textField: UITextField) {
+        enableSyncButton()
     }
     
     func changeEditingModeOnTableView(editing: Bool) {
@@ -191,8 +195,8 @@ class BrewDesignerViewController : UIViewController, UITextFieldDelegate, UITabl
         pickerBgView.hidden = true
     }
     
-    func enableSyncButton() -> Bool {
-       return (brewState.phases.count > 0 && countElements(nameTextField.text) > 0 && countElements(startTimeTextField.text) > 0)
+    func enableSyncButton() {
+       syncButton.enabled = (brewState.phases.count > 0 && countElements(nameTextField.text) > 0 && countElements(startTimeTextField.text) > 0)
     }
     
     //MARK: custom UIBarButtonItem actions
