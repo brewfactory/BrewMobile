@@ -156,7 +156,7 @@ class BrewViewController: UIViewController, UITableViewDelegate, UITableViewData
     //MARK: custom UIBarButtonItem actions
     
     func stopButtonPressed(stopButton: UIBarButtonItem) {
-
+        APIManager.stopBrew()
     }
     
     func resumeButtonPressed(resumeButton: UIBarButtonItem) {

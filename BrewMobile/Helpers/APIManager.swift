@@ -15,6 +15,14 @@ class APIManager {
         }
     }
     
+    class func stopBrew() {
+        var request : NSMutableURLRequest = NSMutableURLRequest()
+        request.URL = NSURL(string: host + "api/brew/stop")
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.HTTPMethod = "PATCH"
+        sendRequest(request)
+    }
+    
     class func postRequestWithBody(body: JSON) {
         var request : NSMutableURLRequest = NSMutableURLRequest()
         var serializationError: NSError?
