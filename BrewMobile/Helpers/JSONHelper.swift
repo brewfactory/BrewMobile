@@ -74,3 +74,9 @@ func JSONArrayObject(object: JSON) -> JSONArray? {
 protocol JSONDecodable {
     class func decode(json: JSON) -> Self?
 }
+
+// MARK: JSONEncodable
+
+protocol JSONEncodable {
+    class func encode(object: Self) -> JSON?
+}

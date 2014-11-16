@@ -10,8 +10,7 @@ import UIKit
 
 let tempChangedEvent = "temperature_changed"
 let brewChangedEvent = "brew_changed"
-//let host = "http://brewcore-demo.herokuapp.com/"
-let host = "http://localhost:3000"
+let host = "http://brewcore-demo.herokuapp.com/"
 
 class BrewCell: UITableViewCell {
     @IBOutlet weak var minLabel: UILabel!

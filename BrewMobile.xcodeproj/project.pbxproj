@@ -28,6 +28,7 @@
 		69DAECB819C5A83500933A62 /* BrewState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69DAECB719C5A83500933A62 /* BrewState.swift */; };
 		69DAECBA19C5A84400933A62 /* BrewPhase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69DAECB919C5A84400933A62 /* BrewPhase.swift */; };
 		69EC2A8D19CC3439008108D8 /* ContentParserTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69EC2A8C19CC3439008108D8 /* ContentParserTestCase.swift */; };
+		E05793921A189770000D79BB /* APIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E05793911A189770000D79BB /* APIManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -63,6 +64,7 @@
 		69DAECB919C5A84400933A62 /* BrewPhase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BrewPhase.swift; sourceTree = "<group>"; };
 		69EC2A8C19CC3439008108D8 /* ContentParserTestCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentParserTestCase.swift; sourceTree = "<group>"; };
 		D4B8B3F1DCDC4AF2ADEC4500 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		E05793911A189770000D79BB /* APIManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIManager.swift; sourceTree = "<group>"; };
 		F29DC7B6AED1269D1165DF82 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -182,6 +184,7 @@
 			children = (
 				69BF5BB819C5DEEF00F878EF /* JSONHelper.swift */,
 				6928C98B19A3A49E00B2494E /* ContentParser.swift */,
+				E05793911A189770000D79BB /* APIManager.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -363,6 +366,7 @@
 			files = (
 				692AAA8B19A34C8C00224C4D /* BrewViewController.swift in Sources */,
 				692AAA8919A34C8C00224C4D /* AppDelegate.swift in Sources */,
+				E05793921A189770000D79BB /* APIManager.swift in Sources */,
 				69DAECB819C5A83500933A62 /* BrewState.swift in Sources */,
 				69DAECBA19C5A84400933A62 /* BrewPhase.swift in Sources */,
 				6928C98C19A3A49E00B2494E /* ContentParser.swift in Sources */,

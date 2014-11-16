@@ -24,15 +24,12 @@ class BrewDesignerViewController : UIViewController, UITextFieldDelegate, UITabl
     @IBOutlet weak var cloneButton: UIBarButtonItem!
     @IBOutlet weak var trashButton: UIBarButtonItem!
 
-    var name: String
-    var startTime: String
-    var phases: Array<BrewPhase>
+    var brewState: BrewState
     var nowDate = NSDate()
 
     required init(coder aDecoder: NSCoder) {
-        name = ""
-        startTime = ""
-        phases = []
+        brewState = BrewState()
+        
         super.init(coder: aDecoder)
     }
     
@@ -91,7 +88,7 @@ class BrewDesignerViewController : UIViewController, UITextFieldDelegate, UITabl
         phasesTableView.editing = editing
         editButton.title = editing ? "Done" : "Edit"
         
-        let numberOfRows = phases.count
+        let numberOfRows = brewState.phases.count
         if numberOfRows == 0 {
             editButton.enabled = false
             syncButton.enabled = false
@@ -107,7 +104,7 @@ class BrewDesignerViewController : UIViewController, UITextFieldDelegate, UITabl
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        let numberOfRows = phases.count
+        let numberOfRows = brewState.phases.count
         if numberOfRows == 0 {
             changeEditingModeOnTableView(false)
             editButton.enabled = false
@@ -121,8 +118,8 @@ class BrewDesignerViewController : UIViewController, UITextFieldDelegate, UITabl
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("PhaseCell", forIndexPath: indexPath) as PhaseCell
-        if phases.count > indexPath.row  {
-            let phase = phases[indexPath.row]
+        if brewState.phases.count > indexPath.row  {
+            let phase = brewState.phases[indexPath.row]
             
             cell.phaseLabel.text = "\(indexPath.row + 1). \(phase.min) min \(phase.temp) ˚C"
         }
@@ -140,8 +137,8 @@ class BrewDesignerViewController : UIViewController, UITextFieldDelegate, UITabl
     
     func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
         if editingStyle == UITableViewCellEditingStyle.Delete {
-            if phases.count > indexPath.row {
-                phases.removeAtIndex(indexPath.row)
+            if brewState.phases.count > indexPath.row {
+                brewState.phases.removeAtIndex(indexPath.row)
                 tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Automatic)
                 tableView.reloadData()
             }
@@ -149,10 +146,10 @@ class BrewDesignerViewController : UIViewController, UITextFieldDelegate, UITabl
     }
     
     func tableView(tableView: UITableView, moveRowAtIndexPath sourceIndexPath: NSIndexPath, toIndexPath destinationIndexPath: NSIndexPath) {
-        let destinationPhase = phases[destinationIndexPath.row]
+        let destinationPhase = brewState.phases[destinationIndexPath.row]
         
-        phases[destinationIndexPath.row] =  phases[sourceIndexPath.row]
-        phases[sourceIndexPath.row] = destinationPhase
+        brewState.phases[destinationIndexPath.row] =  brewState.phases[sourceIndexPath.row]
+        brewState.phases[sourceIndexPath.row] = destinationPhase
         
         tableView.reloadData()
     }
@@ -160,7 +157,7 @@ class BrewDesignerViewController : UIViewController, UITextFieldDelegate, UITabl
     //MARK: BrewPhaseDesignerDelegate
     
     func addNewPhase(phase: BrewPhase) {
-        phases.append(phase)
+        brewState.phases.append(phase)
         phasesTableView.reloadData()
         enableSyncButton()
     }
@@ -181,7 +178,8 @@ class BrewDesignerViewController : UIViewController, UITextFieldDelegate, UITabl
         //TODO: not formatting properly
         let isoDateFormatter = ISO8601DateFormatter()
         isoDateFormatter.includeTime = true
-        startTime = isoDateFormatter.stringFromDate(datePicker.date)
+        brewState.startTime = isoDateFormatter.stringFromDate(datePicker.date)
+      
         enableSyncButton()
     }
     
@@ -196,7 +194,7 @@ class BrewDesignerViewController : UIViewController, UITextFieldDelegate, UITabl
     }
     
     func enableSyncButton() -> Bool {
-       return (phases.count > 0 && countElements(nameTextField.text) > 0 && countElements(startTimeTextField.text) > 0)
+       return (brewState.phases.count > 0 && countElements(nameTextField.text) > 0 && countElements(startTimeTextField.text) > 0)
     }
     
     //MARK: custom UIBarButtonItem actions
@@ -208,20 +206,22 @@ class BrewDesignerViewController : UIViewController, UITextFieldDelegate, UITabl
     
     func syncButtonPressed(syncButton: UIBarButtonItem) {
         dismissInputViews()
+        
+        brewState.name = nameTextField.text
+        brewState.startTime = startTimeTextField.text
+
+        APIManager.createBrew(brewState)
     }
     
     func cloneButtonPressed(cloneButton: UIBarButtonItem) {
         dismissInputViews()
-
+        
     }
     
     func trashButtonPressed(trashButton: UIBarButtonItem) {
         dismissInputViews()
 
-        phases.removeAll(keepCapacity: false)
-        name = ""
-        startTime = ""
-        nameTextField.text = ""
+        brewState = BrewState()
         nowDate = NSDate()
        
         showFormattedTextDate(nowDate)
