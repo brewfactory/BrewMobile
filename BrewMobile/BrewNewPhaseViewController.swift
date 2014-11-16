@@ -23,9 +23,6 @@ class BrewNewPhaseViewController : UIViewController, UITextFieldDelegate {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        minStepper.value = Double(minTextField.text.toInt()!)
-        tempStepper.value = Double(tempTextField.text.toInt()!)
     }
     
     override func didReceiveMemoryWarning() {
