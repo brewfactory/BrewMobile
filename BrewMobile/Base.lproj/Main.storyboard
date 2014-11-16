@@ -90,8 +90,11 @@
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bJe-Uw-kqX">
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bJe-Uw-kqX">
                                 <rect key="frame" x="0.0" y="474" width="320" height="44"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="320" id="xVE-pw-Nrx"/>
+                                </constraints>
                                 <items>
                                     <barButtonItem width="5" style="plain" systemItem="fixedSpace" id="orH-pS-zjp"/>
                                     <barButtonItem systemItem="stop" id="MEt-OV-Ecl"/>
@@ -101,6 +104,8 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="3Qa-Rc-J9s" firstAttribute="top" secondItem="tWJ-EQ-qQb" secondAttribute="bottom" constant="137" id="6tU-dk-plS"/>
+                            <constraint firstItem="hAR-Mr-wUD" firstAttribute="top" secondItem="bJe-Uw-kqX" secondAttribute="bottom" constant="1" id="A4Z-NW-xqO"/>
+                            <constraint firstItem="bJe-Uw-kqX" firstAttribute="leading" secondItem="3Qa-Rc-J9s" secondAttribute="leading" id="CGn-NM-bSg"/>
                             <constraint firstItem="3Qa-Rc-J9s" firstAttribute="leading" secondItem="tNK-FN-4xJ" secondAttribute="leading" id="Gbb-9P-hlq"/>
                             <constraint firstAttribute="centerX" secondItem="vrD-eZ-Qlc" secondAttribute="centerX" id="SPG-xa-5Nm"/>
                             <constraint firstItem="gyd-PU-lhQ" firstAttribute="top" secondItem="tWJ-EQ-qQb" secondAttribute="bottom" constant="20" id="U4O-J9-kcT"/>
@@ -159,8 +164,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="QbG-P1-hyV">
-                                <rect key="frame" x="0.0" y="475" width="320" height="44"/>
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QbG-P1-hyV">
+                                <rect key="frame" x="0.0" y="479" width="320" height="44"/>
                                 <items>
                                     <barButtonItem width="5" style="plain" systemItem="fixedSpace" id="IyC-zF-Wn2"/>
                                     <barButtonItem systemItem="trash" id="6xc-HR-StU"/>
@@ -172,10 +177,10 @@
                                     </barButtonItem>
                                 </items>
                             </toolbar>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Cvx-Mj-E8g">
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Cvx-Mj-E8g">
                                 <rect key="frame" x="0.0" y="64" width="320" height="409"/>
                                 <subviews>
-                                    <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8uU-AK-Jg3">
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8uU-AK-Jg3">
                                         <rect key="frame" x="0.0" y="0.0" width="320" height="410"/>
                                         <subviews>
                                             <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="wdB-53-QG1">
@@ -262,18 +267,31 @@
                                             </tableView>
                                         </subviews>
                                         <color key="backgroundColor" red="0.98912292817679559" green="0.98912292817679559" blue="0.98912292817679559" alpha="1" colorSpace="calibratedRGB"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="410" id="grA-Nz-A4s"/>
+                                        </constraints>
                                     </view>
-                                    <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ELI-23-zFV" userLabel="separator">
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ELI-23-zFV" userLabel="separator">
                                         <rect key="frame" x="0.0" y="129" width="320" height="1"/>
                                         <color key="backgroundColor" red="0.75686274509999996" green="0.75686274509999996" blue="0.75686274509999996" alpha="0.40000000000000002" colorSpace="calibratedRGB"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="1" id="muf-dQ-NhJ"/>
+                                        </constraints>
                                     </view>
                                 </subviews>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="409" id="Bze-Bb-5hN"/>
+                                    <constraint firstItem="ELI-23-zFV" firstAttribute="leading" secondItem="8uU-AK-Jg3" secondAttribute="leading" id="4Ug-Zm-7Ta"/>
+                                    <constraint firstItem="ELI-23-zFV" firstAttribute="leading" secondItem="Cvx-Mj-E8g" secondAttribute="leading" id="7ux-sf-F5M"/>
+                                    <constraint firstAttribute="bottom" secondItem="8uU-AK-Jg3" secondAttribute="bottom" constant="-1" id="Qe6-j6-kfD"/>
+                                    <constraint firstItem="8uU-AK-Jg3" firstAttribute="top" secondItem="Cvx-Mj-E8g" secondAttribute="top" id="X6f-p0-YCR"/>
+                                    <constraint firstItem="ELI-23-zFV" firstAttribute="centerX" secondItem="Cvx-Mj-E8g" secondAttribute="centerX" id="Y2n-p9-n15"/>
+                                    <constraint firstAttribute="trailing" secondItem="ELI-23-zFV" secondAttribute="trailing" id="glo-Tl-zHh"/>
+                                    <constraint firstItem="ELI-23-zFV" firstAttribute="trailing" secondItem="8uU-AK-Jg3" secondAttribute="trailing" id="jyb-8Z-A6a"/>
+                                    <constraint firstItem="ELI-23-zFV" firstAttribute="top" secondItem="Cvx-Mj-E8g" secondAttribute="top" constant="129" id="n0B-gV-qwz"/>
                                 </constraints>
                             </scrollView>
-                            <view hidden="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ggM-eD-ewr">
-                                <rect key="frame" x="0.0" y="312" width="320" height="162"/>
+                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ggM-eD-ewr">
+                                <rect key="frame" x="0.0" y="315" width="320" height="162"/>
                                 <subviews>
                                     <datePicker contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="dateAndTime" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="021-Vb-cVT">
                                         <rect key="frame" x="0.0" y="0.0" width="320" height="162"/>
@@ -286,13 +304,33 @@
                                     </datePicker>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="162" id="8ab-bR-lLN"/>
+                                </constraints>
                             </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <gestureRecognizers/>
                         <constraints>
+                            <constraint firstItem="dk4-bf-dy9" firstAttribute="top" secondItem="QbG-P1-hyV" secondAttribute="bottom" constant="1" id="1Ol-v6-YCJ"/>
+                            <constraint firstAttribute="trailing" secondItem="QbG-P1-hyV" secondAttribute="trailing" id="1vq-cU-KCu"/>
+                            <constraint firstItem="ggM-eD-ewr" firstAttribute="trailing" secondItem="QbG-P1-hyV" secondAttribute="trailing" id="2or-7R-3wL"/>
+                            <constraint firstItem="ggM-eD-ewr" firstAttribute="top" secondItem="g4j-fA-jrF" secondAttribute="bottom" constant="248" id="CpE-Gp-xch"/>
+                            <constraint firstItem="ggM-eD-ewr" firstAttribute="leading" secondItem="Cvx-Mj-E8g" secondAttribute="leading" id="ROw-ff-VKX"/>
+                            <constraint firstItem="Cvx-Mj-E8g" firstAttribute="trailing" secondItem="ggM-eD-ewr" secondAttribute="trailing" id="TJK-nq-nJe"/>
+                            <constraint firstItem="QbG-P1-hyV" firstAttribute="width" secondItem="ggM-eD-ewr" secondAttribute="width" id="bjZ-jG-UaS"/>
+                            <constraint firstAttribute="centerX" secondItem="ggM-eD-ewr" secondAttribute="centerX" id="dTm-wv-94U"/>
+                            <constraint firstItem="ggM-eD-ewr" firstAttribute="leading" secondItem="QbG-P1-hyV" secondAttribute="leading" id="iBX-bx-qy6"/>
                             <constraint firstItem="Cvx-Mj-E8g" firstAttribute="top" secondItem="g4j-fA-jrF" secondAttribute="bottom" id="ifW-Sr-LBv"/>
+                            <constraint firstItem="QbG-P1-hyV" firstAttribute="top" secondItem="ggM-eD-ewr" secondAttribute="bottom" constant="2" id="qj7-tc-mVq"/>
+                            <constraint firstItem="QbG-P1-hyV" firstAttribute="leading" secondItem="ZL9-Ko-s0S" secondAttribute="leading" id="xK2-s7-S4c"/>
+                            <constraint firstItem="QbG-P1-hyV" firstAttribute="top" secondItem="Cvx-Mj-E8g" secondAttribute="bottom" constant="6" id="yag-U5-vOf"/>
                         </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="CpE-Gp-xch"/>
+                            </mask>
+                        </variation>
                         <connections>
                             <outletCollection property="gestureRecognizers" destination="2Ar-Ur-SCt" appends="YES" id="YXs-MP-8Jd"/>
                         </connections>
@@ -338,7 +376,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="9br-pg-Zre">
-                                <rect key="frame" x="0.0" y="184" width="320" height="200"/>
+                                <rect key="frame" x="0.0" y="92" width="320" height="200"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="˚C" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dfX-z4-H5Q">
                                         <rect key="frame" x="267" y="69" width="19" height="21"/>
