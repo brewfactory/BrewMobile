@@ -120,7 +120,6 @@ class BrewDesignerViewController : UIViewController, UITextFieldDelegate, UITabl
         let cell = tableView.dequeueReusableCellWithIdentifier("PhaseCell", forIndexPath: indexPath) as PhaseCell
         if brewState.phases.count > indexPath.row  {
             let phase = brewState.phases[indexPath.row]
-            
             cell.phaseLabel.text = "\(indexPath.row + 1). \(phase.min) min \(phase.temp) ˚C"
         }
         
@@ -179,7 +178,6 @@ class BrewDesignerViewController : UIViewController, UITextFieldDelegate, UITabl
         let isoDateFormatter = ISO8601DateFormatter()
         isoDateFormatter.includeTime = true
         brewState.startTime = isoDateFormatter.stringFromDate(datePicker.date)
-      
         enableSyncButton()
     }
     
@@ -215,7 +213,7 @@ class BrewDesignerViewController : UIViewController, UITextFieldDelegate, UITabl
     
     func cloneButtonPressed(cloneButton: UIBarButtonItem) {
         dismissInputViews()
-        
+
     }
     
     func trashButtonPressed(trashButton: UIBarButtonItem) {

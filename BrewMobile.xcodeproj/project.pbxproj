@@ -29,6 +29,7 @@
 		69DAECBA19C5A84400933A62 /* BrewPhase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69DAECB919C5A84400933A62 /* BrewPhase.swift */; };
 		69EC2A8D19CC3439008108D8 /* ContentParserTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69EC2A8C19CC3439008108D8 /* ContentParserTestCase.swift */; };
 		E05793921A189770000D79BB /* APIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E05793911A189770000D79BB /* APIManager.swift */; };
+
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
