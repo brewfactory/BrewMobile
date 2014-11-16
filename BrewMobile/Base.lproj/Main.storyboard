@@ -154,10 +154,9 @@
                             <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="QbG-P1-hyV">
                                 <rect key="frame" x="0.0" y="475" width="320" height="44"/>
                                 <items>
-                                    <barButtonItem systemItem="refresh" id="V5l-Nc-hnj"/>
-                                    <barButtonItem width="25" style="plain" systemItem="fixedSpace" id="IyC-zF-Wn2"/>
+                                    <barButtonItem width="5" style="plain" systemItem="fixedSpace" id="IyC-zF-Wn2"/>
                                     <barButtonItem systemItem="trash" id="6xc-HR-StU"/>
-                                    <barButtonItem width="195" style="plain" systemItem="fixedSpace" id="W9w-pS-fGp"/>
+                                    <barButtonItem width="240" style="plain" systemItem="fixedSpace" id="W9w-pS-fGp"/>
                                     <barButtonItem systemItem="add" id="K6e-Af-eaO">
                                         <connections>
                                             <segue destination="TyE-Po-z3W" kind="presentation" identifier="addSegue" id="aro-Me-3h5"/>
@@ -298,7 +297,6 @@
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                     <connections>
-                        <outlet property="cloneButton" destination="V5l-Nc-hnj" id="6pb-9c-GaX"/>
                         <outlet property="editButton" destination="ell-oz-yN3" id="kXy-RH-1Eg"/>
                         <outlet property="nameTextField" destination="9cd-gS-0BW" id="GPa-nL-pel"/>
                         <outlet property="phasesTableView" destination="SZm-fm-dCl" id="TNL-Yz-v9e"/>

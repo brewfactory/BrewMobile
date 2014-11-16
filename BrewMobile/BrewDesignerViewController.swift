@@ -42,8 +42,8 @@ class BrewDesignerViewController : UIViewController, UITextFieldDelegate, UITabl
         syncButton.target = self
         syncButton.action = "syncButtonPressed:"
         
-        cloneButton.target = self
-        cloneButton.action = "cloneButtonPressed:"
+        //cloneButton.target = self
+        //cloneButton.action = "cloneButtonPressed:"
         
         trashButton.target = self
         trashButton.action = "trashButtonPressed:"
@@ -221,7 +221,7 @@ class BrewDesignerViewController : UIViewController, UITextFieldDelegate, UITabl
     
     func cloneButtonPressed(cloneButton: UIBarButtonItem) {
         dismissInputViews()
-
+        
     }
     
     func trashButtonPressed(trashButton: UIBarButtonItem) {
