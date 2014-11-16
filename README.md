@@ -15,8 +15,8 @@ App for managing the brewing process from your iPhone.
 
 **The UI**
 
-![Brewing a beer](http://brewfactory.org/BrewMobile/img/3.png)  
-![Designing a brew](http://brewfactory.org/BrewMobile/img/4.png)
+![Brewing a beer](http://brewfactory.org/BrewMobile/img/4.png)  
+![Designing a brew](http://brewfactory.org/BrewMobile/img/5.png)
  
 Used technologies
 -----------------
