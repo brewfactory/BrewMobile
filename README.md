@@ -27,7 +27,7 @@ Used technologies
 ```
 $ pod install
 
-$ open BrewApp.xcworkspace/
+$ open BrewMobile.xcworkspace/
 ```
 // TODO
 -------
