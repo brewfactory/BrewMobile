@@ -8,8 +8,6 @@
 
 import UIKit
 
-let tempChangedEvent = "temperature_changed"
-let brewChangedEvent = "brew_changed"
 let host = "http://brewcore-demo.herokuapp.com/"
 
 class BrewCell: UITableViewCell {
@@ -26,6 +24,9 @@ class BrewViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     var actState: BrewState
     var actTemp: Float
+    
+    let tempChangedEvent = "temperature_changed"
+    let brewChangedEvent = "brew_changed"
     
     @IBOutlet weak var tempLabel: UILabel!
     @IBOutlet weak var nameLabel: UILabel!
@@ -59,7 +60,7 @@ class BrewViewController: UIViewController, UITableViewDelegate, UITableViewData
                 println("Disconnected from \(host)")
             }
             
-            socket.on(tempChangedEvent, callback: {(AnyObject data) -> Void in
+            socket.on(self.tempChangedEvent, callback: {(AnyObject data) -> Void in
                 if data.count > 0 {
                     self.actTemp = data[0] as Float
                 }
@@ -69,7 +70,7 @@ class BrewViewController: UIViewController, UITableViewDelegate, UITableViewData
                 })
             })
             
-            socket.on(brewChangedEvent, callback: {(AnyObject data) -> Void in
+            socket.on(self.brewChangedEvent, callback: {(AnyObject data) -> Void in
                 if data.count > 0 {
                     self.actState = parseBrewState(data[0])!
                     
