@@ -39,5 +39,5 @@ $ open BrewApp.xcworkspace/
  - logs
 
   [1]: https://github.com/brewfactory/BrewCore
-  [2]: http://brewfactory.org/BrewMobile/img/1.png
-  [3]: http://brewfactory.org/BrewMobile/img/2.png
+  [2]: http://brewfactory.org/BrewMobile/img/3.png
+  [3]: http://brewfactory.org/BrewMobile/img/4.png
