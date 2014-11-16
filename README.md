@@ -1,7 +1,7 @@
 BrewMobile
 ==========
 
-iOS client for the [Brewfactory][1] project
+iOS client for the [Brewfactory](https://github.com/brewfactory/BrewCore) project
 
 What is this?
 -------------
@@ -15,7 +15,8 @@ App for managing the brewing process from your iPhone.
 
 **The UI**
 
-![brew_demo_1][2][brew_demo_2][3]
+![Brewing a beer](http://brewfactory.org/BrewMobile/img/3.png)  
+![Designing a brew](http://brewfactory.org/BrewMobile/img/4.png)
  
 Used technologies
 -----------------
@@ -37,7 +38,3 @@ $ open BrewMobile.xcworkspace/
  - ability to edit host
  - pause/resume
  - logs
-
-  [1]: https://github.com/brewfactory/BrewCore
-  [2]: http://brewfactory.org/BrewMobile/img/3.png
-  [3]: http://brewfactory.org/BrewMobile/img/4.png
