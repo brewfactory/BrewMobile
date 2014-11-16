@@ -461,11 +461,11 @@
             </objects>
             <point key="canvasLocation" x="935" y="869"/>
         </scene>
-        <!--Desginer-->
+        <!--Designer-->
         <scene sceneID="9pv-7w-u4P">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="lCH-cY-76p" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Desginer" image="DesignerIcon" id="uE2-4u-eN1"/>
+                    <tabBarItem key="tabBarItem" title="Designer" image="DesignerIcon" id="uE2-4u-eN1"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="Hb0-gw-C4w">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
