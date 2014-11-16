@@ -225,7 +225,8 @@ class BrewDesignerViewController : UIViewController, UITextFieldDelegate, UITabl
 
         brewState = BrewState()
         nowDate = NSDate()
-       
+        
+        nameTextField.text = ""
         showFormattedTextDate(nowDate)
         phasesTableView.reloadData()
     }
