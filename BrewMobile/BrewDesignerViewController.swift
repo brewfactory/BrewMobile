@@ -61,6 +61,13 @@ class BrewDesignerViewController : UIViewController, UITextFieldDelegate, UITabl
         startTimeTextField.text = dateFormatter.stringFromDate(date)
     }
     
+    func createISO8601FormattedDate(date: NSDate) -> String {
+        let isoDateFormatter = ISO8601DateFormatter()
+        isoDateFormatter.defaultTimeZone = NSTimeZone.defaultTimeZone()
+        isoDateFormatter.includeTime = true
+        return isoDateFormatter.stringFromDate(date)
+    }
+    
     //MARK: UITextFieldDelegate
     
     func textFieldShouldBeginEditing(textField: UITextField) -> Bool {
@@ -182,10 +189,8 @@ class BrewDesignerViewController : UIViewController, UITextFieldDelegate, UITabl
 
     @IBAction func datePickerDateDidChange(datePicker: UIDatePicker) {
         showFormattedTextDate(datePicker.date)
-        //TODO: not formatting properly
-        let isoDateFormatter = ISO8601DateFormatter()
-        isoDateFormatter.includeTime = true
-        brewState.startTime = isoDateFormatter.stringFromDate(datePicker.date)
+        brewState.startTime = createISO8601FormattedDate(datePicker.date)
+
         enableSyncButton()
     }
     
@@ -214,7 +219,9 @@ class BrewDesignerViewController : UIViewController, UITextFieldDelegate, UITabl
         dismissInputViews()
         
         brewState.name = nameTextField.text
-        brewState.startTime = startTimeTextField.text
+        if brewState.startTime == "" {
+            brewState.startTime = createISO8601FormattedDate(nowDate)
+        }
 
         APIManager.createBrew(brewState)
     }
