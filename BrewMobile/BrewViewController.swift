@@ -112,7 +112,7 @@ class BrewViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
     
     func updateStartTimeLabel() {
-        self.startTimeLabel.text = "starting \(self.actState.startTime)"
+        self.startTimeLabel.text = self.actState.phases.count > 0 ? "starting \(self.actState.startTime)" : ""
     }
     
     func stateText(brewPhase: BrewPhase) -> String {
