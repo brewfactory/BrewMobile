@@ -130,6 +130,10 @@ class BrewDesignerViewController : UIViewController, UITextFieldDelegate, UITabl
         return cell
     }
     
+    func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        return "Phases"
+    }
+    
     func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
         return true
     }
