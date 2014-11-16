@@ -16,7 +16,7 @@ class BrewStateTestCase: XCTestCase {
     override func setUp() {
         super.setUp()
         
-        brewPhase = BrewPhase(jobEnd: formatDate("2014-08-03T11:55:00.000Z"), min: 10, temp: 70, tempReached: false, inProgress: true)
+        brewPhase = BrewPhase(jobEnd: ContentParser.formatDate("2014-08-03T11:55:00.000Z"), min: 10, temp: 70, tempReached: false, inProgress: true)
         brewState = BrewState(name: "Very IPA", startTime: "10:30", phases: [brewPhase], paused: false, inProgress: true)
     }
     

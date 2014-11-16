@@ -50,13 +50,13 @@ class BrewState: Brew, Equatable  {
             var newPhases: PhaseArray = []
             
             for rawPhase: JSON in phases {
-                if let brewPhase = parseBrewPhase(rawPhase) {
+                if let brewPhase = ContentParser.parseBrewPhase(rawPhase) {
                     newPhases.append(brewPhase)
                 }
             }
             return newPhases
             }(phases)
-        return BrewState(name: name, startTime: formatDate(startTime), phases: parsedPhases, paused: paused, inProgress: inProgress)
+        return BrewState(name: name, startTime: ContentParser.formatDate(startTime), phases: parsedPhases, paused: paused, inProgress: inProgress)
     }
 
     // MARK: JSONDecodable

@@ -93,7 +93,7 @@ class BrewPhase: Brew, Equatable {
     }
     
     class func create(jobEnd: String)(min: Int)(temp: Float)(tempReached: Bool)(inProgress: Bool) -> BrewPhase {
-        return BrewPhase(jobEnd: formatDate(jobEnd), min: min, temp: temp, tempReached: tempReached, inProgress: inProgress)
+        return BrewPhase(jobEnd: ContentParser.formatDate(jobEnd), min: min, temp: temp, tempReached: tempReached, inProgress: inProgress)
     }
     
     // MARK: JSONDecodable
