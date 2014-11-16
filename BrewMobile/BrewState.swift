@@ -59,7 +59,6 @@ class BrewState: Brew, Equatable  {
         return BrewState(name: name, startTime: formatDate(startTime), phases: parsedPhases, paused: paused, inProgress: inProgress)
     }
 
-
     // MARK: JSONDecodable
 
     override class func decode(json: JSON) -> BrewState? {
@@ -75,6 +74,26 @@ class BrewState: Brew, Equatable  {
         } else {
             return BrewState()
         }
+    }
+
+    // MARK: JSONEncodable
+    
+    class func encode(object: BrewState) -> JSON? {
+        var brew = Dictionary<String, AnyObject>()
+       
+        brew["name"] = object.name
+        brew["startTime"] = object.startTime
+        
+        var encodedPhases = JSONArray()
+        for phase: BrewPhase in object.phases {
+            if let encodedPhase: JSON? = BrewPhase.encode(phase) {
+                encodedPhases.append(encodedPhase!)
+            }
+        }
+
+        brew["phases"] = encodedPhases
+        
+        return brew
     }
 
 }

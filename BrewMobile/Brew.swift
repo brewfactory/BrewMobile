@@ -8,7 +8,7 @@
 
 import Foundation
 
-class Brew : JSONDecodable {
+class Brew : JSONDecodable, JSONEncodable {
     var inProgress: Bool
     
     init () {
@@ -22,6 +22,12 @@ class Brew : JSONDecodable {
     // MARK: JSONDecodable
 
     class func decode(json: JSON) -> Self? {
+        return nil
+    }
+    
+    // MARK: JSONEncodable
+    
+    class func encode(object: Brew) -> JSON? {
         return nil
     }
 
