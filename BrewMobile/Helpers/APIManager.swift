@@ -28,7 +28,7 @@ class APIManager {
         var request : NSMutableURLRequest = NSMutableURLRequest()
         var serializationError: NSError?
 
-        request.URL = NSURL(string: host + path)
+        request.URL = NSURL(string: PersistentStorage.sharedInstance.host + path)
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
         request.HTTPMethod = method
         if body != nil {

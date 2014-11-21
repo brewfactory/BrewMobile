@@ -8,8 +8,6 @@
 
 import UIKit
 
-let host = "http://brewcore-demo.herokuapp.com/"
-
 class BrewCell: UITableViewCell {
     @IBOutlet weak var minLabel: UILabel!
     @IBOutlet weak var statusLabel: UILabel!
@@ -64,13 +62,13 @@ class BrewViewController: UIViewController, UITableViewDelegate, UITableViewData
     // MARK: SIOSocket
     
     private func connectToHost() {
-        SIOSocket.socketWithHost(host, reconnectAutomatically: true, attemptLimit: 0, withDelay: 1, maximumDelay: 5, timeout: 20, response: {socket in
+        SIOSocket.socketWithHost(PersistentStorage.sharedInstance.host, reconnectAutomatically: true, attemptLimit: 0, withDelay: 1, maximumDelay: 5, timeout: 20, response: {socket in
             socket.onConnect = {
-                println("Connected to \(host)")
+                println("Connected to \(PersistentStorage.sharedInstance.host)")
             }
             
             socket.onDisconnect = {
-                println("Disconnected from \(host)")
+                println("Disconnected from \(PersistentStorage.sharedInstance.host)")
             }
             
             socket.on(self.tempChangedEvent, callback: {(AnyObject data) -> Void in

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		02CF45421A1F9234008EF2E3 /* PersistentStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02CF45411A1F9234008EF2E3 /* PersistentStorage.swift */; };
 		2AFE0C471EC84D3A99174670 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D4B8B3F1DCDC4AF2ADEC4500 /* libPods.a */; };
 		6809CF595ECA4D168275077A /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D4B8B3F1DCDC4AF2ADEC4500 /* libPods.a */; };
 		690197A71A0D4FA4003DB4B9 /* BrewDesignerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 690197A61A0D4FA4003DB4B9 /* BrewDesignerViewController.swift */; };
@@ -42,6 +43,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		02CF45411A1F9234008EF2E3 /* PersistentStorage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PersistentStorage.swift; sourceTree = "<group>"; };
 		0B8867EBE62D4D04A837E53D /* libPods-BrewMobileTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-BrewMobileTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4773AB27AD3F609E54511C2A /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		690197A61A0D4FA4003DB4B9 /* BrewDesignerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BrewDesignerViewController.swift; sourceTree = "<group>"; };
@@ -182,6 +184,7 @@
 		69832CDC19A4CE1F00F414C4 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
+				02CF45411A1F9234008EF2E3 /* PersistentStorage.swift */,
 				69BF5BB819C5DEEF00F878EF /* JSONHelper.swift */,
 				6928C98B19A3A49E00B2494E /* ContentParser.swift */,
 				E05793911A189770000D79BB /* APIManager.swift */,
@@ -373,6 +376,7 @@
 				69BF5BB919C5DEEF00F878EF /* JSONHelper.swift in Sources */,
 				690197A71A0D4FA4003DB4B9 /* BrewDesignerViewController.swift in Sources */,
 				692AAAA619A3550A00224C4D /* Brew.swift in Sources */,
+				02CF45421A1F9234008EF2E3 /* PersistentStorage.swift in Sources */,
 				690197AB1A0E10F2003DB4B9 /* BrewNewPhaseViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
