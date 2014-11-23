@@ -56,17 +56,21 @@
          //Custom events
          
          //Brew status changed
-         [self.socket on:EVENT_BREW callback:^(id brewData) {
-            actBrewState = [[ContentParser sharedInstance] parseBrewStateFromRawData:brewData];
-            [phasesTableView performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:NO];
-
-            [self performSelectorOnMainThread:@selector(updateNameLabel) withObject:nil waitUntilDone:NO];
-            [self performSelectorOnMainThread:@selector(updateStartTimeLabel) withObject:nil waitUntilDone:NO];
+         [self.socket on:EVENT_BREW callback:^(NSArray *args) {
+             id brewData = args.count > 0 ? args[0] : nil;
+             if (brewData) {
+                 actBrewState = [[ContentParser sharedInstance] parseBrewStateFromRawData:brewData];
+                 [phasesTableView performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:NO];
+                 
+                 [self performSelectorOnMainThread:@selector(updateNameLabel) withObject:nil waitUntilDone:NO];
+                 [self performSelectorOnMainThread:@selector(updateStartTimeLabel) withObject:nil waitUntilDone:NO];
+             }
          }];
          
          //Temperature changed
-         [self.socket on:EVENT_TEMPERATURE callback:^(NSNumber *newTemp) {
-             if (![newTemp isKindOfClass:[NSNull class]]) {
+         [self.socket on:EVENT_TEMPERATURE callback:^(NSArray *args) {
+             NSNumber *newTemp = args.count > 0 ? args[0] : nil;
+             if (newTemp && ![newTemp isKindOfClass:[NSNull class]]) {
                  actTemp = newTemp;
                  [weakSelf performSelectorOnMainThread:@selector(updateTempLabel) withObject:nil waitUntilDone:NO];
              } else {
