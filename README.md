@@ -18,20 +18,18 @@ App for managing the brewing process from your iPhone.
  - iOS >= 7.0, iOS 8 compatible
  - Socket.IO for WebSocket
 
-## Setting up the project
+## Setting up the project with [Carthage](https://github.com/Carthage/Carthage)
+In case you don't have Carthage installed, run:
+
 ```
-$ pod install
+$ brew update && brew install carthage
+```
+then:
+```
+$ carthage bootstrap
 
 $ open BrewMobile.xcworkspace/
 ```
-
-## // TODO
-
- - improve test coverage
- - support push notifications (for phase changes)
- - ability to edit host
- - pause/resume
- - logs
 
 ## The UI
 
