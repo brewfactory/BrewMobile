@@ -10,7 +10,7 @@ import Foundation
 
 class APIManager {
     
-    //Mark: POST to /brew
+    //MARK: POST to /brew
     
     class func createBrew(brew: BrewState) {
         if let brewJSON: JSON? = BrewState.encode(brew) {
@@ -18,7 +18,7 @@ class APIManager {
         }
     }
     
-    //Mark: PATCH to /brew/stop
+    //MARK: PATCH to /brew/stop
 
     class func stopBrew() {
         requestWithBody("api/brew/stop", method: "PATCH", body: nil)
