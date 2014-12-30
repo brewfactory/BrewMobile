@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SocketIOFramework
 
 let host = "http://brewcore-demo.herokuapp.com/"
 

@@ -6,5 +6,5 @@
 //  Copyright (c) 2014 Ágnes Vásárhelyi. All rights reserved.
 //
 
-#import <SIOSocket/SIOSocket.h>
+#import "SIOSocket.h"
 #import "ISO8601DateFormatter.h"

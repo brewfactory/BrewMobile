@@ -7,8 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		2AFE0C471EC84D3A99174670 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D4B8B3F1DCDC4AF2ADEC4500 /* libPods.a */; };
-		6809CF595ECA4D168275077A /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D4B8B3F1DCDC4AF2ADEC4500 /* libPods.a */; };
+		027E31DE1A52E9F200802098 /* ISO8601.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 027E31DA1A52E81000802098 /* ISO8601.framework */; };
+		027E31DF1A52E9F200802098 /* SocketIOFramework.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 027E31D61A52E52800802098 /* SocketIOFramework.framework */; };
+		027E31E31A52EA4100802098 /* ISO8601.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 027E31E01A52EA4100802098 /* ISO8601.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		027E31E51A52EA4100802098 /* SocketIOFramework.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 027E31E11A52EA4100802098 /* SocketIOFramework.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		027E31E71A52EA4E00802098 /* ISO8601.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 027E31E01A52EA4100802098 /* ISO8601.framework */; };
+		027E31E81A52EA4E00802098 /* SocketIOFramework.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 027E31E11A52EA4100802098 /* SocketIOFramework.framework */; };
 		690197A71A0D4FA4003DB4B9 /* BrewDesignerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 690197A61A0D4FA4003DB4B9 /* BrewDesignerViewController.swift */; };
 		690197AB1A0E10F2003DB4B9 /* BrewNewPhaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 690197AA1A0E10F2003DB4B9 /* BrewNewPhaseViewController.swift */; };
 		6928C98C19A3A49E00B2494E /* ContentParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6928C98B19A3A49E00B2494E /* ContentParser.swift */; };
@@ -41,9 +45,26 @@
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		027E31E61A52EA4100802098 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				027E31E51A52EA4100802098 /* SocketIOFramework.framework in Embed Frameworks */,
+				027E31E31A52EA4100802098 /* ISO8601.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
-		0B8867EBE62D4D04A837E53D /* libPods-BrewMobileTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-BrewMobileTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		4773AB27AD3F609E54511C2A /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
+		027E31D61A52E52800802098 /* SocketIOFramework.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SocketIOFramework.framework; path = Carthage/Build/iOS/SocketIOFramework.framework; sourceTree = "<group>"; };
+		027E31DA1A52E81000802098 /* ISO8601.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ISO8601.framework; path = Carthage/Build/iOS/ISO8601.framework; sourceTree = "<group>"; };
+		027E31E01A52EA4100802098 /* ISO8601.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ISO8601.framework; path = Carthage/Build/iOS/ISO8601.framework; sourceTree = "<group>"; };
+		027E31E11A52EA4100802098 /* SocketIOFramework.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SocketIOFramework.framework; path = Carthage/Build/iOS/SocketIOFramework.framework; sourceTree = "<group>"; };
 		690197A61A0D4FA4003DB4B9 /* BrewDesignerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BrewDesignerViewController.swift; sourceTree = "<group>"; };
 		690197AA1A0E10F2003DB4B9 /* BrewNewPhaseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BrewNewPhaseViewController.swift; sourceTree = "<group>"; };
 		6928C98B19A3A49E00B2494E /* ContentParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ContentParser.swift; path = ../ContentParser.swift; sourceTree = "<group>"; };
@@ -56,16 +77,13 @@
 		692AAA9519A34C8C00224C4D /* BrewMobileTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BrewMobileTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		692AAA9A19A34C8C00224C4D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		692AAAA519A3550A00224C4D /* Brew.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Brew.swift; sourceTree = "<group>"; };
-		692AAAA819A3738A00224C4D /* BrewMobile-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "BrewMobile-Bridging-Header.h"; sourceTree = "<group>"; };
 		69A1102519CB38B900108B46 /* BrewPhaseTestCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BrewPhaseTestCase.swift; sourceTree = "<group>"; };
 		69A1102C19CB596700108B46 /* BrewStateTestCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BrewStateTestCase.swift; sourceTree = "<group>"; };
 		69BF5BB819C5DEEF00F878EF /* JSONHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSONHelper.swift; sourceTree = "<group>"; };
 		69DAECB719C5A83500933A62 /* BrewState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BrewState.swift; sourceTree = "<group>"; };
 		69DAECB919C5A84400933A62 /* BrewPhase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BrewPhase.swift; sourceTree = "<group>"; };
 		69EC2A8C19CC3439008108D8 /* ContentParserTestCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentParserTestCase.swift; sourceTree = "<group>"; };
-		D4B8B3F1DCDC4AF2ADEC4500 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		E05793911A189770000D79BB /* APIManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIManager.swift; sourceTree = "<group>"; };
-		F29DC7B6AED1269D1165DF82 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -73,7 +91,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6809CF595ECA4D168275077A /* libPods.a in Frameworks */,
+				027E31E71A52EA4E00802098 /* ISO8601.framework in Frameworks */,
+				027E31E81A52EA4E00802098 /* SocketIOFramework.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -81,22 +100,14 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2AFE0C471EC84D3A99174670 /* libPods.a in Frameworks */,
+				027E31DE1A52E9F200802098 /* ISO8601.framework in Frameworks */,
+				027E31DF1A52E9F200802098 /* SocketIOFramework.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		1BD443019942CDC261CAE3B6 /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				4773AB27AD3F609E54511C2A /* Pods.debug.xcconfig */,
-				F29DC7B6AED1269D1165DF82 /* Pods.release.xcconfig */,
-			);
-			name = Pods;
-			sourceTree = "<group>";
-		};
 		690197AC1A0E10F9003DB4B9 /* Designer */ = {
 			isa = PBXGroup;
 			children = (
@@ -119,11 +130,12 @@
 		692AAA7A19A34C8B00224C4D = {
 			isa = PBXGroup;
 			children = (
+				027E31E01A52EA4100802098 /* ISO8601.framework */,
+				027E31E11A52EA4100802098 /* SocketIOFramework.framework */,
 				692AAA8519A34C8C00224C4D /* BrewMobile */,
 				692AAA9819A34C8C00224C4D /* BrewMobileTests */,
 				692AAA8419A34C8C00224C4D /* Products */,
 				F3641B66629A474A89086F3F /* Frameworks */,
-				1BD443019942CDC261CAE3B6 /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -154,7 +166,6 @@
 		692AAA8619A34C8C00224C4D /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				692AAAA819A3738A00224C4D /* BrewMobile-Bridging-Header.h */,
 				692AAA8719A34C8C00224C4D /* Info.plist */,
 			);
 			name = "Supporting Files";
@@ -192,8 +203,8 @@
 		F3641B66629A474A89086F3F /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				D4B8B3F1DCDC4AF2ADEC4500 /* libPods.a */,
-				0B8867EBE62D4D04A837E53D /* libPods-BrewMobileTests.a */,
+				027E31DA1A52E81000802098 /* ISO8601.framework */,
+				027E31D61A52E52800802098 /* SocketIOFramework.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -205,11 +216,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 692AAA9F19A34C8C00224C4D /* Build configuration list for PBXNativeTarget "BrewMobile" */;
 			buildPhases = (
-				567C04728665419788C1E4AC /* Check Pods Manifest.lock */,
 				692AAA7F19A34C8C00224C4D /* Sources */,
 				692AAA8019A34C8C00224C4D /* Frameworks */,
 				692AAA8119A34C8C00224C4D /* Resources */,
-				B6D28863BED9461A9C383C4A /* Copy Pods Resources */,
+				027E31821A52B7A700802098 /* ShellScript */,
+				027E31E61A52EA4100802098 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -224,11 +235,9 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 692AAAA219A34C8C00224C4D /* Build configuration list for PBXNativeTarget "BrewMobileTests" */;
 			buildPhases = (
-				70E2D1D203464FEA89FA5C46 /* Check Pods Manifest.lock */,
 				692AAA9119A34C8C00224C4D /* Sources */,
 				692AAA9219A34C8C00224C4D /* Frameworks */,
 				692AAA9319A34C8C00224C4D /* Resources */,
-				272C19214ECE4714AF59BE57 /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -297,65 +306,20 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		272C19214ECE4714AF59BE57 /* Copy Pods Resources */ = {
+		027E31821A52B7A700802098 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
+			buildActionMask = 8;
 			files = (
 			);
 			inputPaths = (
+				"$(SRCROOT)/Carthage/Build/iOS/SocketIOFramework.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/ISO8601.framework",
 			);
-			name = "Copy Pods Resources";
 			outputPaths = (
 			);
-			runOnlyForDeploymentPostprocessing = 0;
+			runOnlyForDeploymentPostprocessing = 1;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		567C04728665419788C1E4AC /* Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Check Pods Manifest.lock";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
-			showEnvVarsInLog = 0;
-		};
-		70E2D1D203464FEA89FA5C46 /* Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Check Pods Manifest.lock";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
-			showEnvVarsInLog = 0;
-		};
-		B6D28863BED9461A9C383C4A /* Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-resources.sh\"\n";
-			showEnvVarsInLog = 0;
+			shellScript = "/usr/local/bin/carthage copy-frameworks";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -448,11 +412,10 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
-				SWIFT_OBJC_BRIDGING_HEADER = "BrewMobile/BrewMobile-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
@@ -485,20 +448,22 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
-				SWIFT_OBJC_BRIDGING_HEADER = "BrewMobile/BrewMobile-Bridging-Header.h";
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
 		};
 		692AAAA019A34C8C00224C4D /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 4773AB27AD3F609E54511C2A /* Pods.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				INFOPLIST_FILE = BrewMobile/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -507,10 +472,13 @@
 		};
 		692AAAA119A34C8C00224C4D /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = F29DC7B6AED1269D1165DF82 /* Pods.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				INFOPLIST_FILE = BrewMobile/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -519,12 +487,12 @@
 		};
 		692AAAA319A34C8C00224C4D /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 4773AB27AD3F609E54511C2A /* Pods.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/BrewMobile.app/BrewMobile";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
 				);
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
@@ -543,12 +511,12 @@
 		};
 		692AAAA419A34C8C00224C4D /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = F29DC7B6AED1269D1165DF82 /* Pods.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/BrewMobile.app/BrewMobile";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
