@@ -8,6 +8,7 @@
 
 import UIKit
 import SocketIOFramework
+import SwiftyJSON
 
 let host = "http://brewcore-demo.herokuapp.com/"
 
@@ -86,7 +87,7 @@ class BrewViewController: UIViewController, UITableViewDelegate, UITableViewData
             
             socket.on(self.brewChangedEvent, callback: {(AnyObject data) -> Void in
                 if data.count > 0 {
-                    self.actState = ContentParser.parseBrewState(data[0])!
+                    self.actState = ContentParser.parseBrewState(JSON(data[0]))
                     
                     dispatch_async(dispatch_get_main_queue(), {
                         self.phasesTableView.reloadData()

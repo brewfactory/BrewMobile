@@ -7,38 +7,39 @@
 //
 
 import Foundation
+import LlamaKit
+import SwiftyJSON
 
 class APIManager {
     
     //MARK: POST to /brew
     
     class func createBrew(brew: BrewState) {
-        if let brewJSON: JSON? = BrewState.encode(brew) {
-            requestWithBody("api/brew", method: "POST", body: brewJSON!)
-        }
+        let brewJSON = BrewState.encode(brew)
+        sendRequest(requestWithBody("api/brew", method: "POST", body: brewJSON.value()!).value()!)
     }
     
     //MARK: PATCH to /brew/stop
 
     class func stopBrew() {
-        requestWithBody("api/brew/stop", method: "PATCH", body: nil)
+        sendRequest(requestWithBody("api/brew/stop", method: "PATCH", body: "").value()!)
     }
     
-    class func requestWithBody(path: String, method: String, body: JSON?) {
+    class func requestWithBody(path: String, method: String, body: AnyObject) -> Result<NSMutableURLRequest> {
         var request : NSMutableURLRequest = NSMutableURLRequest()
         var serializationError: NSError?
 
         request.URL = NSURL(string: host + path)
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
         request.HTTPMethod = method
-        if body != nil {
-             request.HTTPBody = NSJSONSerialization.dataWithJSONObject(body!, options: NSJSONWritingOptions.PrettyPrinted, error: &serializationError)
+        if method == "POST" {
+             request.HTTPBody = NSJSONSerialization.dataWithJSONObject(body, options: NSJSONWritingOptions.PrettyPrinted, error: &serializationError)
         }
         
         if serializationError == nil {
-            sendRequest(request)
+            return success(request)
         } else {
-            println("Error serializing JSON from brew")
+            return failure(serializationError!)
         }
     }
     
@@ -49,13 +50,7 @@ class APIManager {
             var serializationError: NSError?
             if error == nil {
                 if data != nil {
-                    if let jsonResult: AnyObject = NSJSONSerialization.JSONObjectWithData(data, options:NSJSONReadingOptions.MutableContainers, error: &serializationError) {
-                        if serializationError == nil {
-                            println(jsonResult)
-                        } else {
-                            println("Error serializing JSON from brew")
-                        }
-                    }
+                    let jsonResult = JSON(data)
                 }
             } else {
                 println("Error during request \(error.localizedDescription)")
