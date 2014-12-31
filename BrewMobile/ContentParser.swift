@@ -11,6 +11,18 @@ import ISO8601
 import SwiftyJSON
 import LlamaKit
 
+// MARK: JSONDecodable
+
+protocol JSONDecodable {
+    class func decode(json: JSON) -> Result<Self>
+}
+
+// MARK: JSONEncodable
+
+protocol JSONEncodable {
+    class func encode(object: Self) -> Result<AnyObject>
+}
+
 typealias PhaseArray = [BrewPhase]
 
 class ContentParser {

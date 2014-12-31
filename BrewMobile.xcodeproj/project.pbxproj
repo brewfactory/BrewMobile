@@ -30,9 +30,7 @@
 		69A1102719CB392D00108B46 /* BrewState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69DAECB719C5A83500933A62 /* BrewState.swift */; };
 		69A1102819CB392D00108B46 /* BrewPhase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69DAECB919C5A84400933A62 /* BrewPhase.swift */; };
 		69A1102919CB3A9400108B46 /* ContentParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6928C98B19A3A49E00B2494E /* ContentParser.swift */; };
-		69A1102B19CB3CC500108B46 /* JSONHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69BF5BB819C5DEEF00F878EF /* JSONHelper.swift */; };
 		69A1102D19CB596700108B46 /* BrewStateTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69A1102C19CB596700108B46 /* BrewStateTestCase.swift */; };
-		69BF5BB919C5DEEF00F878EF /* JSONHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69BF5BB819C5DEEF00F878EF /* JSONHelper.swift */; };
 		69DAECB819C5A83500933A62 /* BrewState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69DAECB719C5A83500933A62 /* BrewState.swift */; };
 		69DAECBA19C5A84400933A62 /* BrewPhase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69DAECB919C5A84400933A62 /* BrewPhase.swift */; };
 		69EC2A8D19CC3439008108D8 /* ContentParserTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69EC2A8C19CC3439008108D8 /* ContentParserTestCase.swift */; };
@@ -87,7 +85,6 @@
 		692AAA9A19A34C8C00224C4D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		69A1102519CB38B900108B46 /* BrewPhaseTestCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BrewPhaseTestCase.swift; sourceTree = "<group>"; };
 		69A1102C19CB596700108B46 /* BrewStateTestCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BrewStateTestCase.swift; sourceTree = "<group>"; };
-		69BF5BB819C5DEEF00F878EF /* JSONHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSONHelper.swift; sourceTree = "<group>"; };
 		69DAECB719C5A83500933A62 /* BrewState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BrewState.swift; sourceTree = "<group>"; };
 		69DAECB919C5A84400933A62 /* BrewPhase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BrewPhase.swift; sourceTree = "<group>"; };
 		69EC2A8C19CC3439008108D8 /* ContentParserTestCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentParserTestCase.swift; sourceTree = "<group>"; };
@@ -117,22 +114,24 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		690197AC1A0E10F9003DB4B9 /* Designer */ = {
+		690197AC1A0E10F9003DB4B9 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				692AAA8C19A34C8C00224C4D /* Main.storyboard */,
+				692AAA8A19A34C8C00224C4D /* BrewViewController.swift */,
 				690197A61A0D4FA4003DB4B9 /* BrewDesignerViewController.swift */,
 				690197AA1A0E10F2003DB4B9 /* BrewNewPhaseViewController.swift */,
 			);
-			name = Designer;
+			name = Views;
 			sourceTree = "<group>";
 		};
-		690197AD1A0E1111003DB4B9 /* Brew entities */ = {
+		690197AD1A0E1111003DB4B9 /* Models */ = {
 			isa = PBXGroup;
 			children = (
 				69DAECB719C5A83500933A62 /* BrewState.swift */,
 				69DAECB919C5A84400933A62 /* BrewPhase.swift */,
 			);
-			name = "Brew entities";
+			name = Models;
 			sourceTree = "<group>";
 		};
 		692AAA7A19A34C8B00224C4D = {
@@ -157,11 +156,9 @@
 		692AAA8519A34C8C00224C4D /* BrewMobile */ = {
 			isa = PBXGroup;
 			children = (
-				690197AD1A0E1111003DB4B9 /* Brew entities */,
-				692AAA8A19A34C8C00224C4D /* BrewViewController.swift */,
-				690197AC1A0E10F9003DB4B9 /* Designer */,
+				690197AD1A0E1111003DB4B9 /* Models */,
+				690197AC1A0E10F9003DB4B9 /* Views */,
 				69832CDC19A4CE1F00F414C4 /* Helpers */,
-				692AAA8C19A34C8C00224C4D /* Main.storyboard */,
 				692AAA8819A34C8C00224C4D /* AppDelegate.swift */,
 				692AAA8F19A34C8C00224C4D /* Images.xcassets */,
 				692AAA8619A34C8C00224C4D /* Supporting Files */,
@@ -199,7 +196,6 @@
 		69832CDC19A4CE1F00F414C4 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
-				69BF5BB819C5DEEF00F878EF /* JSONHelper.swift */,
 				6928C98B19A3A49E00B2494E /* ContentParser.swift */,
 				E05793911A189770000D79BB /* APIManager.swift */,
 			);
@@ -348,7 +344,6 @@
 				69DAECB819C5A83500933A62 /* BrewState.swift in Sources */,
 				69DAECBA19C5A84400933A62 /* BrewPhase.swift in Sources */,
 				6928C98C19A3A49E00B2494E /* ContentParser.swift in Sources */,
-				69BF5BB919C5DEEF00F878EF /* JSONHelper.swift in Sources */,
 				690197A71A0D4FA4003DB4B9 /* BrewDesignerViewController.swift in Sources */,
 				690197AB1A0E10F2003DB4B9 /* BrewNewPhaseViewController.swift in Sources */,
 			);
@@ -358,7 +353,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				69A1102B19CB3CC500108B46 /* JSONHelper.swift in Sources */,
 				69A1102719CB392D00108B46 /* BrewState.swift in Sources */,
 				69EC2A8D19CC3439008108D8 /* ContentParserTestCase.swift in Sources */,
 				02284A271A53FAD400B8CBD2 /* SwiftyJSON.swift in Sources */,
