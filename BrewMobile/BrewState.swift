@@ -7,6 +7,8 @@
 //
 
 import Foundation
+import LlamaKit
+import SwiftyJSON
 
 // MARK: Equatable
 
@@ -23,18 +25,19 @@ func == (left: BrewState, right: BrewState) -> Bool {
     return (left.name == right.name) && (left.startTime == right.startTime) && phasesAreIdentical && (left.paused == right.paused) && (left.inProgress == right.inProgress)
 }
 
-class BrewState: Brew, Equatable  {
+final class BrewState: Equatable, JSONDecodable, JSONEncodable  {
     var name: String
     var startTime: String
     var phases: PhaseArray
     var paused: Bool
+    var inProgress: Bool
     
-    override init() {
+    init() {
         name = ""
         startTime = ""
         phases = PhaseArray()
         paused = false
-        super.init()
+        inProgress = false
     }
     
     init(name: String, startTime: String, phases: PhaseArray, paused: Bool, inProgress: Bool) {
@@ -42,58 +45,46 @@ class BrewState: Brew, Equatable  {
         self.startTime = startTime
         self.phases = phases
         self.paused = paused
-        super.init(inProgress: inProgress)
-    }
-    
-    class func create(name: String)(startTime: String)(phases: JSONArray)(paused: Bool)(inProgress: Bool) -> BrewState {
-        let parsedPhases = { (phases: JSONArray) -> PhaseArray in
-            var newPhases: PhaseArray = []
-            
-            for rawPhase: JSON in phases {
-                if let brewPhase = ContentParser.parseBrewPhase(rawPhase) {
-                    newPhases.append(brewPhase)
-                }
-            }
-            return newPhases
-            }(phases)
-        return BrewState(name: name, startTime: ContentParser.formatDate(startTime), phases: parsedPhases, paused: paused, inProgress: inProgress)
+        self.inProgress = inProgress
     }
 
     // MARK: JSONDecodable
 
-    override class func decode(json: JSON) -> BrewState? {
-        if let decodedBrewStateObject = (JSONDictObject(json) >>> { brew in
-            BrewState.create <^>
-                brew["name"]       >>> JSONString      <*>
-                brew["startTime"]  >>> JSONString      <*>
-                brew["phases"]     >>> JSONArrayObject <*>
-                brew["paused"]     >>> JSONBool        <*>
-                brew["inProgress"] >>> JSONBool
-            }) {
-            return decodedBrewStateObject
-        } else {
-            return BrewState()
-        }
+    class func decode(json: JSON) -> Result<BrewState> {
+        let parsedPhases = { (phases: Array<JSON>) -> PhaseArray in
+            var newPhases: PhaseArray = []
+        
+            for rawPhase: JSON in phases {
+                let brewPhase = ContentParser.parseBrewPhase(rawPhase)
+                newPhases.append(brewPhase)
+            }
+            return newPhases
+        } (json["phases"].arrayValue)
+        
+        return success(BrewState(
+            name: json["name"].stringValue,
+            startTime: ContentParser.formatDate(json["startTime"].stringValue),
+            phases: parsedPhases,
+            paused: json["paused"].boolValue,
+            inProgress: json["inProgress"].boolValue)
+        )
     }
 
     // MARK: JSONEncodable
     
-    class func encode(object: BrewState) -> JSON? {
+    class func encode(object: BrewState) -> Result<AnyObject> {
         var brew = Dictionary<String, AnyObject>()
        
         brew["name"] = object.name
         brew["startTime"] = object.startTime
         
-        var encodedPhases = JSONArray()
+        var encodedPhases = Array<AnyObject>()
         for phase: BrewPhase in object.phases {
-            if let encodedPhase: JSON? = BrewPhase.encode(phase) {
-                encodedPhases.append(encodedPhase!)
-            }
+            encodedPhases.append(BrewPhase.encode(phase).value()!)
         }
-
-        brew["phases"] = encodedPhases
         
-        return brew
+        brew["phases"] = encodedPhases
+        return success(brew)
     }
 
 }

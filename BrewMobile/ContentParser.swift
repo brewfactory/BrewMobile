@@ -8,16 +8,18 @@
 
 import Foundation
 import ISO8601
+import SwiftyJSON
+import LlamaKit
 
 typealias PhaseArray = [BrewPhase]
 
 class ContentParser {
-    class func parseBrewState(brewJSON: JSON) -> BrewState? {
-        return BrewState.decode(brewJSON)
+    class func parseBrewState(brewJSON: JSON) -> BrewState {
+        return BrewState.decode(brewJSON).value()!
     }
     
-    class func parseBrewPhase(brewPhaseJSON: JSON) -> BrewPhase? {
-        return BrewPhase.decode(brewPhaseJSON)
+    class func parseBrewPhase(brewPhaseJSON: JSON) -> BrewPhase {
+        return BrewPhase.decode(brewPhaseJSON).value()!
     }
     
     class func formatDate(dateString: String) -> String {

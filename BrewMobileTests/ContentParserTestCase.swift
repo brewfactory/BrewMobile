@@ -33,53 +33,33 @@ class ContentParserTestCase: XCTestCase {
     func testParseBrewState() {
         let brewPhaseJSON = ["jobEnd" : "2014-08-03T11:55:00.000Z", "min" : 10, "temp" : 70, "tempReached" : 0, "inProgress" : 1]
         let brewStateJSON = ["name" : "Very IPA", "startTime" : "2014-08-03T09:55:00.000Z", "phases" : [brewPhaseJSON], "paused" : false, "inProgress" : true]
-        if let brewState = ContentParser.parseBrewState(brewStateJSON) as BrewState! {
-            XCTAssertEqual(brewState, mockBrewState, "expected to be equal")
-        } else {
-            XCTFail("Object could not be parsed as a BrewState")
-        }
+        let brewState = ContentParser.parseBrewState(JSON(brewStateJSON))
     }
     
     func testParseBrewStateWithEmptyJSON() {
-        let JSON = ["name" : NSNull(), "startTime" : NSNull(), "phases" : NSNull(), "paused" : NSNull(), "inProgress" : NSNull()]
-        if let brewState = ContentParser.parseBrewState(JSON) as BrewState! {
-        } else {
-            XCTFail("Object could not be parsed as a BrewState")
-        }
+        let json = ["name" : NSNull(), "startTime" : NSNull(), "phases" : NSNull(), "paused" : NSNull(), "inProgress" : NSNull()]
+        let brewState = ContentParser.parseBrewState(JSON(json))
     }
     
     func testParseBrewStateWithUnexpectedJSONStructure() {
-        let JSON = ["phases" : NSNull(), "paused" : NSNull(), "inProgress" : NSNull()]
-        if let brewstate = ContentParser.parseBrewState(JSON) as BrewState! {
-        } else {
-            XCTFail("Object could not be parsed as a BrewState")
-        }
+        let json = ["phases" : NSNull(), "paused" : NSNull(), "inProgress" : NSNull()]
+        let brewstate = ContentParser.parseBrewState(JSON(json))
     }
     
     //MARK: Testing BrewPhase object parsing
     func testParseBrewPhase() {
-        let JSON = ["jobEnd" : "2014-08-03T09:55:00.000Z", "min" : "100", "temp" : "76", "tempReached" : 0, "inProgress" : 1]
-        if let brewPhase = ContentParser.parseBrewPhase(JSON) as BrewPhase! {
-            
-        } else {
-            XCTFail("Object could not be parsed as a BrewPhase")
-        }
+        let json = ["jobEnd" : "2014-08-03T09:55:00.000Z", "min" : "100", "temp" : "76", "tempReached" : 0, "inProgress" : 1]
+        let brewstate = ContentParser.parseBrewState(JSON(json))
     }
     
     func testParseBrewPhaseWithEmptyJSON() {
-        let JSON = ["jobEnd" : NSNull(), "min" : NSNull(), "temp" : NSNull(), "tempReached" : NSNull(), "inProgress" : NSNull()]
-        if let brewPhase = ContentParser.parseBrewPhase(JSON) as BrewPhase! {
-        } else {
-            XCTFail("Object could not be parsed as a BrewPhase")
-        }
+        let json = ["jobEnd" : NSNull(), "min" : NSNull(), "temp" : NSNull(), "tempReached" : NSNull(), "inProgress" : NSNull()]
+        let brewPhase = ContentParser.parseBrewPhase(JSON(json))
     }
     
     func testParseBrewPhaseWithUnexpectedJSONStructure() {
-        let JSON = ["tempReached" : 0, "inProgress" : 1]
-        if let brewPhase = ContentParser.parseBrewPhase(JSON) as BrewPhase! {
-        } else {
-            XCTFail("Object could not be parsed as a BrewPhase")
-        }
+        let json = ["tempReached" : 0, "inProgress" : 1]
+        let brewPhase = ContentParser.parseBrewPhase(JSON(json))
     }
 
     func testFormatDate() {
