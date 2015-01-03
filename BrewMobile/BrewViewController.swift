@@ -9,8 +9,9 @@
 import UIKit
 import SocketIOFramework
 import SwiftyJSON
+import ReactiveCocoa
 
-let host = "http://brewcore-demo.herokuapp.com/"
+let host = "http://localhost:3000/"
 
 class BrewCell: UITableViewCell {
     @IBOutlet weak var minLabel: UILabel!

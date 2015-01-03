@@ -7,8 +7,9 @@
 //
 
 import Foundation
-import LlamaKit
 import SwiftyJSON
+import ReactiveCocoa
+import LlamaKit
 
 class APIManager {
     
@@ -16,13 +17,13 @@ class APIManager {
     
     class func createBrew(brew: BrewState) {
         let brewJSON = BrewState.encode(brew)
-        sendRequest(requestWithBody("api/brew", method: "POST", body: brewJSON.value()!).value()!)
+        sendRequest(self.requestWithBody("api/brew", method: "POST", body: brewJSON.value()!).value()!)
     }
     
     //MARK: PATCH to /brew/stop
 
     class func stopBrew() {
-        sendRequest(requestWithBody("api/brew/stop", method: "PATCH", body: "").value()!)
+        sendRequest(self.requestWithBody("api/brew/stop", method: "PATCH", body: "").value()!)
     }
     
     class func requestWithBody(path: String, method: String, body: AnyObject) -> Result<NSMutableURLRequest> {
@@ -30,17 +31,12 @@ class APIManager {
         var serializationError: NSError?
 
         request.URL = NSURL(string: host + path)
-        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
         request.HTTPMethod = method
         if method == "POST" {
-             request.HTTPBody = NSJSONSerialization.dataWithJSONObject(body, options: NSJSONWritingOptions.PrettyPrinted, error: &serializationError)
+             request.HTTPBody = NSJSONSerialization.dataWithJSONObject(body, options: .PrettyPrinted, error: &serializationError)
         }
         
-        if serializationError == nil {
-            return success(request)
-        } else {
-            return failure(serializationError!)
-        }
+        return serializationError == nil ? success(request) : failure(serializationError!)
     }
     
     class func sendRequest(request: NSMutableURLRequest) {

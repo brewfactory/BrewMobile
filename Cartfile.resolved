@@ -1,5 +1,4 @@
-github "Carthage/LlamaKit" "carthage-0.1.1"
+github "ReactiveCocoa/ReactiveCocoa" "v2.4.3"
 git "https://github.com/MegaBits/SIOSocket" "749c697df752ae81ae7aeff79de917f2981a6590"
 github "SwiftyJSON/SwiftyJSON" "f5d08738c287508ffc9fd0672741dbca9ef50a32"
 git "https://github.com/boredzo/iso-8601-date-formatter" "103ee049f0ce2fd66b16b814adbc6b741959ce64"
-git "https://github.com/ReactiveCocoa/ReactiveCocoa.git" "677f713b4966f2dfc392fadfd65fa9243d30abc7"

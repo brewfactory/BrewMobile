@@ -27,7 +27,7 @@ class BrewDesignerViewController : UIViewController, UITextFieldDelegate, UITabl
 
     var brewState: BrewState
     var nowDate = NSDate()
-
+    
     required init(coder aDecoder: NSCoder) {
         brewState = BrewState()
         
