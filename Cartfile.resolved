@@ -1,3 +1,4 @@
+github "LlamaKit/LlamaKit" "0.2.0"
 github "ReactiveCocoa/ReactiveCocoa" "v2.4.3"
 git "https://github.com/MegaBits/SIOSocket" "749c697df752ae81ae7aeff79de917f2981a6590"
 github "SwiftyJSON/SwiftyJSON" "f5d08738c287508ffc9fd0672741dbca9ef50a32"

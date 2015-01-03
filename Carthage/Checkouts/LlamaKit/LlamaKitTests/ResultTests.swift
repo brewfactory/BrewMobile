@@ -31,12 +31,12 @@ class ResultTests: XCTestCase {
 
   func testSuccessReturnsNoError() {
     let s = success(42)
-    XCTAssertNil(s.error())
+    XCTAssert(s.error() == nil)
   }
 
   func testFailureReturnsError() {
     let f: Result<Int> = failure(self.err)
-    XCTAssertEqual(f.error()!, self.err)
+    XCTAssertEqual(f.error() as NSError, self.err)
   }
 
   func testFailureReturnsNoValue() {
@@ -54,7 +54,7 @@ class ResultTests: XCTestCase {
     let x: Result<Int> = failure(self.err)
     let y = x.map(-)
     XCTAssertNil(y.value())
-    XCTAssertEqual(y.error()!, self.err)
+    XCTAssertEqual(y.error() as NSError, self.err)
   }
 
   func testMapSuccessNewType() {
@@ -66,7 +66,7 @@ class ResultTests: XCTestCase {
   func testMapFailureNewType() {
     let x: Result<String> = failure(self.err)
     let y = x.map { countElements($0) }
-    XCTAssertEqual(y.error()!, self.err)
+    XCTAssertEqual(y.error() as NSError, self.err)
   }
 
   func doubleSuccess(x: Int) -> Result<Int> {
@@ -86,19 +86,19 @@ class ResultTests: XCTestCase {
   func testFlatMapSuccessFailure() {
     let x = success(42)
     let y = x.flatMap(doubleFailure)
-    XCTAssertEqual(y.error()!, self.err)
+    XCTAssertEqual(y.error() as NSError, self.err)
   }
 
   func testFlatMapFailureSuccess() {
     let x: Result<Int> = failure(self.err2)
     let y = x.flatMap(doubleSuccess)
-    XCTAssertEqual(y.error()!, self.err2)
+    XCTAssertEqual(y.error() as NSError, self.err2)
   }
 
   func testFlatMapFailureFailure() {
     let x: Result<Int> = failure(self.err2)
     let y = x.flatMap(doubleFailure)
-    XCTAssertEqual(y.error()!, self.err2)
+    XCTAssertEqual(y.error() as NSError, self.err2)
   }
 
   func testDescriptionSuccess() {
@@ -108,43 +108,7 @@ class ResultTests: XCTestCase {
 
   func testDescriptionFailure() {
     let x: Result<String> = failure()
-    XCTAssertEqual(x.description, "Failure: Error Domain= Code=0 \"The operation couldn’t be completed. ( error 0.)\"")
-  }
-
-  func testEqualitySuccessSuccessEqual() {
-    let x = success(42)
-    let y = success(42)
-    XCTAssertTrue(x == y)
-  }
-
-  func testEqualitySuccessSuccessNotEqual() {
-    let x = success(42)
-    let y = success(43)
-    XCTAssertTrue(x != y)
-  }
-
-  func testEqualitySuccessFailure() {
-    let x = success(42)
-    let y: Result<Int> = failure()
-    XCTAssertTrue(x != y)
-  }
-
-  func testEqualityFailureSuccess() {
-    let x = success(42)
-    let y: Result<Int> = failure()
-    XCTAssertTrue(y != x)
-  }
-
-  func testEqualityFailureFailureEqual() {
-    let x: Result<Int> = failure(err)
-    let y: Result<Int> = failure(err)
-    XCTAssertTrue(x == y)
-  }
-
-  func testEqualityFailureFailureNotEqual() {
-    let x: Result<Int> = failure(err)
-    let y: Result<Int> = failure(err2)
-    XCTAssertTrue(x != y)
+    XCTAssert(x.description.hasPrefix("Failure: Error Domain= Code=0 "))
   }
 
   func testCoalesceSuccess() {
