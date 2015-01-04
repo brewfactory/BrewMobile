@@ -8,6 +8,7 @@
 
 import UIKit
 import ISO8601
+import ReactiveCocoa
 
 class PhaseCell: UITableViewCell {
     @IBOutlet weak var phaseLabel: UILabel!
@@ -24,14 +25,18 @@ class BrewDesignerViewController : UIViewController, UITextFieldDelegate, UITabl
     @IBOutlet weak var syncButton: UIBarButtonItem!
     @IBOutlet weak var cloneButton: UIBarButtonItem!
     @IBOutlet weak var trashButton: UIBarButtonItem!
+    @IBOutlet weak var addButton: UIBarButtonItem!
 
-    var brewState: BrewState
-    var nowDate = NSDate()
+    let brewViewModel: BrewViewModel
     
+    init(brewViewModel: BrewViewModel) {
+        self.brewViewModel = brewViewModel
+        super.init(nibName:"BrewDesignerViewController", bundle: nil)
+        self.tabBarItem = UITabBarItem(title: "Designer", image: UIImage(named: "DesignerIcon"), tag: 0)
+    }
+
     required init(coder aDecoder: NSCoder) {
-        brewState = BrewState()
-        
-        super.init(coder: aDecoder)
+        fatalError("init(coder:) has not been implemented")
     }
     
     override func viewDidLoad() {
@@ -76,8 +81,8 @@ class BrewDesignerViewController : UIViewController, UITextFieldDelegate, UITabl
             nameTextField.resignFirstResponder()
             textField.resignFirstResponder()
             
-            startTimePicker.minimumDate = nowDate
-            startTimePicker.date = nowDate
+            startTimePicker.minimumDate = NSDate()
+            startTimePicker.date = NSDate()
             pickerBgView.hidden = false
             
             return false

@@ -35,6 +35,7 @@ class BrewViewController: UIViewController, UITableViewDelegate, UITableViewData
         self.brewViewModel = brewViewModel
         actState = BrewState()
         super.init(nibName:"BrewViewController", bundle: nil)
+        self.tabBarItem = UITabBarItem(title: "Brew", image: UIImage(named: "HopIcon"), tag: 0)
     }
     
     required init(coder aDecoder: NSCoder) {
