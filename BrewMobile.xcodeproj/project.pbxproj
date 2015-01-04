@@ -142,14 +142,14 @@
 			isa = PBXGroup;
 			children = (
 				692AAA8A19A34C8C00224C4D /* BrewViewController.swift */,
-				690197A61A0D4FA4003DB4B9 /* BrewDesignerViewController.swift */,
-				690197AA1A0E10F2003DB4B9 /* BrewNewPhaseViewController.swift */,
-				0213ADE11A5940DC0010F9E1 /* BrewCell.swift */,
 				0213ADD71A5937730010F9E1 /* BrewViewController.xib */,
+				690197A61A0D4FA4003DB4B9 /* BrewDesignerViewController.swift */,
 				0213ADD91A5937930010F9E1 /* BrewDesignerViewController.xib */,
 				0213ADDB1A5937A90010F9E1 /* BrewNewPhaseViewController.xib */,
-				0213ADDD1A59380B0010F9E1 /* PhaseCell.xib */,
+				690197AA1A0E10F2003DB4B9 /* BrewNewPhaseViewController.swift */,
+				0213ADE11A5940DC0010F9E1 /* BrewCell.swift */,
 				0213ADDF1A5938350010F9E1 /* BrewCell.xib */,
+				0213ADDD1A59380B0010F9E1 /* PhaseCell.xib */,
 			);
 			name = Views;
 			sourceTree = "<group>";

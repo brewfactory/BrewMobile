@@ -27,6 +27,10 @@
                         <constraint firstAttribute="height" constant="317" id="riI-jh-ToE"/>
                     </constraints>
                     <sections/>
+                    <connections>
+                        <outlet property="dataSource" destination="-1" id="min-qr-WUQ"/>
+                        <outlet property="delegate" destination="-1" id="Eko-ae-j5q"/>
+                    </connections>
                 </tableView>
                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="0.0" translatesAutoresizingMaskIntoConstraints="NO" id="Egq-fz-xuo" userLabel="nameLabel">
                     <constraints>

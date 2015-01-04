@@ -23,24 +23,24 @@ class BrewViewModel : NSObject {
     
         super.init()
 
-        let validBeerNameSignal = self.rac_valuesForKeyPath("name", observer: self).map {
-            (name: AnyObject!) -> NSNumber in
-            let nameText = name as String
-            return countElements(nameText) > 0
-        }.distinctUntilChanged()
-        
-        let hasPhasesSignal = self.rac_valuesForKeyPath("name", observer: self).map {
-            (phases: AnyObject!) -> NSNumber in
-            let phasesArray = phases as PhaseArray
-            return phasesArray.count > 0
-            }.distinctUntilChanged()
-        
-        validBeerSignal = RACSignal.merge([validBeerNameSignal, hasPhasesSignal])
-        
-        syncCommand = RACCommand(enabled: validBeerNameSignal) {
-            (any:AnyObject!) -> RACSignal in
-            return RACSignal()
-        }
+//        let validBeerNameSignal = self.rac_valuesForKeyPath("name", observer: self).map {
+//            (name: AnyObject!) -> NSNumber in
+//            let nameText = name as String
+//            return countElements(nameText) > 0
+//        }.distinctUntilChanged()
+//        
+//        let hasPhasesSignal = self.rac_valuesForKeyPath("name", observer: self).map {
+//            (phases: AnyObject!) -> NSNumber in
+//            let phasesArray = phases as PhaseArray
+//            return phasesArray.count > 0
+//            }.distinctUntilChanged()
+//        
+//        validBeerSignal = RACSignal.merge([validBeerNameSignal, hasPhasesSignal])
+//        
+//        syncCommand = RACCommand(enabled: validBeerNameSignal) {
+//            (any:AnyObject!) -> RACSignal in
+//            return RACSignal()
+//        }
     }
     
     private func syncSignal() -> RACSignal {

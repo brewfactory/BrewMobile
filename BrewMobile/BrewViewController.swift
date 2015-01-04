@@ -13,24 +13,16 @@ import ReactiveCocoa
 
 let host = "http://localhost:3000/"
 
-class BrewCell: UITableViewCell {
-    @IBOutlet weak var minLabel: UILabel!
-    @IBOutlet weak var statusLabel: UILabel!
-    
-    func setTextColorForAllLabels(color: UIColor) {
-        minLabel.textColor = color
-        statusLabel.textColor = color
-    }
-}
-
 class BrewViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
-    var actState: BrewState
-    var actTemp: Float
+    var actState: BrewState!
+    var actTemp: Float!
     
     let tempChangedEvent = "temperature_changed"
     let brewChangedEvent = "brew_changed"
     
+    let brewViewModel: BrewViewModel
+
     @IBOutlet weak var tempLabel: UILabel!
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var startTimeLabel: UILabel!
@@ -38,11 +30,15 @@ class BrewViewController: UIViewController, UITableViewDelegate, UITableViewData
     @IBOutlet weak var stopButton: UIBarButtonItem!
     @IBOutlet weak var resumeButton: UIBarButtonItem!
     @IBOutlet weak var pauseButton: UIBarButtonItem!
-
-    required init(coder aDecoder: NSCoder) {
+    
+    init(brewViewModel: BrewViewModel) {
+        self.brewViewModel = brewViewModel
         actState = BrewState()
-        actTemp = 0
-        super.init(coder: aDecoder)
+        super.init(nibName:"BrewViewController", bundle: nil)
+    }
+    
+    required init(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
     
     override func viewDidLoad() {
@@ -51,12 +47,9 @@ class BrewViewController: UIViewController, UITableViewDelegate, UITableViewData
         stopButton.target = self
         stopButton.action = "stopButtonPressed:"
         
-        //resumeButton.target = self
-        //resumeButton.action = "resumeButtonPressed:"
-        
-        //pauseButton.target = self
-        //pauseButton.action = "pauseButtonPressed:"
-        
+        let nib = UINib(nibName: "BrewCell", bundle: nil)
+        phasesTableView.registerNib(nib, forCellReuseIdentifier: "BrewCell")
+
         self.connectToHost()
     }
     
