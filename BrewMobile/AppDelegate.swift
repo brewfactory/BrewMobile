@@ -12,14 +12,12 @@ import UIKit
 class AppDelegate: UIResponder, UIApplicationDelegate {
                             
     var window: UIWindow!
-    var brewNavigationController: UINavigationController!
     var brewDesignerNavigationController: UINavigationController!
     var brewTabBarController: UITabBarController!
     
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: NSDictionary?) -> Bool {
     
         brewTabBarController = UITabBarController()
-        brewNavigationController = UINavigationController()
         brewDesignerNavigationController = UINavigationController()
         
         let brewManager = BrewManager()
@@ -28,10 +26,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let brewViewController = BrewViewController(brewViewModel: brewViewModel)
         let brewDesignerViewController = BrewDesignerViewController(brewViewModel: brewViewModel)
 
-        brewNavigationController.pushViewController(brewViewController, animated: false)
         brewDesignerNavigationController.pushViewController(brewDesignerViewController, animated: false)
 
-        brewTabBarController.setViewControllers([brewNavigationController, brewDesignerNavigationController], animated: false)
+        brewTabBarController.setViewControllers([brewViewController, brewDesignerNavigationController], animated: false)
         
         window = UIWindow(frame: UIScreen.mainScreen().bounds)
         window.rootViewController = brewTabBarController
