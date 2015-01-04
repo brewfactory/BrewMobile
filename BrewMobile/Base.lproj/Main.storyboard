@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6254" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="Cwe-ma-8Ys">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6724" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6711"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
@@ -89,7 +89,7 @@
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bJe-Uw-kqX">
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bJe-Uw-kqX">
                                 <rect key="frame" x="0.0" y="474" width="320" height="44"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="320" id="xVE-pw-Nrx"/>
@@ -129,27 +129,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="rTm-iG-WeD" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="99" y="136"/>
-        </scene>
-        <!--Tab Bar Controller-->
-        <scene sceneID="Vaq-vm-h7I">
-            <objects>
-                <tabBarController id="Cwe-ma-8Ys" sceneMemberID="viewController">
-                    <nil key="simulatedBottomBarMetrics"/>
-                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
-                    <tabBar key="tabBar" contentMode="scaleToFill" id="VAJ-yf-Re8">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="49"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                    </tabBar>
-                    <connections>
-                        <segue destination="VzK-S1-lFf" kind="relationship" relationship="viewControllers" id="TYx-0p-Nxo"/>
-                        <segue destination="lCH-cY-76p" kind="relationship" relationship="viewControllers" id="ctx-5e-pIu"/>
-                    </connections>
-                </tabBarController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="fon-YV-XHU" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-664" y="508"/>
+            <point key="canvasLocation" x="550" y="26"/>
         </scene>
         <!--Brew Designer View Controller-->
         <scene sceneID="xhG-Bd-k8U">
@@ -460,28 +440,8 @@
             </objects>
             <point key="canvasLocation" x="935" y="869"/>
         </scene>
-        <!--Designer-->
-        <scene sceneID="9pv-7w-u4P">
-            <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="lCH-cY-76p" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Designer" image="DesignerIcon" id="uE2-4u-eN1"/>
-                    <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="Hb0-gw-C4w">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </navigationBar>
-                    <nil name="viewControllers"/>
-                    <connections>
-                        <segue destination="A99-2W-2tT" kind="relationship" relationship="rootViewController" id="U5e-yE-jf3"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="tMD-Yu-w0p" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="99" y="869"/>
-        </scene>
     </scenes>
     <resources>
-        <image name="DesignerIcon" width="30" height="30"/>
         <image name="HopIcon" width="30" height="30"/>
     </resources>
 </document>
