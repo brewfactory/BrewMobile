@@ -25,6 +25,7 @@
 		0213ADDE1A59380B0010F9E1 /* PhaseCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0213ADDD1A59380B0010F9E1 /* PhaseCell.xib */; };
 		0213ADE01A5938350010F9E1 /* BrewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0213ADDF1A5938350010F9E1 /* BrewCell.xib */; };
 		0213ADE21A5940DC0010F9E1 /* BrewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0213ADE11A5940DC0010F9E1 /* BrewCell.swift */; };
+		0213ADE41A597F980010F9E1 /* PhaseCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0213ADE31A597F980010F9E1 /* PhaseCell.swift */; };
 		02284A261A53FAD400B8CBD2 /* SwiftyJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02284A251A53FAD400B8CBD2 /* SwiftyJSON.swift */; };
 		02284A271A53FAD400B8CBD2 /* SwiftyJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02284A251A53FAD400B8CBD2 /* SwiftyJSON.swift */; };
 		690197A71A0D4FA4003DB4B9 /* BrewDesignerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 690197A61A0D4FA4003DB4B9 /* BrewDesignerViewController.swift */; };
@@ -86,6 +87,7 @@
 		0213ADDD1A59380B0010F9E1 /* PhaseCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PhaseCell.xib; sourceTree = "<group>"; };
 		0213ADDF1A5938350010F9E1 /* BrewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BrewCell.xib; sourceTree = "<group>"; };
 		0213ADE11A5940DC0010F9E1 /* BrewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BrewCell.swift; sourceTree = "<group>"; };
+		0213ADE31A597F980010F9E1 /* PhaseCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhaseCell.swift; sourceTree = "<group>"; };
 		02284A251A53FAD400B8CBD2 /* SwiftyJSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SwiftyJSON.swift; path = "../../Downloads/SwiftyJSON-master/Source/SwiftyJSON.swift"; sourceTree = "<group>"; };
 		027E31E01A52EA4100802098 /* ISO8601.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ISO8601.framework; path = Carthage/Build/iOS/ISO8601.framework; sourceTree = "<group>"; };
 		027E31E11A52EA4100802098 /* SocketIOFramework.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SocketIOFramework.framework; path = Carthage/Build/iOS/SocketIOFramework.framework; sourceTree = "<group>"; };
@@ -145,10 +147,11 @@
 				0213ADD71A5937730010F9E1 /* BrewViewController.xib */,
 				690197A61A0D4FA4003DB4B9 /* BrewDesignerViewController.swift */,
 				0213ADD91A5937930010F9E1 /* BrewDesignerViewController.xib */,
-				0213ADDB1A5937A90010F9E1 /* BrewNewPhaseViewController.xib */,
 				690197AA1A0E10F2003DB4B9 /* BrewNewPhaseViewController.swift */,
+				0213ADDB1A5937A90010F9E1 /* BrewNewPhaseViewController.xib */,
 				0213ADE11A5940DC0010F9E1 /* BrewCell.swift */,
 				0213ADDF1A5938350010F9E1 /* BrewCell.xib */,
+				0213ADE31A597F980010F9E1 /* PhaseCell.swift */,
 				0213ADDD1A59380B0010F9E1 /* PhaseCell.xib */,
 			);
 			name = Views;
@@ -382,6 +385,7 @@
 				02284A261A53FAD400B8CBD2 /* SwiftyJSON.swift in Sources */,
 				69DAECB819C5A83500933A62 /* BrewState.swift in Sources */,
 				69DAECBA19C5A84400933A62 /* BrewPhase.swift in Sources */,
+				0213ADE41A597F980010F9E1 /* PhaseCell.swift in Sources */,
 				6928C98C19A3A49E00B2494E /* ContentParser.swift in Sources */,
 				690197A71A0D4FA4003DB4B9 /* BrewDesignerViewController.swift in Sources */,
 				0213ADD61A5922890010F9E1 /* BrewViewModel.swift in Sources */,
