@@ -10,10 +10,6 @@ import UIKit
 import ISO8601
 import ReactiveCocoa
 
-class PhaseCell: UITableViewCell {
-    @IBOutlet weak var phaseLabel: UILabel!
-}
-
 class BrewDesignerViewController : UIViewController, UITextFieldDelegate, UITableViewDataSource, UITableViewDelegate, BrewPhaseDesignerDelegate, UIGestureRecognizerDelegate {
 
     @IBOutlet weak var nameTextField: UITextField!
@@ -42,19 +38,54 @@ class BrewDesignerViewController : UIViewController, UITextFieldDelegate, UITabl
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        editButton.target = self
-        editButton.action = "editButtonPressed:"
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem()
+        self.navigationItem.leftBarButtonItem?.title = "Sync"
+        syncButton = self.navigationItem.leftBarButtonItem
         
-        syncButton.target = self
-        syncButton.action = "syncButtonPressed:"
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem()
+        self.navigationItem.rightBarButtonItem?.title = "Edit"
+        editButton = self.navigationItem.rightBarButtonItem
         
-        //cloneButton.target = self
-        //cloneButton.action = "cloneButtonPressed:"
+        let dismissInputViewsSignal = RACSignal.createSignal({ _ in
+            self.nameTextField.resignFirstResponder()
+            self.startTimeTextField.resignFirstResponder()
+            return RACDisposable()
+        })
         
-        trashButton.target = self
-        trashButton.action = "trashButtonPressed:"
+        dismissInputViewsSignal.setKeyPath("hidden", onObject:self.pickerBgView)
         
-        showFormattedTextDate(nowDate)
+        syncButton.rac_command = RACCommand() {
+            (any:AnyObject!) -> RACSignal in
+            return self.brewViewModel.syncCommand.execute(self)
+        }
+        
+        editButton.rac_command = RACCommand(enabled: self.brewViewModel.validBeerSignal) {
+            (any:AnyObject!) -> RACSignal in
+            self.changeEditingModeOnTableView(!self.phasesTableView.editing)
+            return RACSignal()
+        }
+        
+        trashButton.rac_command = RACCommand() {
+            (any:AnyObject!) -> RACSignal in
+            // TODO: refresh new date
+            self.phasesTableView.reloadData()
+            return RACSignal()
+        }
+        
+        addButton.rac_command = RACCommand() {
+            (any:AnyObject!) -> RACSignal in
+            self.navigationController?.pushViewController(BrewNewPhaseViewController(brewViewModel: self.brewViewModel), animated: true)
+            return RACSignal.empty()
+        }
+
+        let nib = UINib(nibName: "PhaseCell", bundle: nil)
+        phasesTableView.registerNib(nib, forCellReuseIdentifier: "PhaseCell")
+
+        self.brewViewModel.rac_valuesForKeyPath("phases", observer: self.brewViewModel).map { _ in
+            self.phasesTableView.reloadData()
+            return RACSignal.empty()
+        }
+        // TODO: refresh new date
     }
     
     override func didReceiveMemoryWarning() {
@@ -92,26 +123,10 @@ class BrewDesignerViewController : UIViewController, UITextFieldDelegate, UITabl
             return true
         }
     }
-    
-    func textFieldDidEndEditing(textField: UITextField) {
-        enableSyncButton()
-    }
-    
-    func textFieldDidBeginEditing(textField: UITextField) {
-        enableSyncButton()
-    }
-    
+
     func changeEditingModeOnTableView(editing: Bool) {
         phasesTableView.editing = editing
         editButton.title = editing ? "Done" : "Edit"
-        
-        let numberOfRows = brewState.phases.count
-        if numberOfRows == 0 {
-            editButton.enabled = false
-            syncButton.enabled = false
-        } else {
-            editButton.enabled = true
-        }
     }
     
     // MARK: UITableViewDataSource
@@ -121,22 +136,17 @@ class BrewDesignerViewController : UIViewController, UITextFieldDelegate, UITabl
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        let numberOfRows = brewState.phases.count
-        if numberOfRows == 0 {
-            changeEditingModeOnTableView(false)
-            editButton.enabled = false
-            syncButton.enabled = false
-        } else {
-            editButton.enabled = true
-        }
+        // TODO:
+//        if numberOfRows == 0 {
+//            changeEditingModeOnTableView(false) }
         
-        return numberOfRows
+        return self.brewViewModel.phases.count
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("PhaseCell", forIndexPath: indexPath) as PhaseCell
-        if brewState.phases.count > indexPath.row  {
-            let phase = brewState.phases[indexPath.row]
+        if self.brewViewModel.phases.count > indexPath.row  {
+            let phase = self.brewViewModel.phases[indexPath.row]
             cell.phaseLabel.text = "\(indexPath.row + 1). \(phase.min) min \(phase.temp) ˚C"
         }
         
@@ -157,8 +167,8 @@ class BrewDesignerViewController : UIViewController, UITextFieldDelegate, UITabl
     
     func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
         if editingStyle == UITableViewCellEditingStyle.Delete {
-            if brewState.phases.count > indexPath.row {
-                brewState.phases.removeAtIndex(indexPath.row)
+            if self.brewViewModel.phases.count > indexPath.row {
+                self.brewViewModel.phases.removeAtIndex(indexPath.row)
                 tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Automatic)
                 tableView.reloadData()
             }
@@ -166,10 +176,10 @@ class BrewDesignerViewController : UIViewController, UITextFieldDelegate, UITabl
     }
     
     func tableView(tableView: UITableView, moveRowAtIndexPath sourceIndexPath: NSIndexPath, toIndexPath destinationIndexPath: NSIndexPath) {
-        let destinationPhase = brewState.phases[destinationIndexPath.row]
+        let destinationPhase = self.brewViewModel.phases[destinationIndexPath.row]
         
-        brewState.phases[destinationIndexPath.row] =  brewState.phases[sourceIndexPath.row]
-        brewState.phases[sourceIndexPath.row] = destinationPhase
+        self.brewViewModel.phases[destinationIndexPath.row] =  self.brewViewModel.phases[sourceIndexPath.row]
+        self.brewViewModel.phases[sourceIndexPath.row] = destinationPhase
         
         tableView.reloadData()
     }
@@ -177,9 +187,8 @@ class BrewDesignerViewController : UIViewController, UITextFieldDelegate, UITabl
     //MARK: BrewPhaseDesignerDelegate
     
     func addNewPhase(phase: BrewPhase) {
-        brewState.phases.append(phase)
+        self.brewViewModel.phases.append(phase)
         phasesTableView.reloadData()
-        enableSyncButton()
     }
     
     //MARK: UIGestureRecognizerDelegate
@@ -195,67 +204,7 @@ class BrewDesignerViewController : UIViewController, UITextFieldDelegate, UITabl
 
     @IBAction func datePickerDateDidChange(datePicker: UIDatePicker) {
         showFormattedTextDate(datePicker.date)
-        brewState.startTime = createISO8601FormattedDate(datePicker.date)
-
-        enableSyncButton()
-    }
-    
-    @IBAction func viewTapped() {
-        dismissInputViews()
-    }
-    
-    func dismissInputViews() {
-        nameTextField.resignFirstResponder()
-        startTimeTextField.resignFirstResponder()
-        pickerBgView.hidden = true
-    }
-    
-    func enableSyncButton() {
-       syncButton.enabled = (brewState.phases.count > 0 && countElements(nameTextField.text) > 0 && countElements(startTimeTextField.text) > 0)
-    }
-    
-    //MARK: custom UIBarButtonItem actions
-    
-    func editButtonPressed(editButton: UIBarButtonItem) {
-        changeEditingModeOnTableView(!phasesTableView.editing)
-        dismissInputViews()
-    }
-    
-    func syncButtonPressed(syncButton: UIBarButtonItem) {
-        dismissInputViews()
-        
-        brewState.name = nameTextField.text
-        if brewState.startTime == "" {
-            brewState.startTime = createISO8601FormattedDate(nowDate)
-        }
-
-        APIManager.createBrew(brewState)
-    }
-    
-    func cloneButtonPressed(cloneButton: UIBarButtonItem) {
-        dismissInputViews()
-        
-    }
-    
-    func trashButtonPressed(trashButton: UIBarButtonItem) {
-        dismissInputViews()
-
-        brewState = BrewState()
-        nowDate = NSDate()
-        
-        nameTextField.text = ""
-        showFormattedTextDate(nowDate)
-        phasesTableView.reloadData()
-    }
-    
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        changeEditingModeOnTableView(false)
-        dismissInputViews()
-        
-        if segue.identifier == "addSegue" {
-            let brewNewPhaseViewController: BrewNewPhaseViewController = segue.destinationViewController as BrewNewPhaseViewController
-            brewNewPhaseViewController.delegate = self
-        }
+        self.brewViewModel.startTime = createISO8601FormattedDate(datePicker.date)
     }
     
 }
