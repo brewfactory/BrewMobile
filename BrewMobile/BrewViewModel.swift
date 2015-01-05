@@ -11,11 +11,12 @@ import ReactiveCocoa
 
 class BrewViewModel : NSObject {
     let syncCommand: RACCommand!
+    let stopCommand: RACCommand!
     let validBeerSignal: RACSignal!
     let brewManager: BrewManager
-    var name: String!
-    var phases: PhaseArray!
-    var startTime: String!
+    var name = ""
+    var phases = PhaseArray()
+    var startTime = ""
     
     init(brewManager: BrewManager) {
         
@@ -23,33 +24,30 @@ class BrewViewModel : NSObject {
     
         super.init()
 
-//        let validBeerNameSignal = self.rac_valuesForKeyPath("name", observer: self).map {
-//            (name: AnyObject!) -> NSNumber in
-//            let nameText = name as String
-//            return countElements(nameText) > 0
-//        }.distinctUntilChanged()
-//        
-//        let hasPhasesSignal = self.rac_valuesForKeyPath("name", observer: self).map {
-//            (phases: AnyObject!) -> NSNumber in
-//            let phasesArray = phases as PhaseArray
-//            return phasesArray.count > 0
-//            }.distinctUntilChanged()
-//        
-//        validBeerSignal = RACSignal.merge([validBeerNameSignal, hasPhasesSignal])
-//        
-//        syncCommand = RACCommand(enabled: validBeerNameSignal) {
-//            (any:AnyObject!) -> RACSignal in
-//            return RACSignal()
-//        }
+        let validBeerNameSignal = self.rac_valuesForKeyPath("name", observer: self).map {
+            (name: AnyObject!) -> AnyObject! in
+            let nameText = name as String
+            return countElements(nameText) > 0
+        }.distinctUntilChanged()
+        
+        let hasPhasesSignal = self.rac_valuesForKeyPath("phases", observer: self).map {
+            (phases: AnyObject!) -> AnyObject! in
+            let phasesArray = phases as PhaseArray
+            return phasesArray.count > 0
+            }.distinctUntilChanged()
+        
+        validBeerSignal = RACSignal.merge([validBeerNameSignal, hasPhasesSignal])
+
+        syncCommand = RACCommand() {
+            Void -> RACSignal in
+            let brewState = BrewState(name: self.name, startTime: self.startTime, phases: self.phases, paused: false, inProgress: false)
+            return brewManager.syncBrewCommand.execute(BrewState.encode(brewState).value()!)
+        }
+        
+        stopCommand = RACCommand() {
+            Void -> RACSignal in
+            return brewManager.stopBrewSignal
+        }
     }
-    
-    private func syncSignal() -> RACSignal {
-//        return brewManager.syncBrewSignal(searchText).doNextAs {
-//            (results: FlickrSearchResults) -> () in
-//            let viewModel = SearchResultsViewModel(services: self.services, searchResults: results)
-//            self.services.pushViewModel(viewModel)
-//            self.addToSearchHistory(results)
-//        }
-        return RACSignal()
-    }
+
 }
