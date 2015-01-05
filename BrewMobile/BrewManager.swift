@@ -11,9 +11,22 @@ import SwiftyJSON
 import ReactiveCocoa
 import LlamaKit
 
-class BrewManager {
+class BrewManager : NSObject {
+    
+    let stopBrewSignal: RACSignal!
+    let syncBrewCommand: RACCommand!
 
-    func requestWithBody(path: String, method: String, body: AnyObject) -> Result<NSMutableURLRequest> {
+    override init() {
+        super.init()
+
+        syncBrewCommand = RACCommand(signalBlock: { (brewObject: AnyObject!) -> RACSignal! in
+            return self.composeRequestSignalFromURLRequest(self.requestWithBody("api/brew", method: "POST", body: brewObject).value()!)
+        })
+        
+        stopBrewSignal = composeRequestSignalFromURLRequest(self.requestWithBody("api/brew/stop", method: "PATCH", body: "").value()!)
+    }
+
+    private func requestWithBody(path: String, method: String, body: AnyObject) -> Result<NSMutableURLRequest> {
         var request : NSMutableURLRequest = NSMutableURLRequest()
         var serializationError: NSError?
         
@@ -26,8 +39,10 @@ class BrewManager {
         return (serializationError == nil ? success(request) : failure(serializationError!))
     }
     
-    func sendRequest(request: NSMutableURLRequest) -> RACSignal {
-        return RACSignal.createSignal({ (subscriber: RACSubscriber!) -> RACDisposable! in
+    private func composeRequestSignalFromURLRequest(request: NSMutableURLRequest) -> RACSignal {
+        return RACSignal.createSignal({
+            (subscriber: RACSubscriber!) -> RACDisposable! in
+            
             NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue(), completionHandler: {
                 (response:NSURLResponse!, data: NSData!, error: NSError!) -> Void in
                 if error == nil {
@@ -39,19 +54,6 @@ class BrewManager {
             })
             return RACDisposable()
         })
-    }
- 
-    //MARK: POST to /brew
-    
-    func createBrew(brew: BrewState) {
-        let brewJSON = BrewState.encode(brew)
-        self.sendRequest(self.requestWithBody("api/brew", method: "POST", body: brewJSON.value()!).value()!)
-    }
-    
-    //MARK: PATCH to /brew/stop
-    
-    func stopBrew() {
-        self.sendRequest(self.requestWithBody("api/brew/stop", method: "PATCH", body: "").value()!)
     }
     
 }
