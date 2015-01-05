@@ -6,6 +6,9 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="BrewNewPhaseViewController" customModule="BrewMobile" customModuleProvider="target">
             <connections>
+                <outlet property="addButton" destination="ohP-fR-VLW" id="BAw-fC-gWs"/>
+                <outlet property="minStepper" destination="gPS-Ur-a4r" id="5x6-Fk-QMP"/>
+                <outlet property="tempStepper" destination="21a-cS-NFD" id="wRL-ZT-Lmf"/>
                 <outlet property="view" destination="hPt-CF-kI8" id="gzh-yv-S1g"/>
             </connections>
         </placeholder>

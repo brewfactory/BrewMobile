@@ -7,13 +7,11 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="BrewDesignerViewController" customModule="BrewMobile" customModuleProvider="target">
             <connections>
                 <outlet property="addButton" destination="OPX-QR-bIq" id="EoG-5p-Jbk"/>
-                <outlet property="editButton" destination="Na3-ZB-pqY" id="R12-fE-GCA"/>
                 <outlet property="nameTextField" destination="f8R-9A-fPl" id="Kk1-HL-uc0"/>
                 <outlet property="phasesTableView" destination="UXe-dM-kaf" id="Tko-l3-4jh"/>
                 <outlet property="pickerBgView" destination="tcU-YS-7RG" id="Bo8-J4-GIm"/>
                 <outlet property="startTimePicker" destination="fxA-u9-6nI" id="eES-bj-56M"/>
                 <outlet property="startTimeTextField" destination="bis-dx-s8B" id="04h-QC-sKW"/>
-                <outlet property="syncButton" destination="zFc-nE-P81" id="2in-Ny-Ree"/>
                 <outlet property="trashButton" destination="kyQ-90-AmQ" id="iUL-hs-qta"/>
                 <outlet property="view" destination="ZQC-xj-gZE" id="LP0-VA-bNp"/>
             </connections>
@@ -23,7 +21,7 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Orc-Cg-EuI">
+                <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Orc-Cg-EuI">
                     <rect key="frame" x="0.0" y="479" width="320" height="44"/>
                     <items>
                         <barButtonItem width="5" style="plain" systemItem="fixedSpace" id="eDF-S9-6xb"/>
@@ -32,7 +30,7 @@
                         <barButtonItem systemItem="add" id="OPX-QR-bIq"/>
                     </items>
                 </toolbar>
-                <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" scrollEnabled="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DqD-XB-qDa">
+                <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DqD-XB-qDa">
                     <rect key="frame" x="0.0" y="64" width="320" height="409"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Dh1-ev-PAu">
@@ -108,7 +106,7 @@
                         <constraint firstItem="Dh1-ev-PAu" firstAttribute="top" secondItem="DqD-XB-qDa" secondAttribute="top" id="ojm-hC-3PF"/>
                     </constraints>
                 </scrollView>
-                <view hidden="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="tcU-YS-7RG">
+                <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tcU-YS-7RG">
                     <rect key="frame" x="0.0" y="315" width="320" height="162"/>
                     <subviews>
                         <datePicker contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="dateAndTime" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="fxA-u9-6nI">
@@ -126,15 +124,6 @@
                         <constraint firstAttribute="height" constant="162" id="l6S-ST-Qrw"/>
                     </constraints>
                 </view>
-                <navigationBar contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ttw-TA-vR9">
-                    <rect key="frame" x="0.0" y="20" width="320" height="44"/>
-                    <items>
-                        <navigationItem id="mOm-dx-1ab">
-                            <barButtonItem key="leftBarButtonItem" title="Sync" id="zFc-nE-P81"/>
-                            <barButtonItem key="rightBarButtonItem" title="Edit" id="Na3-ZB-pqY"/>
-                        </navigationItem>
-                    </items>
-                </navigationBar>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
             <gestureRecognizers/>
@@ -145,9 +134,11 @@
                 <constraint firstItem="Orc-Cg-EuI" firstAttribute="leading" secondItem="ZQC-xj-gZE" secondAttribute="leading" id="IHB-gl-upZ"/>
                 <constraint firstItem="Orc-Cg-EuI" firstAttribute="width" secondItem="tcU-YS-7RG" secondAttribute="width" id="OwD-Q5-hfE"/>
                 <constraint firstItem="tcU-YS-7RG" firstAttribute="leading" secondItem="Orc-Cg-EuI" secondAttribute="leading" id="Rq1-EG-uuW"/>
+                <constraint firstAttribute="bottom" secondItem="Orc-Cg-EuI" secondAttribute="bottom" constant="45" id="W6T-ZL-Bej"/>
                 <constraint firstItem="tcU-YS-7RG" firstAttribute="leading" secondItem="DqD-XB-qDa" secondAttribute="leading" id="bvY-tZ-DMG"/>
                 <constraint firstItem="DqD-XB-qDa" firstAttribute="trailing" secondItem="tcU-YS-7RG" secondAttribute="trailing" id="mba-fH-FP9"/>
                 <constraint firstItem="Orc-Cg-EuI" firstAttribute="top" secondItem="tcU-YS-7RG" secondAttribute="bottom" constant="2" id="y04-w2-4yO"/>
+                <constraint firstItem="DqD-XB-qDa" firstAttribute="top" secondItem="ZQC-xj-gZE" secondAttribute="top" constant="64" id="yCY-EX-hN5"/>
                 <constraint firstItem="tcU-YS-7RG" firstAttribute="trailing" secondItem="Orc-Cg-EuI" secondAttribute="trailing" id="yvw-Fq-yj2"/>
             </constraints>
             <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
