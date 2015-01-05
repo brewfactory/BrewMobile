@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import ReactiveCocoa
 
 protocol BrewPhaseDesignerDelegate {
     func addNewPhase(phase: BrewPhase)
@@ -18,11 +19,30 @@ class BrewNewPhaseViewController : UIViewController, UITextFieldDelegate {
     @IBOutlet weak var tempTextField: UITextField!
     @IBOutlet weak var minStepper: UIStepper!
     @IBOutlet weak var tempStepper: UIStepper!
+    @IBOutlet weak var addButton: UIButton!
     
-    var delegate: BrewPhaseDesignerDelegate!
+    let brewViewModel: BrewViewModel
+    
+    init(brewViewModel: BrewViewModel) {
+        self.brewViewModel = brewViewModel
+        super.init(nibName:"BrewNewPhaseViewController", bundle: nil)
+    }
+
+    required init(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        addButton.rac_command = RACCommand() {
+            (any:AnyObject!) -> RACSignal in
+            let newPhase = BrewPhase(jobEnd:"", min:Int(self.minStepper.value), temp:Float(self.tempStepper.value), tempReached:false, inProgress:false)
+            self.brewViewModel.phases.append(newPhase)
+            self.dismissViewControllerAnimated(true, completion: nil)
+
+            return RACSignal.empty()
+        }
     }
     
     override func didReceiveMemoryWarning() {
@@ -51,12 +71,6 @@ class BrewNewPhaseViewController : UIViewController, UITextFieldDelegate {
     
     @IBAction func textFieldDidChange(textField: UITextField) {
         setValueToStepper(Double(countElements(textField.text) > 0 ? textField.text.toInt()! : 0), stepper: textField == minTextField ? minStepper : tempStepper)
-    }
-    
-    @IBAction func addButtonPressed(button: UIButton) {
-        let newPhase = BrewPhase(jobEnd:"", min:Int(minStepper.value), temp:Float(tempStepper.value), tempReached:false, inProgress:false)
-        delegate.addNewPhase(newPhase)
-        self.dismissViewControllerAnimated(true, completion: nil)
     }
     
     @IBAction func viewTapped() {
