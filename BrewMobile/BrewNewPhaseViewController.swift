@@ -13,7 +13,7 @@ protocol BrewPhaseDesignerDelegate {
     func addNewPhase(phase: BrewPhase)
 }
 
-class BrewNewPhaseViewController : UIViewController, UITextFieldDelegate {
+class BrewNewPhaseViewController : UIViewController {
     
     @IBOutlet weak var minTextField: UITextField!
     @IBOutlet weak var tempTextField: UITextField!
@@ -23,6 +23,9 @@ class BrewNewPhaseViewController : UIViewController, UITextFieldDelegate {
     
     let brewViewModel: BrewViewModel
     
+    var min = Int()
+    var temp = Int()
+
     init(brewViewModel: BrewViewModel) {
         self.brewViewModel = brewViewModel
         super.init(nibName:"BrewNewPhaseViewController", bundle: nil)
@@ -37,41 +40,63 @@ class BrewNewPhaseViewController : UIViewController, UITextFieldDelegate {
         
         addButton.rac_command = RACCommand() {
             (any:AnyObject!) -> RACSignal in
-            let newPhase = BrewPhase(jobEnd:"", min:Int(self.minStepper.value), temp:Float(self.tempStepper.value), tempReached:false, inProgress:false)
+            let newPhase = BrewPhase(jobEnd:"", min:self.min, temp:Float(self.temp), tempReached:false, inProgress:false)
             var newPhases = self.brewViewModel.phases
             newPhases.append(newPhase)
             self.brewViewModel.setValue(newPhases, forKeyPath: "phases")
             return RACSignal.empty()
         }
+
+        let minStepperSignal = mappedStepperSignal(minStepper)
+        let tempStepperSignal = mappedStepperSignal(tempStepper)
+
+        let minTextSignal = mappedTextSignal(minTextField)
+        let tempTextSignal = mappedTextSignal(tempTextField)
+
+        minTextSignal.merge(minStepperSignal).subscribeNext {
+                (next: AnyObject!) -> Void in
+            if let min = next as? Int {
+                self.min = min
+                self.minStepper.value = Double(self.min)
+                self.minTextField.text = String(self.min)
+            }
+        }
+
+        tempTextSignal.merge(tempStepperSignal).subscribeNext {
+                (next: AnyObject!) -> Void in
+            if let temp = next as? Int {
+                self.temp = temp
+                self.tempStepper.value = Double(self.temp)
+                self.tempTextField.text = String(self.temp)
+            }
+        }
     }
-    
+
+    // MARK: RACSignals for controls
+
+    func mappedStepperSignal(stepper: UIStepper) -> RACSignal {
+        return stepper.rac_signalForControlEvents(.ValueChanged).map {
+            (any: AnyObject!) -> AnyObject! in
+            let stepper = any as UIStepper
+
+            return Int(stepper.value)
+        }
+    }
+
+    func mappedTextSignal(textField: UITextField) -> RACSignal {
+        return textField.rac_textSignal().map {
+            (any: AnyObject!) -> AnyObject! in
+            let text = any as String
+
+            return text.toInt()
+        }
+    }
+
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
-    
-    func setValueToStepper(value: Double, stepper: UIStepper) {
-        stepper.value = value
-    }
-    
-    func setValueToTextField(value: Int, textField: UITextField) {
-        textField.text = String(value)
-    }
-    
-    //MARK: UITextFieldDelegate
-    
-    func textFieldDidEndEditing(textField: UITextField) {
-        textField.resignFirstResponder()
-    }
-    
+
     //MARK: IBAction methods
-    
-    @IBAction func stepperValueDidChange(stepper: UIStepper) {
-        setValueToTextField(Int(stepper.value), textField: stepper == minStepper ? minTextField : tempTextField)
-    }
-    
-    @IBAction func textFieldDidChange(textField: UITextField) {
-        setValueToStepper(Double(countElements(textField.text) > 0 ? textField.text.toInt()! : 0), stepper: textField == minTextField ? minStepper : tempStepper)
-    }
     
     @IBAction func viewTapped() {
         minTextField.resignFirstResponder()
