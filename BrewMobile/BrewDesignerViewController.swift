@@ -38,6 +38,9 @@ class BrewDesignerViewController : UIViewController, UITextFieldDelegate, UITabl
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        let nib = UINib(nibName: "PhaseCell", bundle: nil)
+        phasesTableView.registerNib(nib, forCellReuseIdentifier: "PhaseCell")
+        
         self.navigationItem.leftBarButtonItem = UIBarButtonItem()
         self.navigationItem.leftBarButtonItem?.title = "Sync"
         syncButton = self.navigationItem.leftBarButtonItem
@@ -54,22 +57,22 @@ class BrewDesignerViewController : UIViewController, UITextFieldDelegate, UITabl
         
         dismissInputViewsSignal.setKeyPath("hidden", onObject:self.pickerBgView)
         
-        syncButton.rac_command = RACCommand() {
+        syncButton.rac_command = RACCommand(enabled: self.brewViewModel.validBeerSignal) {
             (any:AnyObject!) -> RACSignal in
             return self.brewViewModel.syncCommand.execute(self)
         }
         
-        editButton.rac_command = RACCommand(enabled: self.brewViewModel.validBeerSignal) {
+        editButton.rac_command = RACCommand(enabled: self.brewViewModel.hasPhasesSignal) {
             (any:AnyObject!) -> RACSignal in
             self.changeEditingModeOnTableView(!self.phasesTableView.editing)
-            return RACSignal()
+            return RACSignal.empty()
         }
         
         trashButton.rac_command = RACCommand() {
             (any:AnyObject!) -> RACSignal in
             // TODO: refresh new date
             self.phasesTableView.reloadData()
-            return RACSignal()
+            return RACSignal.empty()
         }
         
         addButton.rac_command = RACCommand() {
@@ -78,13 +81,13 @@ class BrewDesignerViewController : UIViewController, UITextFieldDelegate, UITabl
             return RACSignal.empty()
         }
 
-        let nib = UINib(nibName: "PhaseCell", bundle: nil)
-        phasesTableView.registerNib(nib, forCellReuseIdentifier: "PhaseCell")
-
-        self.brewViewModel.rac_valuesForKeyPath("phases", observer: self.brewViewModel).map { _ in
+        self.brewViewModel.rac_valuesForKeyPath("phases", observer: self.brewViewModel).subscribeNext( {
+            (next: AnyObject!) -> () in
             self.phasesTableView.reloadData()
-            return RACSignal.empty()
-        }
+        });
+        
+        self.nameTextField.rac_textSignal().setKeyPath("name", onObject: self.brewViewModel, nilValue:"")
+     
         // TODO: refresh new date
     }
     

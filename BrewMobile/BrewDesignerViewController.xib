@@ -80,6 +80,10 @@
                                     <rect key="frame" x="0.0" y="129" width="320" height="280"/>
                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <sections/>
+                                    <connections>
+                                        <outlet property="dataSource" destination="-1" id="OOx-fJ-lLE"/>
+                                        <outlet property="delegate" destination="-1" id="9vh-cm-x3z"/>
+                                    </connections>
                                 </tableView>
                             </subviews>
                             <color key="backgroundColor" red="0.98912292820000003" green="0.98912292820000003" blue="0.98912292820000003" alpha="1" colorSpace="calibratedRGB"/>

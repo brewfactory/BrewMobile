@@ -38,9 +38,9 @@ class BrewNewPhaseViewController : UIViewController, UITextFieldDelegate {
         addButton.rac_command = RACCommand() {
             (any:AnyObject!) -> RACSignal in
             let newPhase = BrewPhase(jobEnd:"", min:Int(self.minStepper.value), temp:Float(self.tempStepper.value), tempReached:false, inProgress:false)
-            self.brewViewModel.phases.append(newPhase)
-            self.dismissViewControllerAnimated(true, completion: nil)
-
+            var newPhases = self.brewViewModel.phases
+            newPhases.append(newPhase)
+            self.brewViewModel.setValue(newPhases, forKeyPath: "phases")
             return RACSignal.empty()
         }
     }

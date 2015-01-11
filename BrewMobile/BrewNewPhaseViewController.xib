@@ -8,7 +8,9 @@
             <connections>
                 <outlet property="addButton" destination="ohP-fR-VLW" id="BAw-fC-gWs"/>
                 <outlet property="minStepper" destination="gPS-Ur-a4r" id="5x6-Fk-QMP"/>
+                <outlet property="minTextField" destination="kR8-wT-QR1" id="3Ij-dW-pgH"/>
                 <outlet property="tempStepper" destination="21a-cS-NFD" id="wRL-ZT-Lmf"/>
+                <outlet property="tempTextField" destination="itg-rt-tF2" id="Bb0-jc-4cx"/>
                 <outlet property="view" destination="hPt-CF-kI8" id="gzh-yv-S1g"/>
             </connections>
         </placeholder>
@@ -32,13 +34,13 @@
                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                             <nil key="highlightedColor"/>
                         </label>
-                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="0" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="kR8-wT-QR1">
-                            <rect key="frame" x="34" y="65" width="62" height="30"/>
+                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="20" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="itg-rt-tF2">
+                            <rect key="frame" x="197" y="65" width="62" height="30"/>
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                             <textInputTraits key="textInputTraits" keyboardType="decimalPad"/>
                         </textField>
-                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="20" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="itg-rt-tF2">
-                            <rect key="frame" x="197" y="65" width="62" height="30"/>
+                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="0" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="kR8-wT-QR1">
+                            <rect key="frame" x="34" y="65" width="62" height="30"/>
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                             <textInputTraits key="textInputTraits" keyboardType="decimalPad"/>
                         </textField>

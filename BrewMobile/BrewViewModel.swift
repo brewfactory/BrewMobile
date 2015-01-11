@@ -13,6 +13,7 @@ class BrewViewModel : NSObject {
     let syncCommand: RACCommand!
     let stopCommand: RACCommand!
     let validBeerSignal: RACSignal!
+    let hasPhasesSignal: RACSignal!
     let brewManager: BrewManager
     var name = ""
     var phases = PhaseArray()
