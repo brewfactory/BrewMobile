@@ -10,7 +10,7 @@ import UIKit
 import ISO8601
 import ReactiveCocoa
 
-class BrewDesignerViewController : UIViewController, UITextFieldDelegate, UITableViewDataSource, UITableViewDelegate, BrewPhaseDesignerDelegate, UIGestureRecognizerDelegate {
+class BrewDesignerViewController : UIViewController, UITableViewDataSource, UITableViewDelegate, BrewPhaseDesignerDelegate, UIGestureRecognizerDelegate {
 
     @IBOutlet weak var nameTextField: UITextField!
     @IBOutlet weak var startTimeTextField: UITextField!
@@ -109,6 +109,7 @@ class BrewDesignerViewController : UIViewController, UITextFieldDelegate, UITabl
         super.didReceiveMemoryWarning()
     }
     
+    //TODO: show dates
     func showFormattedTextDate(date: NSDate) {
         let dateFormatter = NSDateFormatter()
         dateFormatter.dateFormat = "YYYY.MM.dd. HH:mm"
@@ -120,29 +121,6 @@ class BrewDesignerViewController : UIViewController, UITextFieldDelegate, UITabl
         isoDateFormatter.defaultTimeZone = NSTimeZone.defaultTimeZone()
         isoDateFormatter.includeTime = true
         return isoDateFormatter.stringFromDate(date)
-    }
-    
-    //MARK: UITextFieldDelegate
-    
-    func textFieldShouldBeginEditing(textField: UITextField) -> Bool {
-        if textField == startTimeTextField {
-            nameTextField.resignFirstResponder()
-            textField.resignFirstResponder()
-            
-            startTimePicker.minimumDate = NSDate()
-            startTimePicker.date = NSDate()
-            pickerBgView.hidden = false
-            
-            return false
-        } else {
-            pickerBgView.hidden = true
-            
-            return true
-        }
-    }
-
-    func changeEditingModeOnTableView(editing: Bool) {
-        phasesTableView.editing = editing
     }
     
     // MARK: UITableViewDataSource

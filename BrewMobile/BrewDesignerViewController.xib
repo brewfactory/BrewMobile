@@ -148,5 +148,10 @@
             <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
             <point key="canvasLocation" x="343" y="279"/>
         </view>
+        <tapGestureRecognizer id="jwt-nf-kvG">
+            <connections>
+                <outlet property="delegate" destination="-1" id="3Ub-1z-wsi"/>
+            </connections>
+        </tapGestureRecognizer>
     </objects>
 </document>
