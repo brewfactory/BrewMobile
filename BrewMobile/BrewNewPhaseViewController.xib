@@ -50,9 +50,6 @@
                         <stepper opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="20" maximumValue="10000" translatesAutoresizingMaskIntoConstraints="NO" id="21a-cS-NFD">
                             <rect key="frame" x="197" y="103" width="94" height="29"/>
                         </stepper>
-                        <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ueb-U7-w1Y">
-                            <color key="backgroundColor" red="0.85098039219999999" green="0.84705882349999995" blue="0.87450980389999999" alpha="1" colorSpace="calibratedRGB"/>
-                        </view>
                         <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ohP-fR-VLW">
                             <rect key="frame" x="137" y="170" width="46" height="30"/>
                             <state key="normal" title="Add">

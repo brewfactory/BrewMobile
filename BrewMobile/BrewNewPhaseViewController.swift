@@ -96,11 +96,4 @@ class BrewNewPhaseViewController : UIViewController {
         super.didReceiveMemoryWarning()
     }
 
-    //MARK: IBAction methods
-    
-    @IBAction func viewTapped() {
-        minTextField.resignFirstResponder()
-        tempTextField.resignFirstResponder()
-    }
-
 }
