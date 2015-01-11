@@ -23,8 +23,8 @@ class BrewNewPhaseViewController : UIViewController {
     
     let brewViewModel: BrewViewModel
     
-    var min = Int()
-    var temp = Int()
+    var min = Int(0)
+    var temp = Int(20)
 
     init(brewViewModel: BrewViewModel) {
         self.brewViewModel = brewViewModel
