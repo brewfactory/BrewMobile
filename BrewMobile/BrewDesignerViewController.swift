@@ -195,6 +195,7 @@ class BrewDesignerViewController : UIViewController, UITextFieldDelegate, UITabl
         newPhases[destinationIndexPath.row] =  newPhases[sourceIndexPath.row]
         newPhases[sourceIndexPath.row] = destinationPhase
         self.brewViewModel.setValue(newPhases, forKeyPath: "phases")
+        tableView.reloadData()
     }
     
     //MARK: BrewPhaseDesignerDelegate
