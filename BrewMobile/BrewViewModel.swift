@@ -30,13 +30,13 @@ class BrewViewModel : NSObject {
             (aPhases: AnyObject!) -> AnyObject! in
             let phasesArray = aPhases as PhaseArray
             return phasesArray.count > 0
-        }
+        }.distinctUntilChanged()
 
         let validBeerNameSignal = RACObserve(self, "name").map {
             (aName: AnyObject!) -> AnyObject! in
             let nameText = aName as String
             return countElements(nameText) > 3
-        }
+        }.distinctUntilChanged()
 
         validBeerSignal = RACSignal.combineLatest([validBeerNameSignal, hasPhasesSignal]).map {
             (tuple: AnyObject!) -> AnyObject in

@@ -70,7 +70,10 @@ class BrewDesignerViewController : UIViewController, UITextFieldDelegate, UITabl
         
         self.brewViewModel.hasPhasesSignal.subscribeNext {
             (next: AnyObject!) -> () in
-            self.phasesTableView.reloadData()
+
+            if !self.phasesTableView.editing {
+                self.phasesTableView.reloadData()
+            }
 
             if !(next as Bool) {
                 self.phasesTableView.editing = false
@@ -177,20 +180,21 @@ class BrewDesignerViewController : UIViewController, UITextFieldDelegate, UITabl
     func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
         if editingStyle == UITableViewCellEditingStyle.Delete {
             if self.brewViewModel.phases.count > indexPath.row {
-                self.brewViewModel.phases.removeAtIndex(indexPath.row)
+                var newPhases = self.brewViewModel.phases
+                newPhases.removeAtIndex(indexPath.row)
+                self.brewViewModel.setValue(newPhases, forKeyPath: "phases")
                 tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Automatic)
-                tableView.reloadData()
             }
         }
     }
     
     func tableView(tableView: UITableView, moveRowAtIndexPath sourceIndexPath: NSIndexPath, toIndexPath destinationIndexPath: NSIndexPath) {
         let destinationPhase = self.brewViewModel.phases[destinationIndexPath.row]
-        
-        self.brewViewModel.phases[destinationIndexPath.row] =  self.brewViewModel.phases[sourceIndexPath.row]
-        self.brewViewModel.phases[sourceIndexPath.row] = destinationPhase
-        
-        tableView.reloadData()
+
+        var newPhases = self.brewViewModel.phases
+        newPhases[destinationIndexPath.row] =  newPhases[sourceIndexPath.row]
+        newPhases[sourceIndexPath.row] = destinationPhase
+        self.brewViewModel.setValue(newPhases, forKeyPath: "phases")
     }
     
     //MARK: BrewPhaseDesignerDelegate
