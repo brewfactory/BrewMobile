@@ -29,6 +29,14 @@ class BrewDesignerViewController : UIViewController, UITextFieldDelegate, UITabl
         self.brewViewModel = brewViewModel
         super.init(nibName:"BrewDesignerViewController", bundle: nil)
         self.tabBarItem = UITabBarItem(title: "Designer", image: UIImage(named: "DesignerIcon"), tag: 0)
+    }
+
+    required init(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
 
         self.navigationItem.leftBarButtonItem = UIBarButtonItem()
         self.navigationItem.leftBarButtonItem?.title = "Sync"
@@ -37,15 +45,7 @@ class BrewDesignerViewController : UIViewController, UITextFieldDelegate, UITabl
         self.navigationItem.rightBarButtonItem = UIBarButtonItem()
         self.navigationItem.rightBarButtonItem?.title = "Edit"
         editButton = self.navigationItem.rightBarButtonItem
-    }
 
-    required init(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
         let nib = UINib(nibName: "PhaseCell", bundle: nil)
         phasesTableView.registerNib(nib, forCellReuseIdentifier: "PhaseCell")
         
@@ -57,15 +57,30 @@ class BrewDesignerViewController : UIViewController, UITextFieldDelegate, UITabl
         
         dismissInputViewsSignal ~> RAC(self.pickerBgView, "hidden")
         
+        editButton.rac_command = RACCommand(enabled: self.brewViewModel.hasPhasesSignal) {
+            (any:AnyObject!) -> RACSignal in
+            self.phasesTableView.editing = !self.phasesTableView.editing
+            return RACSignal.empty()
+        }
+
         syncButton.rac_command = RACCommand(enabled: self.brewViewModel.validBeerSignal) {
             (any:AnyObject!) -> RACSignal in
             return self.brewViewModel.syncCommand.execute(self)
         }
         
-        editButton.rac_command = RACCommand(enabled: self.brewViewModel.hasPhasesSignal) {
-            (any:AnyObject!) -> RACSignal in
-            self.changeEditingModeOnTableView(!self.phasesTableView.editing)
-            return RACSignal.empty()
+        self.brewViewModel.hasPhasesSignal.subscribeNext {
+            (next: AnyObject!) -> () in
+            self.phasesTableView.reloadData()
+
+            if !(next as Bool) {
+                self.phasesTableView.editing = false
+            }
+        }
+
+        RACObserve(self.phasesTableView, "editing").subscribeNext {
+            (editing: AnyObject!) -> Void in
+            let editingValue = editing as Bool
+            self.editButton.title = editingValue ? "Done" : "Edit"
         }
         
         trashButton.rac_command = RACCommand() {
@@ -81,12 +96,8 @@ class BrewDesignerViewController : UIViewController, UITextFieldDelegate, UITabl
             return RACSignal.empty()
         }
 
-        RACObserve(self.brewViewModel, "phases").subscribeNext( {
-            (next: AnyObject!) -> () in
-            self.phasesTableView.reloadData()
-        });
-        
         self.nameTextField.rac_textSignal() ~> RAC(self.brewViewModel, "name")
+        self.startTimeTextField.rac_textSignal() ~> RAC(self.brewViewModel, "startTime")
 
         // TODO: refresh new date
     }
@@ -129,7 +140,6 @@ class BrewDesignerViewController : UIViewController, UITextFieldDelegate, UITabl
 
     func changeEditingModeOnTableView(editing: Bool) {
         phasesTableView.editing = editing
-        editButton.title = editing ? "Done" : "Edit"
     }
     
     // MARK: UITableViewDataSource
@@ -139,10 +149,6 @@ class BrewDesignerViewController : UIViewController, UITextFieldDelegate, UITabl
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // TODO:
-//        if numberOfRows == 0 {
-//            changeEditingModeOnTableView(false) }
-        
         return self.brewViewModel.phases.count
     }
     
