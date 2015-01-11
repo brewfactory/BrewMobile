@@ -55,7 +55,7 @@ class BrewDesignerViewController : UIViewController, UITextFieldDelegate, UITabl
             return RACDisposable()
         })
         
-        dismissInputViewsSignal.setKeyPath("hidden", onObject:self.pickerBgView)
+        dismissInputViewsSignal ~> RAC(self.pickerBgView, "hidden")
         
         syncButton.rac_command = RACCommand(enabled: self.brewViewModel.validBeerSignal) {
             (any:AnyObject!) -> RACSignal in
@@ -81,13 +81,13 @@ class BrewDesignerViewController : UIViewController, UITextFieldDelegate, UITabl
             return RACSignal.empty()
         }
 
-        self.brewViewModel.rac_valuesForKeyPath("phases", observer: self.brewViewModel).subscribeNext( {
+        RACObserve(self.brewViewModel, "phases").subscribeNext( {
             (next: AnyObject!) -> () in
             self.phasesTableView.reloadData()
         });
         
-        self.nameTextField.rac_textSignal().setKeyPath("name", onObject: self.brewViewModel, nilValue:"")
-     
+        self.nameTextField.rac_textSignal() ~> RAC(self.brewViewModel, "name")
+
         // TODO: refresh new date
     }
     

@@ -25,13 +25,13 @@ class BrewViewModel : NSObject {
     
         super.init()
 
-        let validBeerNameSignal = self.rac_valuesForKeyPath("name", observer: self).map {
+        let validBeerNameSignal = RACObserve(self, "name").map {
             (name: AnyObject!) -> AnyObject! in
             let nameText = name as String
             return countElements(nameText) > 3
         }.distinctUntilChanged()
         
-        let hasPhasesSignal = self.rac_valuesForKeyPath("phases", observer: self).map {
+        let hasPhasesSignal = RACObserve(self, "phases").map {
             (phases: AnyObject!) -> AnyObject! in
             let phasesArray = phases as PhaseArray
             return phasesArray.count > 0
