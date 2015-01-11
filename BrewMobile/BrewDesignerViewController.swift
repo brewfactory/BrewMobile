@@ -29,6 +29,14 @@ class BrewDesignerViewController : UIViewController, UITextFieldDelegate, UITabl
         self.brewViewModel = brewViewModel
         super.init(nibName:"BrewDesignerViewController", bundle: nil)
         self.tabBarItem = UITabBarItem(title: "Designer", image: UIImage(named: "DesignerIcon"), tag: 0)
+
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem()
+        self.navigationItem.leftBarButtonItem?.title = "Sync"
+        syncButton = self.navigationItem.leftBarButtonItem
+
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem()
+        self.navigationItem.rightBarButtonItem?.title = "Edit"
+        editButton = self.navigationItem.rightBarButtonItem
     }
 
     required init(coder aDecoder: NSCoder) {
@@ -40,14 +48,6 @@ class BrewDesignerViewController : UIViewController, UITextFieldDelegate, UITabl
         
         let nib = UINib(nibName: "PhaseCell", bundle: nil)
         phasesTableView.registerNib(nib, forCellReuseIdentifier: "PhaseCell")
-        
-        self.navigationItem.leftBarButtonItem = UIBarButtonItem()
-        self.navigationItem.leftBarButtonItem?.title = "Sync"
-        syncButton = self.navigationItem.leftBarButtonItem
-        
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem()
-        self.navigationItem.rightBarButtonItem?.title = "Edit"
-        editButton = self.navigationItem.rightBarButtonItem
         
         let dismissInputViewsSignal = RACSignal.createSignal({ _ in
             self.nameTextField.resignFirstResponder()
