@@ -12,6 +12,8 @@
                 <outlet property="pickerBgView" destination="tcU-YS-7RG" id="Bo8-J4-GIm"/>
                 <outlet property="startTimePicker" destination="fxA-u9-6nI" id="eES-bj-56M"/>
                 <outlet property="startTimeTextField" destination="bis-dx-s8B" id="04h-QC-sKW"/>
+                <outlet property="tapGestureRecognizer" destination="jwt-nf-kvG" id="CxT-hI-u1X"/>
+                <outlet property="textFieldsView" destination="AxG-qN-0ml" id="oeL-OF-ofs"/>
                 <outlet property="trashButton" destination="kyQ-90-AmQ" id="iUL-hs-qta"/>
                 <outlet property="view" destination="ZQC-xj-gZE" id="LP0-VA-bNp"/>
             </connections>
@@ -99,6 +101,7 @@
                             </constraints>
                         </view>
                     </subviews>
+                    <gestureRecognizers/>
                     <constraints>
                         <constraint firstAttribute="bottom" secondItem="Dh1-ev-PAu" secondAttribute="bottom" constant="-1" id="120-D1-h52"/>
                         <constraint firstItem="yCN-V7-n4t" firstAttribute="leading" secondItem="DqD-XB-qDa" secondAttribute="leading" id="SlQ-ek-MX1"/>
@@ -109,6 +112,9 @@
                         <constraint firstItem="yCN-V7-n4t" firstAttribute="centerX" secondItem="DqD-XB-qDa" secondAttribute="centerX" id="oBN-kh-LHx"/>
                         <constraint firstItem="Dh1-ev-PAu" firstAttribute="top" secondItem="DqD-XB-qDa" secondAttribute="top" id="ojm-hC-3PF"/>
                     </constraints>
+                    <connections>
+                        <outletCollection property="gestureRecognizers" destination="jwt-nf-kvG" appends="YES" id="7zp-KT-y3j"/>
+                    </connections>
                 </scrollView>
                 <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tcU-YS-7RG">
                     <rect key="frame" x="0.0" y="315" width="320" height="162"/>
@@ -150,7 +156,7 @@
         </view>
         <tapGestureRecognizer id="jwt-nf-kvG">
             <connections>
-                <outlet property="delegate" destination="-1" id="3Ub-1z-wsi"/>
+                <outlet property="delegate" destination="-1" id="kIz-ve-jBk"/>
             </connections>
         </tapGestureRecognizer>
     </objects>

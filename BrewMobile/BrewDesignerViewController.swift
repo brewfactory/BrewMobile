@@ -22,6 +22,8 @@ class BrewDesignerViewController : UIViewController, UITableViewDataSource, UITa
     @IBOutlet weak var cloneButton: UIBarButtonItem!
     @IBOutlet weak var trashButton: UIBarButtonItem!
     @IBOutlet weak var addButton: UIBarButtonItem!
+    @IBOutlet weak var tapGestureRecognizer: UITapGestureRecognizer!
+    @IBOutlet weak var textFieldsView: UIView!
 
     let brewViewModel: BrewViewModel
     
@@ -49,13 +51,7 @@ class BrewDesignerViewController : UIViewController, UITableViewDataSource, UITa
         let nib = UINib(nibName: "PhaseCell", bundle: nil)
         phasesTableView.registerNib(nib, forCellReuseIdentifier: "PhaseCell")
         
-        let dismissInputViewsSignal = RACSignal.createSignal({ _ in
-            self.nameTextField.resignFirstResponder()
-            self.startTimeTextField.resignFirstResponder()
-            return RACDisposable()
-        })
-        
-        dismissInputViewsSignal ~> RAC(self.pickerBgView, "hidden")
+        RACSignal().rac_signalForSelector("dismissKeyboard") ~> RAC(self.pickerBgView, "hidden")
         
         editButton.rac_command = RACCommand(enabled: self.brewViewModel.hasPhasesSignal) {
             (any:AnyObject!) -> RACSignal in
@@ -68,6 +64,9 @@ class BrewDesignerViewController : UIViewController, UITableViewDataSource, UITa
             return self.brewViewModel.syncCommand.execute(self)
         }
         
+        self.brewViewModel.syncCommand.executionSignals.subscribeNext(dismissKeyboard)
+        editButton.rac_command.executionSignals.subscribeNext(dismissKeyboard)
+
         self.brewViewModel.hasPhasesSignal.subscribeNext {
             (next: AnyObject!) -> () in
 
@@ -107,6 +106,11 @@ class BrewDesignerViewController : UIViewController, UITableViewDataSource, UITa
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
+    }
+    
+    func dismissKeyboard(anyObject: AnyObject!) {
+        self.nameTextField.resignFirstResponder()
+        self.startTimeTextField.resignFirstResponder()
     }
     
     //TODO: show dates
@@ -186,7 +190,8 @@ class BrewDesignerViewController : UIViewController, UITableViewDataSource, UITa
     //MARK: UIGestureRecognizerDelegate
 
     func gestureRecognizer(gestureRecognizer: UIGestureRecognizer, shouldReceiveTouch touch: UITouch) -> Bool {
-        if touch.view.isDescendantOfView(phasesTableView) && phasesTableView.editing {
+        if !touch.view.isDescendantOfView(textFieldsView) {
+            dismissKeyboard(textFieldsView)
             return false
         }
         return true
