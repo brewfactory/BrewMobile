@@ -51,20 +51,12 @@ final class BrewState: Equatable, JSONDecodable, JSONEncodable  {
     // MARK: JSONDecodable
 
     class func decode(json: JSON) -> Result<BrewState> {
-        let parsedPhases = { (phases: Array<JSON>) -> PhaseArray in
-            var newPhases: PhaseArray = []
-        
-            for rawPhase: JSON in phases {
-                let brewPhase = ContentParser.parseBrewPhase(rawPhase)
-                newPhases.append(brewPhase)
-            }
-            return newPhases
-        } (json["phases"].arrayValue)
-        
         return success(BrewState(
             name: json["name"].stringValue,
             startTime: ContentParser.formatDate(json["startTime"].stringValue),
-            phases: parsedPhases,
+            phases: json["phases"].arrayValue.map { (JSON rawPhase) -> BrewPhase in
+                return ContentParser.parseBrewPhase(rawPhase)
+            },
             paused: json["paused"].boolValue,
             inProgress: json["inProgress"].boolValue)
         )
@@ -78,12 +70,11 @@ final class BrewState: Equatable, JSONDecodable, JSONEncodable  {
         brew["name"] = object.name
         brew["startTime"] = object.startTime
         
-        var encodedPhases = Array<AnyObject>()
-        for phase: BrewPhase in object.phases {
-            encodedPhases.append(BrewPhase.encode(phase).value()!)
+        object.phases.map { (BrewPhase phase) -> AnyObject in
+            return BrewPhase.encode(phase).value()!
         }
         
-        brew["phases"] = encodedPhases
+        brew["phases"] = object.phases
         return success(brew)
     }
 
