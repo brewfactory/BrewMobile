@@ -10,7 +10,7 @@ import UIKit
 import ISO8601
 import ReactiveCocoa
 
-class BrewDesignerViewController : UIViewController, UITableViewDataSource, UITableViewDelegate, BrewPhaseDesignerDelegate, UIGestureRecognizerDelegate {
+class BrewDesignerViewController : UIViewController, UITableViewDataSource, UITableViewDelegate, UIGestureRecognizerDelegate {
 
     @IBOutlet weak var nameTextField: UITextField!
     @IBOutlet weak var startTimeTextField: UITextField!
@@ -23,7 +23,6 @@ class BrewDesignerViewController : UIViewController, UITableViewDataSource, UITa
     @IBOutlet weak var trashButton: UIBarButtonItem!
     @IBOutlet weak var addButton: UIBarButtonItem!
     @IBOutlet weak var tapGestureRecognizer: UITapGestureRecognizer!
-    @IBOutlet weak var textFieldsView: UIView!
 
     let brewViewModel: BrewViewModel
     
@@ -51,8 +50,6 @@ class BrewDesignerViewController : UIViewController, UITableViewDataSource, UITa
         let nib = UINib(nibName: "PhaseCell", bundle: nil)
         phasesTableView.registerNib(nib, forCellReuseIdentifier: "PhaseCell")
         
-        RACSignal().rac_signalForSelector("dismissKeyboard") ~> RAC(self.pickerBgView, "hidden")
-        
         editButton.rac_command = RACCommand(enabled: self.brewViewModel.hasPhasesSignal) {
             (any:AnyObject!) -> RACSignal in
             self.phasesTableView.editing = !self.phasesTableView.editing
@@ -64,8 +61,22 @@ class BrewDesignerViewController : UIViewController, UITableViewDataSource, UITa
             return self.brewViewModel.syncCommand.execute(self)
         }
         
-        self.brewViewModel.syncCommand.executionSignals.subscribeNext(dismissKeyboard)
-        editButton.rac_command.executionSignals.subscribeNext(dismissKeyboard)
+        trashButton.rac_command = RACCommand() {
+            (any:AnyObject!) -> RACSignal in
+            self.phasesTableView.reloadData()
+            return RACSignal.empty()
+        }
+        
+        trashButton.rac_command.executionSignals.subscribeNext {
+            (next: AnyObject!) -> Void in
+            self.startTimePicker.setDate(NSDate(), animated: true)
+        }
+        
+        addButton.rac_command = RACCommand() {
+            (any:AnyObject!) -> RACSignal in
+            self.navigationController?.pushViewController(BrewNewPhaseViewController(brewViewModel: self.brewViewModel), animated: true)
+            return RACSignal.empty()
+        }
 
         self.brewViewModel.hasPhasesSignal.subscribeNext {
             (next: AnyObject!) -> () in
@@ -85,46 +96,63 @@ class BrewDesignerViewController : UIViewController, UITableViewDataSource, UITa
             self.editButton.title = editingValue ? "Done" : "Edit"
         }
         
-        trashButton.rac_command = RACCommand() {
-            (any:AnyObject!) -> RACSignal in
-            // TODO: refresh new date
-            self.phasesTableView.reloadData()
-            return RACSignal.empty()
-        }
-        
-        addButton.rac_command = RACCommand() {
-            (any:AnyObject!) -> RACSignal in
-            self.navigationController?.pushViewController(BrewNewPhaseViewController(brewViewModel: self.brewViewModel), animated: true)
-            return RACSignal.empty()
-        }
-
         self.nameTextField.rac_textSignal() ~> RAC(self.brewViewModel, "name")
         self.startTimeTextField.rac_textSignal() ~> RAC(self.brewViewModel, "startTime")
+        
+        let statTimeTextFieldPressed = self.startTimeTextField.rac_signalForControlEvents(.EditingDidBegin)
+        statTimeTextFieldPressed.subscribeNext(dismissKeyboard)
+        statTimeTextFieldPressed.mapReplace(false) ~> RAC(self.pickerBgView, "hidden")
+        
+        NSObject().rac_signalForSelector(Selector("setInitialDate")).subscribeNext { (any: AnyObject!) -> Void in
+            //doesn't get called
+        }
+        
+        self.brewViewModel.syncCommand.executionSignals.subscribeNext(dismissKeyboard)
+        editButton.rac_command.executionSignals.subscribeNext(dismissKeyboard)
+        
+        //setting the date on the UIDatePicker explicitly doesn't trigger value changed event
+        let startTimeValueChangedSignal = RACSignal.merge([self.startTimePicker.rac_signalForControlEvents(.ValueChanged), self.rac_signalForSelector(Selector("setInitialDate"))])
+        
+        let startDateSignal = startTimeValueChangedSignal.map {
+            (picker: AnyObject!) -> AnyObject! in
+            let timePicker = picker as UIDatePicker
+            return picker.date
+        }
+        
+        startDateSignal.map {
+            (pickerDate: AnyObject!) -> AnyObject! in
+            let date = pickerDate as NSDate
+            
+            let isoDateFormatter = ISO8601DateFormatter()
+            isoDateFormatter.defaultTimeZone = NSTimeZone.defaultTimeZone()
+            isoDateFormatter.includeTime = true
+            
+            return isoDateFormatter.stringFromDate(date)
+        } ~> RAC(self.brewViewModel, "startTime")
 
-        // TODO: refresh new date
+        startDateSignal.subscribeNext {
+            (next: AnyObject!) -> Void in
+            let date = next as NSDate
+            let dateFormatter = NSDateFormatter()
+            dateFormatter.dateFormat = "YYYY.MM.dd. HH:mm"
+            self.startTimeTextField.text = dateFormatter.stringFromDate(date)
+        }
+        
+        setInitialDate()
     }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
     
+    func setInitialDate() {
+        self.startTimePicker.setDate(NSDate(), animated: true)
+    }
+
     func dismissKeyboard(anyObject: AnyObject!) {
         self.nameTextField.resignFirstResponder()
         self.startTimeTextField.resignFirstResponder()
-    }
-    
-    //TODO: show dates
-    func showFormattedTextDate(date: NSDate) {
-        let dateFormatter = NSDateFormatter()
-        dateFormatter.dateFormat = "YYYY.MM.dd. HH:mm"
-        startTimeTextField.text = dateFormatter.stringFromDate(date)
-    }
-    
-    func createISO8601FormattedDate(date: NSDate) -> String {
-        let isoDateFormatter = ISO8601DateFormatter()
-        isoDateFormatter.defaultTimeZone = NSTimeZone.defaultTimeZone()
-        isoDateFormatter.includeTime = true
-        return isoDateFormatter.stringFromDate(date)
+        self.pickerBgView.hidden = true
     }
     
     // MARK: UITableViewDataSource
@@ -174,34 +202,20 @@ class BrewDesignerViewController : UIViewController, UITableViewDataSource, UITa
         let destinationPhase = self.brewViewModel.phases[destinationIndexPath.row]
 
         var newPhases = self.brewViewModel.phases
-        newPhases[destinationIndexPath.row] =  newPhases[sourceIndexPath.row]
+        newPhases[destinationIndexPath.row] = newPhases[sourceIndexPath.row]
         newPhases[sourceIndexPath.row] = destinationPhase
         self.brewViewModel.setValue(newPhases, forKeyPath: "phases")
         tableView.reloadData()
     }
     
-    //MARK: BrewPhaseDesignerDelegate
-    
-    func addNewPhase(phase: BrewPhase) {
-        self.brewViewModel.phases.append(phase)
-        phasesTableView.reloadData()
-    }
-    
     //MARK: UIGestureRecognizerDelegate
 
     func gestureRecognizer(gestureRecognizer: UIGestureRecognizer, shouldReceiveTouch touch: UITouch) -> Bool {
-        if !touch.view.isDescendantOfView(textFieldsView) {
-            dismissKeyboard(textFieldsView)
+        if !touch.view.isDescendantOfView(nameTextField) {
+            dismissKeyboard(nameTextField)
             return false
         }
         return true
-    }
-    
-    //MARK: IBAction methods
-
-    @IBAction func datePickerDateDidChange(datePicker: UIDatePicker) {
-        showFormattedTextDate(datePicker.date)
-        self.brewViewModel.startTime = createISO8601FormattedDate(datePicker.date)
     }
     
 }

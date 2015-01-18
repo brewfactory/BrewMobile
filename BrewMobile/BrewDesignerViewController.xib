@@ -13,7 +13,6 @@
                 <outlet property="startTimePicker" destination="fxA-u9-6nI" id="eES-bj-56M"/>
                 <outlet property="startTimeTextField" destination="bis-dx-s8B" id="04h-QC-sKW"/>
                 <outlet property="tapGestureRecognizer" destination="jwt-nf-kvG" id="CxT-hI-u1X"/>
-                <outlet property="textFieldsView" destination="AxG-qN-0ml" id="oeL-OF-ofs"/>
                 <outlet property="trashButton" destination="kyQ-90-AmQ" id="iUL-hs-qta"/>
                 <outlet property="view" destination="ZQC-xj-gZE" id="LP0-VA-bNp"/>
             </connections>
@@ -124,9 +123,6 @@
                             <date key="date" timeIntervalSinceReferenceDate="437082403.12645298">
                                 <!--2014-11-07 19:46:43 +0000-->
                             </date>
-                            <connections>
-                                <action selector="datePickerDateDidChange:" destination="-1" eventType="valueChanged" id="Qq8-Iw-FpN"/>
-                            </connections>
                         </datePicker>
                     </subviews>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
