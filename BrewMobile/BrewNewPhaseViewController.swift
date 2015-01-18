@@ -9,10 +9,6 @@
 import UIKit
 import ReactiveCocoa
 
-protocol BrewPhaseDesignerDelegate {
-    func addNewPhase(phase: BrewPhase)
-}
-
 class BrewNewPhaseViewController : UIViewController {
     
     @IBOutlet weak var minTextField: UITextField!
@@ -46,6 +42,26 @@ class BrewNewPhaseViewController : UIViewController {
             self.brewViewModel.setValue(newPhases, forKeyPath: "phases")
             return RACSignal.empty()
         }
+        
+        // MARK: RACSignals for controls
+        
+        func mappedStepperSignal(stepper: UIStepper) -> RACSignal {
+            return stepper.rac_signalForControlEvents(.ValueChanged).map {
+                (any: AnyObject!) -> AnyObject! in
+                let stepper = any as UIStepper
+                
+                return Int(stepper.value)
+            }
+        }
+        
+        func mappedTextSignal(textField: UITextField) -> RACSignal {
+            return textField.rac_textSignal().map {
+                (any: AnyObject!) -> AnyObject! in
+                let text = any as String
+                
+                return text.toInt()
+            }
+        }
 
         let minStepperSignal = mappedStepperSignal(minStepper)
         let tempStepperSignal = mappedStepperSignal(tempStepper)
@@ -69,26 +85,6 @@ class BrewNewPhaseViewController : UIViewController {
                 self.tempStepper.value = Double(self.temp)
                 self.tempTextField.text = String(self.temp)
             }
-        }
-    }
-
-    // MARK: RACSignals for controls
-
-    func mappedStepperSignal(stepper: UIStepper) -> RACSignal {
-        return stepper.rac_signalForControlEvents(.ValueChanged).map {
-            (any: AnyObject!) -> AnyObject! in
-            let stepper = any as UIStepper
-
-            return Int(stepper.value)
-        }
-    }
-
-    func mappedTextSignal(textField: UITextField) -> RACSignal {
-        return textField.rac_textSignal().map {
-            (any: AnyObject!) -> AnyObject! in
-            let text = any as String
-
-            return text.toInt()
         }
     }
 
