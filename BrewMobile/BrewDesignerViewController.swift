@@ -103,10 +103,10 @@ class BrewDesignerViewController : UIViewController, UITableViewDataSource, UITa
         statTimeTextFieldPressed.subscribeNext(dismissKeyboard)
         statTimeTextFieldPressed.mapReplace(false) ~> RAC(self.pickerBgView, "hidden")
         
-        NSObject().rac_signalForSelector(Selector("setInitialDate")).subscribeNext { (any: AnyObject!) -> Void in
+        self.rac_signalForSelector(Selector("setInitialDate")).subscribeNext { (any: AnyObject!) -> Void in
             //doesn't get called
         }
-        
+
         self.brewViewModel.syncCommand.executionSignals.subscribeNext(dismissKeyboard)
         editButton.rac_command.executionSignals.subscribeNext(dismissKeyboard)
         
@@ -144,7 +144,7 @@ class BrewDesignerViewController : UIViewController, UITableViewDataSource, UITa
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
-    
+
     func setInitialDate() {
         self.startTimePicker.setDate(NSDate(), animated: true)
     }
@@ -154,7 +154,7 @@ class BrewDesignerViewController : UIViewController, UITableViewDataSource, UITa
         self.startTimeTextField.resignFirstResponder()
         self.pickerBgView.hidden = true
     }
-    
+
     // MARK: UITableViewDataSource
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
