@@ -14,17 +14,33 @@ class BrewViewModel : NSObject {
     let stopCommand: RACCommand!
     let hasPhasesSignal: RACSignal!
     let validBeerSignal: RACSignal!
-    let brewManager: BrewManager
+    let tempChangedSignal: RACSignal!
+    let brewChangedSignal: RACSignal!
+    let socketErrorSignal: RACSignal!
 
+    let brewManager: BrewManager
     var name = ""
     var phases = PhaseArray()
     var startTime = ""
-    
+    var actState = BrewState()
+    var actTemp = 0.0
+
     init(brewManager: BrewManager) {
         
         self.brewManager = brewManager
     
         super.init()
+        
+        //MARK: Brew
+        
+        self.brewManager.connectToHost().deliverOn(RACScheduler.mainThreadScheduler()).subscribeNext({
+            (next: AnyObject!) -> Void in
+            let
+            }, error: { (error: NSError!) -> Void in
+            //error
+        })
+        
+        //MARK: Designer
 
         hasPhasesSignal = RACObserve(self, "phases").map {
             (aPhases: AnyObject!) -> AnyObject! in

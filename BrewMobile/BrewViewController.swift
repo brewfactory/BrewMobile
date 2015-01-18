@@ -7,19 +7,10 @@
 //
 
 import UIKit
-import SocketIOFramework
 import SwiftyJSON
 import ReactiveCocoa
 
-let host = "http://localhost:3000/"
-
 class BrewViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
-    
-    var actState: BrewState!
-    var actTemp: Float!
-    
-    let tempChangedEvent = "temperature_changed"
-    let brewChangedEvent = "brew_changed"
     
     let brewViewModel: BrewViewModel
 
@@ -31,7 +22,6 @@ class BrewViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     init(brewViewModel: BrewViewModel) {
         self.brewViewModel = brewViewModel
-        actState = BrewState()
         super.init(nibName:"BrewViewController", bundle: nil)
         self.tabBarItem = UITabBarItem(title: "Brew", image: UIImage(named: "HopIcon"), tag: 0)
     }
@@ -56,42 +46,6 @@ class BrewViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-    }
-    
-    // MARK: SIOSocket
-    
-    private func connectToHost() {
-        SIOSocket.socketWithHost(host, reconnectAutomatically: true, attemptLimit: 0, withDelay: 1, maximumDelay: 5, timeout: 20, response: {socket in
-            socket.onConnect = {
-                println("Connected to \(host)")
-            }
-            
-            socket.onDisconnect = {
-                println("Disconnected from \(host)")
-            }
-            
-            socket.on(self.tempChangedEvent, callback: {(AnyObject data) -> Void in
-                if data.count > 0 {
-                    self.actTemp = data[0] as Float
-                }
-                
-                dispatch_async(dispatch_get_main_queue(), {
-                    self.updateTempLabel(self.actTemp)
-                })
-            })
-            
-            socket.on(self.brewChangedEvent, callback: {(AnyObject data) -> Void in
-                if data.count > 0 {
-                    self.actState = ContentParser.parseBrewState(JSON(data[0]))
-                    
-                    dispatch_async(dispatch_get_main_queue(), {
-                        self.phasesTableView.reloadData()
-                        self.updateNameLabel()
-                        self.updateStartTimeLabel()
-                    })
-                }
-            })
-        })
     }
     
     // MARK: refresh UI
