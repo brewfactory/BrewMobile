@@ -63,13 +63,11 @@ class BrewDesignerViewController : UIViewController, UITableViewDataSource, UITa
         
         trashButton.rac_command = RACCommand() {
             (any:AnyObject!) -> RACSignal in
+            self.brewViewModel.phases = PhaseArray()
+            self.setInitialDate()
+            self.nameTextField.text = ""
             self.phasesTableView.reloadData()
             return RACSignal.empty()
-        }
-        
-        trashButton.rac_command.executionSignals.subscribeNext {
-            (next: AnyObject!) -> Void in
-            self.startTimePicker.setDate(NSDate(), animated: true)
         }
         
         addButton.rac_command = RACCommand() {
