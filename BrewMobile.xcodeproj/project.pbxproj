@@ -221,6 +221,7 @@
 				692AAA8119A34C8C00224C4D /* Resources */,
 				027E31821A52B7A700802098 /* ShellScript */,
 				027E31E61A52EA4100802098 /* Embed Frameworks */,
+				02F090541A702B760008EEA9 /* Simulator run script */,
 			);
 			buildRules = (
 			);
@@ -321,6 +322,20 @@
 			shellPath = /bin/sh;
 			shellScript = "/usr/local/bin/carthage copy-frameworks";
 		};
+		02F090541A702B760008EEA9 /* Simulator run script */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Simulator run script";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "#signing app wihout valid code signing identity for simulator-only usage\n\nif [[ $GCC_PREPROCESSOR_DEFINITIONS =~ \"SIMULATOR_ONLY=1\" ]]; then\n    codesign --deep -f -s - \"${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.app\"\nfi\n";
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -404,6 +419,7 @@
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
+					"SIMULATOR_ONLY=0",
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
