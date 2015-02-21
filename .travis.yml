@@ -1,6 +1,8 @@
 language: swift
 
-os: osx
+recipes:
+  - homebrew
+  - travis_build_environment::osx
 
 before_install:
   - brew update
