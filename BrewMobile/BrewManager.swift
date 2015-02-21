@@ -12,15 +12,21 @@ import ReactiveCocoa
 import LlamaKit
 import SocketIOFramework
 
+let tempChangedEvent = "temperature_changed"
+let brewChangedEvent = "brew_changed"
+
 class BrewManager : NSObject {
     let host = "http://localhost:3000/"
-    let tempChangedEvent = "temperature_changed"
-    let brewChangedEvent = "brew_changed"
     
-    let stopBrewSignal: RACSignal!
+    let stopBrewCommand: RACCommand!
     let syncBrewCommand: RACCommand!
-
+    let tempChangedSignal: RACSubject
+    let brewChangedSignal: RACSubject
+    
     override init() {
+        tempChangedSignal = RACSubject()
+        brewChangedSignal = RACSubject()
+        
         super.init()
 
         syncBrewCommand = RACCommand(signalBlock: { (brewObject: AnyObject!) -> RACSignal! in
@@ -65,32 +71,31 @@ class BrewManager : NSObject {
     
     // MARK: WebSocket
     
-    func connectToHost() -> RACSignal {
-        let scheduler = RACScheduler(priority: RACSchedulerPriorityBackground)
-        return RACSignal.createSignal({
-            (subscriber: RACSubscriber!) -> RACDisposable! in
-            SIOSocket.socketWithHost(self.host, reconnectAutomatically: true, attemptLimit: 0, withDelay: 1, maximumDelay: 5, timeout: 20, response: {socket in
-                socket.onConnect = {
-                    println("Connected to \(self.host)")
-                }
-                
-                socket.onDisconnect = {
-                    println("Disconnected from \(self.host)")
-                }
-                
-                socket.on(self.tempChangedEvent, callback: { (AnyObject data) -> Void in
-                    subscriber.sendNext(["event": self.tempChangedEvent, "data": data])
-                })
-                
-                socket.on(self.brewChangedEvent, callback: { (AnyObject data) -> Void in
-                    subscriber.sendNext(["event": self.brewChangedEvent, "data": data])
-                })
-                
-                socket.onError = { (AnyObject anyError) -> Void in
-                    subscriber.sendError(NSError())
+    func connectToHost() {
+        SIOSocket.socketWithHost(self.host, reconnectAutomatically: true, attemptLimit: 0, withDelay: 1, maximumDelay: 5, timeout: 20, response: {socket in
+            socket.onConnect = {
+                println("Connected to \(self.host)")
+            }
+            
+            socket.onDisconnect = {
+                println("Disconnected from \(self.host)")
+            }
+            
+            socket.on(tempChangedEvent, callback: { (AnyObject data) -> Void in
+                if(countElements(data) > 0) {
+                    self.tempChangedSignal.sendNext([tempChangedEvent: data[0] as Float])
                 }
             })
-            return RACDisposable()
-        }).subscribeOn(scheduler)
+            
+            socket.on(brewChangedEvent, callback: { (AnyObject data) -> Void in
+                if(countElements(data) > 0) {
+                    self.brewChangedSignal.sendNext([brewChangedEvent: ContentParser.parseBrewState(JSON(data[0]))])
+                }
+            })
+            
+            socket.onError = { (AnyObject anyError) -> Void in
+                
+            }
+        })
     }
 }
