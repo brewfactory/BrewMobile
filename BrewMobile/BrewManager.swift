@@ -33,7 +33,9 @@ class BrewManager : NSObject {
             return self.composeRequestSignalFromURLRequest(self.requestWithBody("api/brew", method: "POST", body: brewObject).value()!).deliverOn(RACScheduler.mainThreadScheduler())
         })
         
-        stopBrewSignal = composeRequestSignalFromURLRequest(self.requestWithBody("api/brew/stop", method: "PATCH", body: "").value()!).deliverOn(RACScheduler.mainThreadScheduler())
+        stopBrewCommand = RACCommand(signalBlock: { Void -> RACSignal! in
+            return  self.composeRequestSignalFromURLRequest(self.requestWithBody("api/brew/stop", method: "PATCH", body: "").value()!).deliverOn(RACScheduler.mainThreadScheduler())
+        })
     }
 
     //Mark: HTTP
