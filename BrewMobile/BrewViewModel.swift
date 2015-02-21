@@ -22,8 +22,9 @@ class BrewViewModel : NSObject {
     var name = ""
     var phases = PhaseArray()
     var startTime = ""
-    var actState = BrewState()
-    var actTemp: Float = 0.0
+    
+    var state = BrewState()
+    var temp: Float = 0.0
 
     init(brewManager: BrewManager) {
         
@@ -42,8 +43,8 @@ class BrewViewModel : NSObject {
         tempChangedSignal = self.brewManager.tempChangedSignal.map {
             (any: AnyObject!) -> AnyObject! in
             if let anyDict = any as? Dictionary<String, Float> {
-                if let temp = anyDict[tempChangedEvent] {
-                    return temp
+                if let newTemp = anyDict[tempChangedEvent] {
+                    return newTemp
                 }
             }
             return 0
@@ -53,7 +54,7 @@ class BrewViewModel : NSObject {
             (any: AnyObject!) -> AnyObject! in
             if let anyDict = any as? Dictionary<String, BrewState> {
                 if let brew = anyDict[brewChangedEvent] {
-                    self.actState = brew
+                    self.state = brew
                     return brew
                 }
             }
@@ -87,7 +88,9 @@ class BrewViewModel : NSObject {
         syncCommand = RACCommand() {
             Void -> RACSignal in
             let brewState = BrewState(name: self.name, startTime: self.startTime, phases: self.phases, paused: false, inProgress: false)
-            return brewManager.syncBrewCommand.execute(BrewState.encode(brewState).value()!)
+            
+            //wow no such thing as passing a JSON ??
+            return brewManager.syncBrewCommand.execute(BrewState.encode(brewState).value()?.object).deliverOn(RACScheduler.mainThreadScheduler())
         }
     }
 

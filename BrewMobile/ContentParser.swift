@@ -20,7 +20,7 @@ protocol JSONDecodable {
 // MARK: JSONEncodable
 
 protocol JSONEncodable {
-    class func encode(object: Self) -> Result<AnyObject>
+    class func encode(object: Self) -> Result<JSON>
 }
 
 typealias PhaseArray = [BrewPhase]

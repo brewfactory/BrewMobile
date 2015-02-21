@@ -64,18 +64,19 @@ final class BrewState: Equatable, JSONDecodable, JSONEncodable  {
 
     // MARK: JSONEncodable
     
-    class func encode(object: BrewState) -> Result<AnyObject> {
+    class func encode(object: BrewState) -> Result<JSON> {
         var brew = Dictionary<String, AnyObject>()
        
         brew["name"] = object.name
         brew["startTime"] = object.startTime
         
-        object.phases.map { (BrewPhase phase) -> AnyObject in
-            return BrewPhase.encode(phase).value()!
+        var encodedPhases = Array<AnyObject>()
+               for phase: BrewPhase in object.phases {
+                encodedPhases.append(BrewPhase.encode(phase).value()!.object)
         }
         
-        brew["phases"] = object.phases
-        return success(brew)
+        brew["phases"] = encodedPhases
+        return success(JSON(brew))
     }
 
 }

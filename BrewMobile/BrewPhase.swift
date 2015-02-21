@@ -109,13 +109,13 @@ final class BrewPhase: Equatable, JSONDecodable, JSONEncodable {
     
     // MARK: JSONEncodable
     
-    class func encode(object: BrewPhase) -> Result<AnyObject> {
+    class func encode(object: BrewPhase) -> Result<JSON> {
         var phase = Dictionary<String, AnyObject>()
         
         phase["min"] = Int(object.min)
         phase["temp"] = Float(object.temp)
-        
-        return success(phase)
+
+        return success(JSON(phase))
     }
     
 }

@@ -30,24 +30,24 @@ class BrewManager : NSObject {
         super.init()
 
         syncBrewCommand = RACCommand(signalBlock: { (brewObject: AnyObject!) -> RACSignal! in
-            return self.composeRequestSignalFromURLRequest(self.requestWithBody("api/brew", method: "POST", body: brewObject).value()!).deliverOn(RACScheduler.mainThreadScheduler())
+            return self.composeRequestSignalFromURLRequest(self.requestWithBody("api/brew", method: "POST", body: JSON(brewObject)).value()!)
         })
         
         stopBrewCommand = RACCommand(signalBlock: { Void -> RACSignal! in
-            return  self.composeRequestSignalFromURLRequest(self.requestWithBody("api/brew/stop", method: "PATCH", body: "").value()!).deliverOn(RACScheduler.mainThreadScheduler())
+            return  self.composeRequestSignalFromURLRequest(self.requestWithBody("api/brew/stop", method: "PATCH", body: "").value()!)
         })
     }
 
     //Mark: HTTP
     
-    private func requestWithBody(path: String, method: String, body: AnyObject) -> Result<NSMutableURLRequest> {
+    private func requestWithBody(path: String, method: String, body: JSON) -> Result<NSMutableURLRequest> {
         var request : NSMutableURLRequest = NSMutableURLRequest()
         var serializationError: NSError?
         
         request.URL = NSURL(string: host + path)
         request.HTTPMethod = method
         if method == "POST" {
-            request.HTTPBody = NSJSONSerialization.dataWithJSONObject(body, options: .PrettyPrinted, error: &serializationError)
+            request.HTTPBody = body.rawData(options: .PrettyPrinted, error: &serializationError)
         }
         
         return (serializationError == nil ? success(request) : failure(serializationError!))
