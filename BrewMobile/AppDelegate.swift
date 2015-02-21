@@ -11,11 +11,29 @@ import UIKit
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
                             
-    var window: UIWindow?
+    var window: UIWindow!
+    var brewDesignerNavigationController: UINavigationController!
+    var brewTabBarController: UITabBarController!
+    
+    func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: NSDictionary?) -> Bool {
+    
+        brewTabBarController = UITabBarController()
+        brewDesignerNavigationController = UINavigationController()
+        
+        let brewManager = BrewManager()
+        let brewViewModel = BrewViewModel(brewManager: brewManager)
+        
+        let brewViewController = BrewViewController(brewViewModel: brewViewModel)
+        let brewDesignerViewController = BrewDesignerViewController(brewViewModel: brewViewModel)
 
+        brewDesignerNavigationController.pushViewController(brewDesignerViewController, animated: false)
 
-    func application(application: UIApplication!, didFinishLaunchingWithOptions launchOptions: NSDictionary!) -> Bool {
-        // Override point for customization after application launch.
+        brewTabBarController.setViewControllers([brewViewController, brewDesignerNavigationController], animated: false)
+        
+        window = UIWindow(frame: UIScreen.mainScreen().bounds)
+        window.rootViewController = brewTabBarController
+        window.makeKeyAndVisible()
+
         return true
     }
 

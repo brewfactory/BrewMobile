@@ -8,6 +8,8 @@
 
 import Foundation
 import UIKit
+import LlamaKit
+import SwiftyJSON
 
 enum State: Int {
     case INACTIVE = 0
@@ -53,20 +55,21 @@ func == (left: BrewPhase, right: BrewPhase) -> Bool {
     return (left.jobEnd == right.jobEnd) && (left.min == right.min) && (left.temp == right.temp) && (left.tempReached == right.tempReached) && (left.inProgress == right.inProgress)
 }
 
-class BrewPhase: Brew, Equatable {
+final class BrewPhase: Equatable, JSONDecodable, JSONEncodable {
     var jobEnd: String
     var min: Int
     var temp: Float
     var tempReached: Bool
     var state: State
+    var inProgress: Bool
     
-    override init() {
+    init() {
         jobEnd = ""
         min = 0
         temp = 0
         tempReached = false
         state = State.INACTIVE
-        super.init()
+        inProgress = false
     }
     
     init(jobEnd: String, min: Int, temp: Float, tempReached: Bool, inProgress: Bool) {
@@ -89,39 +92,30 @@ class BrewPhase: Brew, Equatable {
                 return State.INACTIVE
             }
         } ()
-        super.init(inProgress: inProgress)
-    }
-    
-    class func create(jobEnd: String)(min: Int)(temp: Float)(tempReached: Bool)(inProgress: Bool) -> BrewPhase {
-        return BrewPhase(jobEnd: ContentParser.formatDate(jobEnd), min: min, temp: temp, tempReached: tempReached, inProgress: inProgress)
+        self.inProgress = inProgress
     }
     
     // MARK: JSONDecodable
     
-    override class func decode(json: JSON) -> BrewPhase? {
-        if let decodedBrewPhaseObject = (JSONDictObject(json) >>> { brew in
-            BrewPhase.create <^>
-                ((brew["jobEnd"] >>> JSONString) ?? "") <*>
-                brew["min"]             >>> JSONInt     <*>
-                brew["temp"]            >>> JSONFloat   <*>
-                brew["tempReached"]     >>> JSONBool    <*>
-                brew["inProgress"]      >>> JSONBool
-            }) {
-            return decodedBrewPhaseObject
-        } else {
-            return BrewPhase()
-        }
+    class func decode(json: JSON) -> Result<BrewPhase> {
+        return success(BrewPhase(
+            jobEnd: ContentParser.formatDate(json["jobEnd"].stringValue),
+            min: json["min"].intValue,
+            temp: json["temp"].floatValue,
+            tempReached: json["tempReached"].boolValue,
+            inProgress: json["inProgress"].boolValue)
+        )
     }
     
     // MARK: JSONEncodable
     
-    class func encode(object: BrewPhase) -> JSON? {
+    class func encode(object: BrewPhase) -> Result<JSON> {
         var phase = Dictionary<String, AnyObject>()
         
         phase["min"] = Int(object.min)
         phase["temp"] = Float(object.temp)
-        
-        return phase
+
+        return success(JSON(phase))
     }
     
 }

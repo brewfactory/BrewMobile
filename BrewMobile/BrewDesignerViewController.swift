@@ -8,12 +8,9 @@
 
 import UIKit
 import ISO8601
+import ReactiveCocoa
 
-class PhaseCell: UITableViewCell {
-    @IBOutlet weak var phaseLabel: UILabel!
-}
-
-class BrewDesignerViewController : UIViewController, UITextFieldDelegate, UITableViewDataSource, UITableViewDelegate, BrewPhaseDesignerDelegate, UIGestureRecognizerDelegate {
+class BrewDesignerViewController : UIViewController, UITableViewDataSource, UITableViewDelegate, UIGestureRecognizerDelegate {
 
     @IBOutlet weak var nameTextField: UITextField!
     @IBOutlet weak var startTimeTextField: UITextField!
@@ -24,91 +21,138 @@ class BrewDesignerViewController : UIViewController, UITextFieldDelegate, UITabl
     @IBOutlet weak var syncButton: UIBarButtonItem!
     @IBOutlet weak var cloneButton: UIBarButtonItem!
     @IBOutlet weak var trashButton: UIBarButtonItem!
+    @IBOutlet weak var addButton: UIBarButtonItem!
+    @IBOutlet weak var tapGestureRecognizer: UITapGestureRecognizer!
 
-    var brewState: BrewState
-    var nowDate = NSDate()
+    let brewViewModel: BrewViewModel
+    
+    init(brewViewModel: BrewViewModel) {
+        self.brewViewModel = brewViewModel
+        super.init(nibName:"BrewDesignerViewController", bundle: nil)
+        self.tabBarItem = UITabBarItem(title: "Designer", image: UIImage(named: "DesignerIcon"), tag: 0)
+    }
 
     required init(coder aDecoder: NSCoder) {
-        brewState = BrewState()
-        
-        super.init(coder: aDecoder)
+        fatalError("init(coder:) has not been implemented")
     }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem()
+        self.navigationItem.leftBarButtonItem?.title = "Sync"
+        syncButton = self.navigationItem.leftBarButtonItem
+
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem()
+        self.navigationItem.rightBarButtonItem?.title = "Edit"
+        editButton = self.navigationItem.rightBarButtonItem
+
+        let nib = UINib(nibName: "PhaseCell", bundle: nil)
+        phasesTableView.registerNib(nib, forCellReuseIdentifier: "PhaseCell")
         
-        editButton.target = self
-        editButton.action = "editButtonPressed:"
+        editButton.rac_command = RACCommand(enabled: self.brewViewModel.hasPhasesSignal) {
+            (any:AnyObject!) -> RACSignal in
+            self.phasesTableView.editing = !self.phasesTableView.editing
+            return RACSignal.empty()
+        }
+
+        syncButton.rac_command = RACCommand(enabled: self.brewViewModel.validBeerSignal) {
+            (any:AnyObject!) -> RACSignal in
+            return self.brewViewModel.syncCommand.execute(self)
+        }
         
-        syncButton.target = self
-        syncButton.action = "syncButtonPressed:"
+        trashButton.rac_command = RACCommand() {
+            (any:AnyObject!) -> RACSignal in
+            self.brewViewModel.phases = PhaseArray()
+            self.setInitialDate()
+            self.nameTextField.text = ""
+            self.phasesTableView.reloadData()
+            return RACSignal.empty()
+        }
         
-        //cloneButton.target = self
-        //cloneButton.action = "cloneButtonPressed:"
+        addButton.rac_command = RACCommand() {
+            (any:AnyObject!) -> RACSignal in
+            self.navigationController?.pushViewController(BrewNewPhaseViewController(brewViewModel: self.brewViewModel), animated: true)
+            return RACSignal.empty()
+        }
+
+        self.brewViewModel.hasPhasesSignal.subscribeNext {
+            (next: AnyObject!) -> () in
+
+            if !self.phasesTableView.editing {
+                self.phasesTableView.reloadData()
+            }
+
+            if !(next as Bool) {
+                self.phasesTableView.editing = false
+            }
+        }
+
+        RACObserve(self.phasesTableView, "editing").subscribeNext {
+            (editing: AnyObject!) -> Void in
+            let editingValue = editing as Bool
+            self.editButton.title = editingValue ? "Done" : "Edit"
+        }
         
-        trashButton.target = self
-        trashButton.action = "trashButtonPressed:"
+        self.nameTextField.rac_textSignal() ~> RAC(self.brewViewModel, "name")
+        self.startTimeTextField.rac_textSignal() ~> RAC(self.brewViewModel, "startTime")
         
-        showFormattedTextDate(nowDate)
+        let statTimeTextFieldPressed = self.startTimeTextField.rac_signalForControlEvents(.EditingDidBegin)
+        statTimeTextFieldPressed.subscribeNext(dismissKeyboard)
+        statTimeTextFieldPressed.mapReplace(false) ~> RAC(self.pickerBgView, "hidden")
+        
+        self.rac_signalForSelector(Selector("setInitialDate")).subscribeNext { (any: AnyObject!) -> Void in
+            //doesn't get called
+        }
+
+        self.brewViewModel.syncCommand.executionSignals.subscribeNext(dismissKeyboard)
+        editButton.rac_command.executionSignals.subscribeNext(dismissKeyboard)
+        
+        //setting the date on the UIDatePicker explicitly doesn't trigger value changed event
+        let startTimeValueChangedSignal = RACSignal.merge([self.startTimePicker.rac_signalForControlEvents(.ValueChanged), self.rac_signalForSelector(Selector("setInitialDate"))])
+        
+        let startDateSignal = startTimeValueChangedSignal.map {
+            (picker: AnyObject!) -> AnyObject! in
+            let timePicker = picker as UIDatePicker
+            return picker.date
+        }
+        
+        startDateSignal.map {
+            (pickerDate: AnyObject!) -> AnyObject! in
+            let date = pickerDate as NSDate
+            
+            let isoDateFormatter = ISO8601DateFormatter()
+            isoDateFormatter.defaultTimeZone = NSTimeZone.defaultTimeZone()
+            isoDateFormatter.includeTime = true
+            
+            return isoDateFormatter.stringFromDate(date)
+        } ~> RAC(self.brewViewModel, "startTime")
+
+        startDateSignal.subscribeNext {
+            (next: AnyObject!) -> Void in
+            let date = next as NSDate
+            let dateFormatter = NSDateFormatter()
+            dateFormatter.dateFormat = "YYYY.MM.dd. HH:mm"
+            self.startTimeTextField.text = dateFormatter.stringFromDate(date)
+        }
+        
+        setInitialDate()
     }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
-    
-    func showFormattedTextDate(date: NSDate) {
-        let dateFormatter = NSDateFormatter()
-        dateFormatter.dateFormat = "YYYY.MM.dd. HH:mm"
-        startTimeTextField.text = dateFormatter.stringFromDate(date)
+
+    func setInitialDate() {
+        self.startTimePicker.setDate(NSDate(), animated: true)
     }
-    
-    func createISO8601FormattedDate(date: NSDate) -> String {
-        let isoDateFormatter = ISO8601DateFormatter()
-        isoDateFormatter.defaultTimeZone = NSTimeZone.defaultTimeZone()
-        isoDateFormatter.includeTime = true
-        return isoDateFormatter.stringFromDate(date)
+
+    func dismissKeyboard(anyObject: AnyObject!) {
+        self.nameTextField.resignFirstResponder()
+        self.startTimeTextField.resignFirstResponder()
+        self.pickerBgView.hidden = true
     }
-    
-    //MARK: UITextFieldDelegate
-    
-    func textFieldShouldBeginEditing(textField: UITextField) -> Bool {
-        if textField == startTimeTextField {
-            nameTextField.resignFirstResponder()
-            textField.resignFirstResponder()
-            
-            startTimePicker.minimumDate = nowDate
-            startTimePicker.date = nowDate
-            pickerBgView.hidden = false
-            
-            return false
-        } else {
-            pickerBgView.hidden = true
-            
-            return true
-        }
-    }
-    
-    func textFieldDidEndEditing(textField: UITextField) {
-        enableSyncButton()
-    }
-    
-    func textFieldDidBeginEditing(textField: UITextField) {
-        enableSyncButton()
-    }
-    
-    func changeEditingModeOnTableView(editing: Bool) {
-        phasesTableView.editing = editing
-        editButton.title = editing ? "Done" : "Edit"
-        
-        let numberOfRows = brewState.phases.count
-        if numberOfRows == 0 {
-            editButton.enabled = false
-            syncButton.enabled = false
-        } else {
-            editButton.enabled = true
-        }
-    }
-    
+
     // MARK: UITableViewDataSource
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
@@ -116,22 +160,13 @@ class BrewDesignerViewController : UIViewController, UITextFieldDelegate, UITabl
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        let numberOfRows = brewState.phases.count
-        if numberOfRows == 0 {
-            changeEditingModeOnTableView(false)
-            editButton.enabled = false
-            syncButton.enabled = false
-        } else {
-            editButton.enabled = true
-        }
-        
-        return numberOfRows
+        return self.brewViewModel.phases.count
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("PhaseCell", forIndexPath: indexPath) as PhaseCell
-        if brewState.phases.count > indexPath.row  {
-            let phase = brewState.phases[indexPath.row]
+        if self.brewViewModel.phases.count > indexPath.row  {
+            let phase = self.brewViewModel.phases[indexPath.row]
             cell.phaseLabel.text = "\(indexPath.row + 1). \(phase.min) min \(phase.temp) ˚C"
         }
         
@@ -152,105 +187,33 @@ class BrewDesignerViewController : UIViewController, UITextFieldDelegate, UITabl
     
     func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
         if editingStyle == UITableViewCellEditingStyle.Delete {
-            if brewState.phases.count > indexPath.row {
-                brewState.phases.removeAtIndex(indexPath.row)
+            if self.brewViewModel.phases.count > indexPath.row {
+                var newPhases = self.brewViewModel.phases
+                newPhases.removeAtIndex(indexPath.row)
+                self.brewViewModel.setValue(newPhases, forKeyPath: "phases")
                 tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Automatic)
-                tableView.reloadData()
             }
         }
     }
     
     func tableView(tableView: UITableView, moveRowAtIndexPath sourceIndexPath: NSIndexPath, toIndexPath destinationIndexPath: NSIndexPath) {
-        let destinationPhase = brewState.phases[destinationIndexPath.row]
-        
-        brewState.phases[destinationIndexPath.row] =  brewState.phases[sourceIndexPath.row]
-        brewState.phases[sourceIndexPath.row] = destinationPhase
-        
+        let destinationPhase = self.brewViewModel.phases[destinationIndexPath.row]
+
+        var newPhases = self.brewViewModel.phases
+        newPhases[destinationIndexPath.row] = newPhases[sourceIndexPath.row]
+        newPhases[sourceIndexPath.row] = destinationPhase
+        self.brewViewModel.setValue(newPhases, forKeyPath: "phases")
         tableView.reloadData()
-    }
-    
-    //MARK: BrewPhaseDesignerDelegate
-    
-    func addNewPhase(phase: BrewPhase) {
-        brewState.phases.append(phase)
-        phasesTableView.reloadData()
-        enableSyncButton()
     }
     
     //MARK: UIGestureRecognizerDelegate
 
     func gestureRecognizer(gestureRecognizer: UIGestureRecognizer, shouldReceiveTouch touch: UITouch) -> Bool {
-        if touch.view.isDescendantOfView(phasesTableView) && phasesTableView.editing {
+        if !touch.view.isDescendantOfView(nameTextField) {
+            dismissKeyboard(nameTextField)
             return false
         }
         return true
-    }
-    
-    //MARK: IBAction methods
-
-    @IBAction func datePickerDateDidChange(datePicker: UIDatePicker) {
-        showFormattedTextDate(datePicker.date)
-        brewState.startTime = createISO8601FormattedDate(datePicker.date)
-
-        enableSyncButton()
-    }
-    
-    @IBAction func viewTapped() {
-        dismissInputViews()
-    }
-    
-    func dismissInputViews() {
-        nameTextField.resignFirstResponder()
-        startTimeTextField.resignFirstResponder()
-        pickerBgView.hidden = true
-    }
-    
-    func enableSyncButton() {
-       syncButton.enabled = (brewState.phases.count > 0 && countElements(nameTextField.text) > 0 && countElements(startTimeTextField.text) > 0)
-    }
-    
-    //MARK: custom UIBarButtonItem actions
-    
-    func editButtonPressed(editButton: UIBarButtonItem) {
-        changeEditingModeOnTableView(!phasesTableView.editing)
-        dismissInputViews()
-    }
-    
-    func syncButtonPressed(syncButton: UIBarButtonItem) {
-        dismissInputViews()
-        
-        brewState.name = nameTextField.text
-        if brewState.startTime == "" {
-            brewState.startTime = createISO8601FormattedDate(nowDate)
-        }
-
-        APIManager.createBrew(brewState)
-    }
-    
-    func cloneButtonPressed(cloneButton: UIBarButtonItem) {
-        dismissInputViews()
-        
-    }
-    
-    func trashButtonPressed(trashButton: UIBarButtonItem) {
-        dismissInputViews()
-
-        brewState = BrewState()
-        nowDate = NSDate()
-        
-        nameTextField.text = ""
-        showFormattedTextDate(nowDate)
-        phasesTableView.reloadData()
-    }
-    
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        changeEditingModeOnTableView(false)
-        dismissInputViews()
-        
-        if segue.identifier == "addSegue" {
-            let brewNewPhaseViewController: BrewNewPhaseViewController = segue.destinationViewController as BrewNewPhaseViewController
-            brewNewPhaseViewController.delegate = self
-        }
     }
     
 }
