@@ -1,6 +1,8 @@
 language: swift
 
 before_install:
+	- brew update
+	- brew install carthage
     - carthage bootstrap
 
 # Path to the Xcode workspace.
