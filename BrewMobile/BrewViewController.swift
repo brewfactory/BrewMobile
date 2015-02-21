@@ -47,13 +47,13 @@ class BrewViewController: UIViewController, UITableViewDelegate, UITableViewData
             (next: AnyObject!) -> Void in
             self.phasesTableView.reloadData()
             
-            if self.brewViewModel.actState.phases.count > 0 {
-                self.nameLabel.text = "Brewing \(self.brewViewModel.actState.name) at"
+            if self.brewViewModel.state.phases.count > 0 {
+                self.nameLabel.text = "Brewing \(self.brewViewModel.state.name) at"
             } else {
                 self.nameLabel.text = "We are not brewing :(\nHow is it possible?"
             }
             
-            self.startTimeLabel.text = self.brewViewModel.actState.phases.count > 0 ? "starting \(self.brewViewModel.actState.startTime)" : ""
+            self.startTimeLabel.text = self.brewViewModel.state.phases.count > 0 ? "starting \(self.brewViewModel.state.startTime)" : ""
         }
     }
     
@@ -62,14 +62,14 @@ class BrewViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
     
     func stateText(brewPhase: BrewPhase) -> String {
-        if self.brewViewModel.actState.paused {
+        if self.brewViewModel.state.paused {
             return "paused"
         }
         switch brewPhase.state  {
         case State.FINISHED:
             return "\(brewPhase.state.stateDescription()) at \(brewPhase.jobEnd)"
         case State.HEATING:
-            if self.brewViewModel.actTemp > brewPhase.temp { return "cooling" }
+            if self.brewViewModel.temp > brewPhase.temp { return "cooling" }
             fallthrough
         default:
             return brewPhase.state.stateDescription()
@@ -79,13 +79,13 @@ class BrewViewController: UIViewController, UITableViewDelegate, UITableViewData
     // MARK: UITableViewDataSource
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.brewViewModel.actState.phases.count
+        return self.brewViewModel.state.phases.count
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("BrewCell", forIndexPath: indexPath) as BrewCell
-        if self.brewViewModel.actState.phases.count > indexPath.row  {
-            let brewPhase = self.brewViewModel.actState.phases[indexPath.row]
+        if self.brewViewModel.state.phases.count > indexPath.row  {
+            let brewPhase = self.brewViewModel.state.phases[indexPath.row]
             
             cell.minLabel.text = "\(brewPhase.min) minutes at \(Int(brewPhase.temp)) ˚C"
             cell.statusLabel.text = "\(self.stateText(brewPhase))"
