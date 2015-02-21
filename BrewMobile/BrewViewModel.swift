@@ -23,22 +23,42 @@ class BrewViewModel : NSObject {
     var phases = PhaseArray()
     var startTime = ""
     var actState = BrewState()
-    var actTemp = 0.0
+    var actTemp: Float = 0.0
 
     init(brewManager: BrewManager) {
         
         self.brewManager = brewManager
     
         super.init()
-        
+        self.brewManager.connectToHost()
+       
         //MARK: Brew
         
-        self.brewManager.connectToHost().deliverOn(RACScheduler.mainThreadScheduler()).subscribeNext({
-            (next: AnyObject!) -> Void in
-            let
-            }, error: { (error: NSError!) -> Void in
-            //error
-        })
+        stopCommand = RACCommand() {
+            Void -> RACSignal in
+            return brewManager.stopBrewCommand.execute(nil).deliverOn(RACScheduler.mainThreadScheduler())
+        }
+        
+        tempChangedSignal = self.brewManager.tempChangedSignal.map {
+            (any: AnyObject!) -> AnyObject! in
+            if let anyDict = any as? Dictionary<String, Float> {
+                if let temp = anyDict[tempChangedEvent] {
+                    return temp
+                }
+            }
+            return 0
+        }.deliverOn(RACScheduler.mainThreadScheduler())
+        
+        brewChangedSignal = self.brewManager.brewChangedSignal.map {
+            (any: AnyObject!) -> AnyObject! in
+            if let anyDict = any as? Dictionary<String, BrewState> {
+                if let brew = anyDict[brewChangedEvent] {
+                    self.actState = brew
+                    return brew
+                }
+            }
+            return nil
+        }.deliverOn(RACScheduler.mainThreadScheduler())
         
         //MARK: Designer
 
@@ -68,11 +88,6 @@ class BrewViewModel : NSObject {
             Void -> RACSignal in
             let brewState = BrewState(name: self.name, startTime: self.startTime, phases: self.phases, paused: false, inProgress: false)
             return brewManager.syncBrewCommand.execute(BrewState.encode(brewState).value()!)
-        }
-        
-        stopCommand = RACCommand() {
-            Void -> RACSignal in
-            return brewManager.stopBrewSignal
         }
     }
 
