@@ -54,6 +54,7 @@ class BrewViewModel : NSObject {
             (any: AnyObject!) -> AnyObject! in
             if let anyDict = any as? Dictionary<String, BrewState> {
                 if let brew = anyDict[brewChangedEvent] {
+                    //might be better to just return the brew object for rendering instead of storing its state
                     self.state = brew
                     return brew
                 }
@@ -89,7 +90,7 @@ class BrewViewModel : NSObject {
             Void -> RACSignal in
             let brewState = BrewState(name: self.name, startTime: self.startTime, phases: self.phases, paused: false, inProgress: false)
             
-            //wow no such thing as passing a JSON ??
+            //wow no such thing as passing a json to execute. fix it with returning anyobject from encode instead.
             return brewManager.syncBrewCommand.execute(BrewState.encode(brewState).value()?.object).deliverOn(RACScheduler.mainThreadScheduler())
         }
     }
