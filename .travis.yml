@@ -1,5 +1,7 @@
 language: swift
 
+os: osx
+
 before_install:
   - brew update
   - brew install carthage
