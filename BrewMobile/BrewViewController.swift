@@ -33,48 +33,43 @@ class BrewViewController: UIViewController, UITableViewDelegate, UITableViewData
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        stopButton.rac_command = RACCommand {
-            Void -> RACSignal in
-            return self.brewViewModel.stopCommand.execute(nil)
-        }
+        stopButton.rac_command = self.brewViewModel.stopCommand
         
         let nib = UINib(nibName: "BrewCell", bundle: nil)
         phasesTableView.registerNib(nib, forCellReuseIdentifier: "BrewCell")
 
-        self.connectToHost()
+        self.brewViewModel.tempChangedSignal.subscribeNext {
+            (next: AnyObject!) -> Void in
+            self.tempLabel.text = NSString(format:"%.2f ˚C", next as Float)
+        }
+        
+        self.brewViewModel.brewChangedSignal.subscribeNext {
+            (next: AnyObject!) -> Void in
+            self.phasesTableView.reloadData()
+            
+            if self.brewViewModel.actState.phases.count > 0 {
+                self.nameLabel.text = "Brewing \(self.brewViewModel.actState.name) at"
+            } else {
+                self.nameLabel.text = "We are not brewing :(\nHow is it possible?"
+            }
+            
+            self.startTimeLabel.text = self.brewViewModel.actState.phases.count > 0 ? "starting \(self.brewViewModel.actState.startTime)" : ""
+        }
     }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
     
-    // MARK: refresh UI
-    
-    func updateNameLabel() {
-        if self.actState.phases.count > 0 {
-            self.nameLabel.text = "Brewing \(self.actState.name) at"
-        } else {
-            self.nameLabel.text = "We are not brewing :(\nHow is it possible?"
-        }
-    }
-    
-    func updateTempLabel(temperature: Float) {
-        self.tempLabel.text = NSString(format:"%.2f ˚C", temperature)
-    }
-    
-    func updateStartTimeLabel() {
-        self.startTimeLabel.text = self.actState.phases.count > 0 ? "starting \(self.actState.startTime)" : ""
-    }
-    
     func stateText(brewPhase: BrewPhase) -> String {
-        if self.actState.paused {
+        if self.brewViewModel.actState.paused {
             return "paused"
         }
         switch brewPhase.state  {
         case State.FINISHED:
             return "\(brewPhase.state.stateDescription()) at \(brewPhase.jobEnd)"
         case State.HEATING:
-            if self.actTemp > brewPhase.temp { return "cooling" }
+            if self.brewViewModel.actTemp > brewPhase.temp { return "cooling" }
             fallthrough
         default:
             return brewPhase.state.stateDescription()
@@ -84,13 +79,13 @@ class BrewViewController: UIViewController, UITableViewDelegate, UITableViewData
     // MARK: UITableViewDataSource
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.actState.phases.count
+        return self.brewViewModel.actState.phases.count
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("BrewCell", forIndexPath: indexPath) as BrewCell
-        if self.actState.phases.count > indexPath.row  {
-            let brewPhase = self.actState.phases[indexPath.row]
+        if self.brewViewModel.actState.phases.count > indexPath.row  {
+            let brewPhase = self.brewViewModel.actState.phases[indexPath.row]
             
             cell.minLabel.text = "\(brewPhase.min) minutes at \(Int(brewPhase.temp)) ˚C"
             cell.statusLabel.text = "\(self.stateText(brewPhase))"
