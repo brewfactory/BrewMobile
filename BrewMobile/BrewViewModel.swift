@@ -40,6 +40,14 @@ class BrewViewModel : NSObject {
             return brewManager.stopBrewCommand.execute(nil).deliverOn(RACScheduler.mainThreadScheduler())
         }
         
+        syncCommand = RACCommand() {
+            Void -> RACSignal in
+            let brewState = BrewState(name: self.name, startTime: self.startTime, phases: self.phases, paused: false, inProgress: false)
+            
+            //wow no such thing as passing a json to execute. fix it with returning anyobject from encode instead.
+            return brewManager.syncBrewCommand.execute(BrewState.encode(brewState).value()?.object).deliverOn(RACScheduler.mainThreadScheduler())
+        }
+        
         tempChangedSignal = self.brewManager.tempChangedSignal.map {
             (any: AnyObject!) -> AnyObject! in
             if let anyDict = any as? Dictionary<String, Float> {
@@ -84,14 +92,6 @@ class BrewViewModel : NSObject {
             let validPhases = validBeer.second as Bool
 
             return validName && validPhases
-        }
-
-        syncCommand = RACCommand() {
-            Void -> RACSignal in
-            let brewState = BrewState(name: self.name, startTime: self.startTime, phases: self.phases, paused: false, inProgress: false)
-            
-            //wow no such thing as passing a json to execute. fix it with returning anyobject from encode instead.
-            return brewManager.syncBrewCommand.execute(BrewState.encode(brewState).value()?.object).deliverOn(RACScheduler.mainThreadScheduler())
         }
     }
 
