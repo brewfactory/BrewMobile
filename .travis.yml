@@ -1,8 +1,5 @@
-language: swift
-
-recipes:
-  - homebrew
-  - travis_build_environment::osx
+language: objective-c
+osx_image: xcode611
 
 before_install:
   - brew update
