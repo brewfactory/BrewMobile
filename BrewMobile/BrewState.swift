@@ -70,12 +70,10 @@ final class BrewState: Equatable, JSONDecodable, JSONEncodable  {
         brew["name"] = object.name
         brew["startTime"] = object.startTime
         
-        var encodedPhases = Array<AnyObject>()
-               for phase: BrewPhase in object.phases {
-                encodedPhases.append(BrewPhase.encode(phase).value()!.object)
+        brew["phases"] = object.phases.map { (BrewPhase phase) -> AnyObject in
+            return BrewPhase.encode(phase).value()!.object
         }
         
-        brew["phases"] = encodedPhases
         return success(JSON(brew))
     }
 
