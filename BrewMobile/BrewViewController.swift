@@ -7,124 +7,69 @@
 //
 
 import UIKit
-import SocketIOFramework
-
-let host = "http://brewcore-demo.herokuapp.com/"
-
-class BrewCell: UITableViewCell {
-    @IBOutlet weak var minLabel: UILabel!
-    @IBOutlet weak var statusLabel: UILabel!
-    
-    func setTextColorForAllLabels(color: UIColor) {
-        minLabel.textColor = color
-        statusLabel.textColor = color
-    }
-}
+import SwiftyJSON
+import ReactiveCocoa
 
 class BrewViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
-    var actState: BrewState
-    var actTemp: Float
-    
-    let tempChangedEvent = "temperature_changed"
-    let brewChangedEvent = "brew_changed"
-    
+    let brewViewModel: BrewViewModel
+
     @IBOutlet weak var tempLabel: UILabel!
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var startTimeLabel: UILabel!
     @IBOutlet weak var phasesTableView: UITableView!
     @IBOutlet weak var stopButton: UIBarButtonItem!
-    @IBOutlet weak var resumeButton: UIBarButtonItem!
-    @IBOutlet weak var pauseButton: UIBarButtonItem!
-
+    
+    init(brewViewModel: BrewViewModel) {
+        self.brewViewModel = brewViewModel
+        super.init(nibName:"BrewViewController", bundle: nil)
+        self.tabBarItem = UITabBarItem(title: "Brew", image: UIImage(named: "HopIcon"), tag: 0)
+    }
+    
     required init(coder aDecoder: NSCoder) {
-        actState = BrewState()
-        actTemp = 0
-        super.init(coder: aDecoder)
+        fatalError("init(coder:) has not been implemented")
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        stopButton.target = self
-        stopButton.action = "stopButtonPressed:"
+        stopButton.rac_command = self.brewViewModel.stopCommand
         
-        //resumeButton.target = self
-        //resumeButton.action = "resumeButtonPressed:"
+        let nib = UINib(nibName: "BrewCell", bundle: nil)
+        phasesTableView.registerNib(nib, forCellReuseIdentifier: "BrewCell")
+
+        self.brewViewModel.tempChangedSignal.subscribeNext {
+            (next: AnyObject!) -> Void in
+            self.tempLabel.text = NSString(format:"%.2f ˚C", next as Float)
+        }
         
-        //pauseButton.target = self
-        //pauseButton.action = "pauseButtonPressed:"
-        
-        self.connectToHost()
+        self.brewViewModel.brewChangedSignal.subscribeNext {
+            (next: AnyObject!) -> Void in
+            self.phasesTableView.reloadData()
+            
+            if self.brewViewModel.state.phases.count > 0 {
+                self.nameLabel.text = "Brewing \(self.brewViewModel.state.name) at"
+            } else {
+                self.nameLabel.text = "We are not brewing :(\nHow is it possible?"
+            }
+            
+            self.startTimeLabel.text = self.brewViewModel.state.phases.count > 0 ? "starting \(self.brewViewModel.state.startTime)" : ""
+        }
     }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
     
-    // MARK: SIOSocket
-    
-    private func connectToHost() {
-        SIOSocket.socketWithHost(host, reconnectAutomatically: true, attemptLimit: 0, withDelay: 1, maximumDelay: 5, timeout: 20, response: {socket in
-            socket.onConnect = {
-                println("Connected to \(host)")
-            }
-            
-            socket.onDisconnect = {
-                println("Disconnected from \(host)")
-            }
-            
-            socket.on(self.tempChangedEvent, callback: {(AnyObject data) -> Void in
-                if data.count > 0 {
-                    self.actTemp = data[0] as Float
-                }
-                
-                dispatch_async(dispatch_get_main_queue(), {
-                    self.updateTempLabel(self.actTemp)
-                })
-            })
-            
-            socket.on(self.brewChangedEvent, callback: {(AnyObject data) -> Void in
-                if data.count > 0 {
-                    self.actState = ContentParser.parseBrewState(data[0])!
-                    
-                    dispatch_async(dispatch_get_main_queue(), {
-                        self.phasesTableView.reloadData()
-                        self.updateNameLabel()
-                        self.updateStartTimeLabel()
-                    })
-                }
-            })
-        })
-    }
-    
-    // MARK: refresh UI
-    
-    func updateNameLabel() {
-        if self.actState.phases.count > 0 {
-            self.nameLabel.text = "Brewing \(self.actState.name) at"
-        } else {
-            self.nameLabel.text = "We are not brewing :(\nHow is it possible?"
-        }
-    }
-    
-    func updateTempLabel(temperature: Float) {
-        self.tempLabel.text = NSString(format:"%.2f ˚C", temperature)
-    }
-    
-    func updateStartTimeLabel() {
-        self.startTimeLabel.text = self.actState.phases.count > 0 ? "starting \(self.actState.startTime)" : ""
-    }
-    
     func stateText(brewPhase: BrewPhase) -> String {
-        if self.actState.paused {
+        if self.brewViewModel.state.paused {
             return "paused"
         }
         switch brewPhase.state  {
         case State.FINISHED:
             return "\(brewPhase.state.stateDescription()) at \(brewPhase.jobEnd)"
         case State.HEATING:
-            if self.actTemp > brewPhase.temp { return "cooling" }
+            if self.brewViewModel.temp > brewPhase.temp { return "cooling" }
             fallthrough
         default:
             return brewPhase.state.stateDescription()
@@ -134,13 +79,13 @@ class BrewViewController: UIViewController, UITableViewDelegate, UITableViewData
     // MARK: UITableViewDataSource
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.actState.phases.count
+        return self.brewViewModel.state.phases.count
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("BrewCell", forIndexPath: indexPath) as BrewCell
-        if self.actState.phases.count > indexPath.row  {
-            let brewPhase = self.actState.phases[indexPath.row]
+        if self.brewViewModel.state.phases.count > indexPath.row  {
+            let brewPhase = self.brewViewModel.state.phases[indexPath.row]
             
             cell.minLabel.text = "\(brewPhase.min) minutes at \(Int(brewPhase.temp)) ˚C"
             cell.statusLabel.text = "\(self.stateText(brewPhase))"
@@ -152,20 +97,6 @@ class BrewViewController: UIViewController, UITableViewDelegate, UITableViewData
         }
         
         return cell
-    }
-    
-    //MARK: custom UIBarButtonItem actions
-    
-    func stopButtonPressed(stopButton: UIBarButtonItem) {
-        APIManager.stopBrew()
-    }
-    
-    func resumeButtonPressed(resumeButton: UIBarButtonItem) {
-
-    }
-    
-    func pauseButtonPressed(pauseButton: UIBarButtonItem) {
-        
     }
     
 }

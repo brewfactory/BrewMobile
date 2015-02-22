@@ -8,16 +8,30 @@
 
 import Foundation
 import ISO8601
+import SwiftyJSON
+import LlamaKit
+
+// MARK: JSONDecodable
+
+protocol JSONDecodable {
+    class func decode(json: JSON) -> Result<Self>
+}
+
+// MARK: JSONEncodable
+
+protocol JSONEncodable {
+    class func encode(object: Self) -> Result<JSON>
+}
 
 typealias PhaseArray = [BrewPhase]
 
 class ContentParser {
-    class func parseBrewState(brewJSON: JSON) -> BrewState? {
-        return BrewState.decode(brewJSON)
+    class func parseBrewState(brewJSON: JSON) -> BrewState {
+        return BrewState.decode(brewJSON).value()!
     }
     
-    class func parseBrewPhase(brewPhaseJSON: JSON) -> BrewPhase? {
-        return BrewPhase.decode(brewPhaseJSON)
+    class func parseBrewPhase(brewPhaseJSON: JSON) -> BrewPhase {
+        return BrewPhase.decode(brewPhaseJSON).value()!
     }
     
     class func formatDate(dateString: String) -> String {
