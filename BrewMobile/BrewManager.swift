@@ -96,7 +96,7 @@ class BrewManager : NSObject {
             })
             
             socket.onError = { (AnyObject anyError) -> Void in
-                
+                println("Socket connection error")
             }
         })
     }
