@@ -1,4 +1,4 @@
-git "https://github.com/MegaBits/SIOSocket" "749c697df752ae81ae7aeff79de917f2981a6590"
+git "https://github.com/vasarhelyia/SIOSocket"
 git "https://github.com/vasarhelyia/iso-8601-date-formatter"
 github "ReactiveCocoa/ReactiveCocoa" == 2.4.3
 github "SwiftyJSON/SwiftyJSON" "f5d08738c287508ffc9fd0672741dbca9ef50a32"
