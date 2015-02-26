@@ -16,7 +16,8 @@ class BrewNewPhaseViewController : UIViewController {
     @IBOutlet weak var minStepper: UIStepper!
     @IBOutlet weak var tempStepper: UIStepper!
     @IBOutlet weak var addButton: UIButton!
-    
+    @IBOutlet weak var feedbackLabel: UILabel!
+
     let brewViewModel: BrewViewModel
     
     var min = Int(0)
@@ -43,6 +44,17 @@ class BrewNewPhaseViewController : UIViewController {
             return RACSignal.empty()
         }
         
+        addButton.rac_command.executionSignals.subscribeNext { (next: AnyObject!) -> Void in
+            self.feedbackLabel.text = "Phase added"
+            UIView.animateWithDuration(0.7, animations: { () -> Void in
+                self.feedbackLabel.alpha = 1.0
+                }, completion: { (Bool) -> Void in
+                    UIView.animateWithDuration(0.7, animations: { () -> Void in
+                        self.feedbackLabel.alpha = 0.0
+                        }, completion: nil)
+            })
+        }
+
         // MARK: RACSignals for controls
         
         func mappedStepperSignal(stepper: UIStepper) -> RACSignal {
