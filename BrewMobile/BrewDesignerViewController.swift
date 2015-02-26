@@ -64,7 +64,6 @@ class BrewDesignerViewController : UIViewController, UITableViewDataSource, UITa
         trashButton.rac_command = RACCommand() {
             (any:AnyObject!) -> RACSignal in
             self.brewViewModel.phases = PhaseArray()
-            self.setInitialDate()
             self.nameTextField.text = ""
             self.phasesTableView.reloadData()
             return RACSignal.empty()
@@ -100,24 +99,13 @@ class BrewDesignerViewController : UIViewController, UITableViewDataSource, UITa
         let statTimeTextFieldPressed = self.startTimeTextField.rac_signalForControlEvents(.EditingDidBegin)
         statTimeTextFieldPressed.subscribeNext(dismissKeyboard)
         statTimeTextFieldPressed.mapReplace(false) ~> RAC(self.pickerBgView, "hidden")
-        
-        self.rac_signalForSelector(Selector("setInitialDate")).subscribeNext { (any: AnyObject!) -> Void in
-            //doesn't get called
-        }
 
         self.brewViewModel.syncCommand.executionSignals.subscribeNext(dismissKeyboard)
         editButton.rac_command.executionSignals.subscribeNext(dismissKeyboard)
         
-        //setting the date on the UIDatePicker explicitly doesn't trigger value changed event
-        let startTimeValueChangedSignal = RACSignal.merge([self.startTimePicker.rac_signalForControlEvents(.ValueChanged), self.rac_signalForSelector(Selector("setInitialDate"))])
-        
-        let startDateSignal = startTimeValueChangedSignal.map {
-            (picker: AnyObject!) -> AnyObject! in
-            let timePicker = picker as UIDatePicker
-            return picker.date
-        }
-        
-        startDateSignal.map {
+        let startTimeValueChangedSignal = RACObserve(self.startTimePicker, "date").startWith(NSDate())
+
+        startTimeValueChangedSignal.map {
             (pickerDate: AnyObject!) -> AnyObject! in
             let date = pickerDate as NSDate
             
@@ -128,23 +116,17 @@ class BrewDesignerViewController : UIViewController, UITableViewDataSource, UITa
             return isoDateFormatter.stringFromDate(date)
         } ~> RAC(self.brewViewModel, "startTime")
 
-        startDateSignal.subscribeNext {
+        startTimeValueChangedSignal.subscribeNext {
             (next: AnyObject!) -> Void in
             let date = next as NSDate
             let dateFormatter = NSDateFormatter()
             dateFormatter.dateFormat = "YYYY.MM.dd. HH:mm"
             self.startTimeTextField.text = dateFormatter.stringFromDate(date)
         }
-        
-        setInitialDate()
     }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-    }
-
-    func setInitialDate() {
-        self.startTimePicker.setDate(NSDate(), animated: true)
     }
 
     func dismissKeyboard(anyObject: AnyObject!) {
