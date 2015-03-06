@@ -24,10 +24,10 @@ class BrewDesignerViewController : UIViewController, UITableViewDataSource, UITa
     @IBOutlet weak var addButton: UIBarButtonItem!
     @IBOutlet weak var tapGestureRecognizer: UITapGestureRecognizer!
 
-    let brewViewModel: BrewViewModel
+    let brewDesignerViewModel: BrewDesignerViewModel
     
-    init(brewViewModel: BrewViewModel) {
-        self.brewViewModel = brewViewModel
+    init(brewDesignerViewModel: BrewDesignerViewModel) {
+        self.brewDesignerViewModel = brewDesignerViewModel
         super.init(nibName:"BrewDesignerViewController", bundle: nil)
         self.tabBarItem = UITabBarItem(title: "Designer", image: UIImage(named: "DesignerIcon"), tag: 0)
     }
@@ -50,20 +50,20 @@ class BrewDesignerViewController : UIViewController, UITableViewDataSource, UITa
         let nib = UINib(nibName: "PhaseCell", bundle: nil)
         phasesTableView.registerNib(nib, forCellReuseIdentifier: "PhaseCell")
         
-        editButton.rac_command = RACCommand(enabled: self.brewViewModel.hasPhasesSignal) {
+        editButton.rac_command = RACCommand(enabled: self.brewDesignerViewModel.hasPhasesSignal) {
             (any:AnyObject!) -> RACSignal in
             self.phasesTableView.editing = !self.phasesTableView.editing
             return RACSignal.empty()
         }
 
-        syncButton.rac_command = RACCommand(enabled: self.brewViewModel.validBeerSignal) {
+        syncButton.rac_command = RACCommand(enabled: self.brewDesignerViewModel.validBeerSignal) {
             (any:AnyObject!) -> RACSignal in
-            return self.brewViewModel.syncCommand.execute(self)
+            return self.brewDesignerViewModel.syncCommand.execute(self)
         }
         
         trashButton.rac_command = RACCommand() {
             (any:AnyObject!) -> RACSignal in
-            self.brewViewModel.phases = PhaseArray()
+            self.brewDesignerViewModel.phases = PhaseArray()
             self.nameTextField.text = ""
             self.phasesTableView.reloadData()
             return RACSignal.empty()
@@ -71,11 +71,11 @@ class BrewDesignerViewController : UIViewController, UITableViewDataSource, UITa
         
         addButton.rac_command = RACCommand() {
             (any:AnyObject!) -> RACSignal in
-            self.navigationController?.pushViewController(BrewNewPhaseViewController(brewViewModel: self.brewViewModel), animated: true)
+            self.navigationController?.pushViewController(BrewNewPhaseViewController(brewDesignerViewModel: self.brewDesignerViewModel), animated: true)
             return RACSignal.empty()
         }
 
-        self.brewViewModel.hasPhasesSignal.subscribeNext {
+        self.brewDesignerViewModel.hasPhasesSignal.subscribeNext {
             (next: AnyObject!) -> () in
 
             if !self.phasesTableView.editing {
@@ -93,14 +93,14 @@ class BrewDesignerViewController : UIViewController, UITableViewDataSource, UITa
             self.editButton.title = editingValue ? "Done" : "Edit"
         }
         
-        self.nameTextField.rac_textSignal() ~> RAC(self.brewViewModel, "name")
-        self.startTimeTextField.rac_textSignal() ~> RAC(self.brewViewModel, "startTime")
+        self.nameTextField.rac_textSignal() ~> RAC(self.brewDesignerViewModel, "name")
+        self.startTimeTextField.rac_textSignal() ~> RAC(self.brewDesignerViewModel, "startTime")
         
         let statTimeTextFieldPressed = self.startTimeTextField.rac_signalForControlEvents(.EditingDidBegin)
         statTimeTextFieldPressed.subscribeNext(dismissKeyboard)
         statTimeTextFieldPressed.mapReplace(false) ~> RAC(self.pickerBgView, "hidden")
 
-        self.brewViewModel.syncCommand.executionSignals.subscribeNext(dismissKeyboard)
+        self.brewDesignerViewModel.syncCommand.executionSignals.subscribeNext(dismissKeyboard)
         editButton.rac_command.executionSignals.subscribeNext(dismissKeyboard)
         
         let startTimeValueChangedSignal = RACObserve(self.startTimePicker, "date").startWith(NSDate())
@@ -114,7 +114,7 @@ class BrewDesignerViewController : UIViewController, UITableViewDataSource, UITa
             isoDateFormatter.includeTime = true
             
             return isoDateFormatter.stringFromDate(date)
-        } ~> RAC(self.brewViewModel, "startTime")
+        } ~> RAC(self.brewDesignerViewModel, "startTime")
 
         startTimeValueChangedSignal.subscribeNext {
             (next: AnyObject!) -> Void in
@@ -142,13 +142,13 @@ class BrewDesignerViewController : UIViewController, UITableViewDataSource, UITa
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.brewViewModel.phases.count
+        return self.brewDesignerViewModel.phases.count
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("PhaseCell", forIndexPath: indexPath) as PhaseCell
-        if self.brewViewModel.phases.count > indexPath.row  {
-            let phase = self.brewViewModel.phases[indexPath.row]
+        if self.brewDesignerViewModel.phases.count > indexPath.row  {
+            let phase = self.brewDesignerViewModel.phases[indexPath.row]
             cell.phaseLabel.text = "\(indexPath.row + 1). \(phase.min) min \(phase.temp) ˚C"
         }
         
@@ -169,22 +169,22 @@ class BrewDesignerViewController : UIViewController, UITableViewDataSource, UITa
     
     func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
         if editingStyle == UITableViewCellEditingStyle.Delete {
-            if self.brewViewModel.phases.count > indexPath.row {
-                var newPhases = self.brewViewModel.phases
+            if self.brewDesignerViewModel.phases.count > indexPath.row {
+                var newPhases = self.brewDesignerViewModel.phases
                 newPhases.removeAtIndex(indexPath.row)
-                self.brewViewModel.setValue(newPhases, forKeyPath: "phases")
+                self.brewDesignerViewModel.setValue(newPhases, forKeyPath: "phases")
                 tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Automatic)
             }
         }
     }
     
     func tableView(tableView: UITableView, moveRowAtIndexPath sourceIndexPath: NSIndexPath, toIndexPath destinationIndexPath: NSIndexPath) {
-        let destinationPhase = self.brewViewModel.phases[destinationIndexPath.row]
+        let destinationPhase = self.brewDesignerViewModel.phases[destinationIndexPath.row]
 
-        var newPhases = self.brewViewModel.phases
+        var newPhases = self.brewDesignerViewModel.phases
         newPhases[destinationIndexPath.row] = newPhases[sourceIndexPath.row]
         newPhases[sourceIndexPath.row] = destinationPhase
-        self.brewViewModel.setValue(newPhases, forKeyPath: "phases")
+        self.brewDesignerViewModel.setValue(newPhases, forKeyPath: "phases")
         tableView.reloadData()
     }
     

@@ -18,13 +18,13 @@ class BrewNewPhaseViewController : UIViewController {
     @IBOutlet weak var addButton: UIButton!
     @IBOutlet weak var feedbackLabel: UILabel!
 
-    let brewViewModel: BrewViewModel
+    let brewDesignerViewModel: BrewDesignerViewModel
     
     var min = Int(0)
     var temp = Int(20)
 
-    init(brewViewModel: BrewViewModel) {
-        self.brewViewModel = brewViewModel
+    init(brewDesignerViewModel: BrewDesignerViewModel) {
+        self.brewDesignerViewModel = brewDesignerViewModel
         super.init(nibName:"BrewNewPhaseViewController", bundle: nil)
     }
 
@@ -38,9 +38,9 @@ class BrewNewPhaseViewController : UIViewController {
         addButton.rac_command = RACCommand() {
             (any:AnyObject!) -> RACSignal in
             let newPhase = BrewPhase(jobEnd:"", min:self.min, temp:Float(self.temp), tempReached:false, inProgress:false)
-            var newPhases = self.brewViewModel.phases
+            var newPhases = self.brewDesignerViewModel.phases
             newPhases.append(newPhase)
-            self.brewViewModel.setValue(newPhases, forKeyPath: "phases")
+            self.brewDesignerViewModel.setValue(newPhases, forKeyPath: "phases")
             return RACSignal.empty()
         }
         
