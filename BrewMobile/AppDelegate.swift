@@ -22,9 +22,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         let brewManager = BrewManager()
         let brewViewModel = BrewViewModel(brewManager: brewManager)
-        
+        let brewDesignerViewModel = BrewDesignerViewModel(brewManager: brewManager)
+
         let brewViewController = BrewViewController(brewViewModel: brewViewModel)
-        let brewDesignerViewController = BrewDesignerViewController(brewViewModel: brewViewModel)
+        let brewDesignerViewController = BrewDesignerViewController(brewDesignerViewModel: brewDesignerViewModel)
 
         brewDesignerNavigationController.pushViewController(brewDesignerViewController, animated: false)
 
