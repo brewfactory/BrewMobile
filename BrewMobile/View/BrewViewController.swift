@@ -38,10 +38,10 @@ class BrewViewController: UIViewController, UITableViewDelegate, UITableViewData
         let nib = UINib(nibName: "BrewCell", bundle: nil)
         phasesTableView.registerNib(nib, forCellReuseIdentifier: "BrewCell")
 
-        self.brewViewModel.tempChangedSignal.subscribeNext {
-            (next: AnyObject!) -> Void in
-            self.tempLabel.text = NSString(format:"%.2f ˚C", next as Float)
-        }
+        self.brewViewModel.tempChangedSignal.map {
+            (temp: AnyObject!) -> AnyObject! in
+            return NSString(format:"%.2f ˚C", temp as Float)
+        } ~> RAC(self.tempLabel, "text")
         
         self.brewViewModel.brewChangedSignal.subscribeNext {
             (next: AnyObject!) -> Void in
