@@ -51,8 +51,7 @@ class BrewDesignerViewModel : NSObject {
             Void -> RACSignal in
             let brewState = BrewState(name: self.name, startTime: self.startTime, phases: self.phases, paused: false, inProgress: false)
             
-            //wow no such thing as passing a json to execute. fix it with returning anyobject from encode instead.
-            return brewManager.syncBrewCommand.execute(BrewState.encode(brewState).value()?.object).deliverOn(RACScheduler.mainThreadScheduler())
+            return brewManager.syncBrewCommand.execute(BrewState.encode(brewState).value()).deliverOn(RACScheduler.mainThreadScheduler())
         }
     }
 }
