@@ -58,7 +58,11 @@ class BrewDesignerViewController : UIViewController, UITableViewDataSource, UITa
 
         syncButton.rac_command = RACCommand(enabled: self.brewDesignerViewModel.validBeerSignal) {
             (any:AnyObject!) -> RACSignal in
-            return self.brewDesignerViewModel.syncCommand.execute(self)
+            let syncSignal = self.brewDesignerViewModel.syncCommand.execute(nil)
+            syncSignal.subscribeError({ (error: NSError!) -> Void in
+                UIAlertView(title: "Error creating brew", message: error.localizedDescription, delegate: nil, cancelButtonTitle: "OK").show()
+            })
+            return syncSignal
         }
         
         trashButton.rac_command = RACCommand() {

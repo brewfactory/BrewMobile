@@ -29,13 +29,13 @@ class BrewDesignerViewModel : NSObject {
             (aPhases: AnyObject!) -> AnyObject! in
             let phasesArray = aPhases as PhaseArray
             return phasesArray.count > 0
-            }.distinctUntilChanged()
+        }.distinctUntilChanged()
         
         let validBeerNameSignal = RACObserve(self, "name").map {
             (aName: AnyObject!) -> AnyObject! in
             let nameText = aName as String
             return countElements(nameText) > 0
-            }.distinctUntilChanged()
+        }.distinctUntilChanged()
         
         validBeerSignal = RACSignal.combineLatest([validBeerNameSignal, hasPhasesSignal]).map {
             (tuple: AnyObject!) -> AnyObject in
@@ -50,8 +50,9 @@ class BrewDesignerViewModel : NSObject {
         syncCommand = RACCommand() {
             Void -> RACSignal in
             let brewState = BrewState(name: self.name, startTime: self.startTime, phases: self.phases, paused: false, inProgress: false)
-            
-            return brewManager.syncBrewCommand.execute(BrewState.encode(brewState).value()).deliverOn(RACScheduler.mainThreadScheduler())
+            let syncSignal = brewManager.syncBrewCommand.execute(BrewState.encode(brewState).value())
+            return syncSignal.deliverOn(RACScheduler.mainThreadScheduler())
         }
     }
+    
 }

@@ -13,7 +13,6 @@ class BrewViewModel : NSObject {
     let stopCommand: RACCommand!
     let tempChangedSignal: RACSignal!
     let brewChangedSignal: RACSignal!
-    let socketErrorSignal: RACSignal!
 
     let brewManager: BrewManager
 
@@ -36,6 +35,7 @@ class BrewViewModel : NSObject {
             (any: AnyObject!) -> AnyObject! in
             if let anyDict = any as? Dictionary<String, Float> {
                 if let newTemp = anyDict[tempChangedEvent] {
+                    self.temp = newTemp
                     return newTemp
                 }
             }
@@ -46,7 +46,6 @@ class BrewViewModel : NSObject {
             (any: AnyObject!) -> AnyObject! in
             if let anyDict = any as? Dictionary<String, BrewState> {
                 if let brew = anyDict[brewChangedEvent] {
-                    //might be better to just return the brew object for rendering instead of storing its state
                     self.state = brew
                     return brew
                 }
