@@ -33,7 +33,14 @@ class BrewViewController: UIViewController, UITableViewDelegate, UITableViewData
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        stopButton.rac_command = self.brewViewModel.stopCommand
+        stopButton.rac_command = RACCommand() {
+            (any:AnyObject!) -> RACSignal in
+            let stopSignal = self.brewViewModel.stopCommand.execute(nil)
+            stopSignal.subscribeError({ (error: NSError!) -> Void in
+                UIAlertView(title: "Error stopping brew", message: error.localizedDescription, delegate: nil, cancelButtonTitle: "OK").show()
+            })
+            return stopSignal
+        }
         
         let nib = UINib(nibName: "BrewCell", bundle: nil)
         phasesTableView.registerNib(nib, forCellReuseIdentifier: "BrewCell")
@@ -55,10 +62,6 @@ class BrewViewController: UIViewController, UITableViewDelegate, UITableViewData
             
             self.startTimeLabel.text = self.brewViewModel.state.phases.count > 0 ? "starting \(self.brewViewModel.state.startTime)" : ""
         }
-    }
-    
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
     }
     
     func stateText(brewPhase: BrewPhase) -> String {
@@ -97,6 +100,11 @@ class BrewViewController: UIViewController, UITableViewDelegate, UITableViewData
         }
         
         return cell
+    }
+    
+    
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
     }
     
 }

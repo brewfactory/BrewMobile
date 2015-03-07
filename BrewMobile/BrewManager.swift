@@ -16,7 +16,7 @@ let tempChangedEvent = "temperature_changed"
 let brewChangedEvent = "brew_changed"
 
 class BrewManager : NSObject {
-    let host = "http://brewcore-demo.herokuapp.com/"
+    let host = "http://localhost:3000/"
     
     let stopBrewCommand: RACCommand!
     let syncBrewCommand: RACCommand!
@@ -112,4 +112,5 @@ class BrewManager : NSObject {
             }
         })
     }
+    
 }
