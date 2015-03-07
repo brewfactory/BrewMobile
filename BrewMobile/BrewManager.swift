@@ -30,11 +30,21 @@ class BrewManager : NSObject {
         super.init()
 
         syncBrewCommand = RACCommand(signalBlock: { (brewObject: AnyObject!) -> RACSignal! in
-            return self.composeRequestSignalFromURLRequest(self.requestWithBody("api/brew", method: "POST", body: JSON(brewObject)).value()!)
+            let requestResult = self.requestWithBody("api/brew", method: "POST", body: JSON(brewObject))
+            if let request = requestResult.value() as NSMutableURLRequest? {
+                return self.composeRequestSignalFromURLRequest(request)
+            }
+            
+            if let serializationError = requestResult.error() {
+                return RACSignal.error(serializationError as NSError)
+            }
+            
+            return RACSignal.empty()
         })
         
         stopBrewCommand = RACCommand(signalBlock: { Void -> RACSignal! in
-            return  self.composeRequestSignalFromURLRequest(self.requestWithBody("api/brew/stop", method: "PATCH", body: "").value()!)
+            let request = self.requestWithBody("api/brew/stop", method: "PATCH", body: "").value()!
+            return  self.composeRequestSignalFromURLRequest(request)
         })
     }
 
@@ -48,9 +58,12 @@ class BrewManager : NSObject {
         request.HTTPMethod = method
         if method == "POST" {
             request.HTTPBody = body.rawData(options: .PrettyPrinted, error: &serializationError)
+            if serializationError != nil {
+                return failure(serializationError!)
+            }
         }
         
-        return (serializationError == nil ? success(request) : failure(serializationError!))
+        return success(request)
     }
     
     private func composeRequestSignalFromURLRequest(request: NSMutableURLRequest) -> RACSignal {
@@ -61,7 +74,6 @@ class BrewManager : NSObject {
             NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue(), completionHandler: {
                 (response:NSURLResponse!, data: NSData!, error: NSError!) -> Void in
                 if error == nil {
-                    subscriber.sendNext(JSON(data).object)
                     subscriber.sendCompleted()
                 } else {
                     subscriber.sendError(error)
