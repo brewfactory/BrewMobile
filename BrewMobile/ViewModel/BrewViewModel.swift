@@ -33,11 +33,9 @@ class BrewViewModel : NSObject {
         
         tempChangedSignal = self.brewManager.tempChangedSignal.map {
             (any: AnyObject!) -> AnyObject! in
-            if let anyDict = any as? Dictionary<String, Float> {
-                if let newTemp = anyDict[tempChangedEvent] {
-                    self.temp = newTemp
-                    return newTemp
-                }
+            if let newTemp = any as? Float {
+                self.temp = newTemp
+                return newTemp
             }
             return 0
         }.deliverOn(RACScheduler.mainThreadScheduler())

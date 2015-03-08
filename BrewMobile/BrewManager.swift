@@ -97,7 +97,7 @@ class BrewManager : NSObject {
             
             socket.on(tempChangedEvent, callback: { (AnyObject data) -> Void in
                 if(countElements(data) > 0) {
-                    self.tempChangedSignal.sendNext([tempChangedEvent: data[0] as Float])
+                    self.tempChangedSignal.sendNext(data[0])
                 }
             })
             
