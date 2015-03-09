@@ -100,9 +100,9 @@ class BrewDesignerViewController : UIViewController, UITableViewDataSource, UITa
         self.nameTextField.rac_textSignal() ~> RAC(self.brewDesignerViewModel, "name")
         self.startTimeTextField.rac_textSignal() ~> RAC(self.brewDesignerViewModel, "startTime")
         
-        let statTimeTextFieldPressed = self.startTimeTextField.rac_signalForControlEvents(.EditingDidBegin)
-        statTimeTextFieldPressed.subscribeNext(dismissKeyboard)
-        statTimeTextFieldPressed.mapReplace(false) ~> RAC(self.pickerBgView, "hidden")
+        let startTimeTextFieldPressed = self.startTimeTextField.rac_signalForControlEvents(.EditingDidBegin)
+        startTimeTextFieldPressed.subscribeNext(dismissKeyboard)
+        startTimeTextFieldPressed.mapReplace(false) ~> RAC(self.pickerBgView, "hidden")
 
         self.brewDesignerViewModel.syncCommand.executionSignals.subscribeNext(dismissKeyboard)
         editButton.rac_command.executionSignals.subscribeNext(dismissKeyboard)
