@@ -3196,7 +3196,7 @@ qck_describe(@"-collect", ^{
 	});
 });
 
-qck_describe(@"-bufferWithTime:", ^{
+qck_describe(@"-bufferWithTime:onScheduler:", ^{
 	__block RACTestScheduler *scheduler;
 
 	__block RACSubject *input;
@@ -3661,6 +3661,31 @@ qck_describe(@"-groupBy:", ^{
 		[subject sendError:[NSError errorWithDomain:@"TestDomain" code:123 userInfo:nil]];
 
 		expect(@(erroneousGroupedSignalCount)).to(equal(@(groupedSignalCount)));
+	});
+
+
+	qck_it(@"should send completed in the order grouped signals were created.", ^{
+		RACSubject *subject = [RACReplaySubject subject];
+
+		NSMutableArray *startedSignals = [NSMutableArray array];
+		NSMutableArray *completedSignals = [NSMutableArray array];
+		[[subject groupBy:^(NSNumber *number) {
+			return @(number.integerValue % 4);
+		}] subscribeNext:^(RACGroupedSignal *groupedSignal) {
+			[startedSignals addObject:groupedSignal];
+
+			[groupedSignal subscribeCompleted:^{
+				[completedSignals addObject:groupedSignal];
+			}];
+		}];
+
+		for (NSInteger i = 0; i < 20; i++)
+		{
+			[subject sendNext:@(i)];
+		}
+		[subject sendCompleted];
+
+		expect(completedSignals).to(equal(startedSignals));
 	});
 });
 

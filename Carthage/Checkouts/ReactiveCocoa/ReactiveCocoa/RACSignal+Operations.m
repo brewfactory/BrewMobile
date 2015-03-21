@@ -326,7 +326,7 @@ static RACDisposable *subscribeForever (RACSignal *signal, void (^next)(id), voi
 
 				if (values.count == 0) return;
 
-				RACTuple *tuple = [RACTuple tupleWithObjectsFromArray:values convertNullsToNils:NO];
+				RACTuple *tuple = [RACTuple tupleWithObjectsFromArray:values];
 				[values removeAllObjects];
 				[subscriber sendNext:tuple];
 			}
@@ -351,7 +351,7 @@ static RACDisposable *subscribeForever (RACSignal *signal, void (^next)(id), voi
 			[selfDisposable dispose];
 			[timerDisposable dispose];
 		}];
-	}] setNameWithFormat:@"[%@] -bufferWithTime: %f", self.name, (double)interval];
+	}] setNameWithFormat:@"[%@] -bufferWithTime: %f onScheduler: %@", self.name, (double)interval, scheduler];
 }
 
 - (RACSignal *)collect {
@@ -376,7 +376,7 @@ static RACDisposable *subscribeForever (RACSignal *signal, void (^next)(id), voi
 			[subscriber sendError:error];
 		} completed:^{
 			for (id value in valuesTaken) {
-				[subscriber sendNext:[value isKindOfClass:RACTupleNil.class] ? nil : value];
+				[subscriber sendNext:value == RACTupleNil.tupleNil ? nil : value];
 			}
 
 			[subscriber sendCompleted];
@@ -399,7 +399,7 @@ static RACDisposable *subscribeForever (RACSignal *signal, void (^next)(id), voi
 		void (^sendNext)(void) = ^{
 			@synchronized (disposable) {
 				if (lastSelfValue == nil || lastOtherValue == nil) return;
-				[subscriber sendNext:[RACTuple tupleWithObjects:lastSelfValue, lastOtherValue, nil]];
+				[subscriber sendNext:RACTuplePack(lastSelfValue, lastOtherValue)];
 			}
 		};
 
@@ -1000,7 +1000,7 @@ static RACDisposable *subscribeForever (RACSignal *signal, void (^next)(id), voi
 
 		[disposable addDisposable:subscriptionDisposable];
 		return disposable;
-	}] setNameWithFormat:@"[%@] -timeout: %f", self.name, (double)interval];
+	}] setNameWithFormat:@"[%@] -timeout: %f onScheduler: %@", self.name, (double)interval, scheduler];
 }
 
 - (RACSignal *)deliverOn:(RACScheduler *)scheduler {
@@ -1074,6 +1074,7 @@ static RACDisposable *subscribeForever (RACSignal *signal, void (^next)(id), voi
 
 	return [[RACSignal createSignal:^(id<RACSubscriber> subscriber) {
 		NSMutableDictionary *groups = [NSMutableDictionary dictionary];
+		NSMutableArray *orderedGroups = [NSMutableArray array];
 
 		return [self subscribeNext:^(id x) {
 			id<NSCopying> key = keyBlock(x);
@@ -1083,6 +1084,7 @@ static RACDisposable *subscribeForever (RACSignal *signal, void (^next)(id), voi
 				if (groupSubject == nil) {
 					groupSubject = [RACGroupedSignal signalWithKey:key];
 					groups[key] = groupSubject;
+					[orderedGroups addObject:groupSubject];
 					[subscriber sendNext:groupSubject];
 				}
 			}
@@ -1091,11 +1093,11 @@ static RACDisposable *subscribeForever (RACSignal *signal, void (^next)(id), voi
 		} error:^(NSError *error) {
 			[subscriber sendError:error];
 
-			[groups.allValues makeObjectsPerformSelector:@selector(sendError:) withObject:error];
+			[orderedGroups makeObjectsPerformSelector:@selector(sendError:) withObject:error];
 		} completed:^{
 			[subscriber sendCompleted];
 
-			[groups.allValues makeObjectsPerformSelector:@selector(sendCompleted)];
+			[orderedGroups makeObjectsPerformSelector:@selector(sendCompleted)];
 		}];
 	}] setNameWithFormat:@"[%@] -groupBy:transform:", self.name];
 }
@@ -1381,7 +1383,7 @@ static RACDisposable *subscribeForever (RACSignal *signal, void (^next)(id), voi
 		RACSubject *windowCloseSubject = [RACSubject subject];
 
 		RACDisposable *closeDisposable = [windowCloseSubject subscribeNext:^(id x) {
-			[subscriber sendNext:[RACTuple tupleWithObjectsFromArray:values convertNullsToNils:NO]];
+			[subscriber sendNext:[RACTuple tupleWithObjectsFromArray:values]];
 			[values removeAllObjects];
 		}];
 
