@@ -32,7 +32,7 @@ class BrewManager : NSObject {
         syncBrewCommand = RACCommand(signalBlock: { (brewObject: AnyObject!) -> RACSignal! in
             let requestResult = self.requestWithBody("api/brew", method: "POST", body: JSON(brewObject))
             if let request = requestResult.value() as NSMutableURLRequest? {
-                return self.composeRequestSignalFromURLRequest(request)
+                return NSURLConnection.rac_sendAsynchronousRequest(request)
             }
             
             if let serializationError = requestResult.error() {
@@ -44,7 +44,7 @@ class BrewManager : NSObject {
         
         stopBrewCommand = RACCommand(signalBlock: { Void -> RACSignal! in
             let request = self.requestWithBody("api/brew/stop", method: "PATCH", body: "").value()!
-            return  self.composeRequestSignalFromURLRequest(request)
+            return NSURLConnection.rac_sendAsynchronousRequest(request)
         })
     }
 
@@ -64,23 +64,6 @@ class BrewManager : NSObject {
         }
         
         return success(request)
-    }
-    
-    private func composeRequestSignalFromURLRequest(request: NSMutableURLRequest) -> RACSignal {
-        let scheduler = RACScheduler(priority: RACSchedulerPriorityBackground)
-        return RACSignal.createSignal({
-            (subscriber: RACSubscriber!) -> RACDisposable! in
-            
-            NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue(), completionHandler: {
-                (response:NSURLResponse!, data: NSData!, error: NSError!) -> Void in
-                if error == nil {
-                    subscriber.sendCompleted()
-                } else {
-                    subscriber.sendError(error)
-                }
-            })
-            return RACDisposable()
-        }).subscribeOn(scheduler)
     }
     
     // MARK: WebSocket
