@@ -50,7 +50,7 @@ final class BrewState: Equatable, JSONDecodable, JSONEncodable  {
 
     // MARK: JSONDecodable
 
-    class func decode(json: JSON) -> Result<BrewState> {
+    class func decode(json: JSON) -> Result<BrewState, NSError> {
         return success(BrewState(
             name: json["name"].stringValue,
             startTime: ContentParser.formatDate(json["startTime"].stringValue),
@@ -64,14 +64,14 @@ final class BrewState: Equatable, JSONDecodable, JSONEncodable  {
 
     // MARK: JSONEncodable
     
-    class func encode(object: BrewState) -> Result<AnyObject> {
+    class func encode(object: BrewState) -> Result<AnyObject, NSError> {
         var brew = Dictionary<String, AnyObject>()
        
         brew["name"] = object.name
         brew["startTime"] = object.startTime
         
         brew["phases"] = object.phases.map { (BrewPhase phase) -> AnyObject in
-            return BrewPhase.encode(phase).value()!
+            return BrewPhase.encode(phase).value!
         }
         
         return success(brew)

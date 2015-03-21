@@ -16,7 +16,7 @@ let tempChangedEvent = "temperature_changed"
 let brewChangedEvent = "brew_changed"
 
 class BrewManager : NSObject {
-    let host = "http://brewcore-demo.herokuapp.com/"
+    let host = "http://localhost:3000/"
     
     let stopBrewCommand: RACCommand!
     let syncBrewCommand: RACCommand!
@@ -31,11 +31,11 @@ class BrewManager : NSObject {
 
         syncBrewCommand = RACCommand(signalBlock: { (brewObject: AnyObject!) -> RACSignal! in
             let requestResult = self.requestWithBody("api/brew", method: "POST", body: JSON(brewObject))
-            if let request = requestResult.value() as NSMutableURLRequest? {
+            if let request = requestResult.value as NSMutableURLRequest? {
                 return NSURLConnection.rac_sendAsynchronousRequest(request)
             }
             
-            if let serializationError = requestResult.error() {
+            if let serializationError = requestResult.error {
                 return RACSignal.error(serializationError as NSError)
             }
             
@@ -43,14 +43,14 @@ class BrewManager : NSObject {
         })
         
         stopBrewCommand = RACCommand(signalBlock: { Void -> RACSignal! in
-            let request = self.requestWithBody("api/brew/stop", method: "PATCH", body: "").value()!
+            let request = self.requestWithBody("api/brew/stop", method: "PATCH", body: "").value!
             return NSURLConnection.rac_sendAsynchronousRequest(request)
         })
     }
 
     //Mark: HTTP
     
-    private func requestWithBody(path: String, method: String, body: JSON) -> Result<NSMutableURLRequest> {
+    private func requestWithBody(path: String, method: String, body: JSON) -> Result<NSMutableURLRequest, NSError> {
         var request : NSMutableURLRequest = NSMutableURLRequest()
         var serializationError: NSError?
         

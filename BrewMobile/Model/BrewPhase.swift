@@ -97,7 +97,7 @@ final class BrewPhase: Equatable, JSONDecodable, JSONEncodable {
     
     // MARK: JSONDecodable
     
-    class func decode(json: JSON) -> Result<BrewPhase> {
+    class func decode(json: JSON) -> Result<BrewPhase, NSError> {
         return success(BrewPhase(
             jobEnd: ContentParser.formatDate(json["jobEnd"].stringValue),
             min: json["min"].intValue,
@@ -109,7 +109,7 @@ final class BrewPhase: Equatable, JSONDecodable, JSONEncodable {
     
     // MARK: JSONEncodable
     
-    class func encode(object: BrewPhase) -> Result<AnyObject> {
+    class func encode(object: BrewPhase) -> Result<AnyObject, NSError> {
         var phase = Dictionary<String, AnyObject>()
         
         phase["min"] = Int(object.min)
