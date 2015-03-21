@@ -83,6 +83,17 @@ public struct JSON {
         self.object = object
     }
 
+    /**
+    Creates a JSON from a [JSON]
+    
+    :param: jsonArray A Swift array of JSON objects
+    
+    :returns: The created JSON
+    */
+    public init(_ jsonArray:[JSON]) {
+        self.init(jsonArray.map { $0.object })
+    }
+
     /// Private object
     private var _object: AnyObject = NSNull()
     /// Private type
@@ -132,7 +143,7 @@ public struct JSON {
 }
 
 // MARK: - SequenceType
-extension JSON: SequenceType{
+extension JSON : Swift.SequenceType {
     
     /// If `type` is `.Array` or `.Dictionary`, return `array.empty` or `dictonary.empty` otherwise return `false`.
     public var isEmpty: Bool {
@@ -163,7 +174,7 @@ extension JSON: SequenceType{
     }
     
     /**
-    If `type` is `.Array` or `.Dictionary`, return a generator over the elements like `Array` or `Dictionary, otherwise return a generator over empty.
+    If `type` is `.Array` or `.Dictionary`, return a generator over the elements like `Array` or `Dictionary`, otherwise return a generator over empty.
     
     :returns: Return a *generator* over the elements of this *sequence*.
     */

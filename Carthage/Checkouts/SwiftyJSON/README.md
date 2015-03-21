@@ -30,7 +30,7 @@ let jsonObject : AnyObject! = NSJSONSerialization.JSONObjectWithData(dataFromTwi
 if let statusesArray = jsonObject as? NSArray{
     if let aStatus = statusesArray[0] as? NSDictionary{
         if let user = aStatus["user"] as? NSDictionary{
-            if let userName = user["name"] as? NSDictionary{
+            if let userName = user["name"] as? NSString{
                 //Finally We Got The Name
                 
             }
@@ -86,10 +86,24 @@ if let userName = json[999999]["wrong_key"]["wrong_name"].string{
 
 ##Integration
 
-You can use [Carthage](https://github.com/Carthage/Carthage) to install `SwiftyJSON` by adding
-`github "SwiftyJSON/SwiftyJSON" >= 2.1.2` to your `Cartfile`
+####Carthage
+You can use [Carthage](https://github.com/Carthage/Carthage) to install `SwiftyJSON` by adding it to your `Cartfile`:
+```
+github "SwiftyJSON/SwiftyJSON" >= 2.1.2
+```
 
-CocoaPods is now supported for Swift. But to use this library in your project manually you may:  
+####CocoaPods
+You can use [Cocoapods](http://cocoapods.org/) to install `SwiftyJSON`by adding it to your `Podfile`:
+```ruby
+pod "SwiftyJSON", ">= 2.1.3"
+```
+Note that it needs you to install CocoaPods 36 version, and requires your iOS deploy target >= 8.0:
+```bash
+[sudo] gem install cocoapods -v '>=0.36'
+```
+####Manually
+
+To use this library in your project manually you may:  
 
 1. for Projects, just drag SwiftyJSON.swift to the project tree
 2. for Workspaces, include the whole SwiftyJSON.xcodeproj (as suggested by @garnett)
@@ -156,7 +170,7 @@ It will never happen in SwiftyJSON.
 
 ```swift
 let json = JSON(["name", "age"])
-let name = json[999].string {
+if let name = json[999].string {
     //Do something you want
 } else {
     println(json[999].error) // "Array[999] is out of bounds"
@@ -164,7 +178,7 @@ let name = json[999].string {
 ```
 ```swift
 let json = JSON(["name":"Jack", "age": 25])
-let name = json["address"].string {
+if let name = json["address"].string {
     //Do something you want
 } else {
     println(json["address"].error) // "Dictionary["address"] does not exist"
@@ -172,14 +186,14 @@ let name = json["address"].string {
 ```
 ```swift
 let json = JSON(12345)
-let age = json[0].string {
+if let age = json[0].string {
     //Do something you want
 } else {
     println(json[0])       // "Array[0] failure, It is not an array"
     println(json[0].error) // "Array[0] failure, It is not an array"
 }
 
-let name = json["name"].string {
+if let name = json["name"].string {
     //Do something you want
 } else {
     println(json["name"])       // "Dictionary[\"name"] failure, It is not an dictionary"
@@ -253,7 +267,7 @@ json[0] = JSON(1)
 json["id"].int =  1234567890
 json["coordinate"].double =  8766.766
 json["name"].string =  "Jack"
-json.array = [1,2,3,4]
+json.arrayObject = [1,2,3,4]
 json.dictionary = ["name":"Jack", "age":25]
 ```
 
