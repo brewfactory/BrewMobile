@@ -15,6 +15,7 @@ class BrewViewController: UIViewController, UITableViewDelegate, UITableViewData
     let brewViewModel: BrewViewModel
 
     @IBOutlet weak var tempLabel: UILabel!
+    @IBOutlet weak var pwmLabel: UILabel!
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var startTimeLabel: UILabel!
     @IBOutlet weak var phasesTableView: UITableView!
@@ -49,6 +50,11 @@ class BrewViewController: UIViewController, UITableViewDelegate, UITableViewData
             (temp: AnyObject!) -> AnyObject! in
             return NSString(format:"%.2f ˚C", temp as Float)
         } ~> RAC(self.tempLabel, "text")
+        
+        self.brewViewModel.pwmChangedSignal.map {
+            (pwm: AnyObject!) -> AnyObject! in
+            return "PWM: \(pwm.intValue as Int32) %"
+        } ~> RAC(self.pwmLabel, "text")
         
         self.brewViewModel.brewChangedSignal.subscribeNext {
             (next: AnyObject!) -> Void in
@@ -90,7 +96,7 @@ class BrewViewController: UIViewController, UITableViewDelegate, UITableViewData
         if self.brewViewModel.state.phases.count > indexPath.row  {
             let brewPhase = self.brewViewModel.state.phases[indexPath.row]
             
-            cell.minLabel.text = "\(brewPhase.min) minutes at \(Int(brewPhase.temp)) ˚C"
+            cell.minLabel.text = brewPhase.jobEnd != "" ? "\(brewPhase.min) mins - \(Int(brewPhase.temp)) ˚C, ends: \(brewPhase.jobEnd)"  : "\(brewPhase.min) mins - \(Int(brewPhase.temp)) ˚C"
             cell.statusLabel.text = "\(self.stateText(brewPhase))"
             
             UIView.animateWithDuration(0.3, animations: { () -> Void in

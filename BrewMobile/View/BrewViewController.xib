@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6724" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6751" systemVersion="14C1514" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6711"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6736"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="BrewViewController" customModule="BrewMobile" customModuleProvider="target">
             <connections>
                 <outlet property="nameLabel" destination="Egq-fz-xuo" id="1st-M7-W78"/>
                 <outlet property="phasesTableView" destination="fDc-9C-BHN" id="ddS-r0-g0N"/>
+                <outlet property="pwmLabel" destination="ssE-4k-7ZS" id="1qY-vv-kf6"/>
                 <outlet property="startTimeLabel" destination="TJ5-FP-k2J" id="Pul-A4-Eee"/>
                 <outlet property="stopButton" destination="SKu-ER-srB" id="jdQ-GZ-cOI"/>
                 <outlet property="tempLabel" destination="R8w-X5-zxS" id="ySP-OD-EV9"/>
@@ -53,6 +54,15 @@
                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                     <nil key="highlightedColor"/>
                 </label>
+                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="0.0" translatesAutoresizingMaskIntoConstraints="NO" id="ssE-4k-7ZS" userLabel="pwmLabel">
+                    <constraints>
+                        <constraint firstAttribute="height" constant="35" id="DXD-LH-Lob"/>
+                        <constraint firstAttribute="height" relation="greaterThanOrEqual" id="csC-fz-P6W"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="25"/>
+                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="0.0" translatesAutoresizingMaskIntoConstraints="NO" id="TJ5-FP-k2J" userLabel="startTimeLabel">
                     <constraints>
                         <constraint firstAttribute="height" constant="35" id="lyO-0p-1NU"/>
@@ -68,7 +78,7 @@
                     </constraints>
                     <items>
                         <barButtonItem width="5" style="plain" systemItem="fixedSpace" id="1hu-Ji-mQO"/>
-                        <barButtonItem systemItem="stop" id="SKu-ER-srB"/>
+                        <barButtonItem enabled="NO" systemItem="stop" id="SKu-ER-srB"/>
                     </items>
                 </toolbar>
             </subviews>
@@ -76,6 +86,7 @@
             <constraints>
                 <constraint firstAttribute="bottom" secondItem="fDc-9C-BHN" secondAttribute="bottom" constant="94" id="2GS-ys-sTp"/>
                 <constraint firstItem="AR7-7W-7Jt" firstAttribute="top" secondItem="fDc-9C-BHN" secondAttribute="bottom" id="4bJ-s7-BIC"/>
+                <constraint firstItem="ssE-4k-7ZS" firstAttribute="centerY" secondItem="R8w-X5-zxS" secondAttribute="centerY" id="9vn-fa-EAv"/>
                 <constraint firstItem="AR7-7W-7Jt" firstAttribute="leading" secondItem="fDc-9C-BHN" secondAttribute="leading" id="EnT-Me-eUX"/>
                 <constraint firstItem="R8w-X5-zxS" firstAttribute="top" secondItem="Egq-fz-xuo" secondAttribute="bottom" constant="3" id="EsE-j3-dYN"/>
                 <constraint firstAttribute="centerX" secondItem="TJ5-FP-k2J" secondAttribute="centerX" id="MKM-4H-wwb"/>
@@ -83,11 +94,18 @@
                 <constraint firstItem="fDc-9C-BHN" firstAttribute="leading" secondItem="aIA-Io-OTP" secondAttribute="leading" id="VaX-K7-RRV"/>
                 <constraint firstAttribute="centerX" secondItem="Egq-fz-xuo" secondAttribute="centerX" id="d8y-Le-23F"/>
                 <constraint firstItem="R8w-X5-zxS" firstAttribute="centerX" secondItem="aIA-Io-OTP" secondAttribute="centerX" id="fIq-xw-c76"/>
+                <constraint firstItem="ssE-4k-7ZS" firstAttribute="leading" secondItem="R8w-X5-zxS" secondAttribute="trailing" constant="30" id="jRY-DD-VYB"/>
                 <constraint firstItem="R8w-X5-zxS" firstAttribute="leading" secondItem="Egq-fz-xuo" secondAttribute="leading" id="new-Px-2AN"/>
                 <constraint firstItem="TJ5-FP-k2J" firstAttribute="top" secondItem="R8w-X5-zxS" secondAttribute="bottom" constant="3" id="uai-PN-cl1"/>
+                <constraint firstItem="R8w-X5-zxS" firstAttribute="leading" secondItem="aIA-Io-OTP" secondAttribute="leading" constant="30" id="w4P-bk-Oa3"/>
                 <constraint firstItem="AR7-7W-7Jt" firstAttribute="top" secondItem="fDc-9C-BHN" secondAttribute="bottom" id="yAw-Jo-qSX"/>
             </constraints>
             <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
+            <variation key="default">
+                <mask key="constraints">
+                    <exclude reference="fIq-xw-c76"/>
+                </mask>
+            </variation>
         </view>
     </objects>
 </document>
