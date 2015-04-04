@@ -13,6 +13,7 @@ class BrewViewModel : NSObject {
     let stopCommand: RACCommand!
     let tempChangedSignal: RACSignal!
     let brewChangedSignal: RACSignal!
+    let pwmChangedSignal: RACSignal!
 
     let brewManager: BrewManager
 
@@ -31,14 +32,8 @@ class BrewViewModel : NSObject {
             return brewManager.stopBrewCommand.execute(nil).deliverOn(RACScheduler.mainThreadScheduler())
         }
         
-        tempChangedSignal = self.brewManager.tempChangedSignal.map {
-            (any: AnyObject!) -> AnyObject! in
-            if let newTemp = any as? Float {
-                self.temp = newTemp
-                return newTemp
-            }
-            return 0
-        }.deliverOn(RACScheduler.mainThreadScheduler())
+        tempChangedSignal = self.brewManager.tempChangedSignal.deliverOn(RACScheduler.mainThreadScheduler())
+        pwmChangedSignal = self.brewManager.pwmChangedSignal.deliverOn(RACScheduler.mainThreadScheduler())
         
         brewChangedSignal = self.brewManager.brewChangedSignal.map {
             (any: AnyObject!) -> AnyObject! in

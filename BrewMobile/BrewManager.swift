@@ -14,6 +14,7 @@ import SocketIOFramework
 
 let tempChangedEvent = "temperature_changed"
 let brewChangedEvent = "brew_changed"
+let pwmChangedEvent = "pwm_changed"
 
 class BrewManager : NSObject {
     let host = "http://brewcore-demo.herokuapp.com/"
@@ -22,10 +23,12 @@ class BrewManager : NSObject {
     let syncBrewCommand: RACCommand!
     let tempChangedSignal: RACSubject
     let brewChangedSignal: RACSubject
-    
+    let pwmChangedSignal: RACSubject
+
     override init() {
         tempChangedSignal = RACSubject()
         brewChangedSignal = RACSubject()
+        pwmChangedSignal = RACSubject()
         
         super.init()
 
@@ -80,13 +83,23 @@ class BrewManager : NSObject {
             
             socket.on(tempChangedEvent, callback: { (AnyObject data) -> Void in
                 if(countElements(data) > 0) {
-                    self.tempChangedSignal.sendNext(data[0])
+                    if let tempStr = data[0] as? NSString {
+                        self.tempChangedSignal.sendNext(tempStr)
+                    }
                 }
             })
             
             socket.on(brewChangedEvent, callback: { (AnyObject data) -> Void in
                 if(countElements(data) > 0) {
                     self.brewChangedSignal.sendNext([brewChangedEvent: ContentParser.parseBrewState(JSON(data[0]))])
+                }
+            })
+            
+            socket.on(pwmChangedEvent, callback: { (AnyObject data) -> Void in
+                if(countElements(data) > 0) {
+                    if let pwmStr = data[0] as? NSString {
+                        self.pwmChangedSignal.sendNext(pwmStr)
+                    }
                 }
             })
             
