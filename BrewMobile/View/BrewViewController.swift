@@ -48,7 +48,7 @@ class BrewViewController: UIViewController, UITableViewDelegate, UITableViewData
 
         self.brewViewModel.tempChangedSignal.map {
             (temp: AnyObject!) -> AnyObject! in
-            return NSString(format:"%.2f ˚C", temp as Float)
+            return NSString(format:"%.2f ˚C", temp.floatValue as Float)
         } ~> RAC(self.tempLabel, "text")
         
         self.brewViewModel.pwmChangedSignal.map {
