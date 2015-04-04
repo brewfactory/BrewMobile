@@ -23,10 +23,6 @@
                 <tableView clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" alwaysBounceVertical="YES" style="plain" separatorStyle="default" allowsSelection="NO" rowHeight="78" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="fDc-9C-BHN" userLabel="phasesTableView">
                     <rect key="frame" x="0.0" y="207" width="320" height="317"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    <constraints>
-                        <constraint firstAttribute="width" constant="320" id="7zJ-ly-bM9"/>
-                        <constraint firstAttribute="height" constant="317" id="riI-jh-ToE"/>
-                    </constraints>
                     <sections/>
                     <connections>
                         <outlet property="dataSource" destination="-1" id="min-qr-WUQ"/>
@@ -85,13 +81,17 @@
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
                 <constraint firstAttribute="bottom" secondItem="fDc-9C-BHN" secondAttribute="bottom" constant="94" id="2GS-ys-sTp"/>
+                <constraint firstItem="fDc-9C-BHN" firstAttribute="trailing" secondItem="AR7-7W-7Jt" secondAttribute="trailing" id="4Rq-wH-c4i"/>
                 <constraint firstItem="AR7-7W-7Jt" firstAttribute="top" secondItem="fDc-9C-BHN" secondAttribute="bottom" id="4bJ-s7-BIC"/>
                 <constraint firstItem="ssE-4k-7ZS" firstAttribute="centerY" secondItem="R8w-X5-zxS" secondAttribute="centerY" id="9vn-fa-EAv"/>
+                <constraint firstAttribute="centerX" secondItem="fDc-9C-BHN" secondAttribute="centerX" id="CTq-PJ-OD4"/>
                 <constraint firstItem="AR7-7W-7Jt" firstAttribute="leading" secondItem="fDc-9C-BHN" secondAttribute="leading" id="EnT-Me-eUX"/>
                 <constraint firstItem="R8w-X5-zxS" firstAttribute="top" secondItem="Egq-fz-xuo" secondAttribute="bottom" constant="3" id="EsE-j3-dYN"/>
                 <constraint firstAttribute="centerX" secondItem="TJ5-FP-k2J" secondAttribute="centerX" id="MKM-4H-wwb"/>
-                <constraint firstItem="Egq-fz-xuo" firstAttribute="top" secondItem="aIA-Io-OTP" secondAttribute="top" constant="50" id="R2Z-8a-60t"/>
+                <constraint firstItem="Egq-fz-xuo" firstAttribute="top" secondItem="aIA-Io-OTP" secondAttribute="top" constant="35" id="R2Z-8a-60t"/>
                 <constraint firstItem="fDc-9C-BHN" firstAttribute="leading" secondItem="aIA-Io-OTP" secondAttribute="leading" id="VaX-K7-RRV"/>
+                <constraint firstItem="fDc-9C-BHN" firstAttribute="top" secondItem="TJ5-FP-k2J" secondAttribute="bottom" constant="10" id="XZK-t1-9EJ"/>
+                <constraint firstAttribute="trailing" secondItem="fDc-9C-BHN" secondAttribute="trailing" id="Zt3-Mu-2gl"/>
                 <constraint firstAttribute="centerX" secondItem="Egq-fz-xuo" secondAttribute="centerX" id="d8y-Le-23F"/>
                 <constraint firstItem="R8w-X5-zxS" firstAttribute="centerX" secondItem="aIA-Io-OTP" secondAttribute="centerX" id="fIq-xw-c76"/>
                 <constraint firstItem="ssE-4k-7ZS" firstAttribute="leading" secondItem="R8w-X5-zxS" secondAttribute="trailing" constant="30" id="jRY-DD-VYB"/>
