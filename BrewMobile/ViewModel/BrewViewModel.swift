@@ -12,7 +12,7 @@ import ReactiveCocoa
 class BrewViewModel : NSObject {
     let stopCommand: RACCommand!
     let tempChangedSignal: RACSignal!
-    let brewChangedSignal: RACSignal!
+    var brewChangedSignal: RACSignal!
     let pwmChangedSignal: RACSignal!
 
     let brewManager: BrewManager
@@ -24,7 +24,6 @@ class BrewViewModel : NSObject {
         
         self.brewManager = brewManager
     
-        super.init()
         self.brewManager.connectToHost()
 
         stopCommand = RACCommand() {
@@ -32,10 +31,12 @@ class BrewViewModel : NSObject {
             return brewManager.stopBrewCommand.execute(nil).deliverOn(RACScheduler.mainThreadScheduler())
         }
         
-        tempChangedSignal = self.brewManager.tempChangedSignal.deliverOn(RACScheduler.mainThreadScheduler())
-        pwmChangedSignal = self.brewManager.pwmChangedSignal.deliverOn(RACScheduler.mainThreadScheduler())
+        tempChangedSignal = brewManager.tempChangedSignal.deliverOn(RACScheduler.mainThreadScheduler())
+        pwmChangedSignal = brewManager.pwmChangedSignal.deliverOn(RACScheduler.mainThreadScheduler())
         
-        brewChangedSignal = self.brewManager.brewChangedSignal.map {
+        super.init()
+
+        brewChangedSignal = brewManager.brewChangedSignal.map {
             (any: AnyObject!) -> AnyObject! in
             if let anyDict = any as? Dictionary<String, BrewState> {
                 if let brew = anyDict[brewChangedEvent] {

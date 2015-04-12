@@ -128,13 +128,27 @@ extension Result: Printable {
 /// Failure coalescing
 ///    .Success(Box(42)) ?? 0 ==> 42
 ///    .Failure(NSError()) ?? 0 ==> 0
-public func ??<T,E>(result: Result<T,E>, defaultValue: @autoclosure () -> T) -> T {
+public func ??<T,E>(result: Result<T,E>, @autoclosure defaultValue:  () -> T) -> T {
   switch result {
   case .Success(let value):
     return value.unbox
   case .Failure(let error):
     return defaultValue()
   }
+}
+
+/// Equatable
+/// Equality for Result is defined by the equality of the contained types
+public func ==<T, E where T: Equatable, E: Equatable>(lhs: Result<T, E>, rhs: Result<T, E>) -> Bool {
+    switch (lhs, rhs) {
+    case let (.Success(l), .Success(r)): return l.unbox == r.unbox
+    case let (.Failure(l), .Failure(r)): return l.unbox == r.unbox
+    default: return false
+    }
+}
+
+public func !=<T, E where T: Equatable, E: Equatable>(lhs: Result<T, E>, rhs: Result<T, E>) -> Bool {
+  return !(lhs == rhs)
 }
 
 /// Due to current swift limitations, we have to include this Box in Result.

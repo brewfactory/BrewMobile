@@ -60,7 +60,7 @@ class BrewNewPhaseViewController : UIViewController {
         func mappedStepperSignal(stepper: UIStepper) -> RACSignal {
             return stepper.rac_signalForControlEvents(.ValueChanged).map {
                 (any: AnyObject!) -> AnyObject! in
-                let stepper = any as UIStepper
+                let stepper = any as! UIStepper
                 
                 return Int(stepper.value)
             }
@@ -69,7 +69,7 @@ class BrewNewPhaseViewController : UIViewController {
         func mappedTextSignal(textField: UITextField) -> RACSignal {
             return textField.rac_textSignal().map {
                 (any: AnyObject!) -> AnyObject! in
-                let text = any as String
+                let text = any as! String
                 
                 return text.toInt()
             }

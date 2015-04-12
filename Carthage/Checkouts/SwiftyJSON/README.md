@@ -87,19 +87,17 @@ if let userName = json[999999]["wrong_key"]["wrong_name"].string{
 ##Integration
 
 ####Carthage
-You can use [Carthage](https://github.com/Carthage/Carthage) to install `SwiftyJSON` by adding it to your `Cartfile`:
-```
-github "SwiftyJSON/SwiftyJSON" >= 2.1.2
-```
+You can use [Carthage](https://github.com/Carthage/Carthage) to install `SwiftyJSON` by adding
+`github "SwiftyJSON/SwiftyJSON" >= 2.1.2` to your `Cartfile`
 
 ####CocoaPods
-You can use [Cocoapods](http://cocoapods.org/) to install `SwiftyJSON`by adding it to your `Podfile`:
+CocoaPods beta release now supports for Swift. 
 ```ruby
-pod "SwiftyJSON", ">= 2.1.3"
+pod 'SwiftyJSON', '2.1.3'
 ```
-Note that it needs you to install CocoaPods 36 version, and requires your iOS deploy target >= 8.0:
+Note that it needs you to install CocoaPods pre-released version, and requires your iOS deploy target >= 8.0:
 ```bash
-[sudo] gem install cocoapods -v '>=0.36'
+[sudo] gem install cocoapods --pre
 ```
 ####Manually
 
@@ -267,7 +265,7 @@ json[0] = JSON(1)
 json["id"].int =  1234567890
 json["coordinate"].double =  8766.766
 json["name"].string =  "Jack"
-json.arrayObject = [1,2,3,4]
+json.array = [1,2,3,4]
 json.dictionary = ["name":"Jack", "age":25]
 ```
 

@@ -31,7 +31,7 @@ class ResultTests: XCTestCase {
 
   func testSuccessReturnsNoError() {
     let s: Result<Int,NSError> = success(42)
-    XCTAssert(s.error == nil)
+    XCTAssertNil(s.error)
   }
 
   func testFailureReturnsError() {
@@ -59,13 +59,13 @@ class ResultTests: XCTestCase {
 
   func testMapSuccessNewType() {
     let x: Result<String, NSError> = success("abcd")
-    let y = x.map { countElements($0) }
+    let y = x.map { count($0) }
     XCTAssertEqual(y.value!, 4)
   }
 
   func testMapFailureNewType() {
     let x: Result<String, NSError> = failure(self.err)
-    let y = x.map { countElements($0) }
+    let y = x.map { count($0) }
     XCTAssertEqual(y.error!, self.err)
   }
 
@@ -134,8 +134,8 @@ class ResultTests: XCTestCase {
   }
 
   func testTryTFailure() {
-    let result = try(makeTryFunction(nil as Int?, false))
-    XCTAssertEqual(result ?? 43, 43)
+    let result = try(makeTryFunction(nil as String?, false))
+    XCTAssertEqual(result ?? "abc", "abc")
     XCTAssert(result.description.hasPrefix("Failure: Error Domain=domain Code=1 "))
   }
 
@@ -147,5 +147,33 @@ class ResultTests: XCTestCase {
     let result = try(makeTryFunction(false, false))
     XCTAssertFalse(result.isSuccess)
     XCTAssert(result.description.hasPrefix("Failure: Error Domain=domain Code=1 "))
+  }
+
+  func testSuccessEquality() {
+    let result: Result<String, NSError> = success("result")
+    let otherResult: Result<String, NSError> = success("result")
+
+    XCTAssert(result == otherResult)
+  }
+
+  func testFailureEquality() {
+    let result: Result<String, NSError> = failure(err)
+    let otherResult: Result<String, NSError> = failure(err)
+
+    XCTAssert(result == otherResult)
+  }
+
+  func testSuccessInequality() {
+    let result: Result<String, NSError> = success("result")
+    let otherResult: Result<String, NSError> = success("different result")
+
+    XCTAssert(result != otherResult)
+  }
+
+  func testFailureInequality() {
+    let result: Result<String, NSError> = failure(err)
+    let otherResult: Result<String, NSError> = failure(err2)
+
+    XCTAssert(result != otherResult)
   }
 }
