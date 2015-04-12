@@ -14,13 +14,13 @@ import LlamaKit
 // MARK: JSONDecodable
 
 protocol JSONDecodable {
-    class func decode(json: JSON) -> Result<Self, NSError>
+    static func decode(json: JSON) -> Result<Self, NSError>
 }
 
 // MARK: JSONEncodable
 
 protocol JSONEncodable {
-    class func encode(object: Self) -> Result<AnyObject, NSError>
+    static func encode(object: Self) -> Result<AnyObject, NSError>
 }
 
 typealias PhaseArray = [BrewPhase]
@@ -35,7 +35,7 @@ class ContentParser {
     }
     
     class func formatDate(dateString: String) -> String {
-        if countElements(dateString) > 0 {
+        if count(dateString) > 0 {
             let isoDateFormatter = ISO8601DateFormatter()
             let formattedDate = isoDateFormatter.dateFromString(dateString)
             let dateStringFormatter = NSDateFormatter()

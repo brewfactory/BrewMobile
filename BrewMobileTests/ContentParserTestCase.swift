@@ -8,6 +8,7 @@
 
 import UIKit
 import XCTest
+import SwiftyJSON
 
 class ContentParserTestCase: XCTestCase {
     var mockBrewState = BrewState()

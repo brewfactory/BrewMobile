@@ -1,5 +1,5 @@
 git "https://github.com/vasarhelyia/SIOSocket" "e3d4f2cd09eab6a1ce0980b3c9fbec2a81a6c4bd"
 git "https://github.com/vasarhelyia/iso-8601-date-formatter" "103ee049f0ce2fd66b16b814adbc6b741959ce64"
 github "ReactiveCocoa/ReactiveCocoa" == 2.4.7
-github "SwiftyJSON/SwiftyJSON" "489a62927cd28d8fd854379e3bbe665a285a9526"
-github "LlamaKit/LlamaKit" == 0.5.0
+github "SwiftyJSON/SwiftyJSON" "xcode6.3"
+github "LlamaKit/LlamaKit" == 0.6.0

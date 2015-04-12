@@ -12,9 +12,9 @@ import ReactiveCocoa
 class BrewDesignerViewModel : NSObject {
 
     let brewManager: BrewManager
-    let hasPhasesSignal: RACSignal!
-    let validBeerSignal: RACSignal!
-    let syncCommand: RACCommand!
+    var hasPhasesSignal: RACSignal!
+    var validBeerSignal: RACSignal!
+    var syncCommand: RACCommand!
 
     var name = ""
     var phases = PhaseArray()
@@ -27,22 +27,22 @@ class BrewDesignerViewModel : NSObject {
 
         hasPhasesSignal = RACObserve(self, "phases").map {
             (aPhases: AnyObject!) -> AnyObject! in
-            let phasesArray = aPhases as PhaseArray
+            let phasesArray = aPhases as! PhaseArray
             return phasesArray.count > 0
         }.distinctUntilChanged()
         
         let validBeerNameSignal = RACObserve(self, "name").map {
             (aName: AnyObject!) -> AnyObject! in
-            let nameText = aName as String
-            return countElements(nameText) > 0
+            let nameText = aName as! String
+            return count(nameText) > 0
         }.distinctUntilChanged()
         
         validBeerSignal = RACSignal.combineLatest([validBeerNameSignal, hasPhasesSignal]).map {
             (tuple: AnyObject!) -> AnyObject in
-            let validBeer = tuple as RACTuple
+            let validBeer = tuple as! RACTuple
             
-            let validName = validBeer.first as Bool
-            let validPhases = validBeer.second as Bool
+            let validName = validBeer.first as! Bool
+            let validPhases = validBeer.second as! Bool
             
             return validName && validPhases
         }

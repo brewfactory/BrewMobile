@@ -86,14 +86,14 @@ class BrewDesignerViewController : UIViewController, UITableViewDataSource, UITa
                 self.phasesTableView.reloadData()
             }
 
-            if !(next as Bool) {
+            if !(next as! Bool) {
                 self.phasesTableView.editing = false
             }
         }
 
         RACObserve(self.phasesTableView, "editing").subscribeNext {
             (editing: AnyObject!) -> Void in
-            let editingValue = editing as Bool
+            let editingValue = editing as! Bool
             self.editButton.title = editingValue ? "Done" : "Edit"
         }
         
@@ -111,7 +111,7 @@ class BrewDesignerViewController : UIViewController, UITableViewDataSource, UITa
 
         startTimeValueChangedSignal.map {
             (pickerDate: AnyObject!) -> AnyObject! in
-            let date = pickerDate as NSDate
+            let date = pickerDate as! NSDate
             
             let isoDateFormatter = ISO8601DateFormatter()
             isoDateFormatter.defaultTimeZone = NSTimeZone.defaultTimeZone()
@@ -122,7 +122,7 @@ class BrewDesignerViewController : UIViewController, UITableViewDataSource, UITa
 
         startTimeValueChangedSignal.subscribeNext {
             (next: AnyObject!) -> Void in
-            let date = next as NSDate
+            let date = next as! NSDate
             let dateFormatter = NSDateFormatter()
             dateFormatter.dateFormat = "YYYY.MM.dd. HH:mm"
             self.startTimeTextField.text = dateFormatter.stringFromDate(date)
@@ -150,7 +150,7 @@ class BrewDesignerViewController : UIViewController, UITableViewDataSource, UITa
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("PhaseCell", forIndexPath: indexPath) as PhaseCell
+        let cell = tableView.dequeueReusableCellWithIdentifier("PhaseCell", forIndexPath: indexPath) as! PhaseCell
         if self.brewDesignerViewModel.phases.count > indexPath.row  {
             let phase = self.brewDesignerViewModel.phases[indexPath.row]
             cell.phaseLabel.text = "\(indexPath.row + 1). \(phase.min) min \(phase.temp) ˚C"
