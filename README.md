@@ -1,5 +1,7 @@
 # BrewMobile
 
+[![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
+
 iOS client for the [Brewfactory](https://github.com/brewfactory/BrewCore) project
 
 What is this?
