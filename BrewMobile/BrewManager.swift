@@ -83,9 +83,8 @@ class BrewManager : NSObject {
             
             socket.on(tempChangedEvent, callback: { (AnyObject data) -> Void in
                 if(count(data) > 0) {
-                    if let tempStr = data[0] as? NSString {
-                        self.tempChangedSignal.sendNext(tempStr)
-                    }
+                    let temp = data[0] as! NSNumber
+                    self.tempChangedSignal.sendNext(temp)
                 }
             })
             
@@ -97,9 +96,8 @@ class BrewManager : NSObject {
             
             socket.on(pwmChangedEvent, callback: { (AnyObject data) -> Void in
                 if(count(data) > 0) {
-                    if let pwmStr = data[0] as? NSString {
-                        self.pwmChangedSignal.sendNext(pwmStr)
-                    }
+                    let pwm = data[0] as! NSNumber
+                    self.pwmChangedSignal.sendNext(pwm)
                 }
             })
             
