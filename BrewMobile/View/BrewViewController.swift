@@ -34,15 +34,27 @@ class BrewViewController: UIViewController, UITableViewDelegate, UITableViewData
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        stopButton.rac_command = self.brewViewModel.stopCommand
+
         stopButton.rac_command = RACCommand() {
             (any:AnyObject!) -> RACSignal in
-            let stopSignal = self.brewViewModel.stopCommand.execute(nil)
-            stopSignal.subscribeError({ (error: NSError!) -> Void in
-                UIAlertView(title: "Error stopping brew", message: error.localizedDescription, delegate: nil, cancelButtonTitle: "OK").show()
-            })
-            return stopSignal
+            var alert = UIAlertController(title: "Stop brewing", message: "Are you sure you want to stop brewing this wonderful beer?", preferredStyle: UIAlertControllerStyle.Alert)
+            alert.addAction(UIAlertAction(title: "No", style: .Cancel, handler: nil))
+            alert.addAction(UIAlertAction(title: "Yes", style: .Default, handler: {
+                action in
+                self.brewViewModel.stopCommand.execute(nil)
+            }))
+            self.presentViewController(alert, animated: true, completion: nil)
+            return RACSignal.empty()
         }
         
+        stopButton.rac_command.executionSignals.subscribeError({
+            (error: NSError!) -> Void in
+            var alert = UIAlertController(title: "Error stopping brew", message: error.localizedDescription, preferredStyle: UIAlertControllerStyle.Alert)
+            alert.addAction(UIAlertAction(title: "OK", style:.Default, handler:nil))
+            self.presentViewController(alert, animated: true, completion: nil)
+        })
+
         let nib = UINib(nibName: "BrewCell", bundle: nil)
         phasesTableView.registerNib(nib, forCellReuseIdentifier: "BrewCell")
 
