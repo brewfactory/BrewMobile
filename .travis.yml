@@ -6,6 +6,9 @@ before_install:
   - brew install carthage
   - carthage bootstrap
 
+after_script:
+ codesign --deep -f -s - "${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.app"
+
 xcode_workspace: BrewMobile.xcworkspace
 xcode_scheme: BrewMobile
 xcode_sdk: iphonesimulator
