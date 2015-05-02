@@ -48,7 +48,8 @@ class BrewViewController: UIViewController, UITableViewDelegate, UITableViewData
             return RACSignal.empty()
         }
         
-        stopButton.rac_command.executionSignals.subscribeError({ (error: NSError!) -> Void in
+        stopButton.rac_command.executionSignals.subscribeError({
+            (error: NSError!) -> Void in
             var alert = UIAlertController(title: "Error stopping brew", message: error.localizedDescription, preferredStyle: UIAlertControllerStyle.Alert)
             alert.addAction(UIAlertAction(title: "OK", style:.Default, handler:nil))
             self.presentViewController(alert, animated: true, completion: nil)
