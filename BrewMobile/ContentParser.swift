@@ -9,7 +9,7 @@
 import Foundation
 import ISO8601
 import SwiftyJSON
-import LlamaKit
+import Result
 
 // MARK: JSONDecodable
 
