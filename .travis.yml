@@ -6,6 +6,8 @@ before_install:
   - brew install carthage
   - carthage bootstrap
 
+before_script: ./sign_fw.sh
+
 after_script:
  codesign --deep -f -s - "${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.app"
 
