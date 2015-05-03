@@ -4,7 +4,9 @@ osx_image: xcode63
 before_install:
   - brew update
   - brew install carthage
-  - carthage bootstrap
+  - carthage checkout
+  - CODE_SIGN_IDENTITY=-
+  - carthage build --platform iOS
 
 before_script: ./sign_fw.sh
 
