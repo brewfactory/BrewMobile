@@ -9,7 +9,7 @@
 import Foundation
 import SwiftyJSON
 import ReactiveCocoa
-import LlamaKit
+import Result
 import SocketIOFramework
 
 let tempChangedEvent = "temperature_changed"
@@ -62,11 +62,11 @@ class BrewManager : NSObject {
         if method == "POST" {
             request.HTTPBody = body.rawData(options: .PrettyPrinted, error: &serializationError)
             if serializationError != nil {
-                return failure(serializationError!)
+                return Result.failure(serializationError!)
             }
         }
         
-        return success(request)
+        return Result.success(request)
     }
     
     // MARK: WebSocket
