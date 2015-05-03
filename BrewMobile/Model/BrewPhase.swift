@@ -8,7 +8,7 @@
 
 import Foundation
 import UIKit
-import Result
+import LlamaKit
 import SwiftyJSON
 
 enum State: Int {
@@ -98,7 +98,7 @@ final class BrewPhase: Equatable, JSONDecodable, JSONEncodable {
     // MARK: JSONDecodable
     
     class func decode(json: JSON) -> Result<BrewPhase, NSError> {
-        return Result.success(BrewPhase(
+        return success(BrewPhase(
             jobEnd: ContentParser.formatDate(json["jobEnd"].stringValue),
             min: json["min"].intValue,
             temp: json["temp"].floatValue,
@@ -115,7 +115,7 @@ final class BrewPhase: Equatable, JSONDecodable, JSONEncodable {
         phase["min"] = Int(object.min)
         phase["temp"] = Float(object.temp)
 
-        return Result.success(phase)
+        return success(phase)
     }
     
 }

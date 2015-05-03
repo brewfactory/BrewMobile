@@ -7,7 +7,7 @@
 //
 
 import Foundation
-import Result
+import LlamaKit
 import SwiftyJSON
 
 // MARK: Equatable
@@ -51,7 +51,7 @@ final class BrewState: Equatable, JSONDecodable, JSONEncodable  {
     // MARK: JSONDecodable
 
     class func decode(json: JSON) -> Result<BrewState, NSError> {
-        return Result.success(BrewState(
+        return success(BrewState(
             name: json["name"].stringValue,
             startTime: ContentParser.formatDate(json["startTime"].stringValue),
             phases: json["phases"].arrayValue.map { (JSON rawPhase) -> BrewPhase in
@@ -74,7 +74,7 @@ final class BrewState: Equatable, JSONDecodable, JSONEncodable  {
             return BrewPhase.encode(phase).value!
         }
         
-        return Result.success(brew)
+        return success(brew)
     }
 
 }
