@@ -6,6 +6,7 @@ before_install:
   - brew install carthage
   - carthage checkout
   - CODE_SIGN_IDENTITY=-
+  - CODE_SIGN_IDENTITY[sdk=iphoneos*]=-
   - carthage build --platform iOS
 
 before_script: ./sign_fw.sh
