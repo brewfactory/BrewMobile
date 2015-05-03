@@ -1,5 +1,6 @@
-github "LlamaKit/LlamaKit" "v0.6.0"
+github "robrix/Box" "1.2.1"
 github "ReactiveCocoa/ReactiveCocoa" "v2.4.7"
 git "https://github.com/vasarhelyia/SIOSocket" "e3d4f2cd09eab6a1ce0980b3c9fbec2a81a6c4bd"
-github "SwiftyJSON/SwiftyJSON" "008a09d7ea8b13c03fb59b35c01aad339584a5e1"
+github "SwiftyJSON/SwiftyJSON" "2.2.0"
 git "https://github.com/vasarhelyia/iso-8601-date-formatter" "103ee049f0ce2fd66b16b814adbc6b741959ce64"
+github "antitypical/Result" "0.4"
