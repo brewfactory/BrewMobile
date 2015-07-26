@@ -7,19 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		0213ADC01A57DB480010F9E1 /* ISO8601.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0213ADBC1A57DB480010F9E1 /* ISO8601.framework */; };
-		0213ADC11A57DB480010F9E1 /* ISO8601.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 0213ADBC1A57DB480010F9E1 /* ISO8601.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		0213ADC21A57DB480010F9E1 /* ReactiveCocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0213ADBD1A57DB480010F9E1 /* ReactiveCocoa.framework */; };
-		0213ADC31A57DB480010F9E1 /* ReactiveCocoa.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 0213ADBD1A57DB480010F9E1 /* ReactiveCocoa.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		0213ADC61A57DB480010F9E1 /* SwiftyJSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0213ADBF1A57DB480010F9E1 /* SwiftyJSON.framework */; };
-		0213ADC71A57DB480010F9E1 /* SwiftyJSON.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 0213ADBF1A57DB480010F9E1 /* SwiftyJSON.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		0213ADD21A57E6EB0010F9E1 /* BrewManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0213ADD11A57E6EB0010F9E1 /* BrewManager.swift */; };
-		0221CBA81AF4EC5F00BD70F7 /* Result.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0221CBA71AF4EC5F00BD70F7 /* Result.framework */; };
-		0221CBA91AF4EC9C00BD70F7 /* Result.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 0221CBA71AF4EC5F00BD70F7 /* Result.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		0221CBAA1AF4ECB800BD70F7 /* SocketIOFramework.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 027E31E11A52EA4100802098 /* SocketIOFramework.framework */; };
-		0221CBAB1AF4ECBA00BD70F7 /* SocketIOFramework.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 027E31E11A52EA4100802098 /* SocketIOFramework.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		0221CBAD1AF4ECD000BD70F7 /* Box.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0221CBAC1AF4ECD000BD70F7 /* Box.framework */; };
-		0221CBAE1AF4ECD300BD70F7 /* Box.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 0221CBAC1AF4ECD000BD70F7 /* Box.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		0289A94C1A626C2600BD2601 /* ContentParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0289A94B1A626C2600BD2601 /* ContentParser.swift */; };
 		0289A94D1A626C2600BD2601 /* ContentParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0289A94B1A626C2600BD2601 /* ContentParser.swift */; };
 		0289A9521A62B0FF00BD2601 /* RAC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0289A94F1A62B0FF00BD2601 /* RAC.swift */; };
@@ -55,6 +43,17 @@
 		02BDD68A1AA19C6200E44DC3 /* BrewManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0213ADD11A57E6EB0010F9E1 /* BrewManager.swift */; };
 		02BDD68C1AA2FF6700E44DC3 /* BrewDesignerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02BDD68B1AA2FF6700E44DC3 /* BrewDesignerViewModel.swift */; };
 		02BDD68D1AA2FF6700E44DC3 /* BrewDesignerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02BDD68B1AA2FF6700E44DC3 /* BrewDesignerViewModel.swift */; };
+		02C058BE1B652990001AC3C1 /* ISO8601.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 02C058B91B652990001AC3C1 /* ISO8601.framework */; };
+		02C058BF1B652990001AC3C1 /* ReactiveCocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 02C058BA1B652990001AC3C1 /* ReactiveCocoa.framework */; };
+		02C058C01B652990001AC3C1 /* Result.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 02C058BB1B652990001AC3C1 /* Result.framework */; };
+		02C058C11B652990001AC3C1 /* SocketIOFramework.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 02C058BC1B652990001AC3C1 /* SocketIOFramework.framework */; };
+		02C058C21B652990001AC3C1 /* SwiftyJSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 02C058BD1B652990001AC3C1 /* SwiftyJSON.framework */; };
+		02C058C31B6529F7001AC3C1 /* ISO8601.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 02C058B91B652990001AC3C1 /* ISO8601.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		02C058C41B6529F7001AC3C1 /* ReactiveCocoa.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 02C058BA1B652990001AC3C1 /* ReactiveCocoa.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		02C058C51B6529F7001AC3C1 /* Result.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 02C058BB1B652990001AC3C1 /* Result.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		02C058C61B6529F7001AC3C1 /* SocketIOFramework.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 02C058BC1B652990001AC3C1 /* SocketIOFramework.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		02C058C71B6529F7001AC3C1 /* SwiftyJSON.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 02C058BD1B652990001AC3C1 /* SwiftyJSON.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		02C058C91B653D62001AC3C1 /* Box.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 02C058C81B653D62001AC3C1 /* Box.framework */; };
 		692AAA8919A34C8C00224C4D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 692AAA8819A34C8C00224C4D /* AppDelegate.swift */; };
 		692AAA9019A34C8C00224C4D /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 692AAA8F19A34C8C00224C4D /* Images.xcassets */; };
 		69A1102619CB38B900108B46 /* BrewPhaseTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69A1102519CB38B900108B46 /* BrewPhaseTestCase.swift */; };
@@ -79,12 +78,11 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				0213ADC71A57DB480010F9E1 /* SwiftyJSON.framework in Embed Frameworks */,
-				0221CBAE1AF4ECD300BD70F7 /* Box.framework in Embed Frameworks */,
-				0213ADC11A57DB480010F9E1 /* ISO8601.framework in Embed Frameworks */,
-				0221CBAB1AF4ECBA00BD70F7 /* SocketIOFramework.framework in Embed Frameworks */,
-				0213ADC31A57DB480010F9E1 /* ReactiveCocoa.framework in Embed Frameworks */,
-				0221CBA91AF4EC9C00BD70F7 /* Result.framework in Embed Frameworks */,
+				02C058C31B6529F7001AC3C1 /* ISO8601.framework in Embed Frameworks */,
+				02C058C41B6529F7001AC3C1 /* ReactiveCocoa.framework in Embed Frameworks */,
+				02C058C51B6529F7001AC3C1 /* Result.framework in Embed Frameworks */,
+				02C058C61B6529F7001AC3C1 /* SocketIOFramework.framework in Embed Frameworks */,
+				02C058C71B6529F7001AC3C1 /* SwiftyJSON.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -92,13 +90,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		0213ADBC1A57DB480010F9E1 /* ISO8601.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ISO8601.framework; path = Carthage/Build/iOS/ISO8601.framework; sourceTree = "<group>"; };
-		0213ADBD1A57DB480010F9E1 /* ReactiveCocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ReactiveCocoa.framework; path = Carthage/Build/iOS/ReactiveCocoa.framework; sourceTree = "<group>"; };
-		0213ADBF1A57DB480010F9E1 /* SwiftyJSON.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftyJSON.framework; path = Carthage/Build/iOS/SwiftyJSON.framework; sourceTree = "<group>"; };
 		0213ADD11A57E6EB0010F9E1 /* BrewManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BrewManager.swift; sourceTree = "<group>"; };
-		0221CBA71AF4EC5F00BD70F7 /* Result.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Result.framework; path = Carthage/Build/iOS/Result.framework; sourceTree = "<group>"; };
-		0221CBAC1AF4ECD000BD70F7 /* Box.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Box.framework; path = Carthage/Build/iOS/Box.framework; sourceTree = "<group>"; };
-		027E31E11A52EA4100802098 /* SocketIOFramework.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SocketIOFramework.framework; path = Carthage/Build/iOS/SocketIOFramework.framework; sourceTree = "<group>"; };
 		0289A94B1A626C2600BD2601 /* ContentParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentParser.swift; sourceTree = "<group>"; };
 		0289A94F1A62B0FF00BD2601 /* RAC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RAC.swift; sourceTree = "<group>"; };
 		0289A9501A62B0FF00BD2601 /* RACObserve.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RACObserve.swift; sourceTree = "<group>"; };
@@ -116,6 +108,12 @@
 		02BDD6811AA19C3800E44DC3 /* BrewState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BrewState.swift; sourceTree = "<group>"; };
 		02BDD6831AA19C3800E44DC3 /* BrewViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BrewViewModel.swift; sourceTree = "<group>"; };
 		02BDD68B1AA2FF6700E44DC3 /* BrewDesignerViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BrewDesignerViewModel.swift; sourceTree = "<group>"; };
+		02C058B91B652990001AC3C1 /* ISO8601.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ISO8601.framework; path = Carthage/Build/iOS/ISO8601.framework; sourceTree = "<group>"; };
+		02C058BA1B652990001AC3C1 /* ReactiveCocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ReactiveCocoa.framework; path = Carthage/Build/iOS/ReactiveCocoa.framework; sourceTree = "<group>"; };
+		02C058BB1B652990001AC3C1 /* Result.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Result.framework; path = Carthage/Build/iOS/Result.framework; sourceTree = "<group>"; };
+		02C058BC1B652990001AC3C1 /* SocketIOFramework.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SocketIOFramework.framework; path = Carthage/Build/iOS/SocketIOFramework.framework; sourceTree = "<group>"; };
+		02C058BD1B652990001AC3C1 /* SwiftyJSON.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftyJSON.framework; path = Carthage/Build/iOS/SwiftyJSON.framework; sourceTree = "<group>"; };
+		02C058C81B653D62001AC3C1 /* Box.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Box.framework; path = Carthage/Build/iOS/Box.framework; sourceTree = "<group>"; };
 		692AAA8319A34C8C00224C4D /* BrewMobile.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BrewMobile.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		692AAA8719A34C8C00224C4D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		692AAA8819A34C8C00224C4D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -132,12 +130,12 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0213ADC61A57DB480010F9E1 /* SwiftyJSON.framework in Frameworks */,
-				0213ADC01A57DB480010F9E1 /* ISO8601.framework in Frameworks */,
-				0213ADC21A57DB480010F9E1 /* ReactiveCocoa.framework in Frameworks */,
-				0221CBAA1AF4ECB800BD70F7 /* SocketIOFramework.framework in Frameworks */,
-				0221CBAD1AF4ECD000BD70F7 /* Box.framework in Frameworks */,
-				0221CBA81AF4EC5F00BD70F7 /* Result.framework in Frameworks */,
+				02C058C01B652990001AC3C1 /* Result.framework in Frameworks */,
+				02C058BE1B652990001AC3C1 /* ISO8601.framework in Frameworks */,
+				02C058C11B652990001AC3C1 /* SocketIOFramework.framework in Frameworks */,
+				02C058BF1B652990001AC3C1 /* ReactiveCocoa.framework in Frameworks */,
+				02C058C91B653D62001AC3C1 /* Box.framework in Frameworks */,
+				02C058C21B652990001AC3C1 /* SwiftyJSON.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -268,12 +266,12 @@
 		F3641B66629A474A89086F3F /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				0221CBAC1AF4ECD000BD70F7 /* Box.framework */,
-				0221CBA71AF4EC5F00BD70F7 /* Result.framework */,
-				0213ADBC1A57DB480010F9E1 /* ISO8601.framework */,
-				0213ADBD1A57DB480010F9E1 /* ReactiveCocoa.framework */,
-				0213ADBF1A57DB480010F9E1 /* SwiftyJSON.framework */,
-				027E31E11A52EA4100802098 /* SocketIOFramework.framework */,
+				02C058C81B653D62001AC3C1 /* Box.framework */,
+				02C058B91B652990001AC3C1 /* ISO8601.framework */,
+				02C058BA1B652990001AC3C1 /* ReactiveCocoa.framework */,
+				02C058BB1B652990001AC3C1 /* Result.framework */,
+				02C058BC1B652990001AC3C1 /* SocketIOFramework.framework */,
+				02C058BD1B652990001AC3C1 /* SwiftyJSON.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -324,6 +322,7 @@
 		692AAA7B19A34C8C00224C4D /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				LastSwiftUpdateCheck = 0700;
 				LastUpgradeCheck = 0600;
 				ORGANIZATIONNAME = "Ágnes Vásárhelyi";
 				TargetAttributes = {

@@ -1,7 +1,5 @@
 //  Copyright (c) 2015 Rob Rix. All rights reserved.
 
-import Box
-
 /// An enum representing either a failure with an explanatory error, or a success with a result value.
 public enum Result<T, Error>: Printable, DebugPrintable {
 	case Success(Box<T>)
@@ -73,6 +71,18 @@ public enum Result<T, Error>: Printable, DebugPrintable {
 			ifSuccess: transform,
 			ifFailure: Result<U, Error>.failure)
 	}
+	
+	/// Returns `self.value` if this result is a .Success, or the given value otherwise. Equivalent with `??`
+	public func recover(@autoclosure value: () -> T) -> T {
+		return self.value ?? value()
+	}
+	
+	/// Returns this result if it is a .Success, or the given result otherwise. Equivalent with `??`
+	public func recoverWith(@autoclosure result: () -> Result<T,Error>) -> Result<T,Error> {
+		return analysis(
+			ifSuccess: { _ in self },
+			ifFailure: { _ in result() })
+	}
 
 
 	// MARK: Errors
@@ -90,12 +100,18 @@ public enum Result<T, Error>: Printable, DebugPrintable {
 	public static var lineKey: String { return "\(errorDomain).line" }
 
 	/// Constructs an error.
-	public static func error(function: String = __FUNCTION__, file: String = __FILE__, line: Int = __LINE__) -> NSError {
-		return NSError(domain: "com.antitypical.Result", code: 0, userInfo: [
+	public static func error(message: String? = nil, function: String = __FUNCTION__, file: String = __FILE__, line: Int = __LINE__) -> NSError {
+		var userInfo: [String: AnyObject] = [
 			functionKey: function,
 			fileKey: file,
 			lineKey: line,
-		])
+		]
+
+		if let message = message {
+			userInfo[NSLocalizedDescriptionKey] = message
+		}
+
+		return NSError(domain: errorDomain, code: 0, userInfo: userInfo)
 	}
 
 
@@ -134,14 +150,12 @@ public func != <T: Equatable, Error: Equatable> (left: Result<T, Error>, right: 
 
 /// Returns the value of `left` if it is a `Success`, or `right` otherwise. Short-circuits.
 public func ?? <T, Error> (left: Result<T, Error>, @autoclosure right: () -> T) -> T {
-	return left.value ?? right()
+	return left.recover(right())
 }
 
 /// Returns `left` if it is a `Success`es, or `right` otherwise. Short-circuits.
 public func ?? <T, Error> (left: Result<T, Error>, @autoclosure right: () -> Result<T, Error>) -> Result<T, Error> {
-	return left.analysis(
-		ifSuccess: { _ in left  },
-		ifFailure: { _ in right() })
+	return left.recoverWith(right())
 }
 
 
@@ -177,9 +191,16 @@ infix operator >>- {
 	associativity left
 
 	// Higher precedence than function application, but lower than function composition.
-	precedence 150
+	precedence 100
 }
 
+infix operator &&& {
+	/// Same associativity as &&.
+	associativity left
+
+	/// Same precedence as &&.
+	precedence 120
+}
 
 /// Returns the result of applying `transform` to `Success`es’ values, or re-wrapping `Failure`’s errors.
 ///
@@ -188,7 +209,11 @@ public func >>- <T, U, Error> (result: Result<T, Error>, @noescape transform: T 
 	return result.flatMap(transform)
 }
 
+/// Returns a Result with a tuple of `left` and `right` values if both are `Success`es, or re-wrapping the error of the earlier `Failure`.
+public func &&& <T, U, Error> (left: Result<T, Error>, @autoclosure right: () -> Result<U, Error>) -> Result<(T, U), Error> {
+	return left.flatMap { left in right().map { right in (left, right) } }
+}
 
-// MARK: - Imports
 
+import Box
 import Foundation
