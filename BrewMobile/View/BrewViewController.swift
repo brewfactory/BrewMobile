@@ -72,18 +72,18 @@ class BrewViewController: UIViewController, UITableViewDelegate, UITableViewData
             (next: AnyObject!) -> Void in
             self.phasesTableView.reloadData()
             
-            if self.brewViewModel.state.phases.count > 0 {
+            if self.brewViewModel.state.phases.value.count > 0 {
                 self.nameLabel.text = "Brewing \(self.brewViewModel.state.name) at"
             } else {
                 self.nameLabel.text = "We are not brewing :(\nHow is it possible?"
             }
             
-            self.startTimeLabel.text = self.brewViewModel.state.phases.count > 0 ? "starting \(self.brewViewModel.state.startTime)" : ""
+            self.startTimeLabel.text = self.brewViewModel.state.phases.value.count > 0 ? "starting \(self.brewViewModel.state.startTime.value)" : ""
         }
     }
     
     func stateText(brewPhase: BrewPhase) -> String {
-        if self.brewViewModel.state.paused {
+        if self.brewViewModel.state.paused.value {
             return "paused"
         }
         switch brewPhase.state  {
@@ -100,13 +100,13 @@ class BrewViewController: UIViewController, UITableViewDelegate, UITableViewData
     // MARK: UITableViewDataSource
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.brewViewModel.state.phases.count
+        return self.brewViewModel.state.phases.value.count
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("BrewCell", forIndexPath: indexPath) as! BrewCell
-        if self.brewViewModel.state.phases.count > indexPath.row  {
-            let brewPhase = self.brewViewModel.state.phases[indexPath.row]
+        if self.brewViewModel.state.phases.value.count > indexPath.row  {
+            let brewPhase = self.brewViewModel.state.phases.value[indexPath.row]
             
             cell.minLabel.text = brewPhase.jobEnd != "" ? "\(brewPhase.min) mins - \(Int(brewPhase.temp)) ˚C, ends: \(brewPhase.jobEnd)"  : "\(brewPhase.min) mins - \(Int(brewPhase.temp)) ˚C"
             cell.statusLabel.text = "\(self.stateText(brewPhase))"
