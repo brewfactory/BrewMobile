@@ -20,10 +20,12 @@ class BrewManager : NSObject {
     let host = "http://brewcore-demo.herokuapp.com/"
     
     var stopBrewCommand: RACCommand!
-    var syncBrewCommand: RACCommand!
+    var syncBrewAction: Action<BrewState, Void, NSError>!
     let tempChangedSignal: RACSubject
     let brewChangedSignal: RACSubject
     let pwmChangedSignal: RACSubject
+    
+    var syncRequest: RACSignal!
 
     override init() {
         tempChangedSignal = RACSubject()
@@ -32,19 +34,14 @@ class BrewManager : NSObject {
         
         super.init()
 
-        syncBrewCommand = RACCommand(signalBlock: { (brewObject: AnyObject!) -> RACSignal! in
-            let requestResult = self.requestWithBody("api/brew", method: "POST", body: JSON(brewObject))
-            if let request = requestResult.value as NSMutableURLRequest? {
-                return NSURLConnection.rac_sendAsynchronousRequest(request)
-            }
-            
-            if let serializationError = requestResult.error {
-                return RACSignal.error(serializationError as NSError)
-            }
-            
-            return RACSignal.empty()
+        syncBrewAction = Action<BrewState, Void, NSError>(enabledIf: MutableProperty(true), { brewState in
+            let requestResult = self.requestWithBody("api/brew", method: "POST", body: JSON(BrewState.encode(brewState).value!))
+            return NSURLSession.sharedSession().rac_dataWithRequest(requestResult.value!)
+                |> map { data, URLResponse in
+                    return ""
+                }
         })
-        
+
         stopBrewCommand = RACCommand(signalBlock: { Void -> RACSignal! in
             let request = self.requestWithBody("api/brew/stop", method: "PATCH", body: "").value!
             return NSURLConnection.rac_sendAsynchronousRequest(request)

@@ -14,17 +14,29 @@ class BrewDesignerViewModel : NSObject {
     let brewManager: BrewManager
     var hasPhasesSignal: RACSignal!
     var validBeerSignal: RACSignal!
-    var syncCommand: RACCommand!
+    var cocoaActionSync: CocoaAction!
 
     var name = ""
     var phases = PhaseArray()
     var startTime = ""
+    
+    let nameProperty = MutableProperty<String>("")
+    var brewStateProperty = MutableProperty(BrewState())
 
+    var newState: BrewState = BrewState()
+    
     init(brewManager: BrewManager) {
         self.brewManager = brewManager
         
         super.init()
 
+        brewStateProperty = MutableProperty(BrewState(name: nameProperty.value, startTime: self.startTime, phases: self.phases, paused: false, inProgress: false))
+        brewStateProperty.value.name <~ nameProperty
+       
+        brewStateProperty.producer.start (next: { value in
+            self.newState = value
+        })
+        
         hasPhasesSignal = RACObserve(self, "phases").map {
             (aPhases: AnyObject!) -> AnyObject! in
             let phasesArray = aPhases as! PhaseArray
@@ -47,12 +59,7 @@ class BrewDesignerViewModel : NSObject {
             return validName && validPhases
         }
         
-        syncCommand = RACCommand() {
-            Void -> RACSignal in
-            let brewState = BrewState(name: self.name, startTime: self.startTime, phases: self.phases, paused: false, inProgress: false)
-            let syncSignal = brewManager.syncBrewCommand.execute(BrewState.encode(brewState).value)
-            return syncSignal.deliverOn(RACScheduler.mainThreadScheduler())
-        }
+        cocoaActionSync = CocoaAction(brewManager.syncBrewAction, input: self.newState)
     }
     
 }

@@ -8,6 +8,14 @@
 import Foundation
 import ReactiveCocoa
 
+extension UITextField {
+    func rac_textSignalProducer() -> SignalProducer<String, NoError> {
+        return self.rac_textSignal().toSignalProducer()
+            |> map { $0 as! String }
+            |> catch { _ in SignalProducer<String, NoError>.empty }
+    }
+}
+
 // a struct that replaces the RAC macro
 struct RAC  {
   var target : NSObject!
