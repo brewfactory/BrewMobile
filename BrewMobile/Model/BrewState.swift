@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import ReactiveCocoa
 import Result
 import SwiftyJSON
 
@@ -14,38 +15,38 @@ import SwiftyJSON
 
 func == (left: BrewState, right: BrewState) -> Bool {
     let phasesAreIdentical = { () -> Bool in
-        for i in 0...left.phases.count - 1 {
-            if left.phases[i] != right.phases[i] {
+        for i in 0...left.phases.value.count - 1 {
+            if left.phases.value[i] != right.phases.value[i] {
                 return false
             }
         }
         return true
     }()
     
-    return (left.name == right.name) && (left.startTime == right.startTime) && phasesAreIdentical && (left.paused == right.paused) && (left.inProgress == right.inProgress)
+    return (left.name.value == right.name.value) && (left.startTime.value == right.startTime.value) && phasesAreIdentical && (left.paused.value == right.paused.value) && (left.inProgress.value == right.inProgress.value)
 }
 
 final class BrewState: Equatable, JSONDecodable, JSONEncodable  {
-    var name: String
-    var startTime: String
-    var phases: PhaseArray
-    var paused: Bool
-    var inProgress: Bool
+    var name: MutableProperty<String>
+    var startTime: MutableProperty<String>
+    var phases: MutableProperty<PhaseArray>
+    var paused: MutableProperty<Bool>
+    var inProgress: MutableProperty<Bool>
     
     init() {
-        name = ""
-        startTime = ""
-        phases = PhaseArray()
-        paused = false
-        inProgress = false
+        name = MutableProperty("")
+        startTime = MutableProperty("")
+        phases = MutableProperty(PhaseArray())
+        paused = MutableProperty(false)
+        inProgress = MutableProperty(false)
     }
     
     init(name: String, startTime: String, phases: PhaseArray, paused: Bool, inProgress: Bool) {
-        self.name = name
-        self.startTime = startTime
-        self.phases = phases
-        self.paused = paused
-        self.inProgress = inProgress
+        self.name = MutableProperty(name)
+        self.startTime = MutableProperty(startTime)
+        self.phases = MutableProperty(phases)
+        self.paused = MutableProperty(paused)
+        self.inProgress = MutableProperty(inProgress)
     }
 
     // MARK: JSONDecodable
@@ -67,10 +68,10 @@ final class BrewState: Equatable, JSONDecodable, JSONEncodable  {
     class func encode(object: BrewState) -> Result<AnyObject, NSError> {
         var brew = Dictionary<String, AnyObject>()
        
-        brew["name"] = object.name
-        brew["startTime"] = object.startTime
+        brew["name"] = object.name.value
+        brew["startTime"] = object.startTime.value
         
-        brew["phases"] = object.phases.map { (BrewPhase phase) -> AnyObject in
+        brew["phases"] = object.phases.value.map { (BrewPhase phase) -> AnyObject in
             return BrewPhase.encode(phase).value!
         }
         
