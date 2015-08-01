@@ -17,11 +17,10 @@ class BrewDesignerViewController : UIViewController, UITableViewDataSource, UITa
     @IBOutlet weak var phasesTableView: UITableView!
     @IBOutlet weak var startTimePicker: UIDatePicker!
     @IBOutlet weak var pickerBgView: UIView!
-    @IBOutlet weak var editButton: UIBarButtonItem!
-    @IBOutlet weak var syncButton: UIBarButtonItem!
-    @IBOutlet weak var cloneButton: UIBarButtonItem!
-    @IBOutlet weak var trashButton: UIBarButtonItem!
-    @IBOutlet weak var addButton: UIBarButtonItem!
+    @IBOutlet weak var editButton: UIButton!
+    @IBOutlet weak var syncButton: UIButton!
+    @IBOutlet weak var trashButton: UIButton!
+    @IBOutlet weak var addButton: UIButton!
     @IBOutlet weak var tapGestureRecognizer: UITapGestureRecognizer!
 
     let brewDesignerViewModel: BrewDesignerViewModel
@@ -38,14 +37,8 @@ class BrewDesignerViewController : UIViewController, UITableViewDataSource, UITa
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        self.navigationItem.leftBarButtonItem = UIBarButtonItem()
-        self.navigationItem.leftBarButtonItem?.title = "Sync"
-        syncButton = self.navigationItem.leftBarButtonItem
-
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem()
-        self.navigationItem.rightBarButtonItem?.title = "Edit"
-        editButton = self.navigationItem.rightBarButtonItem
+        
+        self.title = "New brew"
 
         let nib = UINib(nibName: "PhaseCell", bundle: nil)
         phasesTableView.registerNib(nib, forCellReuseIdentifier: "PhaseCell")
@@ -56,14 +49,16 @@ class BrewDesignerViewController : UIViewController, UITableViewDataSource, UITa
             return RACSignal.empty()
         }
 
-        syncButton.rac_command = RACCommand(enabled: self.brewDesignerViewModel.validBeerSignal) {
-            (any:AnyObject!) -> RACSignal in
-            let syncSignal = self.brewDesignerViewModel.syncCommand.execute(nil)
-            syncSignal.subscribeError({ (error: NSError!) -> Void in
-                UIAlertView(title: "Error creating brew", message: error.localizedDescription, delegate: nil, cancelButtonTitle: "OK").show()
-            })
-            return syncSignal
-        }
+//        syncButton.rac_command = RACCommand(enabled: self.brewDesignerViewModel.validBeerSignal) {
+//            (any:AnyObject!) -> RACSignal in
+//            let syncSignal = self.brewDesignerViewModel.syncCommand.execute(nil)
+//            syncSignal.subscribeError({ (error: NSError!) -> Void in
+//                UIAlertView(title: "Error creating brew", message: error.localizedDescription, delegate: nil, cancelButtonTitle: "OK").show()
+//            })
+//            return syncSignal
+//        }
+
+        syncButton.addTarget(self.brewDesignerViewModel.cocoaActionSync, action:CocoaAction.selector, forControlEvents: .TouchUpInside)
         
         trashButton.rac_command = RACCommand() {
             (any:AnyObject!) -> RACSignal in
@@ -94,17 +89,17 @@ class BrewDesignerViewController : UIViewController, UITableViewDataSource, UITa
         RACObserve(self.phasesTableView, "editing").subscribeNext {
             (editing: AnyObject!) -> Void in
             let editingValue = editing as! Bool
-            self.editButton.title = editingValue ? "Done" : "Edit"
+            self.editButton.setTitle(editingValue ? "Done" : "Edit", forState: .Normal)
         }
-        
-        self.nameTextField.rac_textSignal() ~> RAC(self.brewDesignerViewModel, "name")
+
+        self.brewDesignerViewModel.nameProperty <~ self.nameTextField.rac_textSignalProducer()
         self.startTimeTextField.rac_textSignal() ~> RAC(self.brewDesignerViewModel, "startTime")
         
         let startTimeTextFieldPressed = self.startTimeTextField.rac_signalForControlEvents(.EditingDidBegin)
         startTimeTextFieldPressed.subscribeNext(dismissKeyboard)
         startTimeTextFieldPressed.mapReplace(false) ~> RAC(self.pickerBgView, "hidden")
 
-        self.brewDesignerViewModel.syncCommand.executionSignals.subscribeNext(dismissKeyboard)
+//        self.brewDesignerViewModel.syncCommand.executionSignals.subscribeNext(dismissKeyboard)
         editButton.rac_command.executionSignals.subscribeNext(dismissKeyboard)
         
         let startTimeValueChangedSignal = RACObserve(self.startTimePicker, "date").startWith(NSDate())
