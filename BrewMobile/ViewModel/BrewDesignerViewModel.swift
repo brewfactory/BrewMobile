@@ -32,10 +32,6 @@ class BrewDesignerViewModel : NSObject {
 
         brewStateProperty = MutableProperty(BrewState(name: nameProperty.value, startTime: self.startTime, phases: self.phases, paused: false, inProgress: false))
         brewStateProperty.value.name <~ nameProperty
-       
-        brewStateProperty.producer.start (next: { value in
-            self.newState = value
-        })
         
         hasPhasesSignal = RACObserve(self, "phases").map {
             (aPhases: AnyObject!) -> AnyObject! in
@@ -59,7 +55,7 @@ class BrewDesignerViewModel : NSObject {
             return validName && validPhases
         }
         
-        cocoaActionSync = CocoaAction(brewManager.syncBrewAction, input: self.newState)
+        cocoaActionSync = CocoaAction(brewManager.syncBrewAction, input: brewStateProperty.value)
     }
     
 }
