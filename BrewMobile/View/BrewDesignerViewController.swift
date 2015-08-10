@@ -24,9 +24,12 @@ class BrewDesignerViewController : UIViewController, UITableViewDataSource, UITa
     @IBOutlet weak var tapGestureRecognizer: UITapGestureRecognizer!
 
     let brewDesignerViewModel: BrewDesignerViewModel
-    
+    let brewManager: BrewManager
+
     init(brewDesignerViewModel: BrewDesignerViewModel) {
         self.brewDesignerViewModel = brewDesignerViewModel
+        self.brewManager = brewDesignerViewModel.brewManager
+        
         super.init(nibName:"BrewDesignerViewController", bundle: nil)
         self.tabBarItem = UITabBarItem(title: "Designer", image: UIImage(named: "DesignerIcon"), tag: 0)
     }
@@ -37,8 +40,6 @@ class BrewDesignerViewController : UIViewController, UITableViewDataSource, UITa
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        self.title = "New brew"
 
         let nib = UINib(nibName: "PhaseCell", bundle: nil)
         phasesTableView.registerNib(nib, forCellReuseIdentifier: "PhaseCell")
@@ -49,16 +50,13 @@ class BrewDesignerViewController : UIViewController, UITableViewDataSource, UITa
             return RACSignal.empty()
         }
 
-//        syncButton.rac_command = RACCommand(enabled: self.brewDesignerViewModel.validBeerSignal) {
-//            (any:AnyObject!) -> RACSignal in
-//            let syncSignal = self.brewDesignerViewModel.syncCommand.execute(nil)
-//            syncSignal.subscribeError({ (error: NSError!) -> Void in
-//                UIAlertView(title: "Error creating brew", message: error.localizedDescription, delegate: nil, cancelButtonTitle: "OK").show()
-//            })
-//            return syncSignal
-//        }
-
         syncButton.addTarget(self.brewDesignerViewModel.cocoaActionSync, action:CocoaAction.selector, forControlEvents: .TouchUpInside)
+        
+        self.brewManager.syncBrewAction.errors
+            |> observeOn(UIScheduler())
+            |> observe(next: { error in
+                UIAlertView(title: "Error creating brew", message: error.localizedDescription, delegate: nil, cancelButtonTitle: "OK").show()
+            })
         
         trashButton.rac_command = RACCommand() {
             (any:AnyObject!) -> RACSignal in
@@ -93,42 +91,44 @@ class BrewDesignerViewController : UIViewController, UITableViewDataSource, UITa
         }
 
         self.brewDesignerViewModel.nameProperty <~ self.nameTextField.rac_textSignalProducer()
-        self.startTimeTextField.rac_textSignal() ~> RAC(self.brewDesignerViewModel, "startTime")
+
+        let startTimeTextFieldPressed = self.startTimeTextField.rac_signalForControlEvents(.EditingDidBegin).toSignalProducer()
+        self.pickerBgView.rac_hidden <~ startTimeTextFieldPressed
+            |> map { _ in return false }
+            |> catch { _ in SignalProducer<Bool, NoError>.empty }
         
-        let startTimeTextFieldPressed = self.startTimeTextField.rac_signalForControlEvents(.EditingDidBegin)
-        startTimeTextFieldPressed.subscribeNext(dismissKeyboard)
-        startTimeTextFieldPressed.mapReplace(false) ~> RAC(self.pickerBgView, "hidden")
-
-//        self.brewDesignerViewModel.syncCommand.executionSignals.subscribeNext(dismissKeyboard)
-        editButton.rac_command.executionSignals.subscribeNext(dismissKeyboard)
-        
-        let startTimeValueChangedSignal = RACObserve(self.startTimePicker, "date").startWith(NSDate())
-
-        startTimeValueChangedSignal.map {
-            (pickerDate: AnyObject!) -> AnyObject! in
-            let date = pickerDate as! NSDate
-            
-            let isoDateFormatter = ISO8601DateFormatter()
-            isoDateFormatter.defaultTimeZone = NSTimeZone.defaultTimeZone()
-            isoDateFormatter.includeTime = true
-            
-            return isoDateFormatter.stringFromDate(date)
-        } ~> RAC(self.brewDesignerViewModel, "startTime")
-
-        startTimeValueChangedSignal.subscribeNext {
-            (next: AnyObject!) -> Void in
-            let date = next as! NSDate
-            let dateFormatter = NSDateFormatter()
-            dateFormatter.dateFormat = "YYYY.MM.dd. HH:mm"
-            self.startTimeTextField.text = dateFormatter.stringFromDate(date)
+        startTimeTextFieldPressed |> on { _ in
+            self.dismissKeyboard()
         }
+
+
+        self.startTimePicker.rac_date.producer
+            |> map { return $0 as NSDate }
+            |> on { date in
+                let dateFormatter = NSDateFormatter()
+                dateFormatter.dateFormat = "YYYY.MM.dd. HH:mm"
+                self.startTimeTextField.text = dateFormatter.stringFromDate(date)
+            }
+        
+       self.brewDesignerViewModel.startTimeProperty <~ self.startTimePicker.rac_date.producer
+            |> map { date in
+                let isoDateFormatter = ISO8601DateFormatter()
+                isoDateFormatter.defaultTimeZone = NSTimeZone.defaultTimeZone()
+                isoDateFormatter.includeTime = true
+                
+                return isoDateFormatter.stringFromDate(date)
+            }
+            |> catch { _ in SignalProducer<String, NoError>.empty }
+        
+ //        self.brewDesignerViewModel.syncCommand.executionSignals.subscribeNext(dismissKeyboard)
+//        editButton.rac_command.executionSignals.subscribeNext(dismissKeyboard)
     }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
 
-    func dismissKeyboard(anyObject: AnyObject!) {
+    func dismissKeyboard() {
         self.nameTextField.resignFirstResponder()
         self.startTimeTextField.resignFirstResponder()
         self.pickerBgView.hidden = true
@@ -191,7 +191,7 @@ class BrewDesignerViewController : UIViewController, UITableViewDataSource, UITa
 
     func gestureRecognizer(gestureRecognizer: UIGestureRecognizer, shouldReceiveTouch touch: UITouch) -> Bool {
         if !touch.view.isDescendantOfView(nameTextField) {
-            dismissKeyboard(nameTextField)
+            dismissKeyboard()
             return false
         }
         return true

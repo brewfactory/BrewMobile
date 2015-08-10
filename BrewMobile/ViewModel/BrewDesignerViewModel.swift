@@ -16,11 +16,11 @@ class BrewDesignerViewModel : NSObject {
     var validBeerSignal: RACSignal!
     var cocoaActionSync: CocoaAction!
 
-    var name = ""
     var phases = PhaseArray()
-    var startTime = ""
     
     let nameProperty = MutableProperty<String>("")
+    let startTimeProperty = MutableProperty<String>("")
+
     var brewStateProperty = MutableProperty(BrewState())
 
     var newState: BrewState = BrewState()
@@ -30,8 +30,9 @@ class BrewDesignerViewModel : NSObject {
         
         super.init()
 
-        brewStateProperty = MutableProperty(BrewState(name: nameProperty.value, startTime: self.startTime, phases: self.phases, paused: false, inProgress: false))
+        brewStateProperty = MutableProperty(BrewState(name: nameProperty.value, startTime: startTimeProperty.value, phases: self.phases, paused: false, inProgress: false))
         brewStateProperty.value.name <~ nameProperty
+        brewStateProperty.value.startTime <~ startTimeProperty
         
         hasPhasesSignal = RACObserve(self, "phases").map {
             (aPhases: AnyObject!) -> AnyObject! in
