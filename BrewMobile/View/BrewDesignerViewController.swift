@@ -92,25 +92,41 @@ class BrewDesignerViewController : UIViewController, UITableViewDataSource, UITa
 
         self.brewDesignerViewModel.nameProperty <~ self.nameTextField.rac_textSignalProducer()
 
-        let startTimeTextFieldPressed = self.startTimeTextField.rac_signalForControlEvents(.EditingDidBegin).toSignalProducer()
-        self.pickerBgView.rac_hidden <~ startTimeTextFieldPressed
+        let startTimeTextFieldProducer = self.startTimeTextField.rac_signalForControlEvents(.EditingDidBegin).toSignalProducer()
+            |> map { picker in
+                let datePicker = picker as! UITextField
+                return datePicker.text
+            }
+            |> catch { _ in SignalProducer<String, NoError>.empty }
+        
+        startTimeTextFieldProducer.start(next: { _ in
+            self.dismissKeyboards()
+        })
+    
+        self.pickerBgView.rac_hidden <~ startTimeTextFieldProducer
             |> map { _ in return false }
             |> catch { _ in SignalProducer<Bool, NoError>.empty }
+
+        let pickerDateProducer = self.startTimePicker.rac_signalForControlEvents(.ValueChanged).toSignalProducer()
+            |> map { picker in
+                let datePicker = picker as! UIDatePicker
+                return datePicker.date
+            }
+            |> catch { _ in SignalProducer<NSDate, NoError>.empty }
         
-        startTimeTextFieldPressed |> on { _ in
-            self.dismissKeyboard()
-        }
+        pickerDateProducer.start(next: { _ in
+            self.dismissKeyboards()
+        })
 
-
-        self.startTimePicker.rac_date.producer
-            |> map { return $0 as NSDate }
-            |> on { date in
+        self.startTimeTextField.rac_text <~ pickerDateProducer
+            |> map { date in
                 let dateFormatter = NSDateFormatter()
                 dateFormatter.dateFormat = "YYYY.MM.dd. HH:mm"
-                self.startTimeTextField.text = dateFormatter.stringFromDate(date)
+                return dateFormatter.stringFromDate(date as NSDate)
             }
-        
-       self.brewDesignerViewModel.startTimeProperty <~ self.startTimePicker.rac_date.producer
+            |> catch { _ in SignalProducer<String, NoError>.empty }
+
+        self.brewDesignerViewModel.startTimeProperty <~ pickerDateProducer
             |> map { date in
                 let isoDateFormatter = ISO8601DateFormatter()
                 isoDateFormatter.defaultTimeZone = NSTimeZone.defaultTimeZone()
@@ -119,18 +135,14 @@ class BrewDesignerViewController : UIViewController, UITableViewDataSource, UITa
                 return isoDateFormatter.stringFromDate(date)
             }
             |> catch { _ in SignalProducer<String, NoError>.empty }
-        
- //        self.brewDesignerViewModel.syncCommand.executionSignals.subscribeNext(dismissKeyboard)
-//        editButton.rac_command.executionSignals.subscribeNext(dismissKeyboard)
     }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
 
-    func dismissKeyboard() {
-        self.nameTextField.resignFirstResponder()
-        self.startTimeTextField.resignFirstResponder()
+    func dismissKeyboards() {
+        self.view.endEditing(true)
         self.pickerBgView.hidden = true
     }
 
@@ -190,8 +202,8 @@ class BrewDesignerViewController : UIViewController, UITableViewDataSource, UITa
     //MARK: UIGestureRecognizerDelegate
 
     func gestureRecognizer(gestureRecognizer: UIGestureRecognizer, shouldReceiveTouch touch: UITouch) -> Bool {
-        if !touch.view.isDescendantOfView(nameTextField) {
-            dismissKeyboard()
+        if !touch.view.isDescendantOfView(nameTextField) && !touch.view.isDescendantOfView(pickerBgView) {
+            dismissKeyboards()
             return false
         }
         return true

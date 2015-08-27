@@ -43,25 +43,7 @@
                         <constraint firstItem="yCN-V7-n4t" firstAttribute="centerX" secondItem="DqD-XB-qDa" secondAttribute="centerX" id="oBN-kh-LHx"/>
                         <constraint firstAttribute="bottom" secondItem="yCN-V7-n4t" secondAttribute="bottom" constant="264" id="sbZ-pM-SEq"/>
                     </constraints>
-                    <connections>
-                        <outletCollection property="gestureRecognizers" destination="jwt-nf-kvG" appends="YES" id="7zp-KT-y3j"/>
-                    </connections>
                 </scrollView>
-                <view hidden="YES" contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="tcU-YS-7RG">
-                    <rect key="frame" x="0.0" y="295" width="320" height="162"/>
-                    <subviews>
-                        <datePicker contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="dateAndTime" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="fxA-u9-6nI">
-                            <rect key="frame" x="0.0" y="-5" width="320" height="162"/>
-                            <date key="date" timeIntervalSinceReferenceDate="437082403.12645298">
-                                <!--2014-11-07 19:46:43 +0000-->
-                            </date>
-                        </datePicker>
-                    </subviews>
-                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="162" id="l6S-ST-Qrw"/>
-                    </constraints>
-                </view>
                 <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Dh1-ev-PAu">
                     <rect key="frame" x="0.0" y="2" width="320" height="456"/>
                     <subviews>
@@ -120,6 +102,21 @@
                         <constraint firstAttribute="height" constant="410" id="y6X-KX-B6k"/>
                     </constraints>
                 </view>
+                <view hidden="YES" contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="tcU-YS-7RG">
+                    <rect key="frame" x="0.0" y="295" width="320" height="162"/>
+                    <subviews>
+                        <datePicker contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="dateAndTime" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="fxA-u9-6nI">
+                            <rect key="frame" x="0.0" y="-5" width="320" height="162"/>
+                            <date key="date" timeIntervalSinceReferenceDate="437082403.12645298">
+                                <!--2014-11-07 19:46:43 +0000-->
+                            </date>
+                        </datePicker>
+                    </subviews>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="162" id="l6S-ST-Qrw"/>
+                    </constraints>
+                </view>
                 <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Rdr-iN-Ybe">
                     <rect key="frame" x="0.0" y="461" width="320" height="42"/>
                     <subviews>
@@ -169,6 +166,9 @@
             </constraints>
             <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" translucent="NO" prompted="NO"/>
             <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
+            <connections>
+                <outletCollection property="gestureRecognizers" destination="jwt-nf-kvG" appends="YES" id="w6f-LW-HtL"/>
+            </connections>
             <point key="canvasLocation" x="343" y="279"/>
         </view>
         <tapGestureRecognizer id="jwt-nf-kvG">
