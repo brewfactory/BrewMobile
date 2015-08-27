@@ -38,7 +38,7 @@ class BrewManager : NSObject {
             let requestResult = self.requestWithBody("api/brew", method: "POST", body: JSON(BrewState.encode(brewState).value!))
             return NSURLSession.sharedSession().rac_dataWithRequest(requestResult.value!)
                 |> map { data, URLResponse in
-                    return ""
+                    return data
                 }
         })
 
