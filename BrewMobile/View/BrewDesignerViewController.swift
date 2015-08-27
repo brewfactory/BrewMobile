@@ -28,6 +28,7 @@ class BrewDesignerViewController : UIViewController, UITableViewDataSource, UITa
     
     var cocoaActionTrash: CocoaAction!
     var cocoaActionEdit: CocoaAction!
+    var cocoaActionAdd: CocoaAction!
 
     init(brewDesignerViewModel: BrewDesignerViewModel) {
         self.brewDesignerViewModel = brewDesignerViewModel
@@ -47,6 +48,11 @@ class BrewDesignerViewController : UIViewController, UITableViewDataSource, UITa
         let nib = UINib(nibName: "PhaseCell", bundle: nil)
         phasesTableView.registerNib(nib, forCellReuseIdentifier: "PhaseCell")
         
+        let addAction = Action<Void, Void, NSError>(enabledIf: MutableProperty<Bool>(true), {
+            self.navigationController?.pushViewController(BrewNewPhaseViewController(brewDesignerViewModel: self.brewDesignerViewModel), animated: true)
+            return SignalProducer.empty
+        })
+
         let editAction = Action<Void, Void, NSError>(enabledIf: self.brewDesignerViewModel.hasPhasesProperty, {
             self.phasesTableView.editing = !self.phasesTableView.editing
             return SignalProducer.empty
@@ -62,22 +68,18 @@ class BrewDesignerViewController : UIViewController, UITableViewDataSource, UITa
 
         cocoaActionTrash = CocoaAction(trashAction, input: ())
         cocoaActionEdit = CocoaAction(editAction, input: ())
+        cocoaActionAdd = CocoaAction(addAction, input: ())
 
         syncButton.addTarget(self.brewDesignerViewModel.cocoaActionSync, action:CocoaAction.selector, forControlEvents: .TouchUpInside)
         trashButton.addTarget(cocoaActionTrash, action: CocoaAction.selector, forControlEvents: .TouchUpInside)
         editButton.addTarget(cocoaActionEdit, action: CocoaAction.selector, forControlEvents: .TouchUpInside)
+        addButton.addTarget(cocoaActionAdd, action: CocoaAction.selector, forControlEvents: .TouchUpInside)
 
         self.brewManager.syncBrewAction.errors
             |> observeOn(UIScheduler())
             |> observe(next: { error in
                 UIAlertView(title: "Error creating brew", message: error.localizedDescription, delegate: nil, cancelButtonTitle: "OK").show()
             })
-        
-        addButton.rac_command = RACCommand() {
-            (any:AnyObject!) -> RACSignal in
-            self.navigationController?.pushViewController(BrewNewPhaseViewController(brewDesignerViewModel: self.brewDesignerViewModel), animated: true)
-            return RACSignal.empty()
-        }
 
         self.brewDesignerViewModel.hasPhasesProperty.producer
             |> on( next: { hasPhases in
@@ -90,11 +92,11 @@ class BrewDesignerViewController : UIViewController, UITableViewDataSource, UITa
                 }
             })
 
-        RACObserve(self.phasesTableView, "editing").subscribeNext {
-            (editing: AnyObject!) -> Void in
-            let editingValue = editing as! Bool
-            self.editButton.setTitle(editingValue ? "Done" : "Edit", forState: .Normal)
-        }
+        MutableProperty<Bool>(self.phasesTableView.editing).producer
+            |> on ( next: { editing in
+                let editingValue = editing as Bool
+                self.editButton.setTitle(editingValue ? "Done" : "Edit", forState: .Normal)
+            })
 
         self.brewDesignerViewModel.nameProperty <~ self.nameTextField.rac_textSignalProducer()
 
