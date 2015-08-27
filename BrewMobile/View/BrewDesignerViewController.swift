@@ -50,21 +50,24 @@ class BrewDesignerViewController : UIViewController, UITableViewDataSource, UITa
             return RACSignal.empty()
         }
 
-        syncButton.addTarget(self.brewDesignerViewModel.cocoaActionSync, action:CocoaAction.selector, forControlEvents: .TouchUpInside)
+        let trashAction = Action<Void, Void, NoError> {
+            self.brewDesignerViewModel.phases = PhaseArray()
+            self.nameTextField.text = ""
+            self.phasesTableView.reloadData()
+            
+            return SignalProducer.empty
+        }
         
+        let cocoaActionTrash = CocoaAction(trashAction, input: ())
+        
+        syncButton.addTarget(self.brewDesignerViewModel.cocoaActionSync, action:CocoaAction.selector, forControlEvents: .TouchUpInside)
+        trashButton.addTarget(cocoaActionTrash, action: CocoaAction.selector, forControlEvents: .TouchUpInside)
+     
         self.brewManager.syncBrewAction.errors
             |> observeOn(UIScheduler())
             |> observe(next: { error in
                 UIAlertView(title: "Error creating brew", message: error.localizedDescription, delegate: nil, cancelButtonTitle: "OK").show()
             })
-        
-        trashButton.rac_command = RACCommand() {
-            (any:AnyObject!) -> RACSignal in
-            self.brewDesignerViewModel.phases = PhaseArray()
-            self.nameTextField.text = ""
-            self.phasesTableView.reloadData()
-            return RACSignal.empty()
-        }
         
         addButton.rac_command = RACCommand() {
             (any:AnyObject!) -> RACSignal in
