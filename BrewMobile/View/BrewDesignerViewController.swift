@@ -93,6 +93,7 @@ class BrewDesignerViewController : UIViewController, UITableViewDataSource, UITa
         self.brewDesignerViewModel.nameProperty <~ self.nameTextField.rac_textSignalProducer()
 
         let startTimeTextFieldProducer = self.startTimeTextField.rac_signalForControlEvents(.EditingDidBegin).toSignalProducer()
+        startTimeTextFieldProducer
             |> map { picker in
                 let datePicker = picker as! UITextField
                 return datePicker.text
