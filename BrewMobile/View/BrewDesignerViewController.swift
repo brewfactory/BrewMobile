@@ -25,7 +25,9 @@ class BrewDesignerViewController : UIViewController, UITableViewDataSource, UITa
 
     let brewDesignerViewModel: BrewDesignerViewModel
     let brewManager: BrewManager
+    
     var cocoaActionTrash: CocoaAction!
+    var cocoaActionEdit: CocoaAction!
 
     init(brewDesignerViewModel: BrewDesignerViewModel) {
         self.brewDesignerViewModel = brewDesignerViewModel
@@ -45,11 +47,10 @@ class BrewDesignerViewController : UIViewController, UITableViewDataSource, UITa
         let nib = UINib(nibName: "PhaseCell", bundle: nil)
         phasesTableView.registerNib(nib, forCellReuseIdentifier: "PhaseCell")
         
-//        editButton.rac_command = RACCommand(enabled: self.brewDesignerViewModel.hasPhasesSignal) {
-//            (any:AnyObject!) -> RACSignal in
-//            self.phasesTableView.editing = !self.phasesTableView.editing
-//            return RACSignal.empty()
-//        }
+        let editAction = Action<Void, Void, NSError>(enabledIf: self.brewDesignerViewModel.hasPhasesProperty, {
+            self.phasesTableView.editing = !self.phasesTableView.editing
+            return SignalProducer.empty
+        })
 
         let trashAction = Action<Void, Void, NSError>(enabledIf: self.brewDesignerViewModel.hasPhasesProperty, {
             self.brewDesignerViewModel.phases = PhaseArray()
@@ -58,12 +59,14 @@ class BrewDesignerViewController : UIViewController, UITableViewDataSource, UITa
             
             return SignalProducer.empty
         })
-        
+
         cocoaActionTrash = CocoaAction(trashAction, input: ())
-        
+        cocoaActionEdit = CocoaAction(editAction, input: ())
+
         syncButton.addTarget(self.brewDesignerViewModel.cocoaActionSync, action:CocoaAction.selector, forControlEvents: .TouchUpInside)
         trashButton.addTarget(cocoaActionTrash, action: CocoaAction.selector, forControlEvents: .TouchUpInside)
-     
+        editButton.addTarget(cocoaActionEdit, action: CocoaAction.selector, forControlEvents: .TouchUpInside)
+
         self.brewManager.syncBrewAction.errors
             |> observeOn(UIScheduler())
             |> observe(next: { error in
@@ -76,17 +79,16 @@ class BrewDesignerViewController : UIViewController, UITableViewDataSource, UITa
             return RACSignal.empty()
         }
 
-//        self.brewDesignerViewModel.hasPhasesSignal.subscribeNext {
-//            (next: AnyObject!) -> () in
-//
-//            if !self.phasesTableView.editing {
-//                self.phasesTableView.reloadData()
-//            }
-//
-//            if !(next as! Bool) {
-//                self.phasesTableView.editing = false
-//            }
-//        }
+        self.brewDesignerViewModel.hasPhasesProperty.producer
+            |> on( next: { hasPhases in
+                if !self.phasesTableView.editing {
+                    self.phasesTableView.reloadData()
+                }
+
+                if !(hasPhases as Bool) {
+                    self.phasesTableView.editing = false
+                }
+            })
 
         RACObserve(self.phasesTableView, "editing").subscribeNext {
             (editing: AnyObject!) -> Void in
