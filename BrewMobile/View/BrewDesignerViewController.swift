@@ -25,6 +25,7 @@ class BrewDesignerViewController : UIViewController, UITableViewDataSource, UITa
 
     let brewDesignerViewModel: BrewDesignerViewModel
     let brewManager: BrewManager
+    var cocoaActionTrash: CocoaAction!
 
     init(brewDesignerViewModel: BrewDesignerViewModel) {
         self.brewDesignerViewModel = brewDesignerViewModel
@@ -44,21 +45,21 @@ class BrewDesignerViewController : UIViewController, UITableViewDataSource, UITa
         let nib = UINib(nibName: "PhaseCell", bundle: nil)
         phasesTableView.registerNib(nib, forCellReuseIdentifier: "PhaseCell")
         
-        editButton.rac_command = RACCommand(enabled: self.brewDesignerViewModel.hasPhasesSignal) {
-            (any:AnyObject!) -> RACSignal in
-            self.phasesTableView.editing = !self.phasesTableView.editing
-            return RACSignal.empty()
-        }
+//        editButton.rac_command = RACCommand(enabled: self.brewDesignerViewModel.hasPhasesSignal) {
+//            (any:AnyObject!) -> RACSignal in
+//            self.phasesTableView.editing = !self.phasesTableView.editing
+//            return RACSignal.empty()
+//        }
 
-        let trashAction = Action<Void, Void, NoError> {
+        let trashAction = Action<Void, Void, NSError>(enabledIf: self.brewDesignerViewModel.hasPhasesProperty, {
             self.brewDesignerViewModel.phases = PhaseArray()
             self.nameTextField.text = ""
             self.phasesTableView.reloadData()
             
             return SignalProducer.empty
-        }
+        })
         
-        let cocoaActionTrash = CocoaAction(trashAction, input: ())
+        cocoaActionTrash = CocoaAction(trashAction, input: ())
         
         syncButton.addTarget(self.brewDesignerViewModel.cocoaActionSync, action:CocoaAction.selector, forControlEvents: .TouchUpInside)
         trashButton.addTarget(cocoaActionTrash, action: CocoaAction.selector, forControlEvents: .TouchUpInside)
@@ -75,17 +76,17 @@ class BrewDesignerViewController : UIViewController, UITableViewDataSource, UITa
             return RACSignal.empty()
         }
 
-        self.brewDesignerViewModel.hasPhasesSignal.subscribeNext {
-            (next: AnyObject!) -> () in
-
-            if !self.phasesTableView.editing {
-                self.phasesTableView.reloadData()
-            }
-
-            if !(next as! Bool) {
-                self.phasesTableView.editing = false
-            }
-        }
+//        self.brewDesignerViewModel.hasPhasesSignal.subscribeNext {
+//            (next: AnyObject!) -> () in
+//
+//            if !self.phasesTableView.editing {
+//                self.phasesTableView.reloadData()
+//            }
+//
+//            if !(next as! Bool) {
+//                self.phasesTableView.editing = false
+//            }
+//        }
 
         RACObserve(self.phasesTableView, "editing").subscribeNext {
             (editing: AnyObject!) -> Void in

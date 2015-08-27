@@ -12,45 +12,31 @@ import ReactiveCocoa
 class BrewDesignerViewModel : NSObject {
 
     let brewManager: BrewManager
-    var validBeerSignal: RACSignal!
     
     var cocoaActionSync: CocoaAction!
 
     var phases = PhaseArray()
     
-    let nameProperty = MutableProperty<String>("")
-    let startTimeProperty = MutableProperty<String>("")
+    let nameProperty = MutableProperty("")
+    let startTimeProperty = MutableProperty("")
     var brewStateProperty = MutableProperty(BrewState())
-    var phasesCountProperty = MutableProperty<Int>(0)
+    var hasPhasesProperty = MutableProperty(false)
+    var validNameProperty = MutableProperty(false)
+    var validBeerProperty = MutableProperty(false)
 
     var newState: BrewState = BrewState()
     
     init(brewManager: BrewManager) {
         self.brewManager = brewManager
-        
         super.init()
 
         brewStateProperty = MutableProperty(BrewState(name: nameProperty.value, startTime: startTimeProperty.value, phases: self.phases, paused: false, inProgress: false))
         brewStateProperty.value.name <~ nameProperty
         brewStateProperty.value.startTime <~ startTimeProperty
-        
-        phasesCountProperty = MutableProperty(self.phases.count)
-        
-        let validBeerNameSignal = RACObserve(self, "name").map {
-            (aName: AnyObject!) -> AnyObject! in
-            let nameText = aName as! String
-            return count(nameText) > 0
-        }.distinctUntilChanged()
-        
-        validBeerSignal = RACSignal.combineLatest([validBeerNameSignal, hasPhasesSignal]).map {
-            (tuple: AnyObject!) -> AnyObject in
-            let validBeer = tuple as! RACTuple
-            
-            let validName = validBeer.first as! Bool
-            let validPhases = validBeer.second as! Bool
-            
-            return validName && validPhases
-        }
+
+        hasPhasesProperty = MutableProperty(self.phases.count > 0)
+        validNameProperty = MutableProperty(count(brewStateProperty.value.name.value) > 0)
+        validBeerProperty = MutableProperty(hasPhasesProperty.value && validNameProperty.value)
 
         cocoaActionSync = CocoaAction(brewManager.syncBrewAction, input: brewStateProperty.value)
     }
