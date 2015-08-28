@@ -30,7 +30,6 @@ class BrewDesignerViewController : UIViewController, UITableViewDataSource, UITa
     var cocoaActionEdit: CocoaAction!
     var cocoaActionAdd: CocoaAction!
 
-    var startTimeTextFieldProducer: SignalProducer<AnyObject?, NSError>!
     let tableViewEditing = MutableProperty(false)
 
     init(brewDesignerViewModel: BrewDesignerViewModel) {
@@ -99,28 +98,28 @@ class BrewDesignerViewController : UIViewController, UITableViewDataSource, UITa
 
         self.brewDesignerViewModel.name <~ self.nameTextField.rac_textSignalProducer()
 
-        startTimeTextFieldProducer = self.startTimeTextField.rac_signalForControlEvents(.EditingDidBegin).toSignalProducer()
-        startTimeTextFieldProducer
+        let startTimeTextFieldSignalProducer = self.startTimeTextField.rac_signalForControlEvents(.EditingDidBegin).toSignalProducer()
+        startTimeTextFieldSignalProducer
             |> start(next: { _ in
             self.dismissKeyboards()
         })
     
-        self.pickerBgView.rac_hidden <~ startTimeTextFieldProducer
+        self.pickerBgView.rac_hidden <~ startTimeTextFieldSignalProducer
             |> map { _ in return false }
             |> catch { _ in SignalProducer<Bool, NoError>.empty }
 
-        let pickerDateProducer = self.startTimePicker.rac_signalForControlEvents(.ValueChanged).toSignalProducer()
+        let pickerDateSignalProducer = self.startTimePicker.rac_signalForControlEvents(.ValueChanged).toSignalProducer()
             |> map { picker in
                 let datePicker = picker as! UIDatePicker
                 return datePicker.date
             }
             |> catch { _ in SignalProducer<NSDate, NoError>.empty }
         
-        pickerDateProducer.start(next: { _ in
+        pickerDateSignalProducer.start(next: { _ in
             self.dismissKeyboards()
         })
 
-        self.startTimeTextField.rac_text <~ pickerDateProducer
+        self.startTimeTextField.rac_text <~ pickerDateSignalProducer
             |> map { date in
                 let dateFormatter = NSDateFormatter()
                 dateFormatter.dateFormat = "YYYY.MM.dd. HH:mm"
@@ -128,7 +127,7 @@ class BrewDesignerViewController : UIViewController, UITableViewDataSource, UITa
             }
             |> catch { _ in SignalProducer<String, NoError>.empty }
 
-        self.brewDesignerViewModel.startTime <~ pickerDateProducer
+        self.brewDesignerViewModel.startTime <~ pickerDateSignalProducer
             |> map { date in
                 let isoDateFormatter = ISO8601DateFormatter()
                 isoDateFormatter.defaultTimeZone = NSTimeZone.defaultTimeZone()
