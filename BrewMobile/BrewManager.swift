@@ -21,18 +21,14 @@ class BrewManager : NSObject {
     
     var stopBrewCommand: RACCommand!
     var syncBrewAction: Action<BrewState, NSData, NSError>!
-    let tempChangedSignal: RACSubject
-    let brewChangedSignal: RACSubject
-    let pwmChangedSignal: RACSubject
+    let tempChanged = MutableProperty<Float>(0.0)
+    let brewChanged = MutableProperty(BrewState())
+    let pwmChanged = MutableProperty<Float>(0.0)
     
     var syncRequest: RACSignal!
 
     override init() {
-        tempChangedSignal = RACSubject()
-        brewChangedSignal = RACSubject()
-        pwmChangedSignal = RACSubject()
-        
-        super.init()
+         super.init()
 
         syncBrewAction = Action<BrewState, NSData, NSError>(enabledIf: MutableProperty(true), { brewState in
             let requestResult = self.requestWithBody("api/brew", method: "POST", body: JSON(BrewState.encode(brewState).value!))
@@ -81,20 +77,20 @@ class BrewManager : NSObject {
             socket.on(tempChangedEvent, callback: { (AnyObject data) -> Void in
                 if(count(data) > 0) {
                     let temp = data[0] as! NSNumber
-                    self.tempChangedSignal.sendNext(temp)
+                    self.tempChanged.put(temp.floatValue)
                 }
             })
             
             socket.on(brewChangedEvent, callback: { (AnyObject data) -> Void in
                 if(count(data) > 0) {
-                    self.brewChangedSignal.sendNext([brewChangedEvent: ContentParser.parseBrewState(JSON(data[0]))])
+                    self.brewChanged.put(ContentParser.parseBrewState(JSON(data[0])))
                 }
             })
             
             socket.on(pwmChangedEvent, callback: { (AnyObject data) -> Void in
                 if(count(data) > 0) {
                     let pwm = data[0] as! NSNumber
-                    self.pwmChangedSignal.sendNext(pwm)
+                    self.pwmChanged.put(pwm.floatValue)
                 }
             })
             
