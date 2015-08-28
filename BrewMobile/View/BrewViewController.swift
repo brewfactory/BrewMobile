@@ -93,7 +93,7 @@ class BrewViewController: UIViewController, UITableViewDelegate, UITableViewData
         case State.FINISHED:
             return "\(brewPhase.state.stateDescription()) at \(brewPhase.jobEnd)"
         case State.HEATING:
-            if self.brewViewModel.temp > brewPhase.temp { return "cooling" }
+            if self.brewViewModel.tempChanged.value > brewPhase.temp { return "cooling" }
             fallthrough
         default:
             return brewPhase.state.stateDescription()

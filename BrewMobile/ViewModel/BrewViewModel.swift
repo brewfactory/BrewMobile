@@ -17,8 +17,6 @@ class BrewViewModel : NSObject {
 
     let brewManager: BrewManager
 
-    var temp: Float = 0.0
-
     init(brewManager: BrewManager) {        
         self.brewManager = brewManager
 
