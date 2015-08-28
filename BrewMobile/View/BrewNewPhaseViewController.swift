@@ -60,6 +60,7 @@ class BrewNewPhaseViewController : UIViewController {
                 })
             }
         })
+        |> start()
 
         // MARK: RACSignals for controls
         
