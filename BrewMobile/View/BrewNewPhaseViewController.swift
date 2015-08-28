@@ -22,6 +22,8 @@ class BrewNewPhaseViewController : UIViewController {
     
     var min = Int(0)
     var temp = Int(20)
+    
+    var cocoaActionAdd: CocoaAction!
 
     init(brewDesignerViewModel: BrewDesignerViewModel) {
         self.brewDesignerViewModel = brewDesignerViewModel
@@ -35,25 +37,29 @@ class BrewNewPhaseViewController : UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        addButton.rac_command = RACCommand() {
-            (any:AnyObject!) -> RACSignal in
+        let addAction = Action<Void, Void, NSError>(enabledIf: MutableProperty<Bool>(true), {
             let newPhase = BrewPhase(jobEnd:"", min:self.min, temp:Float(self.temp), tempReached:false, inProgress:false)
-            var newPhases = self.brewDesignerViewModel.phases
+            var newPhases = self.brewDesignerViewModel.phases.value
             newPhases.append(newPhase)
-            self.brewDesignerViewModel.setValue(newPhases, forKeyPath: "phases")
-            return RACSignal.empty()
-        }
-        
-        addButton.rac_command.executionSignals.subscribeNext { (next: AnyObject!) -> Void in
-            self.feedbackLabel.text = "Phase added"
-            UIView.animateWithDuration(0.7, animations: { () -> Void in
-                self.feedbackLabel.alpha = 1.0
-                }, completion: { (Bool) -> Void in
-                    UIView.animateWithDuration(0.7, animations: { () -> Void in
-                        self.feedbackLabel.alpha = 0.0
-                        }, completion: nil)
-            })
-        }
+            self.brewDesignerViewModel.phases.put(newPhases)
+            return SignalProducer.empty
+        })
+
+        cocoaActionAdd = CocoaAction(addAction, input: ())
+        addButton.addTarget(cocoaActionAdd, action: CocoaAction.selector, forControlEvents: .TouchUpInside)
+
+        addAction.executing.producer |> on( next: { executing in
+            if executing {
+                self.feedbackLabel.text = "Phase added"
+                UIView.animateWithDuration(0.7, animations: { () -> Void in
+                    self.feedbackLabel.alpha = 1.0
+                    }, completion: { (Bool) -> Void in
+                        UIView.animateWithDuration(0.7, animations: { () -> Void in
+                            self.feedbackLabel.alpha = 0.0
+                            }, completion: nil)
+                })
+            }
+        })
 
         // MARK: RACSignals for controls
         
