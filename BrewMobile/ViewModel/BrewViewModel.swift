@@ -10,7 +10,7 @@ import Foundation
 import ReactiveCocoa
 
 class BrewViewModel : NSObject {
-    let stopCommand: RACCommand!
+    var cocoaActionStop: CocoaAction!
     let tempChanged = MutableProperty<Float>(0.0)
     let brewChanged = MutableProperty(BrewState())
     let pwmChanged = MutableProperty<Float>(0.0)
@@ -19,15 +19,11 @@ class BrewViewModel : NSObject {
 
     init(brewManager: BrewManager) {        
         self.brewManager = brewManager
-
-        stopCommand = RACCommand() {
-            Void -> RACSignal in
-            return brewManager.stopBrewCommand.execute(nil).deliverOn(RACScheduler.mainThreadScheduler())
-        }
-        
         super.init()
 
         self.brewManager.connectToHost()
+
+        cocoaActionStop = CocoaAction(brewManager.stopBrewAction, input: ())
 
         tempChanged <~ self.brewManager.tempChanged
         brewChanged <~ self.brewManager.brewChanged

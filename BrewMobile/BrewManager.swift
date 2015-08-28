@@ -19,8 +19,8 @@ let pwmChangedEvent = "pwm_changed"
 class BrewManager : NSObject {
     let host = "http://brewcore-demo.herokuapp.com/"
     
-    var stopBrewCommand: RACCommand!
     var syncBrewAction: Action<BrewState, NSData, NSError>!
+    var stopBrewAction: Action<Void, NSData, NSError>!
     let tempChanged = MutableProperty<Float>(0.0)
     let brewChanged = MutableProperty(BrewState())
     let pwmChanged = MutableProperty<Float>(0.0)
@@ -30,18 +30,21 @@ class BrewManager : NSObject {
     override init() {
          super.init()
 
-        syncBrewAction = Action<BrewState, NSData, NSError>(enabledIf: MutableProperty(true), { brewState in
+        syncBrewAction = Action<BrewState, NSData, NSError> { brewState in
             let requestResult = self.requestWithBody("api/brew", method: "POST", body: JSON(BrewState.encode(brewState).value!))
             return NSURLSession.sharedSession().rac_dataWithRequest(requestResult.value!)
                 |> map { data, URLResponse in
                     return data
                 }
-        })
+        }
 
-        stopBrewCommand = RACCommand(signalBlock: { Void -> RACSignal! in
+        stopBrewAction = Action<Void, NSData, NSError> { brewState in
             let request = self.requestWithBody("api/brew/stop", method: "PATCH", body: "").value!
-            return NSURLConnection.rac_sendAsynchronousRequest(request)
-        })
+            return NSURLSession.sharedSession().rac_dataWithRequest(request)
+                |> map { data, URLResponse in
+                    return data
+            }
+        }
     }
 
     //Mark: HTTP

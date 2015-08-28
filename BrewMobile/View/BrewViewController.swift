@@ -13,13 +13,13 @@ import ReactiveCocoa
 class BrewViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     let brewViewModel: BrewViewModel
-
+    
     @IBOutlet weak var tempLabel: UILabel!
     @IBOutlet weak var pwmLabel: UILabel!
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var startTimeLabel: UILabel!
     @IBOutlet weak var phasesTableView: UITableView!
-    @IBOutlet weak var stopButton: UIBarButtonItem!
+    @IBOutlet weak var stopButton: UIButton!
     
     init(brewViewModel: BrewViewModel) {
         self.brewViewModel = brewViewModel
@@ -33,27 +33,8 @@ class BrewViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        stopButton.rac_command = self.brewViewModel.stopCommand
 
-        stopButton.rac_command = RACCommand() {
-            (any:AnyObject!) -> RACSignal in
-            var alert = UIAlertController(title: "Stop brewing", message: "Are you sure you want to stop brewing this wonderful beer?", preferredStyle: UIAlertControllerStyle.Alert)
-            alert.addAction(UIAlertAction(title: "No", style: .Cancel, handler: nil))
-            alert.addAction(UIAlertAction(title: "Yes", style: .Default, handler: {
-                action in
-                self.brewViewModel.stopCommand.execute(nil)
-            }))
-            self.presentViewController(alert, animated: true, completion: nil)
-            return RACSignal.empty()
-        }
-        
-        stopButton.rac_command.executionSignals.subscribeError({
-            (error: NSError!) -> Void in
-            var alert = UIAlertController(title: "Error stopping brew", message: error.localizedDescription, preferredStyle: UIAlertControllerStyle.Alert)
-            alert.addAction(UIAlertAction(title: "OK", style:.Default, handler:nil))
-            self.presentViewController(alert, animated: true, completion: nil)
-        })
+        stopButton.addTarget(self.brewViewModel.cocoaActionStop, action: CocoaAction.selector, forControlEvents: .TouchUpInside)
 
         let nib = UINib(nibName: "BrewCell", bundle: nil)
         phasesTableView.registerNib(nib, forCellReuseIdentifier: "BrewCell")
