@@ -15,14 +15,14 @@ class BrewDesignerViewModel : NSObject {
     
     var cocoaActionSync: CocoaAction!
 
-    var phases = PhaseArray()
+    let phases = MutableProperty(PhaseArray())
     
-    let nameProperty = MutableProperty("")
-    let startTimeProperty = MutableProperty("")
-    var brewStateProperty = MutableProperty(BrewState())
-    var hasPhasesProperty = MutableProperty(false)
-    var validNameProperty = MutableProperty(false)
-    var validBeerProperty = MutableProperty(false)
+    let name = MutableProperty("")
+    let startTime = MutableProperty("")
+    let brewState = MutableProperty(BrewState())
+    let hasPhases = MutableProperty(false)
+    let validName = MutableProperty(false)
+    let validBeer = MutableProperty(false)
 
     var newState: BrewState = BrewState()
     
@@ -30,15 +30,15 @@ class BrewDesignerViewModel : NSObject {
         self.brewManager = brewManager
         super.init()
 
-        brewStateProperty = MutableProperty(BrewState(name: nameProperty.value, startTime: startTimeProperty.value, phases: self.phases, paused: false, inProgress: false))
-        brewStateProperty.value.name <~ nameProperty
-        brewStateProperty.value.startTime <~ startTimeProperty
+        brewState.put(BrewState(name: name.value, startTime: startTime.value, phases: self.phases.value, paused: false, inProgress: false))
+        brewState.value.name <~ name
+        brewState.value.startTime <~ startTime
 
-        hasPhasesProperty = MutableProperty(self.phases.count > 0)
-        validNameProperty = MutableProperty(count(brewStateProperty.value.name.value) > 0)
-        validBeerProperty = MutableProperty(hasPhasesProperty.value && validNameProperty.value)
+        hasPhases.put(self.phases.value.count > 0)
+        validName.put(count(brewState.value.name.value) > 0)
+        validBeer.put(hasPhases.value && validName.value)
 
-        cocoaActionSync = CocoaAction(brewManager.syncBrewAction, input: brewStateProperty.value)
+        cocoaActionSync = CocoaAction(brewManager.syncBrewAction, input: brewState.value)
     }
     
 }

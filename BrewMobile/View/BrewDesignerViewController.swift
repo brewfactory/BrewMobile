@@ -30,6 +30,9 @@ class BrewDesignerViewController : UIViewController, UITableViewDataSource, UITa
     var cocoaActionEdit: CocoaAction!
     var cocoaActionAdd: CocoaAction!
 
+    var startTimeTextFieldProducer: SignalProducer<AnyObject?, NSError>!
+    let tableViewEditing = MutableProperty(false)
+
     init(brewDesignerViewModel: BrewDesignerViewModel) {
         self.brewDesignerViewModel = brewDesignerViewModel
         self.brewManager = brewDesignerViewModel.brewManager
@@ -53,13 +56,13 @@ class BrewDesignerViewController : UIViewController, UITableViewDataSource, UITa
             return SignalProducer.empty
         })
 
-        let editAction = Action<Void, Void, NSError>(enabledIf: self.brewDesignerViewModel.hasPhasesProperty, {
+        let editAction = Action<Void, Void, NSError>(enabledIf: self.brewDesignerViewModel.hasPhases, {
             self.phasesTableView.editing = !self.phasesTableView.editing
             return SignalProducer.empty
         })
 
-        let trashAction = Action<Void, Void, NSError>(enabledIf: self.brewDesignerViewModel.hasPhasesProperty, {
-            self.brewDesignerViewModel.phases = PhaseArray()
+        let trashAction = Action<Void, Void, NSError>(enabledIf: self.brewDesignerViewModel.hasPhases, {
+            self.brewDesignerViewModel.phases.put(PhaseArray())
             self.nameTextField.text = ""
             self.phasesTableView.reloadData()
             
@@ -81,8 +84,9 @@ class BrewDesignerViewController : UIViewController, UITableViewDataSource, UITa
                 UIAlertView(title: "Error creating brew", message: error.localizedDescription, delegate: nil, cancelButtonTitle: "OK").show()
             })
 
-        self.brewDesignerViewModel.hasPhasesProperty.producer
-            |> on( next: { hasPhases in
+        self.brewDesignerViewModel.hasPhases.producer
+            |> observeOn(UIScheduler())
+            |> start( next: { hasPhases in
                 if !self.phasesTableView.editing {
                     self.phasesTableView.reloadData()
                 }
@@ -92,23 +96,20 @@ class BrewDesignerViewController : UIViewController, UITableViewDataSource, UITa
                 }
             })
 
-        MutableProperty<Bool>(self.phasesTableView.editing).producer
-            |> on ( next: { editing in
+        tableViewEditing.put(self.phasesTableView.editing)
+        tableViewEditing.producer
+            |> observeOn(UIScheduler())
+            |> start ( next: { editing in
                 let editingValue = editing as Bool
                 self.editButton.setTitle(editingValue ? "Done" : "Edit", forState: .Normal)
             })
 
-        self.brewDesignerViewModel.nameProperty <~ self.nameTextField.rac_textSignalProducer()
+        self.brewDesignerViewModel.name <~ self.nameTextField.rac_textSignalProducer()
 
-        let startTimeTextFieldProducer = self.startTimeTextField.rac_signalForControlEvents(.EditingDidBegin).toSignalProducer()
+        startTimeTextFieldProducer = self.startTimeTextField.rac_signalForControlEvents(.EditingDidBegin).toSignalProducer()
         startTimeTextFieldProducer
-            |> map { picker in
-                let datePicker = picker as! UITextField
-                return datePicker.text
-            }
-            |> catch { _ in SignalProducer<String, NoError>.empty }
-        
-        startTimeTextFieldProducer.start(next: { _ in
+            |> observeOn(UIScheduler())
+            |> start(next: { _ in
             self.dismissKeyboards()
         })
     
@@ -135,7 +136,7 @@ class BrewDesignerViewController : UIViewController, UITableViewDataSource, UITa
             }
             |> catch { _ in SignalProducer<String, NoError>.empty }
 
-        self.brewDesignerViewModel.startTimeProperty <~ pickerDateProducer
+        self.brewDesignerViewModel.startTime <~ pickerDateProducer
             |> map { date in
                 let isoDateFormatter = ISO8601DateFormatter()
                 isoDateFormatter.defaultTimeZone = NSTimeZone.defaultTimeZone()
@@ -162,13 +163,13 @@ class BrewDesignerViewController : UIViewController, UITableViewDataSource, UITa
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.brewDesignerViewModel.phases.count
+        return self.brewDesignerViewModel.phases.value.count
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("PhaseCell", forIndexPath: indexPath) as! PhaseCell
-        if self.brewDesignerViewModel.phases.count > indexPath.row  {
-            let phase = self.brewDesignerViewModel.phases[indexPath.row]
+        if self.brewDesignerViewModel.phases.value.count > indexPath.row  {
+            let phase = self.brewDesignerViewModel.phases.value[indexPath.row]
             cell.phaseLabel.text = "\(indexPath.row + 1). \(phase.min) min \(phase.temp) ˚C"
         }
         
@@ -189,8 +190,8 @@ class BrewDesignerViewController : UIViewController, UITableViewDataSource, UITa
     
     func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
         if editingStyle == UITableViewCellEditingStyle.Delete {
-            if self.brewDesignerViewModel.phases.count > indexPath.row {
-                var newPhases = self.brewDesignerViewModel.phases
+            if self.brewDesignerViewModel.phases.value.count > indexPath.row {
+                var newPhases = self.brewDesignerViewModel.phases.value
                 newPhases.removeAtIndex(indexPath.row)
                 self.brewDesignerViewModel.setValue(newPhases, forKeyPath: "phases")
                 tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Automatic)
@@ -199,12 +200,12 @@ class BrewDesignerViewController : UIViewController, UITableViewDataSource, UITa
     }
     
     func tableView(tableView: UITableView, moveRowAtIndexPath sourceIndexPath: NSIndexPath, toIndexPath destinationIndexPath: NSIndexPath) {
-        let destinationPhase = self.brewDesignerViewModel.phases[destinationIndexPath.row]
+        let destinationPhase = self.brewDesignerViewModel.phases.value[destinationIndexPath.row]
 
-        var newPhases = self.brewDesignerViewModel.phases
+        var newPhases = self.brewDesignerViewModel.phases.value
         newPhases[destinationIndexPath.row] = newPhases[sourceIndexPath.row]
         newPhases[sourceIndexPath.row] = destinationPhase
-        self.brewDesignerViewModel.setValue(newPhases, forKeyPath: "phases")
+        self.brewDesignerViewModel.phases.put(newPhases)
         tableView.reloadData()
     }
     
