@@ -58,6 +58,7 @@ class BrewDesignerViewController : UIViewController, UITableViewDataSource, UITa
 
         let editAction = Action<Void, Void, NSError>(enabledIf: self.brewDesignerViewModel.hasPhases, {
             self.phasesTableView.editing = !self.phasesTableView.editing
+            self.editButton.setTitle(self.phasesTableView.editing ? "Done" : "Edit", forState: .Normal)
             return SignalProducer.empty
         })
 
@@ -96,19 +97,10 @@ class BrewDesignerViewController : UIViewController, UITableViewDataSource, UITa
                 }
             })
 
-        tableViewEditing.put(self.phasesTableView.editing)
-        tableViewEditing.producer
-            |> observeOn(UIScheduler())
-            |> start ( next: { editing in
-                let editingValue = editing as Bool
-                self.editButton.setTitle(editingValue ? "Done" : "Edit", forState: .Normal)
-            })
-
         self.brewDesignerViewModel.name <~ self.nameTextField.rac_textSignalProducer()
 
         startTimeTextFieldProducer = self.startTimeTextField.rac_signalForControlEvents(.EditingDidBegin).toSignalProducer()
         startTimeTextFieldProducer
-            |> observeOn(UIScheduler())
             |> start(next: { _ in
             self.dismissKeyboards()
         })
