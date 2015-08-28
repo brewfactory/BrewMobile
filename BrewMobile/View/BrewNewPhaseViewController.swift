@@ -37,13 +37,13 @@ class BrewNewPhaseViewController : UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let addAction = Action<Void, Void, NSError>(enabledIf: MutableProperty<Bool>(true), {
+        let addAction = Action<Void, Void, NSError> {
             let newPhase = BrewPhase(jobEnd:"", min:self.min, temp:Float(self.temp), tempReached:false, inProgress:false)
             var newPhases = self.brewDesignerViewModel.phases.value
             newPhases.append(newPhase)
             self.brewDesignerViewModel.phases.put(newPhases)
             return SignalProducer.empty
-        })
+        }
 
         cocoaActionAdd = CocoaAction(addAction, input: ())
         addButton.addTarget(cocoaActionAdd, action: CocoaAction.selector, forControlEvents: .TouchUpInside)
