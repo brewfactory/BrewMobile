@@ -23,7 +23,11 @@ func == (left: BrewState, right: BrewState) -> Bool {
         return true
     }()
     
-    return (left.name.value == right.name.value) && (left.startTime.value == right.startTime.value) && phasesAreIdentical && (left.paused.value == right.paused.value) && (left.inProgress.value == right.inProgress.value)
+    return (left.name.value == right.name.value) &&
+        (left.startTime.value == right.startTime.value) &&
+        phasesAreIdentical &&
+        (left.paused.value == right.paused.value) &&
+        (left.inProgress.value == right.inProgress.value)
 }
 
 final class BrewState: Equatable, JSONDecodable, JSONEncodable  {
@@ -45,6 +49,17 @@ final class BrewState: Equatable, JSONDecodable, JSONEncodable  {
         self.name = MutableProperty(name)
         self.startTime = MutableProperty(startTime)
         self.phases = MutableProperty(phases)
+        self.paused = MutableProperty(paused)
+        self.inProgress = MutableProperty(inProgress)
+    }
+    
+    init(name: MutableProperty<String>,
+        startTime: MutableProperty<String>,
+        phases: MutableProperty<PhaseArray>,
+        paused: Bool, inProgress: Bool) {
+        self.name = name
+        self.startTime = startTime
+        self.phases = phases
         self.paused = MutableProperty(paused)
         self.inProgress = MutableProperty(inProgress)
     }
