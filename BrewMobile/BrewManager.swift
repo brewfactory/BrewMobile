@@ -28,13 +28,13 @@ class BrewManager : NSObject {
     override init() {
          super.init()
 
-        syncBrewAction = Action<BrewState, NSData, NSError> { brewState in
+        syncBrewAction = Action { brewState in
             let requestResult = self.requestWithBody("api/brew", method: "POST", body: JSON(BrewState.encode(brewState).value!))
             return NSURLSession.sharedSession().rac_dataWithRequest(requestResult.value!)
                 |> map { $0.0 }
         }
 
-        stopBrewAction = Action<Void, NSData, NSError> { brewState in
+        stopBrewAction = Action { brewState in
             let request = self.requestWithBody("api/brew/stop", method: "PATCH", body: "").value!
             return NSURLSession.sharedSession().rac_dataWithRequest(request)
                 |> map { $0.0 }

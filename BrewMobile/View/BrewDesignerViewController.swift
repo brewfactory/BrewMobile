@@ -50,7 +50,7 @@ class BrewDesignerViewController : UIViewController, UITableViewDataSource, UITa
         let nib = UINib(nibName: "PhaseCell", bundle: nil)
         phasesTableView.registerNib(nib, forCellReuseIdentifier: "PhaseCell")
         
-        let addAction = Action<Void, Void, NSError>{
+        let addAction = Action<Void, Void, NSError> {
             self.navigationController?.pushViewController(BrewNewPhaseViewController(brewDesignerViewModel: self.brewDesignerViewModel), animated: true)
             return SignalProducer.empty
         }
