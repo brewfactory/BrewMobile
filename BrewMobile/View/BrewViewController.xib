@@ -29,7 +29,8 @@
                         <outlet property="delegate" destination="-1" id="Eko-ae-j5q"/>
                     </connections>
                 </tableView>
-                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="0.0" translatesAutoresizingMaskIntoConstraints="NO" id="Egq-fz-xuo" userLabel="nameLabel">
+                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="0.0" translatesAutoresizingMaskIntoConstraints="NO" id="Egq-fz-xuo" userLabel="nameLabel">
+                    <rect key="frame" x="50" y="35" width="220" height="0.0"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="35" id="Yje-eS-gUy"/>
                     </constraints>
@@ -42,7 +43,8 @@
                         </mask>
                     </variation>
                 </label>
-                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="0.0" translatesAutoresizingMaskIntoConstraints="NO" id="R8w-X5-zxS" userLabel="tempLabel">
+                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="0.0" translatesAutoresizingMaskIntoConstraints="NO" id="R8w-X5-zxS" userLabel="tempLabel">
+                    <rect key="frame" x="50" y="38" width="0.0" height="35"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="35" id="m9X-iV-60v"/>
                     </constraints>
@@ -50,7 +52,8 @@
                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="0.0" translatesAutoresizingMaskIntoConstraints="NO" id="ssE-4k-7ZS" userLabel="pwmLabel">
+                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="0.0" translatesAutoresizingMaskIntoConstraints="NO" id="ssE-4k-7ZS" userLabel="pwmLabel">
+                    <rect key="frame" x="85" y="38" width="0.0" height="35"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="35" id="DXD-LH-Lob"/>
                         <constraint firstAttribute="height" relation="greaterThanOrEqual" id="csC-fz-P6W"/>
@@ -59,7 +62,8 @@
                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="0.0" translatesAutoresizingMaskIntoConstraints="NO" id="TJ5-FP-k2J" userLabel="startTimeLabel">
+                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="0.0" translatesAutoresizingMaskIntoConstraints="NO" id="TJ5-FP-k2J" userLabel="startTimeLabel">
+                    <rect key="frame" x="160" y="76" width="0.0" height="35"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="35" id="lyO-0p-1NU"/>
                     </constraints>
@@ -91,10 +95,10 @@
                 <constraint firstAttribute="trailing" secondItem="fDc-9C-BHN" secondAttribute="trailing" id="Zt3-Mu-2gl"/>
                 <constraint firstAttribute="centerX" secondItem="Egq-fz-xuo" secondAttribute="centerX" id="d8y-Le-23F"/>
                 <constraint firstItem="R8w-X5-zxS" firstAttribute="centerX" secondItem="aIA-Io-OTP" secondAttribute="centerX" id="fIq-xw-c76"/>
-                <constraint firstItem="ssE-4k-7ZS" firstAttribute="leading" secondItem="R8w-X5-zxS" secondAttribute="trailing" constant="30" id="jRY-DD-VYB"/>
+                <constraint firstItem="ssE-4k-7ZS" firstAttribute="leading" secondItem="R8w-X5-zxS" secondAttribute="trailing" constant="35" id="jRY-DD-VYB"/>
                 <constraint firstItem="R8w-X5-zxS" firstAttribute="leading" secondItem="Egq-fz-xuo" secondAttribute="leading" id="new-Px-2AN"/>
                 <constraint firstItem="TJ5-FP-k2J" firstAttribute="top" secondItem="R8w-X5-zxS" secondAttribute="bottom" constant="3" id="uai-PN-cl1"/>
-                <constraint firstItem="R8w-X5-zxS" firstAttribute="leading" secondItem="aIA-Io-OTP" secondAttribute="leading" constant="30" id="w4P-bk-Oa3"/>
+                <constraint firstItem="R8w-X5-zxS" firstAttribute="leading" secondItem="aIA-Io-OTP" secondAttribute="leading" constant="50" id="w4P-bk-Oa3"/>
             </constraints>
             <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
             <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>

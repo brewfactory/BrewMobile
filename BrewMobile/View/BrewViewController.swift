@@ -47,7 +47,7 @@ class BrewViewController: UIViewController, UITableViewDelegate, UITableViewData
         
         self.pwmLabel.rac_text <~ self.brewViewModel.pwmChanged.producer
             |> map { pwm in
-                return String(format:"%g %%", pwm)
+                return String(format:"PWM %g %%", pwm)
             }
             |> catch { _ in SignalProducer<String, NoError>.empty }
         
