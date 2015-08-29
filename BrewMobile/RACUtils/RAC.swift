@@ -9,14 +9,6 @@ import Foundation
 import ReactiveCocoa
 import UIKit
 
-extension UITextField {
-    func rac_textSignalProducer() -> SignalProducer<String, NoError> {
-        return self.rac_textSignal().toSignalProducer()
-            |> map { $0 as! String }
-            |> catch { _ in SignalProducer<String, NoError>.empty }
-    }
-}
-
 struct AssociationKey {
     static var hidden: UInt8 = 1
     static var date: UInt8 = 2
@@ -58,6 +50,15 @@ extension UIView {
 extension UILabel {
     public var rac_text: MutableProperty<String> {
         return lazyMutableProperty(self, &AssociationKey.text, { self.text = $0 }, { self.text ?? "" })
+    }
+}
+
+
+extension UITextField {
+    func rac_textSignalProducer() -> SignalProducer<String, NoError> {
+        return self.rac_textSignal().toSignalProducer()
+            |> map { $0 as! String }
+            |> catch { _ in SignalProducer<String, NoError>.empty }
     }
 }
 

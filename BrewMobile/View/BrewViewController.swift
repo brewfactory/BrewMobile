@@ -105,7 +105,6 @@ class BrewViewController: UIViewController, UITableViewDelegate, UITableViewData
         return cell
     }
     
-    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }

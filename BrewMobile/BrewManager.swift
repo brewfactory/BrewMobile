@@ -24,8 +24,6 @@ class BrewManager : NSObject {
     let tempChanged = MutableProperty<Float>(0.0)
     let brewChanged = MutableProperty(BrewState())
     let pwmChanged = MutableProperty<Float>(0.0)
-    
-    var syncRequest: RACSignal!
 
     override init() {
          super.init()
