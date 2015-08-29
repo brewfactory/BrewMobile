@@ -101,8 +101,8 @@ class BrewDesignerViewController : UIViewController, UITableViewDataSource, UITa
         let startTimeTextFieldSignalProducer = self.startTimeTextField.rac_signalForControlEvents(.EditingDidBegin).toSignalProducer()
         startTimeTextFieldSignalProducer
             |> start(next: { _ in
-            self.dismissKeyboards()
-        })
+                self.dismissKeyboards()
+            })
     
         self.pickerBgView.rac_hidden <~ startTimeTextFieldSignalProducer
             |> map { _ in false }

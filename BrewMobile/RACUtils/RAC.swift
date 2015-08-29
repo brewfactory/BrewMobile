@@ -35,12 +35,6 @@ func lazyMutableProperty<T>(host: AnyObject, key: UnsafePointer<Void>, setter: T
     }
 }
 
-extension UIDatePicker {
-    public var rac_date: MutableProperty<NSDate> {
-        return lazyMutableProperty(self, &AssociationKey.date, { self.date = $0 }, { self.date })
-    }
-}
-
 extension UIView {
     public var rac_hidden: MutableProperty<Bool> {
         return lazyMutableProperty(self, &AssociationKey.hidden, { self.hidden = $0 }, { self.hidden })
