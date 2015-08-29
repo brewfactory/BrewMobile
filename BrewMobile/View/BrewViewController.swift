@@ -92,7 +92,8 @@ class BrewViewController: UIViewController, UITableViewDelegate, UITableViewData
         if self.brewViewModel.brewChanged.value.phases.value.count > indexPath.row  {
             let brewPhase = self.brewViewModel.brewChanged.value.phases.value[indexPath.row]
             
-            cell.minLabel.text = brewPhase.jobEnd != "" ? "\(brewPhase.min) mins - \(Int(brewPhase.temp)) ˚C, ends: \(brewPhase.jobEnd)"  : "\(brewPhase.min) mins - \(Int(brewPhase.temp)) ˚C"
+            let showEnd: Bool = brewPhase.tempReached && brewPhase.inProgress
+            cell.minLabel.text = showEnd ? "\(brewPhase.min) mins - \(Int(brewPhase.temp)) ˚C, ends: \(brewPhase.jobEnd)" : "\(brewPhase.min) mins - \(Int(brewPhase.temp)) ˚C"
             cell.statusLabel.text = "\(self.stateText(brewPhase))"
             
             UIView.animateWithDuration(0.3, animations: { () -> Void in

@@ -43,8 +43,8 @@
                         </mask>
                     </variation>
                 </label>
-                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="0.0" translatesAutoresizingMaskIntoConstraints="NO" id="R8w-X5-zxS" userLabel="tempLabel">
-                    <rect key="frame" x="50" y="38" width="0.0" height="35"/>
+                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="0.0" translatesAutoresizingMaskIntoConstraints="NO" id="R8w-X5-zxS" userLabel="tempLabel">
+                    <rect key="frame" x="35" y="38" width="0.0" height="35"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="35" id="m9X-iV-60v"/>
                     </constraints>
