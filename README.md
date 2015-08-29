@@ -1,6 +1,6 @@
 # BrewMobile
 
-[![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
+[![Bitrise](https://www.bitrise.io/app/276d8847158110d2.svg?token=aYjuPeusfMeRdDn_eDksIg)](https://www.bitrise.io/) [![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
 
 iOS client for the [Brewfactory](https://github.com/brewfactory/BrewCore) project
 
@@ -29,7 +29,7 @@ $ brew update && brew install carthage
 ```
 then:
 ```
-$ carthage checkout && carthage build --platform iOS
+$ carthage bootstrap --platform iOS
 
 $ open BrewMobile.xcworkspace/
 ```
