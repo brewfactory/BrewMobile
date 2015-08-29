@@ -11,9 +11,9 @@ import ReactiveCocoa
 
 class BrewViewModel : NSObject {
     var cocoaActionStop: CocoaAction!
-    let tempChanged = MutableProperty<Float>(0.0)
-    let brewChanged = MutableProperty(BrewState())
-    let pwmChanged = MutableProperty<Float>(0.0)
+    let temp = MutableProperty<Float>(0.0)
+    let brew = MutableProperty(BrewState())
+    let pwm = MutableProperty<Float>(0.0)
 
     let brewManager: BrewManager
 
@@ -25,9 +25,9 @@ class BrewViewModel : NSObject {
 
         cocoaActionStop = CocoaAction(brewManager.stopBrewAction, input: ())
 
-        tempChanged <~ self.brewManager.tempChanged
-        brewChanged <~ self.brewManager.brewChanged
-        pwmChanged <~ self.brewManager.pwmChanged
+        temp <~ self.brewManager.temp
+        brew <~ self.brewManager.brew
+        pwm <~ self.brewManager.pwm
     }
 
 }

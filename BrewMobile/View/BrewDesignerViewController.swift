@@ -73,7 +73,7 @@ class BrewDesignerViewController : UIViewController, UITableViewDataSource, UITa
         cocoaActionEdit = CocoaAction(editAction, input: ())
         cocoaActionAdd = CocoaAction(addAction, input: ())
 
-        syncButton.addTarget(self.brewDesignerViewModel.cocoaActionSync, action:CocoaAction.selector, forControlEvents: .TouchUpInside)
+        syncButton.addTarget(self.brewDesignerViewModel.cocoaActionSync, action: CocoaAction.selector, forControlEvents: .TouchUpInside)
         trashButton.addTarget(cocoaActionTrash, action: CocoaAction.selector, forControlEvents: .TouchUpInside)
         editButton.addTarget(cocoaActionEdit, action: CocoaAction.selector, forControlEvents: .TouchUpInside)
         addButton.addTarget(cocoaActionAdd, action: CocoaAction.selector, forControlEvents: .TouchUpInside)

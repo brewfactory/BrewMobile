@@ -39,19 +39,19 @@ class BrewViewController: UIViewController, UITableViewDelegate, UITableViewData
         let nib = UINib(nibName: "BrewCell", bundle: nil)
         phasesTableView.registerNib(nib, forCellReuseIdentifier: "BrewCell")
 
-        self.tempLabel.rac_text <~ self.brewViewModel.tempChanged.producer
+        self.tempLabel.rac_text <~ self.brewViewModel.temp.producer
             |> map { temp in
                 return String(format:"%.2f ˚C", temp)
             }
             |> catch { _ in SignalProducer<String, NoError>.empty }
         
-        self.pwmLabel.rac_text <~ self.brewViewModel.pwmChanged.producer
+        self.pwmLabel.rac_text <~ self.brewViewModel.pwm.producer
             |> map { pwm in
                 return String(format:"PWM %g %%", pwm)
             }
             |> catch { _ in SignalProducer<String, NoError>.empty }
         
-        self.brewViewModel.brewChanged.producer
+        self.brewViewModel.brew.producer
             |> on (next: { brewState in
                 self.phasesTableView.reloadData()
                 
@@ -67,14 +67,14 @@ class BrewViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
     
     func stateText(brewPhase: BrewPhase) -> String {
-        if self.brewViewModel.brewChanged.value.paused.value {
+        if self.brewViewModel.brew.value.paused.value {
             return "paused"
         }
         switch brewPhase.state  {
         case State.FINISHED:
             return "\(brewPhase.state.stateDescription()) at \(brewPhase.jobEnd)"
         case State.HEATING:
-            if self.brewViewModel.tempChanged.value > brewPhase.temp { return "cooling" }
+            if self.brewViewModel.temp.value > brewPhase.temp { return "cooling" }
             fallthrough
         default:
             return brewPhase.state.stateDescription()
@@ -84,13 +84,13 @@ class BrewViewController: UIViewController, UITableViewDelegate, UITableViewData
     // MARK: UITableViewDataSource
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.brewViewModel.brewChanged.value.phases.value.count
+        return self.brewViewModel.brew.value.phases.value.count
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("BrewCell", forIndexPath: indexPath) as! BrewCell
-        if self.brewViewModel.brewChanged.value.phases.value.count > indexPath.row  {
-            let brewPhase = self.brewViewModel.brewChanged.value.phases.value[indexPath.row]
+        if self.brewViewModel.brew.value.phases.value.count > indexPath.row  {
+            let brewPhase = self.brewViewModel.brew.value.phases.value[indexPath.row]
             
             let showEnd: Bool = brewPhase.tempReached && brewPhase.inProgress
             cell.minLabel.text = showEnd ? "\(brewPhase.min) mins - \(Int(brewPhase.temp)) ˚C, ends: \(brewPhase.jobEnd)" : "\(brewPhase.min) mins - \(Int(brewPhase.temp)) ˚C"

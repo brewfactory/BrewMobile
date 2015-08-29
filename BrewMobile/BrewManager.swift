@@ -21,9 +21,9 @@ class BrewManager : NSObject {
     
     var syncBrewAction: Action<BrewState, NSData, NSError>!
     var stopBrewAction: Action<Void, NSData, NSError>!
-    let tempChanged = MutableProperty<Float>(0.0)
-    let brewChanged = MutableProperty(BrewState())
-    let pwmChanged = MutableProperty<Float>(0.0)
+    let temp = MutableProperty<Float>(0.0)
+    let brew = MutableProperty(BrewState())
+    let pwm = MutableProperty<Float>(0.0)
 
     override init() {
          super.init()
@@ -74,20 +74,20 @@ class BrewManager : NSObject {
             socket.on(tempChangedEvent, callback: { (AnyObject data) -> Void in
                 if(count(data) > 0) {
                     let temp = data[0] as! NSNumber
-                    self.tempChanged.put(temp.floatValue)
+                    self.temp.put(temp.floatValue)
                 }
             })
             
             socket.on(brewChangedEvent, callback: { (AnyObject data) -> Void in
                 if(count(data) > 0) {
-                    self.brewChanged.put(ContentParser.parseBrewState(JSON(data[0])))
+                    self.brew.put(ContentParser.parseBrewState(JSON(data[0])))
                 }
             })
             
             socket.on(pwmChangedEvent, callback: { (AnyObject data) -> Void in
                 if(count(data) > 0) {
                     let pwm = data[0] as! NSNumber
-                    self.pwmChanged.put(pwm.floatValue)
+                    self.pwm.put(pwm.floatValue)
                 }
             })
             
