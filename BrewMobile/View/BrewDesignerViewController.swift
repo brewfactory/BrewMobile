@@ -115,16 +115,9 @@ class BrewDesignerViewController : UIViewController, UITableViewDataSource, UITa
             }
             |> catch { _ in SignalProducer<NSDate, NoError>.empty }
         
-        pickerDateSignalProducer.start(next: { _ in
-            self.dismissKeyboards()
-        })
-
+        self.startTimeTextField.rac_text.put(self.formatDate(NSDate()))
         self.startTimeTextField.rac_text <~ pickerDateSignalProducer
-            |> map { date in
-                let dateFormatter = NSDateFormatter()
-                dateFormatter.dateFormat = "YYYY.MM.dd. HH:mm"
-                return dateFormatter.stringFromDate(date as NSDate)
-            }
+            |> map { self.formatDate($0) }
             |> catch { _ in SignalProducer<String, NoError>.empty }
 
         self.brewDesignerViewModel.startTime <~ pickerDateSignalProducer
@@ -147,6 +140,11 @@ class BrewDesignerViewController : UIViewController, UITableViewDataSource, UITa
         self.pickerBgView.hidden = true
     }
 
+    func formatDate(date: NSDate) -> String {
+        let dateFormatter = NSDateFormatter()
+        dateFormatter.dateFormat = "YYYY.MM.dd. HH:mm"
+        return dateFormatter.stringFromDate(date as NSDate)
+    }
     // MARK: UITableViewDataSource
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
