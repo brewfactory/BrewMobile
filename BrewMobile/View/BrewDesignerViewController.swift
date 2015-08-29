@@ -105,7 +105,7 @@ class BrewDesignerViewController : UIViewController, UITableViewDataSource, UITa
         })
     
         self.pickerBgView.rac_hidden <~ startTimeTextFieldSignalProducer
-            |> map { _ in return false }
+            |> map { _ in false }
             |> catch { _ in SignalProducer<Bool, NoError>.empty }
 
         let pickerDateSignalProducer = self.startTimePicker.rac_signalForControlEvents(.ValueChanged).toSignalProducer()

@@ -45,19 +45,20 @@ class BrewNewPhaseViewController : UIViewController {
         cocoaActionAdd = CocoaAction(addAction, input: ())
         addButton.addTarget(cocoaActionAdd, action: CocoaAction.selector, forControlEvents: .TouchUpInside)
 
-        addAction.executing.producer |> on( next: { executing in
-            if executing {
-                self.feedbackLabel.text = "Phase added"
-                UIView.animateWithDuration(0.7, animations: { () -> Void in
-                    self.feedbackLabel.alpha = 1.0
-                    }, completion: { (Bool) -> Void in
-                        UIView.animateWithDuration(0.7, animations: { () -> Void in
-                            self.feedbackLabel.alpha = 0.0
-                            }, completion: nil)
-                })
-            }
-        })
-        |> start()
+        addAction.executing.producer
+            |> on( next: { executing in
+                if executing {
+                    self.feedbackLabel.text = "Phase added"
+                    UIView.animateWithDuration(0.7, animations: { () -> Void in
+                        self.feedbackLabel.alpha = 1.0
+                        }, completion: { (Bool) -> Void in
+                            UIView.animateWithDuration(0.7, animations: { () -> Void in
+                                self.feedbackLabel.alpha = 0.0
+                                }, completion: nil)
+                    })
+                }
+            })
+            |> start()
 
         let minStepperSignalProducer = minStepper.rac_signalForControlEvents(.ValueChanged).toSignalProducer()
             |> map { aStepper in
