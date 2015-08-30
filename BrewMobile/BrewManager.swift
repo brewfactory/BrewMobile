@@ -31,13 +31,17 @@ class BrewManager : NSObject {
         syncBrewAction = Action { brewState in
             let requestResult = self.requestWithBody("api/brew", method: "POST", body: JSON(BrewState.encode(brewState).value!))
             return NSURLSession.sharedSession().rac_dataWithRequest(requestResult.value!)
-                |> map { $0.0 }
+                |> map { data, URLResponse in
+                    return data
+                }
         }
 
         stopBrewAction = Action { brewState in
             let request = self.requestWithBody("api/brew/stop", method: "PATCH", body: "").value!
             return NSURLSession.sharedSession().rac_dataWithRequest(request)
-                |> map { $0.0 }
+                |> map { data, URLResponse in
+                    return data
+                }
         }
     }
 
