@@ -4,6 +4,9 @@
 //  Created by Colin Eberhardt on 15/07/2014.
 //  Copyright (c) 2014 Colin Eberhardt. All rights reserved.
 //
+//  Original source can be found at:
+//  https://github.com/ColinEberhardt/ReactiveTwitterSearch/blob/master/ReactiveTwitterSearch/Util/UIKitExtensions.swift
+//
 
 import Foundation
 import ReactiveCocoa
