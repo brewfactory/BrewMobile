@@ -51,7 +51,9 @@ class BrewDesignerViewController : UIViewController, UITableViewDataSource, UITa
         phasesTableView.registerNib(nib, forCellReuseIdentifier: "PhaseCell")
         
         let addAction = Action<Void, Void, NSError> {
-            self.navigationController?.pushViewController(BrewNewPhaseViewController(brewDesignerViewModel: self.brewDesignerViewModel), animated: true)
+            if let navigationController = self.navigationController {
+                navigationController.pushViewController(BrewNewPhaseViewController(brewDesignerViewModel: self.brewDesignerViewModel), animated: true)
+            }
             return SignalProducer.empty
         }
 
@@ -110,8 +112,10 @@ class BrewDesignerViewController : UIViewController, UITableViewDataSource, UITa
 
         let pickerDateSignalProducer = self.startTimePicker.rac_signalForControlEvents(.ValueChanged).toSignalProducer()
             |> map { picker in
-                let datePicker = picker as! UIDatePicker
-                return datePicker.date
+                if let datePicker = picker as? UIDatePicker {
+                    return datePicker.date
+                }
+                fatalError("this should not happen")
             }
             |> catch { _ in SignalProducer<NSDate, NoError>.empty }
         
@@ -156,13 +160,14 @@ class BrewDesignerViewController : UIViewController, UITableViewDataSource, UITa
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("PhaseCell", forIndexPath: indexPath) as! PhaseCell
-        if self.brewDesignerViewModel.phases.value.count > indexPath.row  {
-            let phase = self.brewDesignerViewModel.phases.value[indexPath.row]
-            cell.phaseLabel.text = "\(indexPath.row + 1). \(phase.min) min \(phase.temp) ˚C"
+        if let cell = tableView.dequeueReusableCellWithIdentifier("PhaseCell", forIndexPath: indexPath) as? PhaseCell {
+            if self.brewDesignerViewModel.phases.value.count > indexPath.row  {
+                let phase = self.brewDesignerViewModel.phases.value[indexPath.row]
+                cell.phaseLabel.text = "\(indexPath.row + 1). \(phase.min) min \(phase.temp) ˚C"
+            }
+            return cell
         }
-        
-        return cell
+        fatalError("every cell must be a PhaseCell")
     }
     
     func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {

@@ -81,7 +81,7 @@ final class BrewState: Equatable, JSONDecodable, JSONEncodable  {
     // MARK: JSONEncodable
     
     class func encode(object: BrewState) -> Result<AnyObject, NSError> {
-        var brew = Dictionary<String, AnyObject>()
+        var brew = [String: AnyObject]()
        
         brew["name"] = object.name.value
         brew["startTime"] = object.startTime.value
