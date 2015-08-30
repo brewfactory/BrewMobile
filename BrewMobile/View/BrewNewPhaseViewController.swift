@@ -61,32 +61,22 @@ class BrewNewPhaseViewController : UIViewController {
             |> start()
 
         let minStepperSignalProducer = minStepper.rac_signalForControlEvents(.ValueChanged).toSignalProducer()
-            |> map { aStepper in
-                let stepper = aStepper as! UIStepper
-                return Int(stepper.value)
-            }
-            |> catch { _ in SignalProducer<Int, NoError>.empty }
+            |> map(self.mapStepper)
+            |> catch(self.catcher)
 
         let tempStepperSignalProducer = tempStepper.rac_signalForControlEvents(.ValueChanged).toSignalProducer()
-            |> map { aStepper in
-                let stepper = aStepper as! UIStepper
-                return Int(stepper.value)
-            }
-            |> catch { _ in SignalProducer<Int, NoError>.empty }
+            |> map(self.mapStepper)
+            |> catch(self.catcher)
         
         let minTextSignalProducer = minTextField.rac_textSignalProducer()
-            |> filter( { $0 != "" } )
-            |> map { minText in
-                return minText.toInt()!
-            }
-            |> catch { _ in SignalProducer<Int, NoError>.empty }
+            |> filter(self.nonEmptyFilter)
+            |> map(self.toIntConverter)
+            |> catch(self.catcher)
 
         let tempTextSignalProducer = tempTextField.rac_textSignalProducer()
-            |> filter( { $0 != "" } )
-            |> map { tempText in
-                return tempText.toInt()!
-            }
-            |> catch { _ in SignalProducer<Int, NoError>.empty }
+            |> filter(self.nonEmptyFilter)
+            |> map(self.toIntConverter)
+            |> catch(self.catcher)
 
         SignalProducer(values: [minStepperSignalProducer, minTextSignalProducer])
             |> flatten(.Merge)
@@ -109,4 +99,26 @@ class BrewNewPhaseViewController : UIViewController {
         super.didReceiveMemoryWarning()
     }
 
+    
+    // MARK: helper functions
+    
+    func mapStepper(aStepper: AnyObject?) -> Int {
+        if let stepper = aStepper as? UIStepper {
+            return Int(stepper.value)
+        }
+        fatalError("stepper should be a UIStepper")
+    }
+    
+    func catcher<E>(aInput: E) -> SignalProducer<Int, NoError> {
+        return SignalProducer.empty
+    }
+    
+    func nonEmptyFilter(aInput: String) -> Bool {
+        return aInput != ""
+    }
+    
+    func toIntConverter(aInput: String) -> Int {
+        return aInput.toInt()!
+    }
+    
 }

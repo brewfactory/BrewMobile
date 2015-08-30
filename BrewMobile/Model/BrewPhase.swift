@@ -110,7 +110,7 @@ final class BrewPhase: Equatable, JSONDecodable, JSONEncodable {
     // MARK: JSONEncodable
     
     class func encode(object: BrewPhase) -> Result<AnyObject, NSError> {
-        var phase = Dictionary<String, AnyObject>()
+        var phase = [String: AnyObject]()
         
         phase["min"] = Int(object.min)
         phase["temp"] = Float(object.temp)

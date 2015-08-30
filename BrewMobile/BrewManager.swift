@@ -29,19 +29,26 @@ class BrewManager : NSObject {
          super.init()
 
         syncBrewAction = Action { brewState in
-            let requestResult = self.requestWithBody("api/brew", method: "POST", body: JSON(BrewState.encode(brewState).value!))
-            return NSURLSession.sharedSession().rac_dataWithRequest(requestResult.value!)
-                |> map { data, URLResponse in
-                    return data
+            if let jsonData:AnyObject = BrewState.encode(brewState).value {
+                let requestResult = self.requestWithBody("api/brew", method: "POST", body: JSON(jsonData))
+                if let requestResultValue = requestResult.value {
+                    return NSURLSession.sharedSession().rac_dataWithRequest(requestResultValue)
+                        |> map { data, URLResponse in
+                            return data
+                        }
                 }
+            }
+            fatalError("jsonData is nil")
         }
 
         stopBrewAction = Action { brewState in
-            let request = self.requestWithBody("api/brew/stop", method: "PATCH", body: "").value!
-            return NSURLSession.sharedSession().rac_dataWithRequest(request)
-                |> map { data, URLResponse in
-                    return data
-                }
+            if let request = self.requestWithBody("api/brew/stop", method: "PATCH", body: "").value {
+                return NSURLSession.sharedSession().rac_dataWithRequest(request)
+                    |> map { data, URLResponse in
+                        return data
+                    }
+            }
+            fatalError("request is nil")
         }
     }
 
@@ -55,8 +62,8 @@ class BrewManager : NSObject {
         request.HTTPMethod = method
         if method == "POST" {
             request.HTTPBody = body.rawData(options: .PrettyPrinted, error: &serializationError)
-            if serializationError != nil {
-                return Result.failure(serializationError!)
+            if let error = serializationError {
+                return Result.failure(error)
             }
         }
         
@@ -76,22 +83,24 @@ class BrewManager : NSObject {
             }
             
             socket.on(tempChangedEvent, callback: { (AnyObject data) -> Void in
-                if(count(data) > 0) {
-                    let temp = data[0] as! NSNumber
-                    self.temp.put(temp.floatValue)
+                if (count(data) > 0) {
+                    if let temp = data[0] as? NSNumber {
+                        self.temp.put(temp.floatValue)
+                    }
                 }
             })
             
             socket.on(brewChangedEvent, callback: { (AnyObject data) -> Void in
-                if(count(data) > 0) {
+                if (count(data) > 0) {
                     self.brew.put(ContentParser.parseBrewState(JSON(data[0])))
                 }
             })
             
             socket.on(pwmChangedEvent, callback: { (AnyObject data) -> Void in
-                if(count(data) > 0) {
-                    let pwm = data[0] as! NSNumber
-                    self.pwm.put(pwm.floatValue)
+                if (count(data) > 0) {
+                    if let pwm = data[0] as? NSNumber {
+                        self.pwm.put(pwm.floatValue)
+                    }
                 }
             })
             
