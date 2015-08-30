@@ -19,36 +19,37 @@ let pwmChangedEvent = "pwm_changed"
 class BrewManager : NSObject {
     let host = "http://brewcore-demo.herokuapp.com/"
     
-    var stopBrewCommand: RACCommand!
-    var syncBrewCommand: RACCommand!
-    let tempChangedSignal: RACSubject
-    let brewChangedSignal: RACSubject
-    let pwmChangedSignal: RACSubject
+    var syncBrewAction: Action<BrewState, NSData, NSError>!
+    var stopBrewAction: Action<Void, NSData, NSError>!
+    let temp = MutableProperty<Float>(0.0)
+    let brew = MutableProperty(BrewState())
+    let pwm = MutableProperty<Float>(0.0)
 
     override init() {
-        tempChangedSignal = RACSubject()
-        brewChangedSignal = RACSubject()
-        pwmChangedSignal = RACSubject()
-        
-        super.init()
+         super.init()
 
-        syncBrewCommand = RACCommand(signalBlock: { (brewObject: AnyObject!) -> RACSignal! in
-            let requestResult = self.requestWithBody("api/brew", method: "POST", body: JSON(brewObject))
-            if let request = requestResult.value as NSMutableURLRequest? {
-                return NSURLConnection.rac_sendAsynchronousRequest(request)
+        syncBrewAction = Action { brewState in
+            if let jsonData:AnyObject = BrewState.encode(brewState).value {
+                let requestResult = self.requestWithBody("api/brew", method: "POST", body: JSON(jsonData))
+                if let requestResultValue = requestResult.value {
+                    return NSURLSession.sharedSession().rac_dataWithRequest(requestResultValue)
+                        |> map { data, URLResponse in
+                            return data
+                        }
+                }
             }
-            
-            if let serializationError = requestResult.error {
-                return RACSignal.error(serializationError as NSError)
+            fatalError("jsonData is nil")
+        }
+
+        stopBrewAction = Action { brewState in
+            if let request = self.requestWithBody("api/brew/stop", method: "PATCH", body: "").value {
+                return NSURLSession.sharedSession().rac_dataWithRequest(request)
+                    |> map { data, URLResponse in
+                        return data
+                    }
             }
-            
-            return RACSignal.empty()
-        })
-        
-        stopBrewCommand = RACCommand(signalBlock: { Void -> RACSignal! in
-            let request = self.requestWithBody("api/brew/stop", method: "PATCH", body: "").value!
-            return NSURLConnection.rac_sendAsynchronousRequest(request)
-        })
+            fatalError("request is nil")
+        }
     }
 
     //Mark: HTTP
@@ -61,8 +62,8 @@ class BrewManager : NSObject {
         request.HTTPMethod = method
         if method == "POST" {
             request.HTTPBody = body.rawData(options: .PrettyPrinted, error: &serializationError)
-            if serializationError != nil {
-                return Result.failure(serializationError!)
+            if let error = serializationError {
+                return Result.failure(error)
             }
         }
         
@@ -82,22 +83,24 @@ class BrewManager : NSObject {
             }
             
             socket.on(tempChangedEvent, callback: { (AnyObject data) -> Void in
-                if(count(data) > 0) {
-                    let temp = data[0] as! NSNumber
-                    self.tempChangedSignal.sendNext(temp)
+                if (count(data) > 0) {
+                    if let temp = data[0] as? NSNumber {
+                        self.temp.put(temp.floatValue)
+                    }
                 }
             })
             
             socket.on(brewChangedEvent, callback: { (AnyObject data) -> Void in
-                if(count(data) > 0) {
-                    self.brewChangedSignal.sendNext([brewChangedEvent: ContentParser.parseBrewState(JSON(data[0]))])
+                if (count(data) > 0) {
+                    self.brew.put(ContentParser.parseBrewState(JSON(data[0])))
                 }
             })
             
             socket.on(pwmChangedEvent, callback: { (AnyObject data) -> Void in
-                if(count(data) > 0) {
-                    let pwm = data[0] as! NSNumber
-                    self.pwmChangedSignal.sendNext(pwm)
+                if (count(data) > 0) {
+                    if let pwm = data[0] as? NSNumber {
+                        self.pwm.put(pwm.floatValue)
+                    }
                 }
             })
             

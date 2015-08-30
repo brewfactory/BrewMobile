@@ -13,13 +13,13 @@ import ReactiveCocoa
 class BrewViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     let brewViewModel: BrewViewModel
-
+    
     @IBOutlet weak var tempLabel: UILabel!
     @IBOutlet weak var pwmLabel: UILabel!
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var startTimeLabel: UILabel!
     @IBOutlet weak var phasesTableView: UITableView!
-    @IBOutlet weak var stopButton: UIBarButtonItem!
+    @IBOutlet weak var stopButton: UIButton!
     
     init(brewViewModel: BrewViewModel) {
         self.brewViewModel = brewViewModel
@@ -33,64 +33,48 @@ class BrewViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        stopButton.rac_command = self.brewViewModel.stopCommand
 
-        stopButton.rac_command = RACCommand() {
-            (any:AnyObject!) -> RACSignal in
-            var alert = UIAlertController(title: "Stop brewing", message: "Are you sure you want to stop brewing this wonderful beer?", preferredStyle: UIAlertControllerStyle.Alert)
-            alert.addAction(UIAlertAction(title: "No", style: .Cancel, handler: nil))
-            alert.addAction(UIAlertAction(title: "Yes", style: .Default, handler: {
-                action in
-                self.brewViewModel.stopCommand.execute(nil)
-            }))
-            self.presentViewController(alert, animated: true, completion: nil)
-            return RACSignal.empty()
-        }
-        
-        stopButton.rac_command.executionSignals.subscribeError({
-            (error: NSError!) -> Void in
-            var alert = UIAlertController(title: "Error stopping brew", message: error.localizedDescription, preferredStyle: UIAlertControllerStyle.Alert)
-            alert.addAction(UIAlertAction(title: "OK", style:.Default, handler:nil))
-            self.presentViewController(alert, animated: true, completion: nil)
-        })
+        stopButton.addTarget(self.brewViewModel.cocoaActionStop, action: CocoaAction.selector, forControlEvents: .TouchUpInside)
 
         let nib = UINib(nibName: "BrewCell", bundle: nil)
         phasesTableView.registerNib(nib, forCellReuseIdentifier: "BrewCell")
 
-        self.brewViewModel.tempChangedSignal.map {
-            (temp: AnyObject!) -> AnyObject! in
-            return NSString(format:"%.2f ˚C", temp.floatValue as Float)
-        } ~> RAC(self.tempLabel, "text")
-        
-        self.brewViewModel.pwmChangedSignal.map {
-            (pwm: AnyObject!) -> AnyObject! in
-            return "PWM: \(pwm.intValue as Int32) %"
-        } ~> RAC(self.pwmLabel, "text")
-        
-        self.brewViewModel.brewChangedSignal.subscribeNext {
-            (next: AnyObject!) -> Void in
-            self.phasesTableView.reloadData()
-            
-            if self.brewViewModel.state.phases.count > 0 {
-                self.nameLabel.text = "Brewing \(self.brewViewModel.state.name) at"
-            } else {
-                self.nameLabel.text = "We are not brewing :(\nHow is it possible?"
+        self.tempLabel.rac_text <~ self.brewViewModel.temp.producer
+            |> map { temp in
+                return String(format:"%.2f ˚C", temp)
             }
-            
-            self.startTimeLabel.text = self.brewViewModel.state.phases.count > 0 ? "starting \(self.brewViewModel.state.startTime)" : ""
-        }
+            |> catch { _ in SignalProducer<String, NoError>.empty }
+        
+        self.pwmLabel.rac_text <~ self.brewViewModel.pwm.producer
+            |> map { pwm in
+                return String(format:"PWM %g %%", pwm)
+            }
+            |> catch { _ in SignalProducer<String, NoError>.empty }
+        
+        self.brewViewModel.brew.producer
+            |> on (next: { brewState in
+                self.phasesTableView.reloadData()
+                
+                if brewState.phases.value.count > 0 {
+                    self.nameLabel.text = "Brewing \(brewState.name.value) at"
+                } else {
+                    self.nameLabel.text = "We are not brewing :(\nHow is it possible?"
+                }
+                
+                self.startTimeLabel.text = brewState.phases.value.count > 0 ? "starting \(brewState.startTime.value)" : ""
+            })
+            |> start()
     }
     
     func stateText(brewPhase: BrewPhase) -> String {
-        if self.brewViewModel.state.paused {
+        if self.brewViewModel.brew.value.paused.value {
             return "paused"
         }
         switch brewPhase.state  {
         case State.FINISHED:
             return "\(brewPhase.state.stateDescription()) at \(brewPhase.jobEnd)"
         case State.HEATING:
-            if self.brewViewModel.temp > brewPhase.temp { return "cooling" }
+            if self.brewViewModel.temp.value > brewPhase.temp { return "cooling" }
             fallthrough
         default:
             return brewPhase.state.stateDescription()
@@ -100,15 +84,16 @@ class BrewViewController: UIViewController, UITableViewDelegate, UITableViewData
     // MARK: UITableViewDataSource
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.brewViewModel.state.phases.count
+        return self.brewViewModel.brew.value.phases.value.count
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("BrewCell", forIndexPath: indexPath) as! BrewCell
-        if self.brewViewModel.state.phases.count > indexPath.row  {
-            let brewPhase = self.brewViewModel.state.phases[indexPath.row]
+        if self.brewViewModel.brew.value.phases.value.count > indexPath.row  {
+            let brewPhase = self.brewViewModel.brew.value.phases.value[indexPath.row]
             
-            cell.minLabel.text = brewPhase.jobEnd != "" ? "\(brewPhase.min) mins - \(Int(brewPhase.temp)) ˚C, ends: \(brewPhase.jobEnd)"  : "\(brewPhase.min) mins - \(Int(brewPhase.temp)) ˚C"
+            let showEnd: Bool = brewPhase.tempReached && brewPhase.inProgress
+            cell.minLabel.text = showEnd ? "\(brewPhase.min) mins - \(Int(brewPhase.temp)) ˚C, ends: \(brewPhase.jobEnd)" : "\(brewPhase.min) mins - \(Int(brewPhase.temp)) ˚C"
             cell.statusLabel.text = "\(self.stateText(brewPhase))"
             
             UIView.animateWithDuration(0.3, animations: { () -> Void in
@@ -119,7 +104,6 @@ class BrewViewController: UIViewController, UITableViewDelegate, UITableViewData
         
         return cell
     }
-    
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

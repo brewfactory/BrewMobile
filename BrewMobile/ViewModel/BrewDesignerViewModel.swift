@@ -12,47 +12,34 @@ import ReactiveCocoa
 class BrewDesignerViewModel : NSObject {
 
     let brewManager: BrewManager
-    var hasPhasesSignal: RACSignal!
-    var validBeerSignal: RACSignal!
-    var syncCommand: RACCommand!
+    
+    var cocoaActionSync: CocoaAction!
 
-    var name = ""
-    var phases = PhaseArray()
-    var startTime = ""
+    let phases = MutableProperty(PhaseArray())
+    
+    let name = MutableProperty("")
+    let startTime = MutableProperty("")
+    let brewState = MutableProperty(BrewState())
+    let hasPhases = MutableProperty(false)
+    let validName = MutableProperty(false)
+    let validBeer = MutableProperty(false)
 
+    var newState: BrewState = BrewState()
+    
     init(brewManager: BrewManager) {
         self.brewManager = brewManager
-        
         super.init()
 
-        hasPhasesSignal = RACObserve(self, "phases").map {
-            (aPhases: AnyObject!) -> AnyObject! in
-            let phasesArray = aPhases as! PhaseArray
-            return phasesArray.count > 0
-        }.distinctUntilChanged()
-        
-        let validBeerNameSignal = RACObserve(self, "name").map {
-            (aName: AnyObject!) -> AnyObject! in
-            let nameText = aName as! String
-            return count(nameText) > 0
-        }.distinctUntilChanged()
-        
-        validBeerSignal = RACSignal.combineLatest([validBeerNameSignal, hasPhasesSignal]).map {
-            (tuple: AnyObject!) -> AnyObject in
-            let validBeer = tuple as! RACTuple
-            
-            let validName = validBeer.first as! Bool
-            let validPhases = validBeer.second as! Bool
-            
-            return validName && validPhases
-        }
-        
-        syncCommand = RACCommand() {
-            Void -> RACSignal in
-            let brewState = BrewState(name: self.name, startTime: self.startTime, phases: self.phases, paused: false, inProgress: false)
-            let syncSignal = brewManager.syncBrewCommand.execute(BrewState.encode(brewState).value)
-            return syncSignal.deliverOn(RACScheduler.mainThreadScheduler())
-        }
+        brewState.put(BrewState(name: name, startTime: startTime, phases: self.phases, paused: false, inProgress: false))
+
+        hasPhases <~ self.phases.producer
+            |> flatMap(.Concat) { SignalProducer(value: $0.count > 0) }
+        validName <~ self.brewState.producer
+            |> flatMap(.Concat) { SignalProducer(value: count($0.name.value) > 0) }
+        validBeer <~ combineLatest(hasPhases.producer, validName.producer)
+            |> map { $0 && $1 }
+
+        cocoaActionSync = CocoaAction(brewManager.syncBrewAction, input: brewState.value)
     }
     
 }

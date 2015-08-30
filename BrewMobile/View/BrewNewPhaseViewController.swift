@@ -20,8 +20,7 @@ class BrewNewPhaseViewController : UIViewController {
 
     let brewDesignerViewModel: BrewDesignerViewModel
     
-    var min = Int(0)
-    var temp = Int(20)
+    var cocoaActionAdd: CocoaAction!
 
     init(brewDesignerViewModel: BrewDesignerViewModel) {
         self.brewDesignerViewModel = brewDesignerViewModel
@@ -35,73 +34,91 @@ class BrewNewPhaseViewController : UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        addButton.rac_command = RACCommand() {
-            (any:AnyObject!) -> RACSignal in
-            let newPhase = BrewPhase(jobEnd:"", min:self.min, temp:Float(self.temp), tempReached:false, inProgress:false)
-            var newPhases = self.brewDesignerViewModel.phases
+        let addAction = Action<Void, Void, NSError> {
+            let newPhase = BrewPhase(jobEnd:"", min:Int(self.minStepper.value), temp:Float(self.tempStepper.value), tempReached:false, inProgress:false)
+            var newPhases = self.brewDesignerViewModel.phases.value
             newPhases.append(newPhase)
-            self.brewDesignerViewModel.setValue(newPhases, forKeyPath: "phases")
-            return RACSignal.empty()
+            self.brewDesignerViewModel.phases.put(newPhases)
+            return SignalProducer.empty
         }
-        
-        addButton.rac_command.executionSignals.subscribeNext { (next: AnyObject!) -> Void in
-            self.feedbackLabel.text = "Phase added"
-            UIView.animateWithDuration(0.7, animations: { () -> Void in
-                self.feedbackLabel.alpha = 1.0
-                }, completion: { (Bool) -> Void in
+
+        cocoaActionAdd = CocoaAction(addAction, input: ())
+        addButton.addTarget(cocoaActionAdd, action: CocoaAction.selector, forControlEvents: .TouchUpInside)
+
+        addAction.executing.producer
+            |> on( next: { executing in
+                if executing {
+                    self.feedbackLabel.text = "Phase added"
                     UIView.animateWithDuration(0.7, animations: { () -> Void in
-                        self.feedbackLabel.alpha = 0.0
-                        }, completion: nil)
+                        self.feedbackLabel.alpha = 1.0
+                        }, completion: { (Bool) -> Void in
+                            UIView.animateWithDuration(0.7, animations: { () -> Void in
+                                self.feedbackLabel.alpha = 0.0
+                                }, completion: nil)
+                    })
+                }
             })
-        }
+            |> start()
 
-        // MARK: RACSignals for controls
+        let minStepperSignalProducer = minStepper.rac_signalForControlEvents(.ValueChanged).toSignalProducer()
+            |> map(self.mapStepper)
+            |> catch(self.catcher)
+
+        let tempStepperSignalProducer = tempStepper.rac_signalForControlEvents(.ValueChanged).toSignalProducer()
+            |> map(self.mapStepper)
+            |> catch(self.catcher)
         
-        func mappedStepperSignal(stepper: UIStepper) -> RACSignal {
-            return stepper.rac_signalForControlEvents(.ValueChanged).map {
-                (any: AnyObject!) -> AnyObject! in
-                let stepper = any as! UIStepper
-                
-                return Int(stepper.value)
-            }
-        }
+        let minTextSignalProducer = minTextField.rac_textSignalProducer()
+            |> filter(self.nonEmptyFilter)
+            |> map(self.toIntConverter)
+            |> catch(self.catcher)
+
+        let tempTextSignalProducer = tempTextField.rac_textSignalProducer()
+            |> filter(self.nonEmptyFilter)
+            |> map(self.toIntConverter)
+            |> catch(self.catcher)
+
+        SignalProducer(values: [minStepperSignalProducer, minTextSignalProducer])
+            |> flatten(.Merge)
+            |> on( next: { min in
+                self.minStepper.value = Double(Int(min))
+                self.minTextField.text = String(Int(min))
+            })
+            |> start()
         
-        func mappedTextSignal(textField: UITextField) -> RACSignal {
-            return textField.rac_textSignal().map {
-                (any: AnyObject!) -> AnyObject! in
-                let text = any as! String
-                
-                return text.toInt()
-            }
-        }
-
-        let minStepperSignal = mappedStepperSignal(minStepper)
-        let tempStepperSignal = mappedStepperSignal(tempStepper)
-
-        let minTextSignal = mappedTextSignal(minTextField)
-        let tempTextSignal = mappedTextSignal(tempTextField)
-
-        minTextSignal.merge(minStepperSignal).subscribeNext {
-                (next: AnyObject!) -> Void in
-            if let min = next as? Int {
-                self.min = min
-                self.minStepper.value = Double(self.min)
-                self.minTextField.text = String(self.min)
-            }
-        }
-
-        tempTextSignal.merge(tempStepperSignal).subscribeNext {
-                (next: AnyObject!) -> Void in
-            if let temp = next as? Int {
-                self.temp = temp
-                self.tempStepper.value = Double(self.temp)
-                self.tempTextField.text = String(self.temp)
-            }
-        }
+        SignalProducer(values: [tempStepperSignalProducer, tempTextSignalProducer])
+            |> flatten(.Merge)
+            |> on( next: { temp in
+                self.tempStepper.value = Double(Int(temp))
+                self.tempTextField.text = String(Int(temp))
+            })
+            |> start()
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
 
+    
+    // MARK: helper functions
+    
+    func mapStepper(aStepper: AnyObject?) -> Int {
+        if let stepper = aStepper as? UIStepper {
+            return Int(stepper.value)
+        }
+        fatalError("stepper should be a UIStepper")
+    }
+    
+    func catcher<E>(aInput: E) -> SignalProducer<Int, NoError> {
+        return SignalProducer.empty
+    }
+    
+    func nonEmptyFilter(aInput: String) -> Bool {
+        return aInput != ""
+    }
+    
+    func toIntConverter(aInput: String) -> Int {
+        return aInput.toInt()!
+    }
+    
 }

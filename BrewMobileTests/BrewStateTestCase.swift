@@ -25,27 +25,27 @@ class BrewStateTestCase: XCTestCase {
     }
 
     func testName() {
-        XCTAssertNotNil(brewState.name, "should have name")
-        XCTAssertTrue(brewState.name == "Very IPA", "expected to be equal")
+        XCTAssertNotNil(brewState.name.value, "should have name")
+        XCTAssertTrue(brewState.name.value == "Very IPA", "expected to be equal")
     }
     
     func testStartTime() {
-        XCTAssertNotNil(brewState.startTime, "should have startTime")
-        XCTAssertTrue(brewState.startTime == "10:30", "expected to be equal")
+        XCTAssertNotNil(brewState.startTime.value, "should have startTime")
+        XCTAssertTrue(brewState.startTime.value == "10:30", "expected to be equal")
     }
     
     func testPhases() {
-        XCTAssertEqual(brewState.phases[0] as BrewPhase, brewPhase, "expected to be equal")
+        XCTAssertEqual(brewState.phases.value[0] as BrewPhase, brewPhase, "expected to be equal")
     }
     
     func testPaused() {
-        XCTAssertNotNil(brewState.paused, "should have paused")
-        XCTAssertFalse(brewState.paused, "expected to be false")
+        XCTAssertNotNil(brewState.paused.value, "should have paused")
+        XCTAssertFalse(brewState.paused.value, "expected to be false")
     }
     
     func testInProgress() {
-        XCTAssertNotNil(brewState.inProgress, "should have inProgress")
-        XCTAssertTrue(brewState.inProgress, "expected to be true")
+        XCTAssertNotNil(brewState.inProgress.value, "should have inProgress")
+        XCTAssertTrue(brewState.inProgress.value, "expected to be true")
     }
 
 
