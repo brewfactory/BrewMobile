@@ -119,18 +119,17 @@ class BrewDesignerViewController : UIViewController, UITableViewDataSource, UITa
             }
             |> catch { _ in SignalProducer<NSDate, NoError>.empty }
         
-        self.startTimeTextField.rac_text.put(self.formatDate(NSDate()))
+        let nowDate = NSDate()
+        self.startTimeTextField.rac_text.put(self.formatDateToShow(nowDate))
+        self.brewDesignerViewModel.startTime.put(self.formatDateToUpdate(nowDate))
+
         self.startTimeTextField.rac_text <~ pickerDateSignalProducer
-            |> map { self.formatDate($0) }
+            |> map { self.formatDateToShow($0) }
             |> catch { _ in SignalProducer<String, NoError>.empty }
 
         self.brewDesignerViewModel.startTime <~ pickerDateSignalProducer
             |> map { date in
-                let isoDateFormatter = ISO8601DateFormatter()
-                isoDateFormatter.defaultTimeZone = NSTimeZone.defaultTimeZone()
-                isoDateFormatter.includeTime = true
-                
-                return isoDateFormatter.stringFromDate(date)
+                return self.formatDateToUpdate(date)
             }
             |> catch { _ in SignalProducer<String, NoError>.empty }
     }
@@ -144,11 +143,20 @@ class BrewDesignerViewController : UIViewController, UITableViewDataSource, UITa
         self.pickerBgView.hidden = true
     }
 
-    func formatDate(date: NSDate) -> String {
+    func formatDateToShow(date: NSDate) -> String {
         let dateFormatter = NSDateFormatter()
         dateFormatter.dateFormat = "YYYY.MM.dd. HH:mm"
         return dateFormatter.stringFromDate(date as NSDate)
     }
+    
+    func formatDateToUpdate(date: NSDate) -> String {
+        let isoDateFormatter = ISO8601DateFormatter()
+        isoDateFormatter.defaultTimeZone = NSTimeZone.defaultTimeZone()
+        isoDateFormatter.includeTime = true
+        
+        return isoDateFormatter.stringFromDate(date)
+    }
+
     // MARK: UITableViewDataSource
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
@@ -187,7 +195,7 @@ class BrewDesignerViewController : UIViewController, UITableViewDataSource, UITa
             if self.brewDesignerViewModel.phases.value.count > indexPath.row {
                 var newPhases = self.brewDesignerViewModel.phases.value
                 newPhases.removeAtIndex(indexPath.row)
-                self.brewDesignerViewModel.setValue(newPhases, forKeyPath: "phases")
+                self.brewDesignerViewModel.phases.put(newPhases)
                 tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Automatic)
             }
         }
