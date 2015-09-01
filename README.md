@@ -36,4 +36,4 @@ $ open BrewMobile.xcworkspace/
 
 ## The UI
 
-![Brewing a beer](http://brewfactory.org/BrewMobile/img/9.png)![Designing a brew](http://brewfactory.org/BrewMobile/img/8.png)
+![Brewing a beer](http://brewfactory.org/BrewMobile/img/9_small.png)![Designing a brew](http://brewfactory.org/BrewMobile/img/8_small.png)
