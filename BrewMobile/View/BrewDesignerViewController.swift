@@ -108,7 +108,7 @@ class BrewDesignerViewController : UIViewController, UITableViewDataSource, UITa
     
         self.pickerBgView.rac_hidden <~ startTimeTextFieldSignalProducer
             .map { _ in false }
-            .catch { _ in SignalProducer<Bool, NoError>.empty }
+            .flatMapError { _ in SignalProducer<Bool, NoError>.empty }
 
         let pickerDateSignalProducer = self.startTimePicker.rac_signalForControlEvents(.ValueChanged).toSignalProducer()
             .map { picker in
@@ -117,7 +117,7 @@ class BrewDesignerViewController : UIViewController, UITableViewDataSource, UITa
                 }
                 fatalError("this should not happen")
             }
-            .catch { _ in SignalProducer<NSDate, NoError>.empty }
+            .flatMapError { _ in SignalProducer<NSDate, NoError>.empty }
         
         let nowDate = NSDate()
         self.startTimeTextField.rac_text.put(self.formatDateToShow(nowDate))
@@ -125,13 +125,13 @@ class BrewDesignerViewController : UIViewController, UITableViewDataSource, UITa
 
         self.startTimeTextField.rac_text <~ pickerDateSignalProducer
             .map { self.formatDateToShow($0) }
-            .catch { _ in SignalProducer<String, NoError>.empty }
+            .flatMapError { _ in SignalProducer<String, NoError>.empty }
 
         self.brewDesignerViewModel.startTime <~ pickerDateSignalProducer
             .map { date in
                 return self.formatDateToUpdate(date)
             }
-            .catch { _ in SignalProducer<String, NoError>.empty }
+            .flatMapError { _ in SignalProducer<String, NoError>.empty }
     }
     
     override func didReceiveMemoryWarning() {

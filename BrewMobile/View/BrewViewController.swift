@@ -43,13 +43,13 @@ class BrewViewController: UIViewController, UITableViewDelegate, UITableViewData
             .map { temp in
                 return String(format:"%.2f ˚C", temp)
             }
-            .catch { _ in SignalProducer<String, NoError>.empty }
+            .catflatMapErrorch { _ in SignalProducer<String, NoError>.empty }
         
         self.pwmLabel.rac_text <~ self.brewViewModel.pwm.producer
             .map { pwm in
                 return String(format:"PWM %g %%", pwm)
             }
-            .catch { _ in SignalProducer<String, NoError>.empty }
+            .flatMapError { _ in SignalProducer<String, NoError>.empty }
         
         self.brewViewModel.brew.producer
             .on (next: { brewState in

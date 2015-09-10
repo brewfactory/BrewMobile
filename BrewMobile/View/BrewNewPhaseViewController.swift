@@ -62,21 +62,21 @@ class BrewNewPhaseViewController : UIViewController {
 
         let minStepperSignalProducer = minStepper.rac_signalForControlEvents(.ValueChanged).toSignalProducer()
             .map(self.mapStepper)
-            .catch(self.catcher)
+            .flatMapError(self.catcher)
 
         let tempStepperSignalProducer = tempStepper.rac_signalForControlEvents(.ValueChanged).toSignalProducer()
             .map(self.mapStepper)
-            .catchError(self.catcher)
+            .flatMapError(self.catcher)
         
         let minTextSignalProducer = minTextField.rac_textSignalProducer()
             .filter(self.nonEmptyFilter)
             .map(self.toIntConverter)
-            .catch(self.catcher)
+            .flatMapError(self.catcher)
 
         let tempTextSignalProducer = tempTextField.rac_textSignalProducer()
             .filter(self.nonEmptyFilter)
             .map(self.toIntConverter)
-            .catch(self.catcher)
+            .flatMapError(self.catcher)
 
         SignalProducer(values: [minStepperSignalProducer, minTextSignalProducer])
             .flatten(.Merge)
