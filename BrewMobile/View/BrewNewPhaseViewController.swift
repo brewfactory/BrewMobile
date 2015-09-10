@@ -46,7 +46,7 @@ class BrewNewPhaseViewController : UIViewController {
         addButton.addTarget(cocoaActionAdd, action: CocoaAction.selector, forControlEvents: .TouchUpInside)
 
         addAction.executing.producer
-            |> on( next: { executing in
+            .on( next: { executing in
                 if executing {
                     self.feedbackLabel.text = "Phase added"
                     UIView.animateWithDuration(0.7, animations: { () -> Void in
@@ -58,41 +58,41 @@ class BrewNewPhaseViewController : UIViewController {
                     })
                 }
             })
-            |> start()
+            .start()
 
         let minStepperSignalProducer = minStepper.rac_signalForControlEvents(.ValueChanged).toSignalProducer()
-            |> map(self.mapStepper)
-            |> catch(self.catcher)
+            .map(self.mapStepper)
+            .catch(self.catcher)
 
         let tempStepperSignalProducer = tempStepper.rac_signalForControlEvents(.ValueChanged).toSignalProducer()
-            |> map(self.mapStepper)
-            |> catch(self.catcher)
+            .map(self.mapStepper)
+            .catchError(self.catcher)
         
         let minTextSignalProducer = minTextField.rac_textSignalProducer()
-            |> filter(self.nonEmptyFilter)
-            |> map(self.toIntConverter)
-            |> catch(self.catcher)
+            .filter(self.nonEmptyFilter)
+            .map(self.toIntConverter)
+            .catch(self.catcher)
 
         let tempTextSignalProducer = tempTextField.rac_textSignalProducer()
-            |> filter(self.nonEmptyFilter)
-            |> map(self.toIntConverter)
-            |> catch(self.catcher)
+            .filter(self.nonEmptyFilter)
+            .map(self.toIntConverter)
+            .catch(self.catcher)
 
         SignalProducer(values: [minStepperSignalProducer, minTextSignalProducer])
-            |> flatten(.Merge)
-            |> on( next: { min in
+            .flatten(.Merge)
+            .on( next: { min in
                 self.minStepper.value = Double(Int(min))
                 self.minTextField.text = String(Int(min))
             })
-            |> start()
+            .start()
         
         SignalProducer(values: [tempStepperSignalProducer, tempTextSignalProducer])
-            |> flatten(.Merge)
-            |> on( next: { temp in
+            .flatten(.Merge)
+            .on( next: { temp in
                 self.tempStepper.value = Double(Int(temp))
                 self.tempTextField.text = String(Int(temp))
             })
-            |> start()
+            .start()
     }
 
     override func didReceiveMemoryWarning() {

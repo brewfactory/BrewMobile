@@ -81,14 +81,14 @@ class BrewDesignerViewController : UIViewController, UITableViewDataSource, UITa
         addButton.addTarget(cocoaActionAdd, action: CocoaAction.selector, forControlEvents: .TouchUpInside)
 
         self.brewManager.syncBrewAction.errors
-            |> observeOn(UIScheduler())
-            |> observe(next: { error in
+            .observeOn(UIScheduler())
+            .observe(next: { error in
                 UIAlertView(title: "Error creating brew", message: error.localizedDescription, delegate: nil, cancelButtonTitle: "OK").show()
             })
 
         self.brewDesignerViewModel.hasPhases.producer
-            |> observeOn(UIScheduler())
-            |> start( next: { hasPhases in
+            .observeOn(UIScheduler())
+            .start( next: { hasPhases in
                 if !self.phasesTableView.editing {
                     self.phasesTableView.reloadData()
                 }
@@ -102,36 +102,36 @@ class BrewDesignerViewController : UIViewController, UITableViewDataSource, UITa
 
         let startTimeTextFieldSignalProducer = self.startTimeTextField.rac_signalForControlEvents(.EditingDidBegin).toSignalProducer()
         startTimeTextFieldSignalProducer
-            |> start(next: { _ in
+            .start(next: { _ in
                 self.dismissKeyboards()
             })
     
         self.pickerBgView.rac_hidden <~ startTimeTextFieldSignalProducer
-            |> map { _ in false }
-            |> catch { _ in SignalProducer<Bool, NoError>.empty }
+            .map { _ in false }
+            .catch { _ in SignalProducer<Bool, NoError>.empty }
 
         let pickerDateSignalProducer = self.startTimePicker.rac_signalForControlEvents(.ValueChanged).toSignalProducer()
-            |> map { picker in
+            .map { picker in
                 if let datePicker = picker as? UIDatePicker {
                     return datePicker.date
                 }
                 fatalError("this should not happen")
             }
-            |> catch { _ in SignalProducer<NSDate, NoError>.empty }
+            .catch { _ in SignalProducer<NSDate, NoError>.empty }
         
         let nowDate = NSDate()
         self.startTimeTextField.rac_text.put(self.formatDateToShow(nowDate))
         self.brewDesignerViewModel.startTime.put(self.formatDateToUpdate(nowDate))
 
         self.startTimeTextField.rac_text <~ pickerDateSignalProducer
-            |> map { self.formatDateToShow($0) }
-            |> catch { _ in SignalProducer<String, NoError>.empty }
+            .map { self.formatDateToShow($0) }
+            .catch { _ in SignalProducer<String, NoError>.empty }
 
         self.brewDesignerViewModel.startTime <~ pickerDateSignalProducer
-            |> map { date in
+            .map { date in
                 return self.formatDateToUpdate(date)
             }
-            |> catch { _ in SignalProducer<String, NoError>.empty }
+            .catch { _ in SignalProducer<String, NoError>.empty }
     }
     
     override func didReceiveMemoryWarning() {

@@ -54,8 +54,8 @@ extension UILabel {
 extension UITextField {
     func rac_textSignalProducer() -> SignalProducer<String, NoError> {
         return self.rac_textSignal().toSignalProducer()
-            |> map { $0 as! String }
-            |> catch { _ in SignalProducer<String, NoError>.empty }
+            .map { $0 as! String }
+            .catch { _ in SignalProducer<String, NoError>.empty }
     }
 }
 

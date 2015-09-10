@@ -33,7 +33,7 @@ class BrewManager : NSObject {
                 let requestResult = self.requestWithBody("api/brew", method: "POST", body: JSON(jsonData))
                 if let requestResultValue = requestResult.value {
                     return NSURLSession.sharedSession().rac_dataWithRequest(requestResultValue)
-                        |> map { data, URLResponse in
+                        .map { data, URLResponse in
                             return data
                         }
                 }
@@ -44,7 +44,7 @@ class BrewManager : NSObject {
         stopBrewAction = Action { brewState in
             if let request = self.requestWithBody("api/brew/stop", method: "PATCH", body: "").value {
                 return NSURLSession.sharedSession().rac_dataWithRequest(request)
-                    |> map { data, URLResponse in
+                    .map { data, URLResponse in
                         return data
                     }
             }

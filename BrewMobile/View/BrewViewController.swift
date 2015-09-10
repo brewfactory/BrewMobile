@@ -40,19 +40,19 @@ class BrewViewController: UIViewController, UITableViewDelegate, UITableViewData
         phasesTableView.registerNib(nib, forCellReuseIdentifier: "BrewCell")
 
         self.tempLabel.rac_text <~ self.brewViewModel.temp.producer
-            |> map { temp in
+            .map { temp in
                 return String(format:"%.2f ˚C", temp)
             }
-            |> catch { _ in SignalProducer<String, NoError>.empty }
+            .catch { _ in SignalProducer<String, NoError>.empty }
         
         self.pwmLabel.rac_text <~ self.brewViewModel.pwm.producer
-            |> map { pwm in
+            .map { pwm in
                 return String(format:"PWM %g %%", pwm)
             }
-            |> catch { _ in SignalProducer<String, NoError>.empty }
+            .catch { _ in SignalProducer<String, NoError>.empty }
         
         self.brewViewModel.brew.producer
-            |> on (next: { brewState in
+            .on (next: { brewState in
                 self.phasesTableView.reloadData()
                 
                 if brewState.phases.value.count > 0 {
@@ -63,7 +63,7 @@ class BrewViewController: UIViewController, UITableViewDelegate, UITableViewData
                 
                 self.startTimeLabel.text = brewState.phases.value.count > 0 ? "starting \(brewState.startTime.value)" : ""
             })
-            |> start()
+            .start()
     }
     
     func stateText(brewPhase: BrewPhase) -> String {
