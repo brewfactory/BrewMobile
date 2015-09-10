@@ -88,7 +88,7 @@ class BrewDesignerViewController : UIViewController, UITableViewDataSource, UITa
 
         self.brewDesignerViewModel.hasPhases.producer
             .observeOn(UIScheduler())
-            .start( next: { hasPhases in
+            .startWithNext { hasPhases in
                 if !self.phasesTableView.editing {
                     self.phasesTableView.reloadData()
                 }
@@ -102,9 +102,9 @@ class BrewDesignerViewController : UIViewController, UITableViewDataSource, UITa
 
         let startTimeTextFieldSignalProducer = self.startTimeTextField.rac_signalForControlEvents(.EditingDidBegin).toSignalProducer()
         startTimeTextFieldSignalProducer
-            .start(next: { _ in
+            .startWithNext { _ in
                 self.dismissKeyboards()
-            })
+            }
     
         self.pickerBgView.rac_hidden <~ startTimeTextFieldSignalProducer
             .map { _ in false }
