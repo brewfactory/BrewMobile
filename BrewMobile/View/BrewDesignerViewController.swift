@@ -64,7 +64,7 @@ class BrewDesignerViewController : UIViewController, UITableViewDataSource, UITa
         })
 
         let trashAction = Action<Void, Void, NSError>(enabledIf: self.brewDesignerViewModel.hasPhases, {
-            self.brewDesignerViewModel.phases.put(PhaseArray())
+            self.brewDesignerViewModel.phases(PhaseArray())
             self.nameTextField.text = ""
             self.phasesTableView.reloadData()
             
@@ -120,8 +120,8 @@ class BrewDesignerViewController : UIViewController, UITableViewDataSource, UITa
             .flatMapError { _ in SignalProducer<NSDate, NoError>.empty }
         
         let nowDate = NSDate()
-        self.startTimeTextField.rac_text.put(self.formatDateToShow(nowDate))
-        self.brewDesignerViewModel.startTime.put(self.formatDateToUpdate(nowDate))
+        self.startTimeTextField.rac_text(self.formatDateToShow(nowDate))
+        self.brewDesignerViewModel.startTime(self.formatDateToUpdate(nowDate))
 
         self.startTimeTextField.rac_text <~ pickerDateSignalProducer
             .map { self.formatDateToShow($0) }
@@ -195,7 +195,7 @@ class BrewDesignerViewController : UIViewController, UITableViewDataSource, UITa
             if self.brewDesignerViewModel.phases.value.count > indexPath.row {
                 var newPhases = self.brewDesignerViewModel.phases.value
                 newPhases.removeAtIndex(indexPath.row)
-                self.brewDesignerViewModel.phases.put(newPhases)
+                self.brewDesignerViewModel.phases(newPhases)
                 tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Automatic)
             }
         }
@@ -207,7 +207,7 @@ class BrewDesignerViewController : UIViewController, UITableViewDataSource, UITa
         var newPhases = self.brewDesignerViewModel.phases.value
         newPhases[destinationIndexPath.row] = newPhases[sourceIndexPath.row]
         newPhases[sourceIndexPath.row] = destinationPhase
-        self.brewDesignerViewModel.phases.put(newPhases)
+        self.brewDesignerViewModel.phases(newPhases)
         tableView.reloadData()
     }
     

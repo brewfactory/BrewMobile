@@ -38,7 +38,7 @@ class BrewNewPhaseViewController : UIViewController {
             let newPhase = BrewPhase(jobEnd:"", min:Int(self.minStepper.value), temp:Float(self.tempStepper.value), tempReached:false, inProgress:false)
             var newPhases = self.brewDesignerViewModel.phases.value
             newPhases.append(newPhase)
-            self.brewDesignerViewModel.phases.put(newPhases)
+            self.brewDesignerViewModel.phases(newPhases)
             return SignalProducer.empty
         }
 
