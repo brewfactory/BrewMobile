@@ -82,9 +82,9 @@ class BrewDesignerViewController : UIViewController, UITableViewDataSource, UITa
 
         self.brewManager.syncBrewAction.errors
             .observeOn(UIScheduler())
-            .observe(next: { error in
+            .observeNext { error in
                 UIAlertView(title: "Error creating brew", message: error.localizedDescription, delegate: nil, cancelButtonTitle: "OK").show()
-            })
+            }
 
         self.brewDesignerViewModel.hasPhases.producer
             .observeOn(UIScheduler())
@@ -96,7 +96,7 @@ class BrewDesignerViewController : UIViewController, UITableViewDataSource, UITa
                 if !(hasPhases as Bool) {
                     self.phasesTableView.editing = false
                 }
-            })
+            }
 
         self.brewDesignerViewModel.name <~ self.nameTextField.rac_textSignalProducer()
 
@@ -214,7 +214,7 @@ class BrewDesignerViewController : UIViewController, UITableViewDataSource, UITa
     //MARK: UIGestureRecognizerDelegate
 
     func gestureRecognizer(gestureRecognizer: UIGestureRecognizer, shouldReceiveTouch touch: UITouch) -> Bool {
-        if !touch.view.isDescendantOfView(nameTextField) && !touch.view.isDescendantOfView(pickerBgView) {
+        if !touch.view!.isDescendantOfView(nameTextField) && !touch.view!.isDescendantOfView(pickerBgView) {
             dismissKeyboards()
             return false
         }
