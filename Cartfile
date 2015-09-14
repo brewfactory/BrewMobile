@@ -1,4 +1,4 @@
 git "https://github.com/vasarhelyia/SIOSocket" "e3d4f2cd09eab6a1ce0980b3c9fbec2a81a6c4bd"
-git "https://github.com/vasarhelyia/iso-8601-date-formatter" "103ee049f0ce2fd66b16b814adbc6b741959ce64"
+github "boredzo/iso-8601-date-formatter" "feec66e8701f70b794e6690d22530c2d7ae04e4a"
 github "ReactiveCocoa/ReactiveCocoa" "v3.0.0"
 github "SwiftyJSON/SwiftyJSON" >= 2.2.1

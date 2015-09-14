@@ -22,33 +22,57 @@
          </BuildActionEntry>
          <BuildActionEntry
             buildForTesting = "YES"
-            buildForRunning = "YES"
+            buildForRunning = "NO"
             buildForProfiling = "NO"
             buildForArchiving = "NO"
-            buildForAnalyzing = "YES">
+            buildForAnalyzing = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "027E31C11A52DFCE00802098"
-               BuildableName = "ISO8601DateFormatterTests.xctest"
-               BlueprintName = "ISO8601DateFormatterTests"
+               BlueprintIdentifier = "31AEAFDC17546BC800BD292F"
+               BuildableName = "ISO8601ForCocoaTests.xctest"
+               BlueprintName = "ISO8601ForCocoaTests"
+               ReferencedContainer = "container:ISO8601ForCocoa.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "NO"
+            buildForProfiling = "NO"
+            buildForArchiving = "NO"
+            buildForAnalyzing = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "31A271C317CE9B5B00E3FA7D"
+               BuildableName = "ISO8601ForCocoaTouchTests.xctest"
+               BlueprintName = "ISO8601ForCocoaTouchTests"
                ReferencedContainer = "container:ISO8601ForCocoa.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
    </BuildAction>
    <TestAction
+      buildConfiguration = "Debug"
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
-      shouldUseLaunchSchemeArgsEnv = "YES"
-      buildConfiguration = "Debug">
+      shouldUseLaunchSchemeArgsEnv = "YES">
       <Testables>
          <TestableReference
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "027E31C11A52DFCE00802098"
-               BuildableName = "ISO8601DateFormatterTests.xctest"
-               BlueprintName = "ISO8601DateFormatterTests"
+               BlueprintIdentifier = "31AEAFDC17546BC800BD292F"
+               BuildableName = "ISO8601ForCocoaTests.xctest"
+               BlueprintName = "ISO8601ForCocoaTests"
+               ReferencedContainer = "container:ISO8601ForCocoa.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "31A271C317CE9B5B00E3FA7D"
+               BuildableName = "ISO8601ForCocoaTouchTests.xctest"
+               BlueprintName = "ISO8601ForCocoaTouchTests"
                ReferencedContainer = "container:ISO8601ForCocoa.xcodeproj">
             </BuildableReference>
          </TestableReference>
@@ -62,15 +86,18 @@
             ReferencedContainer = "container:ISO8601ForCocoa.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
+      <AdditionalOptions>
+      </AdditionalOptions>
    </TestAction>
    <LaunchAction
+      buildConfiguration = "Debug"
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       launchStyle = "0"
       useCustomWorkingDirectory = "NO"
-      buildConfiguration = "Debug"
       ignoresPersistentStateOnLaunch = "NO"
       debugDocumentVersioning = "YES"
+      debugServiceExtension = "internal"
       allowLocationSimulation = "YES">
       <MacroExpansion>
          <BuildableReference
@@ -85,10 +112,10 @@
       </AdditionalOptions>
    </LaunchAction>
    <ProfileAction
+      buildConfiguration = "Release"
       shouldUseLaunchSchemeArgsEnv = "YES"
       savedToolIdentifier = ""
       useCustomWorkingDirectory = "NO"
-      buildConfiguration = "Release"
       debugDocumentVersioning = "YES">
       <MacroExpansion>
          <BuildableReference

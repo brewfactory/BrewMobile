@@ -11,18 +11,18 @@
 		027E31D11A52DFE200802098 /* ISO8601DateFormatter.h in Headers */ = {isa = PBXBuildFile; fileRef = 31AEAFF517546BFA00BD292F /* ISO8601DateFormatter.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		027E31D21A52DFEC00802098 /* ISO8601DateFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = 31AEAFF617546BFA00BD292F /* ISO8601DateFormatter.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		3119ABEF17FCF8F0003412AE /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3119ABEE17FCF8F0003412AE /* UIKit.framework */; };
+		312D4C441B9CA7D300FF3602 /* ISO8601Testing.m in Sources */ = {isa = PBXBuildFile; fileRef = 312D4C431B9CA7D300FF3602 /* ISO8601Testing.m */; };
+		312D4C451B9CA7D600FF3602 /* ISO8601Testing.m in Sources */ = {isa = PBXBuildFile; fileRef = 312D4C431B9CA7D300FF3602 /* ISO8601Testing.m */; };
 		31419D9717E08256007B02E2 /* ISO8601ForCocoaWeekDateTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 31419D9617E08256007B02E2 /* ISO8601ForCocoaWeekDateTests.m */; };
 		31419D9817E08256007B02E2 /* ISO8601ForCocoaWeekDateTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 31419D9617E08256007B02E2 /* ISO8601ForCocoaWeekDateTests.m */; };
 		3198826517FCF2B0005FB1DA /* ISO8601MemoryWarningTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 3198826417FCF2B0005FB1DA /* ISO8601MemoryWarningTests.m */; };
 		31A271B717CE9B5A00E3FA7D /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 31A271B617CE9B5A00E3FA7D /* Foundation.framework */; };
-		31A271C517CE9B5B00E3FA7D /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 31AEAFDE17546BC800BD292F /* SenTestingKit.framework */; };
 		31A271C817CE9B5B00E3FA7D /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 31A271B617CE9B5A00E3FA7D /* Foundation.framework */; };
 		31A271CB17CE9B5B00E3FA7D /* libISO8601ForCocoaTouch.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 31A271B517CE9B5A00E3FA7D /* libISO8601ForCocoaTouch.a */; };
 		31A271D117CE9B5B00E3FA7D /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 31A271CF17CE9B5B00E3FA7D /* InfoPlist.strings */; };
 		31A271DB17CE9C3A00E3FA7D /* ISO8601ForCocoaCalendarDateTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 31AEAFEB17546BC900BD292F /* ISO8601ForCocoaCalendarDateTests.m */; };
 		31A271DC17CE9C5E00E3FA7D /* ISO8601DateFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = 31AEAFF617546BFA00BD292F /* ISO8601DateFormatter.m */; };
 		31A271DD17CE9E3500E3FA7D /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 31AEAFD117546BC800BD292F /* Foundation.framework */; };
-		31AEAFDF17546BC800BD292F /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 31AEAFDE17546BC800BD292F /* SenTestingKit.framework */; };
 		31AEAFE317546BC800BD292F /* libISO8601ForCocoa.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 31AEAFC917546BC800BD292F /* libISO8601ForCocoa.a */; };
 		31AEAFE917546BC800BD292F /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 31AEAFE717546BC800BD292F /* InfoPlist.strings */; };
 		31AEAFEC17546BC900BD292F /* ISO8601ForCocoaCalendarDateTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 31AEAFEB17546BC900BD292F /* ISO8601ForCocoaCalendarDateTests.m */; };
@@ -64,11 +64,12 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		027E31B81A52DFCE00802098 /* ISO8601DateFormatter.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ISO8601DateFormatter.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		027E31BB1A52DFCE00802098 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		027E31BC1A52DFCE00802098 /* ISO8601.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ISO8601.h; sourceTree = "<group>"; };
 		1B2A62BE59D932056840CE25 /* PRHNamedCharacter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PRHNamedCharacter.h; sourceTree = "<group>"; };
 		3119ABEE17FCF8F0003412AE /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS6.1.sdk/System/Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
+		312D4C421B9CA7D300FF3602 /* ISO8601Testing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ISO8601Testing.h; sourceTree = "<group>"; };
+		312D4C431B9CA7D300FF3602 /* ISO8601Testing.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ISO8601Testing.m; sourceTree = "<group>"; };
 		31419D9517E08256007B02E2 /* ISO8601ForCocoaWeekDateTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ISO8601ForCocoaWeekDateTests.h; sourceTree = "<group>"; };
 		31419D9617E08256007B02E2 /* ISO8601ForCocoaWeekDateTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ISO8601ForCocoaWeekDateTests.m; sourceTree = "<group>"; };
 		3179B3EB17E94D5000CE9D95 /* ISO8601ForCocoaTimeOnlyTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ISO8601ForCocoaTimeOnlyTests.h; sourceTree = "<group>"; };
@@ -78,7 +79,7 @@
 		31A271B517CE9B5A00E3FA7D /* libISO8601ForCocoaTouch.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libISO8601ForCocoaTouch.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		31A271B617CE9B5A00E3FA7D /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		31A271BA17CE9B5B00E3FA7D /* ISO8601ForCocoaTouch-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ISO8601ForCocoaTouch-Prefix.pch"; sourceTree = "<group>"; };
-		31A271C417CE9B5B00E3FA7D /* ISO8601ForCocoaTouchTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ISO8601ForCocoaTouchTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
+		31A271C417CE9B5B00E3FA7D /* ISO8601ForCocoaTouchTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ISO8601ForCocoaTouchTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		31A271CE17CE9B5B00E3FA7D /* ISO8601ForCocoaTouchTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "ISO8601ForCocoaTouchTests-Info.plist"; sourceTree = "<group>"; };
 		31A271D017CE9B5B00E3FA7D /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		31AEAFC917546BC800BD292F /* libISO8601ForCocoa.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libISO8601ForCocoa.a; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -86,14 +87,14 @@
 		31AEAFD017546BC800BD292F /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		31AEAFD117546BC800BD292F /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		31AEAFD417546BC800BD292F /* ISO8601ForCocoa-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ISO8601ForCocoa-Prefix.pch"; sourceTree = "<group>"; };
-		31AEAFDD17546BC800BD292F /* ISO8601ForCocoaTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ISO8601ForCocoaTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
-		31AEAFDE17546BC800BD292F /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
+		31AEAFDD17546BC800BD292F /* ISO8601ForCocoaTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ISO8601ForCocoaTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		31AEAFE617546BC800BD292F /* ISO8601ForCocoaTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "ISO8601ForCocoaTests-Info.plist"; sourceTree = "<group>"; };
 		31AEAFE817546BC800BD292F /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		31AEAFEA17546BC800BD292F /* ISO8601ForCocoaCalendarDateTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ISO8601ForCocoaCalendarDateTests.h; sourceTree = "<group>"; };
 		31AEAFEB17546BC900BD292F /* ISO8601ForCocoaCalendarDateTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ISO8601ForCocoaCalendarDateTests.m; sourceTree = "<group>"; };
 		31AEAFF517546BFA00BD292F /* ISO8601DateFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ISO8601DateFormatter.h; path = ../ISO8601DateFormatter.h; sourceTree = "<group>"; };
 		31AEAFF617546BFA00BD292F /* ISO8601DateFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ISO8601DateFormatter.m; path = ../ISO8601DateFormatter.m; sourceTree = "<group>"; };
+		31D981F31B9E5A35007CF1DA /* ISO8601.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ISO8601.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3904FF2317CF34AE003603D1 /* MBMockLocale.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBMockLocale.h; sourceTree = "<group>"; };
 		3904FF2417CF34AE003603D1 /* MBMockLocale.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBMockLocale.m; sourceTree = "<group>"; };
 		3904FF2517CF34AE003603D1 /* NSLocale+UnitTestSwizzling.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSLocale+UnitTestSwizzling.h"; sourceTree = "<group>"; };
@@ -121,7 +122,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				3119ABEF17FCF8F0003412AE /* UIKit.framework in Frameworks */,
-				31A271C517CE9B5B00E3FA7D /* SenTestingKit.framework in Frameworks */,
 				31A271C817CE9B5B00E3FA7D /* Foundation.framework in Frameworks */,
 				31A271CB17CE9B5B00E3FA7D /* libISO8601ForCocoaTouch.a in Frameworks */,
 			);
@@ -139,7 +139,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				31AEAFDF17546BC800BD292F /* SenTestingKit.framework in Frameworks */,
 				31AEAFE317546BC800BD292F /* libISO8601ForCocoa.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -219,10 +218,10 @@
 			isa = PBXGroup;
 			children = (
 				31AEAFC917546BC800BD292F /* libISO8601ForCocoa.a */,
-				31AEAFDD17546BC800BD292F /* ISO8601ForCocoaTests.octest */,
+				31AEAFDD17546BC800BD292F /* ISO8601ForCocoaTests.xctest */,
 				31A271B517CE9B5A00E3FA7D /* libISO8601ForCocoaTouch.a */,
-				31A271C417CE9B5B00E3FA7D /* ISO8601ForCocoaTouchTests.octest */,
-				027E31B81A52DFCE00802098 /* ISO8601DateFormatter.framework */,
+				31A271C417CE9B5B00E3FA7D /* ISO8601ForCocoaTouchTests.xctest */,
+				31D981F31B9E5A35007CF1DA /* ISO8601.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -231,7 +230,6 @@
 			isa = PBXGroup;
 			children = (
 				3119ABEE17FCF8F0003412AE /* UIKit.framework */,
-				31AEAFDE17546BC800BD292F /* SenTestingKit.framework */,
 				31A271B617CE9B5A00E3FA7D /* Foundation.framework */,
 				31AEAFCE17546BC800BD292F /* Other Frameworks */,
 			);
@@ -271,6 +269,8 @@
 				3904FF2417CF34AE003603D1 /* MBMockLocale.m */,
 				3904FF2517CF34AE003603D1 /* NSLocale+UnitTestSwizzling.h */,
 				3904FF2617CF34AE003603D1 /* NSLocale+UnitTestSwizzling.m */,
+				312D4C421B9CA7D300FF3602 /* ISO8601Testing.h */,
+				312D4C431B9CA7D300FF3602 /* ISO8601Testing.m */,
 				3179B3EB17E94D5000CE9D95 /* ISO8601ForCocoaTimeOnlyTests.h */,
 				3179B3EC17E94D5000CE9D95 /* ISO8601ForCocoaTimeOnlyTests.m */,
 				31AEAFEA17546BC800BD292F /* ISO8601ForCocoaCalendarDateTests.h */,
@@ -323,7 +323,6 @@
 				027E31B41A52DFCE00802098 /* Frameworks */,
 				027E31B51A52DFCE00802098 /* Headers */,
 				027E31B61A52DFCE00802098 /* Resources */,
-				027E31D31A52DFFC00802098 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -331,7 +330,7 @@
 			);
 			name = ISO8601;
 			productName = ISO8601DateFormatter;
-			productReference = 027E31B81A52DFCE00802098 /* ISO8601DateFormatter.framework */;
+			productReference = 31D981F31B9E5A35007CF1DA /* ISO8601.framework */;
 			productType = "com.apple.product-type.framework";
 		};
 		31A271B417CE9B5A00E3FA7D /* ISO8601ForCocoaTouch */ = {
@@ -358,7 +357,6 @@
 				31A271BF17CE9B5B00E3FA7D /* Sources */,
 				31A271C017CE9B5B00E3FA7D /* Frameworks */,
 				31A271C117CE9B5B00E3FA7D /* Resources */,
-				31A271C217CE9B5B00E3FA7D /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -367,8 +365,8 @@
 			);
 			name = ISO8601ForCocoaTouchTests;
 			productName = ISO8601ForCocoaTouchTests;
-			productReference = 31A271C417CE9B5B00E3FA7D /* ISO8601ForCocoaTouchTests.octest */;
-			productType = "com.apple.product-type.bundle.ocunit-test";
+			productReference = 31A271C417CE9B5B00E3FA7D /* ISO8601ForCocoaTouchTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
 		};
 		31AEAFC817546BC800BD292F /* ISO8601ForCocoa */ = {
 			isa = PBXNativeTarget;
@@ -394,7 +392,6 @@
 				31AEAFD817546BC800BD292F /* Sources */,
 				31AEAFD917546BC800BD292F /* Frameworks */,
 				31AEAFDA17546BC800BD292F /* Resources */,
-				31AEAFDB17546BC800BD292F /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -403,8 +400,8 @@
 			);
 			name = ISO8601ForCocoaTests;
 			productName = ISO8601ForCocoaTests;
-			productReference = 31AEAFDD17546BC800BD292F /* ISO8601ForCocoaTests.octest */;
-			productType = "com.apple.product-type.bundle.ocunit-test";
+			productReference = 31AEAFDD17546BC800BD292F /* ISO8601ForCocoaTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
 
@@ -412,6 +409,7 @@
 		31AEAFC117546BC800BD292F /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				LastTestingUpgradeCheck = 0700;
 				LastUpgradeCheck = 0460;
 				ORGANIZATIONNAME = "Peter Hosey";
 				TargetAttributes = {
@@ -470,48 +468,6 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
-/* Begin PBXShellScriptBuildPhase section */
-		027E31D31A52DFFC00802098 /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 8;
-			files = (
-			);
-			inputPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 1;
-			shellPath = /bin/sh;
-			shellScript = "set -e\n\nexport FRAMEWORK_LOCN=\"${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.framework\"\n\n# Create the path to the real Headers die\nmkdir -p \"${FRAMEWORK_LOCN}/Versions/A/Headers\"\n\n# Create the required symlinks\n/bin/ln -sfh A \"${FRAMEWORK_LOCN}/Versions/Current\"\n/bin/ln -sfh Versions/Current/Headers \"${FRAMEWORK_LOCN}/Headers\"\n/bin/ln -sfh \"Versions/Current/${PRODUCT_NAME}\" \\\n\"${FRAMEWORK_LOCN}/${PRODUCT_NAME}\"\n\n# Copy the public headers into the framework\n/bin/cp -a \"${TARGET_BUILD_DIR}/${PUBLIC_HEADERS_FOLDER_PATH}/\" \\\n\"${FRAMEWORK_LOCN}/Versions/A/Headers\"";
-		};
-		31A271C217CE9B5B00E3FA7D /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "# Run the unit tests in this test bundle.\n\"${SYSTEM_DEVELOPER_DIR}/Tools/RunUnitTests\"\n";
-		};
-		31AEAFDB17546BC800BD292F /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "# Run the unit tests in this test bundle.\n\"${SYSTEM_DEVELOPER_DIR}/Tools/RunUnitTests\"\n";
-		};
-/* End PBXShellScriptBuildPhase section */
-
 /* Begin PBXSourcesBuildPhase section */
 		027E31B31A52DFCE00802098 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -538,6 +494,7 @@
 				3904FF2A17CF34AE003603D1 /* NSLocale+UnitTestSwizzling.m in Sources */,
 				31419D9817E08256007B02E2 /* ISO8601ForCocoaWeekDateTests.m in Sources */,
 				3198826517FCF2B0005FB1DA /* ISO8601MemoryWarningTests.m in Sources */,
+				312D4C451B9CA7D600FF3602 /* ISO8601Testing.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -553,6 +510,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				312D4C441B9CA7D300FF3602 /* ISO8601Testing.m in Sources */,
 				31AEAFEC17546BC900BD292F /* ISO8601ForCocoaCalendarDateTests.m in Sources */,
 				3904FF2717CF34AE003603D1 /* MBMockLocale.m in Sources */,
 				3904FF2917CF34AE003603D1 /* NSLocale+UnitTestSwizzling.m in Sources */,
@@ -623,6 +581,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MTL_ENABLE_DEBUG_INFO = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = org.boredzo.ISO8601;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
@@ -657,6 +616,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MTL_ENABLE_DEBUG_INFO = NO;
+				PRODUCT_BUNDLE_IDENTIFIER = org.boredzo.ISO8601;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
@@ -709,9 +669,11 @@
 		31A271D717CE9B5B00E3FA7D /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"\"$(SDKROOT)/Developer/Library/Frameworks\"",
 					"\"$(DEVELOPER_LIBRARY_DIR)/Frameworks\"",
+					"$(inherited)",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "ISO8601ForCocoaTouch/ISO8601ForCocoaTouch-Prefix.pch";
@@ -723,16 +685,17 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
-				WRAPPER_EXTENSION = octest;
 			};
 			name = Debug;
 		};
 		31A271D817CE9B5B00E3FA7D /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"\"$(SDKROOT)/Developer/Library/Frameworks\"",
 					"\"$(DEVELOPER_LIBRARY_DIR)/Frameworks\"",
+					"$(inherited)",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "ISO8601ForCocoaTouch/ISO8601ForCocoaTouch-Prefix.pch";
@@ -745,7 +708,6 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
-				WRAPPER_EXTENSION = octest;
 			};
 			name = Release;
 		};
@@ -836,7 +798,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
-				FRAMEWORK_SEARCH_PATHS = "\"$(DEVELOPER_LIBRARY_DIR)/Frameworks\"";
+				FRAMEWORK_SEARCH_PATHS = (
+					"\"$(DEVELOPER_LIBRARY_DIR)/Frameworks\"",
+					"$(inherited)",
+				);
 				GCC_GENERATE_TEST_COVERAGE_FILES = YES;
 				GCC_INSTRUMENT_PROGRAM_FLOW_ARCS = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -845,7 +810,6 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
-				WRAPPER_EXTENSION = octest;
 			};
 			name = Debug;
 		};
@@ -853,7 +817,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
-				FRAMEWORK_SEARCH_PATHS = "\"$(DEVELOPER_LIBRARY_DIR)/Frameworks\"";
+				FRAMEWORK_SEARCH_PATHS = (
+					"\"$(DEVELOPER_LIBRARY_DIR)/Frameworks\"",
+					"$(inherited)",
+				);
 				GCC_GENERATE_TEST_COVERAGE_FILES = YES;
 				GCC_INSTRUMENT_PROGRAM_FLOW_ARCS = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -862,7 +829,6 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
-				WRAPPER_EXTENSION = octest;
 			};
 			name = Release;
 		};
