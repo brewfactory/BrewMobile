@@ -6,9 +6,9 @@
 //  Copyright (c) 2013 Peter Hosey. All rights reserved.
 //
 
-#import <XCTest/XCTest.h>
+#import <SenTestingKit/SenTestingKit.h>
 
-@interface ISO8601ForCocoaTimeOnlyTests : XCTestCase
+@interface ISO8601ForCocoaTimeOnlyTests : SenTestCase
 
 - (void) testParsingStringWithOnlyHourMinuteSecondZulu;
 - (void) testParsingStringWithOnlyHourMinuteZulu;
