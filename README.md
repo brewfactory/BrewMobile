@@ -2,7 +2,9 @@
 
 [![Bitrise](https://www.bitrise.io/app/276d8847158110d2.svg?token=aYjuPeusfMeRdDn_eDksIg&branch=master)](https://www.bitrise.io/) [![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
 
-iOS client for the [Brewfactory](https://github.com/brewfactory/BrewCore) project, read the [story of upgrading to ReactiveCocoa 3.0 on AllTheFlow](https://blog.alltheflow.com/reactive-swift-upgrading-to-reactivecocoa-3-0/).
+iOS client for the [Brewfactory](https://github.com/brewfactory/BrewCore) project. 
+
+Read the [story of upgrading to ReactiveCocoa 3.0 on AllTheFlow](https://blog.alltheflow.com/reactive-swift-upgrading-to-reactivecocoa-3-0/).
 
 What is this?
 -------------
