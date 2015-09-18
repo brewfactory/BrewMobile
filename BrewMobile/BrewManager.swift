@@ -82,7 +82,7 @@ class BrewManager : NSObject {
             }
             
             socket.on(tempChangedEvent, callback: { (AnyObject data) -> Void in
-                if (count(data) > 0) {
+                if (data.count > 0) {
                     if let temp = data[0] as? NSNumber {
                         self.temp(temp.floatValue)
                     }
@@ -90,13 +90,13 @@ class BrewManager : NSObject {
             })
             
             socket.on(brewChangedEvent, callback: { (AnyObject data) -> Void in
-                if (count(data) > 0) {
+                if (data.count > 0) {
                     self.brew(ContentParser.parseBrewState(JSON(data[0])))
                 }
             })
             
             socket.on(pwmChangedEvent, callback: { (AnyObject data) -> Void in
-                if (count(data) > 0) {
+                if (data.count > 0) {
                     if let pwm = data[0] as? NSNumber {
                         self.pwm(pwm.floatValue)
                     }
