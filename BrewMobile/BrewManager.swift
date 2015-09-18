@@ -55,18 +55,20 @@ class BrewManager : NSObject {
     //Mark: HTTP
     
     private func requestWithBody(path: String, method: String, body: JSON) -> Result<NSMutableURLRequest, NSError> {
-        var request : NSMutableURLRequest = NSMutableURLRequest()
-        
+        let request : NSMutableURLRequest = NSMutableURLRequest()
+
         request.URL = NSURL(string: host + path)
         request.HTTPMethod = method
         if method == "POST" {
-            request.HTTPBody = body.rawData(options: .PrettyPrinted, error: &serializationError)
-            if let error = serializationError {
-                return Result.failure(error)
+            
+            do {
+                request.HTTPBody = try body.rawData(options: .PrettyPrinted)
+            } catch let error as NSError {
+                return Result(error: error)
             }
         }
         
-        return Result.success(request)
+        return Result(request)
     }
     
     // MARK: WebSocket
@@ -108,3 +110,5 @@ class BrewManager : NSObject {
             }
         })
     }
+
+}
