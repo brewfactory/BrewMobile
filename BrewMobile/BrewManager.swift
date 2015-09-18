@@ -74,11 +74,11 @@ class BrewManager : NSObject {
     func connectToHost() {
         SIOSocket.socketWithHost(self.host, reconnectAutomatically: true, attemptLimit: 0, withDelay: 1, maximumDelay: 5, timeout: 20, response: {socket in
             socket.onConnect = {
-                println("Connected to \(self.host)")
+                print("Connected to \(self.host)")
             }
             
             socket.onDisconnect = {
-                println("Disconnected from \(self.host)")
+                print("Disconnected from \(self.host)")
             }
             
             socket.on(tempChangedEvent, callback: { (AnyObject data) -> Void in
@@ -104,7 +104,7 @@ class BrewManager : NSObject {
             })
             
             socket.onError = { (AnyObject anyError) -> Void in
-                println("Socket connection error")
+                print("Socket connection error")
             }
         })
     }
