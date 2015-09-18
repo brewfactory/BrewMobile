@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		0213ADD21A57E6EB0010F9E1 /* BrewManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0213ADD11A57E6EB0010F9E1 /* BrewManager.swift */; };
-		027BCD061B6CA5E90014C8BE /* Box.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 02C058C81B653D62001AC3C1 /* Box.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		0289A94C1A626C2600BD2601 /* ContentParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0289A94B1A626C2600BD2601 /* ContentParser.swift */; };
 		0289A94D1A626C2600BD2601 /* ContentParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0289A94B1A626C2600BD2601 /* ContentParser.swift */; };
 		0289A9521A62B0FF00BD2601 /* RAC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0289A94F1A62B0FF00BD2601 /* RAC.swift */; };
@@ -52,7 +51,6 @@
 		02C058C51B6529F7001AC3C1 /* Result.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 02C058BB1B652990001AC3C1 /* Result.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		02C058C61B6529F7001AC3C1 /* SocketIOFramework.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 02C058BC1B652990001AC3C1 /* SocketIOFramework.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		02C058C71B6529F7001AC3C1 /* SwiftyJSON.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 02C058BD1B652990001AC3C1 /* SwiftyJSON.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		02C058C91B653D62001AC3C1 /* Box.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 02C058C81B653D62001AC3C1 /* Box.framework */; };
 		692AAA8919A34C8C00224C4D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 692AAA8819A34C8C00224C4D /* AppDelegate.swift */; };
 		692AAA9019A34C8C00224C4D /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 692AAA8F19A34C8C00224C4D /* Images.xcassets */; };
 		69A1102619CB38B900108B46 /* BrewPhaseTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69A1102519CB38B900108B46 /* BrewPhaseTestCase.swift */; };
@@ -79,7 +77,6 @@
 			files = (
 				02C058C31B6529F7001AC3C1 /* ISO8601.framework in Embed Frameworks */,
 				02C058C41B6529F7001AC3C1 /* ReactiveCocoa.framework in Embed Frameworks */,
-				027BCD061B6CA5E90014C8BE /* Box.framework in Embed Frameworks */,
 				02C058C51B6529F7001AC3C1 /* Result.framework in Embed Frameworks */,
 				02C058C61B6529F7001AC3C1 /* SocketIOFramework.framework in Embed Frameworks */,
 				02C058C71B6529F7001AC3C1 /* SwiftyJSON.framework in Embed Frameworks */,
@@ -133,7 +130,6 @@
 				02C058BE1B652990001AC3C1 /* ISO8601.framework in Frameworks */,
 				02C058C11B652990001AC3C1 /* SocketIOFramework.framework in Frameworks */,
 				02C058BF1B652990001AC3C1 /* ReactiveCocoa.framework in Frameworks */,
-				02C058C91B653D62001AC3C1 /* Box.framework in Frameworks */,
 				02C058C21B652990001AC3C1 /* SwiftyJSON.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
