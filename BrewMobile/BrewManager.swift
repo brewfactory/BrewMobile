@@ -17,7 +17,7 @@ let brewChangedEvent = "brew_changed"
 let pwmChangedEvent = "pwm_changed"
 
 class BrewManager : NSObject {
-    let host = "http://brewcore-demo.herokuapp.com/"
+    let host = "https://brewcore-demo.herokuapp.com/"
     
     var syncBrewAction: Action<BrewState, NSData, NSError>!
     var stopBrewAction: Action<Void, NSData, NSError>!
