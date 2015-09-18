@@ -27,7 +27,7 @@ class BrewNewPhaseViewController : UIViewController {
         super.init(nibName:"BrewNewPhaseViewController", bundle: nil)
     }
 
-    required init(coder aDecoder: NSCoder) {
+    required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -118,7 +118,7 @@ class BrewNewPhaseViewController : UIViewController {
     }
     
     func toIntConverter(aInput: String) -> Int {
-        return aInput.toInt()!
+        return Int(aInput)!
     }
     
 }

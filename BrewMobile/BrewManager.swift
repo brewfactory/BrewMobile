@@ -56,7 +56,6 @@ class BrewManager : NSObject {
     
     private func requestWithBody(path: String, method: String, body: JSON) -> Result<NSMutableURLRequest, NSError> {
         var request : NSMutableURLRequest = NSMutableURLRequest()
-        var serializationError: NSError?
         
         request.URL = NSURL(string: host + path)
         request.HTTPMethod = method
@@ -109,5 +108,3 @@ class BrewManager : NSObject {
             }
         })
     }
-    
-}

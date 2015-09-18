@@ -30,12 +30,12 @@ class BrewDesignerViewModel : NSObject {
         self.brewManager = brewManager
         super.init()
 
-        brewState(BrewState(name: name, startTime: startTime, phases: self.phases, paused: false, inProgress: false))
+        brewState.value = (BrewState(name: name, startTime: startTime, phases: self.phases, paused: false, inProgress: false))
 
         hasPhases <~ self.phases.producer
             .flatMap(.Concat) { SignalProducer(value: $0.count > 0) }
         validName <~ self.brewState.producer
-            .flatMap(.Concat) { SignalProducer(value: count($0.name.value) > 0) }
+            .flatMap(.Concat) { SignalProducer(value: ($0.name.value).count > 0) }
         validBeer <~ combineLatest(hasPhases.producer, validName.producer)
             .map { $0 && $1 }
 
