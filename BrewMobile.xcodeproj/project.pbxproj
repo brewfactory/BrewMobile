@@ -109,7 +109,6 @@
 		02C058BB1B652990001AC3C1 /* Result.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Result.framework; path = Carthage/Build/iOS/Result.framework; sourceTree = "<group>"; };
 		02C058BC1B652990001AC3C1 /* SocketIOFramework.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SocketIOFramework.framework; path = Carthage/Build/iOS/SocketIOFramework.framework; sourceTree = "<group>"; };
 		02C058BD1B652990001AC3C1 /* SwiftyJSON.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftyJSON.framework; path = Carthage/Build/iOS/SwiftyJSON.framework; sourceTree = "<group>"; };
-		02C058C81B653D62001AC3C1 /* Box.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Box.framework; path = Carthage/Build/iOS/Box.framework; sourceTree = "<group>"; };
 		692AAA8319A34C8C00224C4D /* BrewMobile.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BrewMobile.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		692AAA8719A34C8C00224C4D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		692AAA8819A34C8C00224C4D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -260,7 +259,6 @@
 		F3641B66629A474A89086F3F /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				02C058C81B653D62001AC3C1 /* Box.framework */,
 				02C058B91B652990001AC3C1 /* ISO8601.framework */,
 				02C058BA1B652990001AC3C1 /* ReactiveCocoa.framework */,
 				02C058BB1B652990001AC3C1 /* Result.framework */,
