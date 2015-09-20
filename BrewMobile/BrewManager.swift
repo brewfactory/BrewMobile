@@ -60,7 +60,6 @@ class BrewManager : NSObject {
         request.URL = NSURL(string: host + path)
         request.HTTPMethod = method
         if method == "POST" {
-            
             do {
                 request.HTTPBody = try body.rawData(options: .PrettyPrinted)
             } catch let error as NSError {
