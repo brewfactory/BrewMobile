@@ -34,33 +34,33 @@ class ContentParserTestCase: XCTestCase {
     func testParseBrewState() {
         let brewPhaseJSON = ["jobEnd" : "2014-08-03T11:55:00.000Z", "min" : 10, "temp" : 70, "tempReached" : 0, "inProgress" : 1]
         let brewStateJSON = ["name" : "Very IPA", "startTime" : "2014-08-03T09:55:00.000Z", "phases" : [brewPhaseJSON], "paused" : false, "inProgress" : true]
-        let brewState = ContentParser.parseBrewState(JSON(brewStateJSON))
+        _ = ContentParser.parseBrewState(JSON(brewStateJSON))
     }
     
     func testParseBrewStateWithEmptyJSON() {
         let json = ["name" : NSNull(), "startTime" : NSNull(), "phases" : NSNull(), "paused" : NSNull(), "inProgress" : NSNull()]
-        let brewState = ContentParser.parseBrewState(JSON(json))
+        _ = ContentParser.parseBrewState(JSON(json))
     }
     
     func testParseBrewStateWithUnexpectedJSONStructure() {
         let json = ["phases" : NSNull(), "paused" : NSNull(), "inProgress" : NSNull()]
-        let brewstate = ContentParser.parseBrewState(JSON(json))
+        _ = ContentParser.parseBrewState(JSON(json))
     }
     
     //MARK: Testing BrewPhase object parsing
     func testParseBrewPhase() {
         let json = ["jobEnd" : "2014-08-03T09:55:00.000Z", "min" : "100", "temp" : "76", "tempReached" : 0, "inProgress" : 1]
-        let brewstate = ContentParser.parseBrewState(JSON(json))
+        _ = ContentParser.parseBrewState(JSON(json))
     }
     
     func testParseBrewPhaseWithEmptyJSON() {
         let json = ["jobEnd" : NSNull(), "min" : NSNull(), "temp" : NSNull(), "tempReached" : NSNull(), "inProgress" : NSNull()]
-        let brewPhase = ContentParser.parseBrewPhase(JSON(json))
+        _ = ContentParser.parseBrewPhase(JSON(json))
     }
     
     func testParseBrewPhaseWithUnexpectedJSONStructure() {
         let json = ["tempReached" : 0, "inProgress" : 1]
-        let brewPhase = ContentParser.parseBrewPhase(JSON(json))
+        _ = ContentParser.parseBrewPhase(JSON(json))
     }
 
     func testFormatDate() {

@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		0213ADD21A57E6EB0010F9E1 /* BrewManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0213ADD11A57E6EB0010F9E1 /* BrewManager.swift */; };
-		027BCD061B6CA5E90014C8BE /* Box.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 02C058C81B653D62001AC3C1 /* Box.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		0289A94C1A626C2600BD2601 /* ContentParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0289A94B1A626C2600BD2601 /* ContentParser.swift */; };
 		0289A94D1A626C2600BD2601 /* ContentParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0289A94B1A626C2600BD2601 /* ContentParser.swift */; };
 		0289A9521A62B0FF00BD2601 /* RAC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0289A94F1A62B0FF00BD2601 /* RAC.swift */; };
@@ -52,7 +51,6 @@
 		02C058C51B6529F7001AC3C1 /* Result.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 02C058BB1B652990001AC3C1 /* Result.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		02C058C61B6529F7001AC3C1 /* SocketIOFramework.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 02C058BC1B652990001AC3C1 /* SocketIOFramework.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		02C058C71B6529F7001AC3C1 /* SwiftyJSON.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 02C058BD1B652990001AC3C1 /* SwiftyJSON.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		02C058C91B653D62001AC3C1 /* Box.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 02C058C81B653D62001AC3C1 /* Box.framework */; };
 		692AAA8919A34C8C00224C4D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 692AAA8819A34C8C00224C4D /* AppDelegate.swift */; };
 		692AAA9019A34C8C00224C4D /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 692AAA8F19A34C8C00224C4D /* Images.xcassets */; };
 		69A1102619CB38B900108B46 /* BrewPhaseTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69A1102519CB38B900108B46 /* BrewPhaseTestCase.swift */; };
@@ -79,7 +77,6 @@
 			files = (
 				02C058C31B6529F7001AC3C1 /* ISO8601.framework in Embed Frameworks */,
 				02C058C41B6529F7001AC3C1 /* ReactiveCocoa.framework in Embed Frameworks */,
-				027BCD061B6CA5E90014C8BE /* Box.framework in Embed Frameworks */,
 				02C058C51B6529F7001AC3C1 /* Result.framework in Embed Frameworks */,
 				02C058C61B6529F7001AC3C1 /* SocketIOFramework.framework in Embed Frameworks */,
 				02C058C71B6529F7001AC3C1 /* SwiftyJSON.framework in Embed Frameworks */,
@@ -112,7 +109,6 @@
 		02C058BB1B652990001AC3C1 /* Result.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Result.framework; path = Carthage/Build/iOS/Result.framework; sourceTree = "<group>"; };
 		02C058BC1B652990001AC3C1 /* SocketIOFramework.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SocketIOFramework.framework; path = Carthage/Build/iOS/SocketIOFramework.framework; sourceTree = "<group>"; };
 		02C058BD1B652990001AC3C1 /* SwiftyJSON.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftyJSON.framework; path = Carthage/Build/iOS/SwiftyJSON.framework; sourceTree = "<group>"; };
-		02C058C81B653D62001AC3C1 /* Box.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Box.framework; path = Carthage/Build/iOS/Box.framework; sourceTree = "<group>"; };
 		692AAA8319A34C8C00224C4D /* BrewMobile.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BrewMobile.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		692AAA8719A34C8C00224C4D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		692AAA8819A34C8C00224C4D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -133,7 +129,6 @@
 				02C058BE1B652990001AC3C1 /* ISO8601.framework in Frameworks */,
 				02C058C11B652990001AC3C1 /* SocketIOFramework.framework in Frameworks */,
 				02C058BF1B652990001AC3C1 /* ReactiveCocoa.framework in Frameworks */,
-				02C058C91B653D62001AC3C1 /* Box.framework in Frameworks */,
 				02C058C21B652990001AC3C1 /* SwiftyJSON.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -264,7 +259,6 @@
 		F3641B66629A474A89086F3F /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				02C058C81B653D62001AC3C1 /* Box.framework */,
 				02C058B91B652990001AC3C1 /* ISO8601.framework */,
 				02C058BA1B652990001AC3C1 /* ReactiveCocoa.framework */,
 				02C058BB1B652990001AC3C1 /* Result.framework */,
@@ -320,8 +314,9 @@
 		692AAA7B19A34C8C00224C4D /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				LastSwiftMigration = 0700;
 				LastSwiftUpdateCheck = 0700;
-				LastUpgradeCheck = 0600;
+				LastUpgradeCheck = 0700;
 				ORGANIZATIONNAME = "Ágnes Vásárhelyi";
 				TargetAttributes = {
 					692AAA8219A34C8C00224C4D = {
@@ -477,6 +472,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -545,8 +541,11 @@
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
 				);
 				INFOPLIST_FILE = BrewMobile/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.brew.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -560,8 +559,11 @@
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
 				);
 				INFOPLIST_FILE = BrewMobile/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.brew.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
@@ -584,6 +586,7 @@
 				);
 				INFOPLIST_FILE = BrewMobileTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.brew.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUNDLE_LOADER)";
 			};
@@ -604,6 +607,7 @@
 				);
 				INFOPLIST_FILE = BrewMobileTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.brew.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUNDLE_LOADER)";
 			};

@@ -27,8 +27,6 @@ enum State: Int {
             return "active"
         case .FINISHED:
             return "finished"
-        default:
-            return String(self.rawValue)
         }
     }
     
@@ -42,8 +40,6 @@ enum State: Int {
             return UIColor(red: 66.0 / 255.0, green:139.0 / 255.0, blue:202.0 / 255.0, alpha: 1.0)
         case .FINISHED:
             return UIColor(red: 92.0 / 255.0, green:184.0 / 255.0, blue:92.0 / 255.0, alpha: 1.0)
-        default:
-            return UIColor.whiteColor()
         }
     }
     
@@ -98,7 +94,7 @@ final class BrewPhase: Equatable, JSONDecodable, JSONEncodable {
     // MARK: JSONDecodable
     
     class func decode(json: JSON) -> Result<BrewPhase, NSError> {
-        return Result.success(BrewPhase(
+        return Result(BrewPhase(
             jobEnd: ContentParser.formatDate(json["jobEnd"].stringValue),
             min: json["min"].intValue,
             temp: json["temp"].floatValue,
@@ -115,7 +111,7 @@ final class BrewPhase: Equatable, JSONDecodable, JSONEncodable {
         phase["min"] = Int(object.min)
         phase["temp"] = Float(object.temp)
 
-        return Result.success(phase)
+        return Result(phase)
     }
     
 }

@@ -17,7 +17,7 @@ let brewChangedEvent = "brew_changed"
 let pwmChangedEvent = "pwm_changed"
 
 class BrewManager : NSObject {
-    let host = "http://brewcore-demo.herokuapp.com/"
+    let host = "https://brewcore-demo.herokuapp.com/"
     
     var syncBrewAction: Action<BrewState, NSData, NSError>!
     var stopBrewAction: Action<Void, NSData, NSError>!
@@ -33,7 +33,7 @@ class BrewManager : NSObject {
                 let requestResult = self.requestWithBody("api/brew", method: "POST", body: JSON(jsonData))
                 if let requestResultValue = requestResult.value {
                     return NSURLSession.sharedSession().rac_dataWithRequest(requestResultValue)
-                        |> map { data, URLResponse in
+                        .map { data, URLResponse in
                             return data
                         }
                 }
@@ -44,7 +44,7 @@ class BrewManager : NSObject {
         stopBrewAction = Action { brewState in
             if let request = self.requestWithBody("api/brew/stop", method: "PATCH", body: "").value {
                 return NSURLSession.sharedSession().rac_dataWithRequest(request)
-                    |> map { data, URLResponse in
+                    .map { data, URLResponse in
                         return data
                     }
             }
@@ -55,19 +55,19 @@ class BrewManager : NSObject {
     //Mark: HTTP
     
     private func requestWithBody(path: String, method: String, body: JSON) -> Result<NSMutableURLRequest, NSError> {
-        var request : NSMutableURLRequest = NSMutableURLRequest()
-        var serializationError: NSError?
-        
+        let request : NSMutableURLRequest = NSMutableURLRequest()
+
         request.URL = NSURL(string: host + path)
         request.HTTPMethod = method
         if method == "POST" {
-            request.HTTPBody = body.rawData(options: .PrettyPrinted, error: &serializationError)
-            if let error = serializationError {
-                return Result.failure(error)
+            do {
+                request.HTTPBody = try body.rawData(options: .PrettyPrinted)
+            } catch let error as NSError {
+                return Result(error: error)
             }
         }
         
-        return Result.success(request)
+        return Result(request)
     }
     
     // MARK: WebSocket
@@ -75,39 +75,39 @@ class BrewManager : NSObject {
     func connectToHost() {
         SIOSocket.socketWithHost(self.host, reconnectAutomatically: true, attemptLimit: 0, withDelay: 1, maximumDelay: 5, timeout: 20, response: {socket in
             socket.onConnect = {
-                println("Connected to \(self.host)")
+                print("Connected to \(self.host)")
             }
             
             socket.onDisconnect = {
-                println("Disconnected from \(self.host)")
+                print("Disconnected from \(self.host)")
             }
             
             socket.on(tempChangedEvent, callback: { (AnyObject data) -> Void in
-                if (count(data) > 0) {
+                if (data.count > 0) {
                     if let temp = data[0] as? NSNumber {
-                        self.temp.put(temp.floatValue)
+                        self.temp.value = temp.floatValue
                     }
                 }
             })
             
             socket.on(brewChangedEvent, callback: { (AnyObject data) -> Void in
-                if (count(data) > 0) {
-                    self.brew.put(ContentParser.parseBrewState(JSON(data[0])))
+                if (data.count > 0) {
+                    self.brew.value = ContentParser.parseBrewState(JSON(data[0]))
                 }
             })
             
             socket.on(pwmChangedEvent, callback: { (AnyObject data) -> Void in
-                if (count(data) > 0) {
+                if (data.count > 0) {
                     if let pwm = data[0] as? NSNumber {
-                        self.pwm.put(pwm.floatValue)
+                        self.pwm.value = pwm.floatValue
                     }
                 }
             })
             
             socket.onError = { (AnyObject anyError) -> Void in
-                println("Socket connection error")
+                print("Socket connection error")
             }
         })
     }
-    
+
 }

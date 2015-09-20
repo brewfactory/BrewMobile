@@ -30,14 +30,14 @@ class BrewDesignerViewModel : NSObject {
         self.brewManager = brewManager
         super.init()
 
-        brewState.put(BrewState(name: name, startTime: startTime, phases: self.phases, paused: false, inProgress: false))
+        brewState.value = (BrewState(name: name, startTime: startTime, phases: self.phases, paused: false, inProgress: false))
 
         hasPhases <~ self.phases.producer
-            |> flatMap(.Concat) { SignalProducer(value: $0.count > 0) }
+            .flatMap(.Concat) { SignalProducer(value: $0.count > 0) }
         validName <~ self.brewState.producer
-            |> flatMap(.Concat) { SignalProducer(value: count($0.name.value) > 0) }
+            .flatMap(.Concat) { SignalProducer(value: $0.name.value.characters.count > 0) }
         validBeer <~ combineLatest(hasPhases.producer, validName.producer)
-            |> map { $0 && $1 }
+            .map { $0 && $1 }
 
         cocoaActionSync = CocoaAction(brewManager.syncBrewAction, input: brewState.value)
     }

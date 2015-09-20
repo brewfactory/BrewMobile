@@ -67,7 +67,7 @@ final class BrewState: Equatable, JSONDecodable, JSONEncodable  {
     // MARK: JSONDecodable
 
     class func decode(json: JSON) -> Result<BrewState, NSError> {
-        return Result.success(BrewState(
+        return Result(BrewState(
             name: json["name"].stringValue,
             startTime: ContentParser.formatDate(json["startTime"].stringValue),
             phases: json["phases"].arrayValue.map { (JSON rawPhase) -> BrewPhase in
@@ -90,7 +90,7 @@ final class BrewState: Equatable, JSONDecodable, JSONEncodable  {
             return BrewPhase.encode(phase).value!
         }
         
-        return Result.success(brew)
+        return Result(brew)
     }
 
 }

@@ -40,7 +40,7 @@ class BrewDesignerViewController : UIViewController, UITableViewDataSource, UITa
         self.tabBarItem = UITabBarItem(title: "Designer", image: UIImage(named: "DesignerIcon"), tag: 0)
     }
 
-    required init(coder aDecoder: NSCoder) {
+    required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -64,7 +64,7 @@ class BrewDesignerViewController : UIViewController, UITableViewDataSource, UITa
         })
 
         let trashAction = Action<Void, Void, NSError>(enabledIf: self.brewDesignerViewModel.hasPhases, {
-            self.brewDesignerViewModel.phases.put(PhaseArray())
+            self.brewDesignerViewModel.phases.value = PhaseArray()
             self.nameTextField.text = ""
             self.phasesTableView.reloadData()
             
@@ -81,14 +81,14 @@ class BrewDesignerViewController : UIViewController, UITableViewDataSource, UITa
         addButton.addTarget(cocoaActionAdd, action: CocoaAction.selector, forControlEvents: .TouchUpInside)
 
         self.brewManager.syncBrewAction.errors
-            |> observeOn(UIScheduler())
-            |> observe(next: { error in
+            .observeOn(UIScheduler())
+            .observeNext { error in
                 UIAlertView(title: "Error creating brew", message: error.localizedDescription, delegate: nil, cancelButtonTitle: "OK").show()
-            })
+            }
 
         self.brewDesignerViewModel.hasPhases.producer
-            |> observeOn(UIScheduler())
-            |> start( next: { hasPhases in
+            .observeOn(UIScheduler())
+            .startWithNext { hasPhases in
                 if !self.phasesTableView.editing {
                     self.phasesTableView.reloadData()
                 }
@@ -96,42 +96,42 @@ class BrewDesignerViewController : UIViewController, UITableViewDataSource, UITa
                 if !(hasPhases as Bool) {
                     self.phasesTableView.editing = false
                 }
-            })
+            }
 
         self.brewDesignerViewModel.name <~ self.nameTextField.rac_textSignalProducer()
 
         let startTimeTextFieldSignalProducer = self.startTimeTextField.rac_signalForControlEvents(.EditingDidBegin).toSignalProducer()
         startTimeTextFieldSignalProducer
-            |> start(next: { _ in
+            .startWithNext { _ in
                 self.dismissKeyboards()
-            })
+            }
     
         self.pickerBgView.rac_hidden <~ startTimeTextFieldSignalProducer
-            |> map { _ in false }
-            |> catch { _ in SignalProducer<Bool, NoError>.empty }
+            .map { _ in false }
+            .flatMapError { _ in SignalProducer<Bool, NoError>.empty }
 
         let pickerDateSignalProducer = self.startTimePicker.rac_signalForControlEvents(.ValueChanged).toSignalProducer()
-            |> map { picker in
+            .map { picker in
                 if let datePicker = picker as? UIDatePicker {
                     return datePicker.date
                 }
                 fatalError("this should not happen")
             }
-            |> catch { _ in SignalProducer<NSDate, NoError>.empty }
+            .flatMapError { _ in SignalProducer<NSDate, NoError>.empty }
         
         let nowDate = NSDate()
-        self.startTimeTextField.rac_text.put(self.formatDateToShow(nowDate))
-        self.brewDesignerViewModel.startTime.put(self.formatDateToUpdate(nowDate))
+        self.startTimeTextField.rac_text.value = self.formatDateToShow(nowDate)
+        self.brewDesignerViewModel.startTime.value = self.formatDateToUpdate(nowDate)
 
         self.startTimeTextField.rac_text <~ pickerDateSignalProducer
-            |> map { self.formatDateToShow($0) }
-            |> catch { _ in SignalProducer<String, NoError>.empty }
+            .map { self.formatDateToShow($0) }
+            .flatMapError { _ in SignalProducer<String, NoError>.empty }
 
         self.brewDesignerViewModel.startTime <~ pickerDateSignalProducer
-            |> map { date in
+            .map { date in
                 return self.formatDateToUpdate(date)
             }
-            |> catch { _ in SignalProducer<String, NoError>.empty }
+            .flatMapError { _ in SignalProducer<String, NoError>.empty }
     }
     
     override func didReceiveMemoryWarning() {
@@ -195,7 +195,7 @@ class BrewDesignerViewController : UIViewController, UITableViewDataSource, UITa
             if self.brewDesignerViewModel.phases.value.count > indexPath.row {
                 var newPhases = self.brewDesignerViewModel.phases.value
                 newPhases.removeAtIndex(indexPath.row)
-                self.brewDesignerViewModel.phases.put(newPhases)
+                self.brewDesignerViewModel.phases.value = newPhases
                 tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Automatic)
             }
         }
@@ -207,14 +207,14 @@ class BrewDesignerViewController : UIViewController, UITableViewDataSource, UITa
         var newPhases = self.brewDesignerViewModel.phases.value
         newPhases[destinationIndexPath.row] = newPhases[sourceIndexPath.row]
         newPhases[sourceIndexPath.row] = destinationPhase
-        self.brewDesignerViewModel.phases.put(newPhases)
+        self.brewDesignerViewModel.phases.value = newPhases
         tableView.reloadData()
     }
     
     //MARK: UIGestureRecognizerDelegate
 
     func gestureRecognizer(gestureRecognizer: UIGestureRecognizer, shouldReceiveTouch touch: UITouch) -> Bool {
-        if !touch.view.isDescendantOfView(nameTextField) && !touch.view.isDescendantOfView(pickerBgView) {
+        if !touch.view!.isDescendantOfView(nameTextField) && !touch.view!.isDescendantOfView(pickerBgView) {
             dismissKeyboards()
             return false
         }

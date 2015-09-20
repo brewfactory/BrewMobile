@@ -35,7 +35,7 @@ class ContentParser {
     }
     
     class func formatDate(dateString: String) -> String {
-        if count(dateString) > 0 {
+        if dateString.characters.count > 0 {
             let isoDateFormatter = ISO8601DateFormatter()
             let formattedDate = isoDateFormatter.dateFromString(dateString)
             let dateStringFormatter = NSDateFormatter()
