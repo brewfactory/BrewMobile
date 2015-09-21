@@ -18,10 +18,10 @@ App for managing the brewing process from your iPhone.
  
 ## Used technologies
 
- - Swift 1.2
- - iOS >= 8.0
+ - Swift 2.0
+ - iOS >= 8.1
  - Socket.IO for WebSocket
- - [ReactiveCocoa 3.0](https://github.com/ReactiveCocoa/ReactiveCocoa)
+ - [ReactiveCocoa 4.0](https://github.com/ReactiveCocoa/ReactiveCocoa)
 
 ## Setting up the project with [Carthage](https://github.com/Carthage/Carthage)
 In case you don't have Carthage installed, run:
