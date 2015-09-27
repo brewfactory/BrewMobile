@@ -1,0 +1,26 @@
+format_version: 1.0.0
+default_step_lib_source: https://github.com/bitrise-io/bitrise-steplib.git
+
+workflows:
+  primary:
+    steps:
+    - script:
+        title: Carthage
+        inputs:
+        - content: |-
+              #! bin/bash
+              brew update && brew install carthage
+              carthage bootstrap --platform iOS --no-use-binaries
+    - xcode-test@1.1.2:
+        inputs:
+        - simulator_device: iPhone 6
+        - simulator_os_version: '9.0'
+    envs:
+app:
+  envs:
+  - BITRISE_PROJECT_PATH: "./BrewMobile.xcodeproj"
+    opts:
+      is_expand: false
+  - BITRISE_SCHEME: BrewMobile
+    opts:
+      is_expand: false
