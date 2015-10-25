@@ -1,5 +1,5 @@
-github "antitypical/Result" "76f9a972ed61ff872b731460bc610c8acbfae58c"
+github "antitypical/Result" "0.6.0-beta.3"
 git "https://github.com/vasarhelyia/SIOSocket" "e3d4f2cd09eab6a1ce0980b3c9fbec2a81a6c4bd"
 github "SwiftyJSON/SwiftyJSON" "2.3.0"
 github "boredzo/iso-8601-date-formatter" "11cd171ff5b659c8a1c55864810a3e3f5075853b"
-github "ReactiveCocoa/ReactiveCocoa" "v4.0-alpha.1"
+github "ReactiveCocoa/ReactiveCocoa" "v4.0.0-alpha.2"

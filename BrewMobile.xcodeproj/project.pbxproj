@@ -41,11 +41,6 @@
 		02BDD68A1AA19C6200E44DC3 /* BrewManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0213ADD11A57E6EB0010F9E1 /* BrewManager.swift */; };
 		02BDD68C1AA2FF6700E44DC3 /* BrewDesignerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02BDD68B1AA2FF6700E44DC3 /* BrewDesignerViewModel.swift */; };
 		02BDD68D1AA2FF6700E44DC3 /* BrewDesignerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02BDD68B1AA2FF6700E44DC3 /* BrewDesignerViewModel.swift */; };
-		02C058BE1B652990001AC3C1 /* ISO8601.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 02C058B91B652990001AC3C1 /* ISO8601.framework */; };
-		02C058BF1B652990001AC3C1 /* ReactiveCocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 02C058BA1B652990001AC3C1 /* ReactiveCocoa.framework */; };
-		02C058C01B652990001AC3C1 /* Result.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 02C058BB1B652990001AC3C1 /* Result.framework */; };
-		02C058C11B652990001AC3C1 /* SocketIOFramework.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 02C058BC1B652990001AC3C1 /* SocketIOFramework.framework */; };
-		02C058C21B652990001AC3C1 /* SwiftyJSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 02C058BD1B652990001AC3C1 /* SwiftyJSON.framework */; };
 		02C058C31B6529F7001AC3C1 /* ISO8601.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 02C058B91B652990001AC3C1 /* ISO8601.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		02C058C41B6529F7001AC3C1 /* ReactiveCocoa.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 02C058BA1B652990001AC3C1 /* ReactiveCocoa.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		02C058C51B6529F7001AC3C1 /* Result.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 02C058BB1B652990001AC3C1 /* Result.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -125,11 +120,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				02C058C01B652990001AC3C1 /* Result.framework in Frameworks */,
-				02C058BE1B652990001AC3C1 /* ISO8601.framework in Frameworks */,
-				02C058C11B652990001AC3C1 /* SocketIOFramework.framework in Frameworks */,
-				02C058BF1B652990001AC3C1 /* ReactiveCocoa.framework in Frameworks */,
-				02C058C21B652990001AC3C1 /* SwiftyJSON.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -487,7 +477,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -514,7 +504,6 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				COPY_PHASE_STRIP = YES;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -524,7 +513,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
@@ -541,11 +530,9 @@
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
 				);
 				INFOPLIST_FILE = BrewMobile/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.brew.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -559,11 +546,9 @@
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
 				);
 				INFOPLIST_FILE = BrewMobile/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.brew.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
