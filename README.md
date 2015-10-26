@@ -4,7 +4,7 @@
 
 iOS client for the [Brewfactory](https://github.com/brewfactory/BrewCore) project. 
 
-Read the [story of upgrading to ReactiveCocoa 3.0 on AllTheFlow](https://blog.alltheflow.com/reactive-swift-upgrading-to-reactivecocoa-3-0/).
+Read the [stories of upgrading BrewMobile to ReactiveCocoa & Swift on AllTheFlow](https://blog.alltheflow.com/).
 
 What is this?
 -------------
