@@ -31,7 +31,7 @@ $ brew update && brew install carthage
 ```
 then:
 ```
-$ carthage bootstrap --platform iOS
+$ carthage update --platform iOS --no-use-binaries
 
 $ open BrewMobile.xcworkspace/
 ```
