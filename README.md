@@ -18,7 +18,7 @@ App for managing the brewing process from your iPhone.
  
 ## Used technologies
 
- - Swift 2.0
+ - Swift 2.1
  - iOS >= 8.1
  - Socket.IO for WebSocket
  - [ReactiveCocoa 4.0](https://github.com/ReactiveCocoa/ReactiveCocoa)
