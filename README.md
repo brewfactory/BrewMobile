@@ -23,6 +23,8 @@ App for managing the brewing process from your iPhone.
  - socket.io
  - [ReactiveCocoa](https://github.com/ReactiveCocoa/ReactiveCocoa)
 
+Required minimum Xcode version: 7.1
+
 ## Setting up the project with [Carthage](https://github.com/Carthage/Carthage)
 In case you don't have Carthage installed, run:
 
