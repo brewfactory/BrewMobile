@@ -1,5 +1,5 @@
-github "antitypical/Result" "0.6.0-beta.3"
+github "antitypical/Result" "1.0.2"
 github "SwiftyJSON/SwiftyJSON" "2.3.3"
 github "boredzo/iso-8601-date-formatter" "43210ea91f5ea2baff6ba13d699af5dc267ad374"
 github "socketio/socket.io-client-swift" "v5.3.3"
-github "ReactiveCocoa/ReactiveCocoa" "v4.0.0-alpha.2"
+github "ReactiveCocoa/ReactiveCocoa" "v4.0.1"

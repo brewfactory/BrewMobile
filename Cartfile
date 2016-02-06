@@ -1,4 +1,4 @@
 github "socketio/socket.io-client-swift" ~> 5.3.3
 github "boredzo/iso-8601-date-formatter" "43210ea91f5ea2baff6ba13d699af5dc267ad374"
-github "ReactiveCocoa/ReactiveCocoa" "v4.0.0-alpha.2"
+github "ReactiveCocoa/ReactiveCocoa" ~> 4.0.1
 github "SwiftyJSON/SwiftyJSON" >= 2.2.1
