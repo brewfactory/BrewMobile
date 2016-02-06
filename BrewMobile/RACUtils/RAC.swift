@@ -12,6 +12,11 @@ import Foundation
 import ReactiveCocoa
 import UIKit
 
+
+// see https://github.com/ReactiveCocoa/ReactiveCocoa/issues/2704
+import enum Result.NoError
+public typealias NoError = Result.NoError
+
 struct AssociationKey {
     static var hidden: UInt8 = 1
     static var date: UInt8 = 2
