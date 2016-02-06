@@ -10,23 +10,25 @@ import Foundation
 import SwiftyJSON
 import ReactiveCocoa
 import Result
-import SocketIOFramework
+import SocketIOClientSwift
 
 let tempChangedEvent = "temperature_changed"
 let brewChangedEvent = "brew_changed"
 let pwmChangedEvent = "pwm_changed"
+let host = "https://brewcore-demo.herokuapp.com/"
 
 class BrewManager : NSObject {
-    let host = "https://brewcore-demo.herokuapp.com/"
-    
     var syncBrewAction: Action<BrewState, NSData, NSError>!
     var stopBrewAction: Action<Void, NSData, NSError>!
+    var socket: SocketIOClient
     let temp = MutableProperty<Float>(0.0)
     let brew = MutableProperty(BrewState())
     let pwm = MutableProperty<Float>(0.0)
 
     override init() {
-         super.init()
+        socket = SocketIOClient(socketURL:NSURL(string: host)!)
+
+        super.init()
 
         syncBrewAction = Action { brewState in
             if let jsonData:AnyObject = BrewState.encode(brewState).value {
@@ -73,41 +75,33 @@ class BrewManager : NSObject {
     // MARK: WebSocket
     
     func connectToHost() {
-        SIOSocket.socketWithHost(self.host, reconnectAutomatically: true, attemptLimit: 0, withDelay: 1, maximumDelay: 5, timeout: 20, response: {socket in
-            socket.onConnect = {
-                print("Connected to \(self.host)")
-            }
-            
-            socket.onDisconnect = {
-                print("Disconnected from \(self.host)")
-            }
-            
-            socket.on(tempChangedEvent, callback: { (AnyObject data) -> Void in
-                if (data.count > 0) {
-                    if let temp = data[0] as? NSNumber {
-                        self.temp.value = temp.floatValue
-                    }
+        socket.connect()
+
+        socket.on(tempChangedEvent) { data, ack in
+            if (data.count > 0) {
+                if let temp = data[0] as? NSNumber {
+                    self.temp.value = temp.floatValue
                 }
-            })
-            
-            socket.on(brewChangedEvent, callback: { (AnyObject data) -> Void in
-                if (data.count > 0) {
-                    self.brew.value = ContentParser.parseBrewState(JSON(data[0]))
-                }
-            })
-            
-            socket.on(pwmChangedEvent, callback: { (AnyObject data) -> Void in
-                if (data.count > 0) {
-                    if let pwm = data[0] as? NSNumber {
-                        self.pwm.value = pwm.floatValue
-                    }
-                }
-            })
-            
-            socket.onError = { (AnyObject anyError) -> Void in
-                print("Socket connection error")
             }
-        })
+        }
+        
+        socket.on(brewChangedEvent) { data, ack in
+            if (data.count > 0) {
+                self.brew.value = ContentParser.parseBrewState(JSON(data[0]))
+            }
+        }
+        
+        socket.on(pwmChangedEvent) { data, ack in
+            if (data.count > 0) {
+                if let pwm = data[0] as? NSNumber {
+                    self.pwm.value = pwm.floatValue
+                }
+            }
+        }
+        
+        socket.on("connect") {data, ack in
+            print("socket connected")
+        }
     }
 
 }
