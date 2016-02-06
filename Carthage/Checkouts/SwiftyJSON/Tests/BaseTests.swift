@@ -21,7 +21,7 @@
 //  THE SOFTWARE.
 
 import XCTest
-import SwiftyJSON
+@testable import SwiftyJSON
 
 class BaseTests: XCTestCase {
 
@@ -165,7 +165,7 @@ class BaseTests: XCTestCase {
         XCTAssertLessThanOrEqual(JSON(-8763), JSON(-8763))
     }
 
-    func testNumberConverToString(){
+    func testNumberConvertToString(){
         XCTAssertEqual(JSON(true).stringValue, "true")
         XCTAssertEqual(JSON(999.9823).stringValue, "999.9823")
         XCTAssertEqual(JSON(true).number!.stringValue, "1")
@@ -226,6 +226,13 @@ class BaseTests: XCTestCase {
         }
     }
     
+    func testExistance() {
+        let dictionary = ["number":1111]
+        let json = JSON(dictionary)
+        XCTAssertFalse(json["unspecifiedValue"].isExists())
+        XCTAssertTrue(json["number"].isExists())
+    }
+    
     func testErrorHandle() {
         let json = JSON(data:self.testData)
         if let _ = json["wrong-type"].string {
@@ -254,8 +261,8 @@ class BaseTests: XCTestCase {
     func testNumberCompare(){
         XCTAssertEqual(NSNumber(double: 888332), NSNumber(int:888332))
         XCTAssertNotEqual(NSNumber(double: 888332.1), NSNumber(int:888332))
-        XCTAssertLessThan(NSNumber(int: 888332), NSNumber(double:888332.1))
-        XCTAssertGreaterThan(NSNumber(double: 888332.1), NSNumber(int:888332))
+        XCTAssertLessThan(NSNumber(int: 888332).doubleValue, NSNumber(double:888332.1).doubleValue)
+        XCTAssertGreaterThan(NSNumber(double: 888332.1).doubleValue, NSNumber(int:888332).doubleValue)
         XCTAssertFalse(NSNumber(double: 1) == NSNumber(bool:true))
         XCTAssertFalse(NSNumber(int: 0) == NSNumber(bool:false))
         XCTAssertEqual(NSNumber(bool: false), NSNumber(bool:false))
