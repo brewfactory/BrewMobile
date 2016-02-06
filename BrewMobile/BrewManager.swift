@@ -99,9 +99,14 @@ class BrewManager : NSObject {
             }
         }
         
-        socket.on("connect") {data, ack in
-            print("socket connected")
+        socket.on("connect") { data, ack in
+            print("Connected to \(self.host)")
         }
+
+        socket.on("disconnect") { data, ack in
+            print("Disconnected from \(self.host)")
+        }
+
     }
 
 }
