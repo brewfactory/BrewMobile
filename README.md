@@ -18,10 +18,10 @@ App for managing the brewing process from your iPhone.
  
 ## Used technologies
 
- - Swift 2.1
+ - Swift 2.1.x
  - iOS >= 8.1
- - Socket.IO for WebSocket
- - [ReactiveCocoa 4.0](https://github.com/ReactiveCocoa/ReactiveCocoa)
+ - socket.io
+ - [ReactiveCocoa](https://github.com/ReactiveCocoa/ReactiveCocoa)
 
 ## Setting up the project with [Carthage](https://github.com/Carthage/Carthage)
 In case you don't have Carthage installed, run:
@@ -31,7 +31,7 @@ $ brew update && brew install carthage
 ```
 then:
 ```
-$ carthage update --platform iOS --no-use-binaries
+$ carthage update --platform iOS
 
 $ open BrewMobile.xcworkspace/
 ```
